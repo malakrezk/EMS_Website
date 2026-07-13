@@ -1,0 +1,8 @@
+{
+  "installCommand": "cd ems-website && npm install",
+  "buildCommand": "cd ems-website && npm run build",
+  "outputDirectory": "ems-website/dist",
+  "rewrites": [
+    { "source": "/(.*)", "destination": "/index.html" }
+  ]
+}
