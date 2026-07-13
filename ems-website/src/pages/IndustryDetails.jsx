@@ -1,0 +1,31 @@
+import { Link, Navigate, useParams } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import { HiOutlineArrowLeft, HiOutlineArrowRight, HiOutlineCheck, HiOutlineCpuChip } from 'react-icons/hi2'
+import { industries } from '../data/industries'
+
+const technologies = ['Siemens', 'Schneider Electric', 'ABB', 'Honeywell', 'BACnet', 'Modbus', 'OPC UA', 'IoT Platforms']
+const gallery = [
+  'https://images.unsplash.com/photo-1581092160562-40aa08e78837?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1497366754035-f200968a6e72?auto=format&fit=crop&w=1200&q=80',
+  'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1200&q=80',
+]
+
+export default function IndustryDetails() {
+  const { industryId } = useParams()
+  const industry = industries.find(item => item.id === industryId)
+  if (!industry) return <Navigate to="/" replace />
+  const Icon = industry.icon
+  return <main className="overflow-hidden bg-[#061326] text-white">
+    <section className="relative flex min-h-[680px] items-end overflow-hidden pb-20 pt-28"><motion.img initial={{ scale: 1.08 }} animate={{ scale: 1 }} transition={{ duration: 1.5 }} src={industry.image} alt={`${industry.title} infrastructure`} className="absolute inset-0 h-full w-full object-cover" /><div className="absolute inset-0 bg-gradient-to-r from-[#040d1a]/95 via-[#061326]/70 to-transparent" /><div className="absolute inset-0 bg-gradient-to-t from-[#061326] via-transparent to-[#061326]/30" /><div className="container-ems relative"><Link to="/" className="inline-flex items-center gap-2 text-xs text-slate-300 hover:text-cyan-200"><HiOutlineArrowLeft /> Back to industries</Link><Icon className="mt-8 h-8 w-8 text-cyan-300" /><p className="mt-5 text-xs uppercase tracking-[.3em] text-cyan-300">Industry expertise</p><h1 className="mt-4 max-w-3xl font-serif text-4xl sm:text-5xl md:text-6xl">Smart engineering for {industry.title}</h1><p className="mt-5 max-w-2xl text-base leading-7 text-slate-200">{industry.description}</p><Link to="/contact" className="btn-primary mt-8">Discuss Your Project <HiOutlineArrowRight /></Link></div></section>
+
+    <section className="section-padding"><div className="container-ems grid gap-12 lg:grid-cols-2"><div><p className="eyebrow">Sector overview</p><h2 className="mt-4 font-serif text-3xl md:text-4xl">Performance begins with understanding the environment</h2><p className="mt-5 text-sm leading-7 text-slate-300">EMS combines sector insight with multidisciplinary engineering to address the operational, safety, compliance, and lifecycle priorities unique to {industry.title.toLowerCase()}. Every system is coordinated around reliability and measurable value.</p></div><div className="grid grid-cols-2 gap-4">{[['24/7', 'Operational resilience'], ['99.9%', 'System availability'], ['One', 'Integrated partner'], ['Full', 'Lifecycle support']].map(([v,l]) => <div key={l} className="card-surface p-5"><p className="font-serif text-2xl text-cyan-100">{v}</p><p className="mt-2 text-xs text-slate-400">{l}</p></div>)}</div></div></section>
+
+    <section className="section-padding border-y border-white/10 bg-[#091b32]"><div className="container-ems"><p className="eyebrow">Services provided</p><h2 className="mt-4 font-serif text-3xl md:text-4xl">A coordinated engineering scope</h2><div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{industry.services.map((service, i) => <motion.article key={service} initial={{ opacity: 0, y: 15 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 3) * .06 }} className="card-surface card-hover-glow min-h-40 p-6"><HiOutlineCheck className="h-5 w-5 text-cyan-300" /><h3 className="mt-5 text-base font-semibold">{service}</h3><p className="mt-2 text-[13px] leading-6 text-slate-400">Designed, integrated, commissioned, and supported by experienced EMS specialists.</p></motion.article>)}</div></div></section>
+
+    <section className="section-padding"><div className="container-ems grid gap-12 lg:grid-cols-[.7fr_1.3fr]"><div><p className="eyebrow">Technology ecosystem</p><h2 className="mt-4 font-serif text-3xl md:text-4xl">Open platforms. Reliable integration.</h2><HiOutlineCpuChip className="mt-7 h-8 w-8 text-cyan-300" /></div><div className="grid grid-cols-2 border-l border-t border-white/10 sm:grid-cols-4">{technologies.map(tech => <div key={tech} className="flex h-24 items-center justify-center border-b border-r border-white/10 px-3 text-center text-xs font-semibold text-slate-300 transition hover:bg-cyan-300/5">{tech}</div>)}</div></div></section>
+
+    <section className="section-padding bg-[#091b32]"><div className="container-ems"><p className="eyebrow">Projects & case studies</p><h2 className="mt-4 font-serif text-3xl md:text-4xl">Engineering in context</h2><div className="mt-10 grid gap-5 md:grid-cols-3">{gallery.map((image, i) => <motion.article key={image} initial={{ opacity: 0, y: 18 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="group relative h-72 overflow-hidden rounded-md"><img src={i === 0 ? industry.image : image} alt={`${industry.title} project`} loading="lazy" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /><div className="absolute inset-0 bg-gradient-to-t from-[#040d1a] to-transparent" /><div className="absolute bottom-5 left-5"><p className="font-serif text-lg">{industry.title} Integrated Project</p><p className="mt-1 text-xs text-cyan-200">Design · Delivery · Commissioning</p></div></motion.article>)}</div></div></section>
+
+    <section className="relative overflow-hidden py-24 text-center"><img src={industry.image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-25" /><div className="absolute inset-0 bg-[#061326]/85" /><div className="container-ems relative"><h2 className="mx-auto max-w-2xl font-serif text-3xl md:text-4xl">Build a better {industry.title.toLowerCase()} environment</h2><p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-300">Talk to EMS about the infrastructure, automation, and performance outcomes your next project demands.</p><Link to="/contact" className="btn-primary mt-7">Request Consultation <HiOutlineArrowRight /></Link></div></section>
+  </main>
+}

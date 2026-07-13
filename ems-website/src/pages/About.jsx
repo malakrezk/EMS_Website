@@ -1,0 +1,60 @@
+import { useState } from 'react'
+import { Link } from 'react-router-dom'
+import { motion } from 'framer-motion'
+import {
+  HiOutlineArrowRight, HiOutlineBolt, HiOutlineCheckBadge, HiOutlineGlobeAlt,
+  HiOutlineHeart, HiOutlineLightBulb, HiOutlinePlay, HiOutlineShieldCheck,
+  HiOutlineSparkles, HiOutlineUserGroup,
+} from 'react-icons/hi2'
+import PageHeader from '../components/ui/PageHeader'
+import useCountUp from '../hooks/useCountUp'
+
+const milestones = [
+  ['2016', 'EMS Founded', 'Established in Cairo with a clear ambition: integrate engineering discipline with intelligent automation.'],
+  ['2018', 'Regional Delivery', 'Expanded project delivery across Egypt and the UAE through multidisciplinary engineering teams.'],
+  ['2020', 'Automation Growth', 'Broadened SCADA, PLC, and smart-building capabilities for mission-critical environments.'],
+  ['2022', 'Siemens Partnership', 'Strengthened the technology ecosystem as a Siemens official partner in building management systems.'],
+  ['2024', 'Integrated Platform', 'Connected MEP delivery, automation, analytics, and lifecycle support in one operating model.'],
+  ['Future', 'Smarter Infrastructure', 'Advancing safer, more efficient, and more sustainable places across the region.'],
+]
+const values = [
+  [HiOutlineLightBulb, 'Innovation', 'Practical technology that creates measurable operational value.'],
+  [HiOutlineShieldCheck, 'Reliability', 'Decisions, systems, and relationships built to perform for the long term.'],
+  [HiOutlineGlobeAlt, 'Sustainability', 'Smarter resource use designed into every engineering solution.'],
+  [HiOutlineSparkles, 'Excellence', 'Disciplined execution and attention to detail at every stage.'],
+  [HiOutlineHeart, 'Customer Success', 'Partnerships centered on the outcomes our clients need most.'],
+  [HiOutlineCheckBadge, 'Safety', 'People, assets, and continuity protected without compromise.'],
+]
+const stats = [[10, '+', 'Years of growth'], [450, '+', 'Projects delivered'], [120, '+', 'Engineers & specialists'], [5, '', 'Regional markets']]
+
+function Counter({ end, suffix, label }) {
+  const { ref, value } = useCountUp(end, 1500)
+  return <div ref={ref} className="border-l border-cyan-300/30 pl-5"><p className="font-serif text-3xl text-white md:text-4xl">{value}{suffix}</p><p className="mt-1 text-xs text-slate-400">{label}</p></div>
+}
+
+export default function About() {
+  const [playing, setPlaying] = useState(false)
+  return (
+    <main className="bg-[#061326] text-white">
+      <PageHeader eyebrow="About EMS" title="Engineering confidence into every place we create" description="Since 2016, EMS has combined MEP expertise, intelligent automation, and disciplined project delivery to create infrastructure that performs with confidence." />
+
+      <section className="section-padding"><div className="container-ems grid items-center gap-12 lg:grid-cols-2">
+        <motion.div initial={{ opacity: 0, x: -24 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true }} transition={{ duration: .6 }}><p className="eyebrow">Our story</p><h2 className="mt-4 font-serif text-3xl leading-tight md:text-4xl">A technology-minded engineering company, built around real-world delivery</h2><p className="mt-5 text-sm leading-7 text-slate-300">EMS brings project management, mechanical and electrical engineering, automation, smart building systems, and lifecycle support together under one accountable team. Our work begins with understanding how a place must perform—then engineering every layer around that outcome.</p><div className="mt-7 grid gap-5 sm:grid-cols-2"><div className="border-l border-cyan-300/30 pl-5"><h3 className="text-sm font-semibold">Our mission</h3><p className="mt-2 text-[13px] leading-6 text-slate-400">Deliver reliable, efficient systems that make complex facilities simpler to operate.</p></div><div className="border-l border-cyan-300/30 pl-5"><h3 className="text-sm font-semibold">Our vision</h3><p className="mt-2 text-[13px] leading-6 text-slate-400">Shape the region's future through connected, sustainable, intelligent infrastructure.</p></div></div></motion.div>
+        <motion.div initial={{ opacity: 0, scale: .96 }} whileInView={{ opacity: 1, scale: 1 }} viewport={{ once: true }} transition={{ duration: .7 }} className="relative h-[440px] overflow-hidden rounded-md"><img src="https://images.unsplash.com/photo-1497366811353-6870744d04b2?auto=format&fit=crop&w=1400&q=85" alt="EMS engineering collaboration" loading="lazy" className="h-full w-full object-cover" /><div className="absolute inset-0 bg-gradient-to-t from-[#061326]/80 to-transparent" /><p className="absolute bottom-6 left-6 max-w-xs text-sm leading-6 text-slate-200">Engineering excellence is not one discipline. It is how every discipline works together.</p></motion.div>
+      </div></section>
+
+      <section className="section-padding border-y border-white/10 bg-[#091b32]"><div className="container-ems"><div className="mb-10"><p className="eyebrow">Leadership</p><h2 className="mt-4 font-serif text-3xl md:text-4xl">A clear vision for smarter infrastructure</h2></div><div className="grid gap-6 lg:grid-cols-2">
+        <motion.article initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} className="overflow-hidden rounded-md border border-white/10 bg-[#0b223e]"><div className="grid sm:grid-cols-[.78fr_1.22fr]"><div className="relative min-h-[380px]"><img src="/ahmed-elzayat.jpeg" alt="Ahmed Elzayat, Founder and CEO of EMS" className="absolute inset-0 h-full w-full object-cover object-top" /><span className="absolute left-4 top-4 rounded bg-[#061326]/80 px-3 py-1.5 text-[10px] font-semibold uppercase tracking-wider text-cyan-200 backdrop-blur">CEO &amp; Founder</span></div><div className="flex flex-col justify-center p-7"><h3 className="font-serif text-2xl">Ahmed Elzayat</h3><p className="mt-1 text-xs uppercase tracking-[.2em] text-cyan-300">Founder &amp; Chief Executive Officer</p><p className="mt-5 text-[13px] leading-6 text-slate-300">An engineer and business leader focused on integrated MEP delivery, building automation, and smart infrastructure. Ahmed founded EMS to unite technical depth with accountable project management and long-term client partnership.</p><div className="mt-5 flex items-center gap-5 border-t border-white/10 pt-5"><div><b className="font-serif text-2xl text-cyan-100">20+</b><span className="ml-2 text-xs text-slate-400">years in engineering</span></div></div><div className="mt-6 flex flex-wrap gap-3"><a href="https://enterpriseam.com/egypt/2024/10/31/my-morning-routine-ahmed-elzayat-founder-and-ceo-of-engineering-management-systems/" target="_blank" rel="noreferrer" className="btn-outline">Read Biography</a><a href="https://eg.linkedin.com/in/ahmed-elzayat-a8325b41" target="_blank" rel="noreferrer" className="btn-primary">LinkedIn</a></div></div></div></motion.article>
+        <motion.article initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: .08 }} className="overflow-hidden rounded-md border border-white/10 bg-[#0b223e]">{playing ? <iframe title="Ahmed Elzayat interview" src="https://www.youtube-nocookie.com/embed/_xLHsVvXjvE?autoplay=1" className="aspect-video w-full" allow="autoplay; encrypted-media; picture-in-picture" allowFullScreen /> : <button type="button" onClick={() => setPlaying(true)} className="group relative block aspect-video w-full overflow-hidden text-left"><img src="https://img.youtube.com/vi/_xLHsVvXjvE/maxresdefault.jpg" alt="Ahmed Elzayat featured interview" className="h-full w-full object-cover transition duration-700 group-hover:scale-105" /><div className="absolute inset-0 bg-[#061326]/45 transition group-hover:bg-[#061326]/30" /><span className="absolute left-1/2 top-1/2 flex h-16 w-16 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full bg-cyan-300 text-[#061326] shadow-[0_0_35px_rgba(0,200,255,.35)]"><HiOutlinePlay className="ml-1 h-6 w-6" /></span></button>}<div className="p-7"><p className="text-[10px] uppercase tracking-[.25em] text-cyan-300">Featured conversation</p><h3 className="mt-2 font-serif text-2xl">Leadership, innovation, and the future of EMS</h3><p className="mt-3 text-[13px] leading-6 text-slate-400">A closer look at the thinking, experience, and ambition shaping the company's next chapter.</p></div></motion.article>
+      </div><blockquote className="mx-auto mt-14 max-w-4xl border-l-2 border-cyan-300 pl-7 font-serif text-2xl leading-relaxed text-slate-200">“Innovation is not only about technology; it is about creating smarter, safer, and more sustainable infrastructure for the future.”</blockquote></div></section>
+
+      <section className="section-padding"><div className="container-ems"><p className="eyebrow">Our journey</p><h2 className="mt-4 font-serif text-3xl md:text-4xl">A decade of deliberate growth</h2><div className="mt-12 grid gap-0 md:grid-cols-3">{milestones.map(([year, title, text], i) => <motion.div key={year} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 3) * .07 }} className="border-l border-t border-white/10 p-6 md:min-h-48"><span className="font-mono text-xs text-cyan-300">{year}</span><h3 className="mt-3 text-base font-semibold">{title}</h3><p className="mt-2 text-[13px] leading-6 text-slate-400">{text}</p></motion.div>)}</div><div className="mt-14 grid grid-cols-2 gap-7 md:grid-cols-4">{stats.map(([end, suffix, label]) => <Counter key={label} end={end} suffix={suffix} label={label} />)}</div></div></section>
+
+      <section className="section-padding bg-[#091b32]"><div className="container-ems"><p className="eyebrow">What guides us</p><h2 className="mt-4 font-serif text-3xl md:text-4xl">Values translated into action</h2><div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">{values.map(([Icon, title, text], i) => <motion.article key={title} initial={{ opacity: 0, y: 16 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: (i % 3) * .06 }} className="card-surface card-hover-glow min-h-44 p-6"><Icon className="h-6 w-6 text-cyan-300" /><h3 className="mt-5 text-base font-semibold">{title}</h3><p className="mt-2 text-[13px] leading-6 text-slate-400">{text}</p></motion.article>)}</div></div></section>
+
+      <section className="border-y border-white/10 py-14"><div className="container-ems flex flex-col items-center justify-between gap-8 md:flex-row"><div><p className="eyebrow">Certified ecosystem</p><h2 className="mt-3 font-serif text-2xl md:text-3xl">Trusted technology. Proven standards.</h2></div><div className="flex flex-wrap items-center gap-10"><img src="/siemens.png" alt="Siemens" loading="lazy" className="h-8 w-auto object-contain" /><span className="flex items-center gap-2 text-sm text-slate-300"><HiOutlineCheckBadge className="h-6 w-6 text-cyan-300" />ISO 9001:2015</span><span className="flex items-center gap-2 text-sm text-slate-300"><HiOutlineUserGroup className="h-6 w-6 text-cyan-300" />Technology Partners</span></div></div></section>
+
+      <section className="relative overflow-hidden py-24 text-center"><img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2000&q=85" alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-25" /><div className="absolute inset-0 bg-[#061326]/85" /><div className="container-ems relative"><HiOutlineBolt className="mx-auto h-7 w-7 text-cyan-300" /><h2 className="mx-auto mt-5 max-w-2xl font-serif text-3xl md:text-4xl">Let’s engineer what comes next</h2><p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-300">Bring us your ambition, operational challenge, or next project. We’ll bring the engineering discipline to move it forward.</p><div className="mt-7 flex flex-wrap justify-center gap-3"><Link to="/contact" className="btn-primary">Start a Conversation <HiOutlineArrowRight /></Link><Link to="/services" className="btn-outline">Explore Services</Link></div></div></section>
+    </main>
+  )
+}

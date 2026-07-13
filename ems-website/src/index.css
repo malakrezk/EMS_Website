@@ -1,0 +1,100 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  overflow-x: hidden;
+}
+
+::selection {
+  background: #00C8FF;
+  color: #07182E;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #07182E;
+}
+::-webkit-scrollbar-thumb {
+  background: #0066FF;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #00C8FF;
+}
+
+/* Visible keyboard focus for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #00C8FF;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer base {
+  body {
+    background-color: #07182E;
+  }
+}
+
+@layer components {
+  .container-ems {
+    @apply max-w-7xl mx-auto px-5 sm:px-7 lg:px-9;
+  }
+
+  .section-padding {
+    @apply py-16 md:py-24;
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 text-xs font-mono font-semibold tracking-[0.2em] uppercase text-cyan-400;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-[13px] font-semibold text-white shadow-[0_8px_24px_rgba(0,102,255,.24)] transition-all duration-300 hover:bg-primary-600 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(0,200,255,.25)] active:translate-y-0;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/20 px-5 py-3 text-[13px] font-semibold text-white transition-all duration-300 hover:border-cyan-400 hover:bg-white/5 hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  /* Alias kept for backward compatibility with any remaining call sites */
+  .btn-outline-dark {
+    @apply btn-outline;
+  }
+
+  .card-surface {
+    @apply relative rounded-md border border-white/[0.09] bg-[#0a1d36]/90 shadow-card backdrop-blur-sm transition-all duration-300;
+  }
+
+  .card-hover-glow {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:bg-[#102b4c] hover:shadow-[0_18px_42px_rgba(0,0,0,.28)];
+  }
+
+  .grid-bg {
+    background-image: linear-gradient(rgba(0, 200, 255, 0.06) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(0, 200, 255, 0.06) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+}
