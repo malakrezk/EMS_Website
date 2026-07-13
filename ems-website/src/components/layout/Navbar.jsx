@@ -8,7 +8,7 @@ const links = [
   { to: '/', label: 'Home' },
   { to: '/about', label: 'About' },
   { to: '/services', label: 'Services' },
-  { to: '/digital-twin', label: 'Digital Twin' },
+  { to: '/solutions', label: 'Solutions' },
   { to: '/projects', label: 'Case Studies' }
 ]
 
@@ -45,18 +45,18 @@ export default function Navbar() {
         open && 'shadow-lg'
       )}
     >
-      <nav className={cn('container-ems flex items-center justify-between transition-all duration-500', scrolled ? 'h-[68px]' : 'h-[82px]')}>
+      <nav className={cn('container-ems grid grid-cols-[1fr_auto] items-center transition-all duration-500 lg:grid-cols-[1fr_auto_1fr]', scrolled ? 'h-[68px]' : 'h-[82px]')}>
         <Link to="/" className="flex min-w-0 items-center" onClick={() => setOpen(false)} aria-label="EMS home">
           <img
             src="/ems-logo.png"
             alt="EMS Engineering Management Systems"
             width="331"
             height="101"
-            className={cn('h-auto w-[180px] object-contain object-left transition-all duration-500 sm:w-[210px]', scrolled ? 'max-h-[48px]' : 'max-h-[56px]')}
+            className={cn('h-auto w-[clamp(150px,15vw,210px)] max-w-full object-contain object-left transition-all duration-500', scrolled ? 'max-h-[46px]' : 'max-h-[54px]')}
           />
         </Link>
 
-        <div className="hidden lg:flex lg:items-center lg:gap-5 xl:gap-7">
+        <div className="hidden lg:flex lg:items-center lg:justify-center lg:gap-4 xl:gap-7">
           {links.map((link) => {
             const isActive = link.to === '/' ? location.pathname === '/' : location.pathname.startsWith(link.to)
             return (
@@ -81,11 +81,11 @@ export default function Navbar() {
               </NavLink>
             )
           })}
-          <Link to="/contact" className="ml-1 inline-flex items-center rounded-full border border-cyan-300/25 bg-cyan-300/10 px-4 py-2 text-xs font-semibold text-cyan-100 transition hover:border-cyan-300/50 hover:bg-cyan-300/15">Contact Us</Link>
         </div>
+        <div className="hidden justify-self-end lg:block"><Link to="/contact" className="inline-flex items-center rounded-full border border-cyan-300/25 bg-cyan-300/10 px-4 py-2 text-xs font-semibold text-cyan-100 transition hover:border-cyan-300/50 hover:bg-cyan-300/15">Contact Us</Link></div>
 
         <button
-          className="flex h-11 w-11 items-center justify-center rounded-full border border-white/15 bg-white/5 text-white lg:hidden"
+          className="flex h-11 w-11 items-center justify-center justify-self-end rounded-full border border-white/15 bg-white/5 text-white lg:hidden"
           onClick={() => setOpen((v) => !v)}
           aria-label={open ? 'Close menu' : 'Open menu'}
           aria-expanded={open}
@@ -126,7 +126,7 @@ export default function Navbar() {
                   </NavLink>
                 </motion.div>
               ))}
-              <NavLink to="/contact" onClick={() => setOpen(false)} className={({ isActive }) => cn('mt-1 block rounded-md px-4 py-3 text-base font-medium transition-colors', isActive ? 'bg-white/10 text-white' : 'text-white/80 hover:bg-white/5 hover:text-white')}>Contact</NavLink>
+              <NavLink to="/contact" onClick={() => setOpen(false)} className={({ isActive }) => cn('mt-2 block rounded-md border border-cyan-300/20 bg-cyan-300/10 px-4 py-3 text-base font-medium transition-colors', isActive ? 'text-white' : 'text-cyan-100')}>Contact Us</NavLink>
             </div>
           </motion.div>
         )}

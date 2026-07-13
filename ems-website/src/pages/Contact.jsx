@@ -7,7 +7,7 @@ export default function Contact() {
       <PageHeader
         eyebrow="Contact"
         title="Start the conversation"
-        description="Whether you're planning a new SCADA deployment or need support on an existing system, our team is ready to help."
+        description="Talk to EMS about connecting BMS, SCADA, IoT, AI and digital operations through the ZETA platform."
       />
       <ContactSection />
     </>

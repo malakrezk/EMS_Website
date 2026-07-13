@@ -1,7 +1,6 @@
 import { motion } from 'framer-motion'
 import { Link } from 'react-router-dom'
-import { HiOutlineMapPin, HiOutlineArrowRight, HiOutlineClock, HiOutlineBuildingOffice2 } from 'react-icons/hi2'
-import CircuitPlaceholder from '../ui/CircuitPlaceholder'
+import { HiOutlineArrowRight, HiOutlineBuildingOffice2 } from 'react-icons/hi2'
 
 export default function ProjectCard({ project, index = 0 }) {
   return (
@@ -13,30 +12,16 @@ export default function ProjectCard({ project, index = 0 }) {
       whileHover={{ y: -8 }}
       className="card-surface group flex flex-col overflow-hidden transition-colors duration-500 hover:border-cyan-300/35"
     >
-      <CircuitPlaceholder
-        seed={index + 1}
-        accent={project.accent}
-        label={project.industry}
-        className="h-48 w-full transition-transform duration-500 group-hover:scale-[1.03]"
-      />
+      <div className="relative h-52 overflow-hidden"><img src={project.image} alt="" loading="lazy" className="h-full w-full object-cover opacity-75 transition duration-700 group-hover:scale-105" /><div className="absolute inset-0 bg-gradient-to-t from-[#0a1d36] to-transparent" /></div>
 
       <div className="flex flex-1 flex-col p-6">
-        <div className="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs font-medium text-muted/70">
-          <span className="flex items-center gap-1.5">
-            <HiOutlineMapPin className="h-3.5 w-3.5 text-cyan-400" />
-            {project.country} &bull; {project.year}
-          </span>
-          <span className="flex items-center gap-1.5">
-            <HiOutlineClock className="h-3.5 w-3.5 text-cyan-400" />
-            {project.duration}
-          </span>
-        </div>
+        <p className="text-[10px] font-semibold uppercase tracking-[.22em] text-cyan-300">ZETA case study</p>
 
         <h3 className="mt-3 font-serif text-xl font-medium text-white">{project.name}</h3>
 
         <p className="mt-1.5 flex items-center gap-1.5 text-xs text-muted/60">
           <HiOutlineBuildingOffice2 className="h-3.5 w-3.5" />
-          {project.client}
+          {project.industry}
         </p>
 
         <p className="mt-3 text-sm leading-relaxed text-muted/80">{project.description}</p>

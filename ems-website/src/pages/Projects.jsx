@@ -3,7 +3,6 @@ import { motion, AnimatePresence } from 'framer-motion'
 import PageHeader from '../components/ui/PageHeader'
 import ProjectFilters from '../components/projects/ProjectFilters'
 import ProjectCard from '../components/projects/ProjectCard'
-import FAQSection from '../components/projects/FAQSection'
 import { projects, projectCategories } from '../data/projects'
 
 export default function Projects() {
@@ -18,8 +17,8 @@ export default function Projects() {
     <>
       <PageHeader
         eyebrow="Case Studies"
-        title="Projects delivering reliability across the grid"
-        description="A selection of the SCADA, EMS, automation, and protection projects our engineering teams have designed, built, and commissioned."
+        title="ZETA applied to real operating environments"
+        description="Explore how connected control, live data and digital facility context come together across water infrastructure, healthcare and commercial buildings."
       />
 
       <section className="section-padding bg-navy">
@@ -49,7 +48,6 @@ export default function Projects() {
         </div>
       </section>
 
-      <FAQSection />
     </>
   )
 }
