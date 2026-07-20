@@ -29,7 +29,7 @@ const homeStyles = `
   .home-page-shell .home-no-scrollbar::-webkit-scrollbar { display:none; }
   .home-page-shell .home-hero-word { display:block; overflow:hidden; padding-bottom:.08em; }
   .home-page-shell .home-hero-word > span { display:block; }
-  .home-page-shell .home-hero-title { font-size:clamp(2.55rem,7.3vw,7rem); }
+  .home-page-shell .home-hero-title { font-size:clamp(2.6rem,6vw,6rem);line-height:.95;max-width:850px; }
   .home-page-shell .home-hero-copy { font-size:clamp(.9rem,1.25vw,1.08rem); }
   .home-page-shell .home-hero-action { min-height:48px;padding-inline:1.5rem; }
   .home-page-shell .home-section-title { font-size:clamp(2.35rem,5vw,5rem); }
@@ -39,7 +39,6 @@ const homeStyles = `
   .home-page-shell .home-service-card { height:clamp(440px,50vw,590px);width:min(82vw,760px); }
   .home-page-shell .home-service-content { padding:clamp(1.35rem,4vw,2.5rem); }
   .home-page-shell .home-service-title { font-size:clamp(2rem,5vw,4.4rem); }
-  .home-page-shell .home-orbit { height:clamp(22rem,46vw,46rem);width:clamp(22rem,46vw,46rem); }
   .home-page-shell .home-hero-content { padding-bottom:clamp(4rem,8vw,7rem); }
   .home-page-shell .home-major-section { padding-block:clamp(6rem,11vw,10rem); }
   .home-page-shell .home-solution-content { padding:clamp(1.4rem,3vw,2.25rem); }
@@ -51,7 +50,9 @@ const homeStyles = `
   .home-page-shell .home-about-title { font-size:clamp(2.5rem,5.5vw,5.5rem); }
   .home-page-shell .home-about-panel { padding:clamp(1.6rem,4vw,2.6rem); }
   .home-page-shell .home-scroll-line::after { content:'';position:absolute;inset:0;background:#59dcff;transform:translateY(-100%);animation:homeScrollLine 2.2s cubic-bezier(.77,0,.18,1) infinite; }
-  .home-page-shell .home-orbit { animation:homeOrbit 18s linear infinite; }
+  .home-page-shell .home-network-path { stroke-dasharray:7 14;animation:homeNetworkFlow 9s linear infinite; }
+  .home-page-shell .home-data-particle { animation:homeDataFloat 5s ease-in-out infinite; }
+  .home-page-shell .home-scan { animation:homeScan 8s ease-in-out infinite; }
   .home-page-shell .home-float { animation:homeFloat 5.5s ease-in-out infinite; }
   .home-page-shell .home-service-card::after { content:'';position:absolute;inset:-45% -80%;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.12) 50%,transparent 58%);transform:translateX(-38%) rotate(8deg);transition:transform 1s cubic-bezier(.22,1,.36,1);pointer-events:none; }
   .home-page-shell .home-service-card:hover::after { transform:translateX(42%) rotate(8deg); }
@@ -62,10 +63,13 @@ const homeStyles = `
   body:has(.home-page-shell) header nav > div:nth-of-type(1) a[href='/projects'] { order:3; }
   body:has(.home-page-shell) header nav > div:nth-of-type(1) a[href='/about'] { order:4; }
   @keyframes homeScrollLine { 0%{transform:translateY(-100%)} 45%,55%{transform:translateY(0)} 100%{transform:translateY(100%)} }
-  @keyframes homeOrbit { to{transform:rotate(360deg)} }
+  @keyframes homeNetworkFlow { to{stroke-dashoffset:-84} }
+  @keyframes homeDataFloat { 0%,100%{opacity:.18;transform:translate3d(0,0,0)} 50%{opacity:.75;transform:translate3d(0,-10px,0)} }
+  @keyframes homeScan { 0%,18%{transform:translateY(-120%);opacity:0} 28%{opacity:.28} 72%{opacity:.12} 82%,100%{transform:translateY(120%);opacity:0} }
   @keyframes homeFloat { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-9px,0)} }
   @media (hover:none) { .home-page-shell .home-solution-description { opacity:1;transform:none; } }
-  @media (prefers-reduced-motion: reduce) { .home-page-shell .home-orbit,.home-page-shell .home-float,.home-page-shell .home-scroll-line::after{animation:none!important} }
+  @media (max-width:767px) { .home-page-shell .home-hero-title{font-size:clamp(2.45rem,12vw,3.45rem)}.home-page-shell .home-hero-content{padding-top:6rem} }
+  @media (prefers-reduced-motion: reduce) { .home-page-shell .home-network-path,.home-page-shell .home-data-particle,.home-page-shell .home-scan,.home-page-shell .home-float,.home-page-shell .home-scroll-line::after{animation:none!important} }
 `
 
 const ease = [0.22, 1, 0.36, 1]
@@ -176,6 +180,20 @@ function ServiceCarousel() {
 
 export default function Home() {
   const rootRef = useRef(null)
+  const heroVideoRef = useRef(null)
+
+  useEffect(() => {
+    const video = heroVideoRef.current
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    if (!video) return undefined
+    const syncPlayback = () => {
+      if (reducedMotion.matches) video.pause()
+      else video.play().catch(() => undefined)
+    }
+    syncPlayback()
+    reducedMotion.addEventListener('change', syncPlayback)
+    return () => reducedMotion.removeEventListener('change', syncPlayback)
+  }, [])
 
   useLayoutEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
@@ -222,18 +240,27 @@ export default function Home() {
     <style>{homeStyles}</style>
 
     <section id="home-hero" className="relative min-h-[100svh] scroll-mt-20 overflow-hidden">
-      <video className="home-hero-video absolute inset-0 h-full w-full object-cover will-change-transform" autoPlay muted loop playsInline preload="metadata" poster="https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=2200&q=84" aria-label="Cinematic smart city skyline">
-        <source src="/ems-city-hero-clean.mp4" type="video/mp4" />
+      <video ref={heroVideoRef} className="home-hero-video absolute inset-0 h-full w-full object-cover object-center will-change-transform" autoPlay muted loop playsInline preload="metadata" poster="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2200&q=84" aria-label="EMS smart infrastructure, SCADA and engineering systems" onLoadedMetadata={event => { event.currentTarget.currentTime = 15.5; if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) event.currentTarget.pause() }} onTimeUpdate={event => { if (event.currentTarget.currentTime >= 25.5) event.currentTarget.currentTime = 15.5 }}>
+        <source src="/ems-infrastructure-hero-optimized.mp4" type="video/mp4" />
       </video>
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,8,18,.94)_0%,rgba(2,8,18,.7)_48%,rgba(2,8,18,.34)_100%)]" />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#020812] via-transparent to-[#020812]/55" />
-      <div className="home-grid absolute inset-0 opacity-20 [mask-image:linear-gradient(to_right,black,transparent_70%)]" />
-      <div className="home-orbit absolute -right-[16vw] top-[18vh] rounded-full border border-cyan-300/10"><span className="absolute left-1/2 top-[-4px] h-2 w-2 rounded-full bg-cyan-300 shadow-[0_0_20px_#59dcff]" /></div>
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,8,18,.995)_0%,rgba(2,8,18,.94)_42%,rgba(2,8,18,.32)_100%)]" />
+      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(2,8,18,.5)_0%,transparent_48%,#020812_100%)]" />
+      <div className="home-grid absolute inset-0 opacity-[.16] [mask-image:linear-gradient(to_right,black,transparent_78%)]" />
+      <svg aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full opacity-25 [mask-image:linear-gradient(to_right,transparent_28%,black_70%,transparent)]">
+        <g fill="none" stroke="rgba(89,220,255,.58)" strokeWidth="1">
+          <path className="home-network-path" d="M620 710 L790 620 L930 665 L1080 510 L1260 565 L1435 410" />
+          <path className="home-network-path" style={{ animationDelay: '-3s' }} d="M720 250 L850 340 L1010 290 L1160 400 L1350 300" />
+          <path className="home-network-path" style={{ animationDelay: '-6s' }} d="M830 820 L960 735 L1120 770 L1250 650 L1440 700" />
+        </g>
+        <g fill="#59dcff">{[[790,620],[930,665],[1080,510],[1260,565],[850,340],[1010,290],[1160,400],[960,735],[1120,770],[1250,650]].map(([x,y], index) => <circle key={`${x}-${y}`} cx={x} cy={y} r={index % 3 === 0 ? 3 : 2} opacity={index % 2 ? .5 : .9} />)}</g>
+      </svg>
+      <div aria-hidden="true" className="pointer-events-none absolute inset-0">{[[68,22],[78,35],[86,18],[72,62],[91,54],[82,77],[64,83]].map(([left, top], index) => <span key={`${left}-${top}`} style={{ left: `${left}%`, top: `${top}%`, animationDelay: `${index * -.72}s` }} className="home-data-particle absolute h-1 w-1 rounded-full bg-cyan-200 shadow-[0_0_12px_#59dcff]" />)}</div>
+      <div aria-hidden="true" className="home-scan pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-transparent via-cyan-300/10 to-transparent blur-sm" />
 
       <div className="home-hero-content container-ems relative flex min-h-[100svh] items-center pt-28">
         <div className="max-w-[850px]">
           <div className="home-hero-support flex items-center gap-3"><span className="h-px w-9 bg-cyan-300" /><Eyebrow>Engineering Management Systems · Since 2016</Eyebrow></div>
-          <h1 className="home-hero-title mt-7 font-serif leading-[.89] tracking-[-.035em]">
+          <h1 className="home-hero-title mt-7 font-serif tracking-[-.035em]">
             <span className="home-hero-word"><span>Smart Engineering.</span></span>
             <span className="home-hero-word"><span>Smart Cities.</span></span>
             <span className="home-hero-word text-cyan-200"><span>Smart Future.</span></span>
