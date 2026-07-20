@@ -37,8 +37,8 @@ img, video, canvas, svg { max-width: 100%; }
 }
 
 ::selection {
-  background: #00C8FF;
-  color: #07182E;
+  background: #23C7FF;
+  color: #010B1F;
 }
 
 /* Scrollbar */
@@ -46,14 +46,14 @@ img, video, canvas, svg { max-width: 100%; }
   width: 10px;
 }
 ::-webkit-scrollbar-track {
-  background: #07182E;
+  background: #010B1F;
 }
 ::-webkit-scrollbar-thumb {
-  background: #0066FF;
+  background: #299BF0;
   border-radius: 999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #00C8FF;
+  background: #23C7FF;
 }
 
 /* Visible keyboard focus for accessibility */
@@ -62,7 +62,7 @@ button:focus-visible,
 input:focus-visible,
 textarea:focus-visible,
 select:focus-visible {
-  outline: 2px solid #00C8FF;
+  outline: 2px solid #23C7FF;
   outline-offset: 3px;
   border-radius: 4px;
 }
@@ -80,7 +80,7 @@ select:focus-visible {
 
 @layer base {
   body {
-    background-color: #07182E;
+    background-color: #010B1F;
   }
 }
 
@@ -99,7 +99,7 @@ select:focus-visible {
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-md bg-primary px-5 py-3 text-[13px] font-semibold text-white shadow-[0_8px_24px_rgba(0,102,255,.24)] transition-all duration-300 hover:bg-primary-600 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(0,200,255,.25)] active:translate-y-0;
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-primary to-cyan-500 px-5 py-3 text-[13px] font-semibold text-white shadow-[0_8px_24px_rgba(41,155,240,.26)] transition-all duration-300 hover:from-primary-400 hover:to-cyan-400 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(35,199,255,.28)] active:translate-y-0;
   }
 
   .btn-outline {
@@ -112,7 +112,7 @@ select:focus-visible {
   }
 
   .card-surface {
-    @apply relative rounded-md border border-white/[0.09] bg-[#0a1d36]/90 shadow-card backdrop-blur-sm transition-all duration-300;
+    @apply relative rounded-md border border-white/[0.09] bg-[#0B2548]/90 shadow-card backdrop-blur-sm transition-all duration-300;
   }
 
   .card-hover-glow {
@@ -120,8 +120,8 @@ select:focus-visible {
   }
 
   .grid-bg {
-    background-image: linear-gradient(rgba(0, 200, 255, 0.06) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(0, 200, 255, 0.06) 1px, transparent 1px);
+    background-image: linear-gradient(rgba(35, 199, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(35, 199, 255, 0.07) 1px, transparent 1px);
     background-size: 44px 44px;
   }
 }

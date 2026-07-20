@@ -34,7 +34,7 @@ export default function ServiceDetails() {
   const Icon = service.icon
 
   return (
-    <main className="overflow-hidden bg-[#061326] text-white">
+    <main className="overflow-hidden bg-[#010B1F] text-white">
       <section ref={heroRef} className="relative flex min-h-[760px] items-end overflow-hidden pb-20 pt-28 md:min-h-[860px] md:pb-28">
         <motion.img style={{ y: heroY }} initial={{ scale: 1.1 }} animate={{ scale: 1 }} transition={{ duration: 1.8 }} src={service.image} alt="" className="absolute -inset-y-[12%] inset-x-0 h-[124%] w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#040d1a]/95 via-[#061326]/75 to-[#061326]/20" />
@@ -66,7 +66,7 @@ export default function ServiceDetails() {
 
       <section className="section-padding border-y border-white/10 bg-[#091c34]">
         <div className="container-ems"><p className="text-xs uppercase tracking-[.3em] text-cyan-300">Solutions we provide</p><h2 className="mt-4 font-serif text-3xl md:text-4xl">Specialized capabilities</h2>
-          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">{service.capabilities.map((cap, i) => <motion.article key={cap} custom={i} variants={reveal} initial="hidden" whileInView="show" viewport={{ once: true }} whileHover={{ y: -8 }} className="group relative min-h-[360px] overflow-hidden rounded-sm border border-white/10 bg-[#061326]"><img src={i === 0 ? service.image : gallery[(i - 1) % gallery.length]} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110" /><div className="absolute inset-0 bg-gradient-to-t from-[#040d1a] via-[#061326]/75 to-[#061326]/20" /><div className="absolute inset-x-0 bottom-0 p-7"><HiOutlineCpuChip className="h-8 w-8 text-cyan-300 transition group-hover:drop-shadow-[0_0_10px_#00c8ff]" /><h3 className="mt-6 font-serif text-2xl">{cap}</h3><p className="mt-3 text-sm leading-6 text-slate-300">Designed, integrated, and validated by EMS specialists for demanding operational environments.</p></div><span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-cyan-300 transition-transform duration-500 group-hover:scale-x-100" /></motion.article>)}</div>
+          <div className="mt-12 grid gap-5 md:grid-cols-2 lg:grid-cols-4">{service.capabilities.map((cap, i) => <motion.article key={cap} custom={i} variants={reveal} initial="hidden" whileInView="show" viewport={{ once: true }} whileHover={{ y: -8 }} className="group relative min-h-[360px] overflow-hidden rounded-sm border border-white/10 bg-[#061326]"><img src={i === 0 ? service.image : gallery[(i - 1) % gallery.length]} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover transition duration-700 group-hover:scale-110" /><div className="absolute inset-0 bg-gradient-to-t from-[#040d1a] via-[#061326]/75 to-[#061326]/20" /><div className="absolute inset-x-0 bottom-0 p-7"><HiOutlineCpuChip className="h-8 w-8 text-cyan-300 transition group-hover:drop-shadow-[0_0_10px_#23C7FF]" /><h3 className="mt-6 font-serif text-2xl">{cap}</h3><p className="mt-3 text-sm leading-6 text-slate-300">Designed, integrated, and validated by EMS specialists for demanding operational environments.</p></div><span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-cyan-300 transition-transform duration-500 group-hover:scale-x-100" /></motion.article>)}</div>
         </div>
       </section>
 

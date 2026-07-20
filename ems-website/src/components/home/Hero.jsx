@@ -59,7 +59,7 @@ export default function Hero() {
               key={i}
               d={d}
               fill="none"
-              stroke="#00C8FF"
+              stroke="#23C7FF"
               strokeWidth="1"
               strokeDasharray="5 7"
               strokeOpacity="0.4"

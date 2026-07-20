@@ -4,7 +4,7 @@ import { HiOutlineArrowLeft } from 'react-icons/hi2'
 
 export default function NotFound() {
   return (
-    <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-navy-800">
+    <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-[#010B1F]">
       <div className="absolute inset-0 grid-bg opacity-40" />
       <div className="absolute inset-0 bg-radial-glow" />
       <div className="container-ems relative text-center">

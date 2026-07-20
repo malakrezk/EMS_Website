@@ -7,7 +7,7 @@ export default function Layout() {
   useScrollToTop()
 
   return (
-    <div className="flex min-h-screen flex-col bg-surface">
+    <div className="flex min-h-screen flex-col bg-[#010B1F]">
       <Navbar />
       <main className="flex-1">
         <Outlet />

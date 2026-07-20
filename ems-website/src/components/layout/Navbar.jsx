@@ -52,7 +52,7 @@ export default function Navbar() {
             alt="EMS Engineering Management Systems"
             width="331"
             height="101"
-            className={cn('h-auto w-[clamp(150px,15vw,210px)] max-w-full object-contain object-left transition-all duration-500', scrolled ? 'max-h-[46px]' : 'max-h-[54px]')}
+            className="-ml-[20px] h-auto w-[220px] max-w-full object-contain object-left transition-all duration-500"
           />
         </Link>
 

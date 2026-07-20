@@ -81,7 +81,7 @@ export default function About() {
     pointerYInput.set(((event.clientY - bounds.top) / bounds.height - .5) * 12)
   }
 
-  return <main ref={pageRef} className="overflow-hidden bg-[#030a13] text-white">
+  return <main ref={pageRef} className="overflow-hidden bg-[#010B1F] text-white">
     <section onPointerMove={onPointerMove} onPointerLeave={() => { pointerXInput.set(0); pointerYInput.set(0) }} className="relative min-h-[720px] overflow-hidden pt-24 lg:min-h-[92vh]">
       <motion.img style={{ x: pointerX, y: pointerY }} initial={{ scale: 1.12 }} animate={{ scale: 1.04 }} transition={{ duration: 2.2, ease: [0.22, 1, 0.36, 1] }} src={images.hero} alt="Modern smart city skyline" className="absolute -inset-6 h-[calc(100%+3rem)] w-[calc(100%+3rem)] object-cover" />
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(3,10,19,.94)_0%,rgba(4,17,34,.72)_56%,rgba(4,17,34,.58)_100%)]" /><div className="absolute inset-0 bg-gradient-to-t from-[#030a13] via-transparent to-[#030a13]/35" /><div className="absolute inset-0 opacity-25 [background-image:linear-gradient(rgba(67,211,255,.08)_1px,transparent_1px),linear-gradient(90deg,rgba(67,211,255,.08)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:linear-gradient(to_right,black,transparent_88%)]" />

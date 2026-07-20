@@ -27,7 +27,7 @@ export default function ContactSection() {
   }
 
   return (
-    <section id="contact" className="section-padding relative overflow-hidden bg-[#061326]">
+    <section id="contact" className="section-padding relative overflow-hidden bg-[#010B1F]">
       <div className="absolute right-0 top-0 h-96 w-96 rounded-full bg-cyan-400/5 blur-3xl" />
       <div className="container-ems">
         <SectionHeading

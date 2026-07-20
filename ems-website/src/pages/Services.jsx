@@ -77,7 +77,7 @@ export default function Services() {
     pointer.set((.5 - (event.clientX - bounds.left) / bounds.width) * 65)
   }
 
-  return <main className="overflow-hidden bg-[#030a13] text-white">
+  return <main className="overflow-hidden bg-[#010B1F] text-white">
     <section ref={sectionRef} onPointerMove={onPointerMove} onPointerLeave={() => pointer.set(0)} className="relative mx-[clamp(1rem,2.2vw,2.75rem)] my-10 hidden h-[min(82vh,760px)] min-h-[620px] overflow-hidden rounded-[28px] border border-white/10 pt-16 lg:block">
       <AnimatePresence mode="popLayout"><motion.img key={selected.id} src={selected.image} alt="" initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: .18, scale: 1 }} exit={{ opacity: 0 }} transition={{ duration: .75 }} className="absolute inset-0 h-full w-full object-cover" /></AnimatePresence>
       <div className="absolute inset-0 bg-gradient-to-r from-[#030a13] via-[#030a13]/92 to-[#061326]/55" /><div className="absolute inset-0 grid-bg opacity-20" /><div className="absolute right-[10%] top-[14%] h-80 w-80 rounded-full bg-blue-500/10 blur-[110px]" />
