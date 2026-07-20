@@ -316,8 +316,8 @@ export default function Home() {
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end"><SectionTitle eyebrow="02 / Intelligent solutions" title="From physical systems to operational intelligence." text="EMS connects control, data and engineering context so teams can see more clearly and operate with confidence." /><Link to="/solutions" className="home-reveal inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">Explore all solutions <HiOutlineArrowRight /></Link></div>
         <div className="mt-14 grid auto-rows-[minmax(270px,1fr)] gap-4 md:grid-cols-2 lg:grid-cols-3">
           {solutionCards.map((solution, index) => <motion.article key={solution.title} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .08, ease }} className={`home-solution-card group relative isolate overflow-hidden rounded-2xl border border-white/10 bg-[#07182e] ${index === 0 || index === 5 ? 'lg:col-span-2' : ''}`}>
-            <img src={solution.image} alt={solution.title} loading="lazy" className="home-parallax-image absolute inset-0 -z-10 h-[116%] w-full object-cover opacity-55 transition duration-[1200ms] group-hover:scale-105 group-hover:opacity-70" />
-            <div className="absolute inset-0 -z-10 bg-gradient-to-t from-[#030a13] via-[#061326]/35 to-transparent" />
+            <img src={solution.image} alt={solution.title} loading="lazy" className="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-80 transition duration-[1200ms] group-hover:scale-105 group-hover:opacity-95" />
+            <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(1,11,31,.18)_0%,rgba(1,11,31,.52)_55%,rgba(1,11,31,.94)_100%)]" />
             <div className="home-solution-content flex h-full min-h-[290px] flex-col justify-end">
               <p className="font-mono text-[9px] uppercase tracking-[.25em] text-[#299BF0]">{String(index + 1).padStart(2, '0')} · {solution.label}</p>
               <h3 className="home-solution-title mt-3 font-serif leading-none">{solution.title}</h3>
@@ -332,18 +332,23 @@ export default function Home() {
     <section id="home-case-studies" className="home-major-section relative scroll-mt-20 bg-[#010B1F]">
       <div className="container-ems">
         <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end"><SectionTitle eyebrow="03 / Case studies" title="Engineering outcomes, made visible." text="Selected EMS applications show how complex infrastructure becomes a clearer, connected operating environment." /><Link to="/projects" className="home-reveal inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">View all case studies <HiOutlineArrowRight /></Link></div>
-        <div className="mt-14 space-y-6">
-          {projects.slice(0, 3).map((project, index) => <motion.article key={project.id} initial={{ opacity: 0, y: 42 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-100px' }} transition={{ duration: .9, ease }} className="group mx-auto grid w-full max-w-[1450px] overflow-hidden rounded-2xl border border-white/10 bg-[#071326] lg:min-h-[460px] lg:grid-cols-2">
-            <div className={`relative min-h-[300px] overflow-hidden ${index % 2 ? 'lg:order-2' : ''}`}><img src={index === 0 ? 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1800&q=84' : project.image} alt={project.name} loading="lazy" className="home-parallax-image absolute inset-0 h-[116%] w-full object-cover transition duration-[1400ms] group-hover:scale-[1.04]" /><div className="absolute inset-0 bg-gradient-to-t from-[#061326]/75 via-transparent to-transparent lg:bg-gradient-to-r" /><div className="absolute bottom-6 left-6 rounded-full border border-white/15 bg-[#061326]/70 px-4 py-2 font-mono text-[8px] uppercase tracking-[.2em] text-[#299BF0] backdrop-blur-xl">{project.industry}</div></div>
-            <div className={`home-case-content flex flex-col justify-center ${index % 2 ? 'lg:order-1' : ''}`}>
-              <p className="font-mono text-[9px] uppercase tracking-[.26em] text-slate-500">Case study {String(index + 1).padStart(2, '0')}</p>
-              <h3 className="home-case-title mt-4 font-serif leading-[1.02]">{project.name}</h3>
-              <div className="mt-7 grid gap-5 border-y border-white/10 py-6 sm:grid-cols-3 lg:grid-cols-1 xl:grid-cols-3">
-                <div><p className="text-[9px] uppercase tracking-[.2em] text-[#299BF0]">Challenge</p><p className="mt-2 line-clamp-3 text-[11px] leading-5 text-slate-400">{project.challenge}</p></div>
-                <div><p className="text-[9px] uppercase tracking-[.2em] text-[#299BF0]">Solution</p><p className="mt-2 line-clamp-3 text-[11px] leading-5 text-slate-400">{project.solution}</p></div>
-                <div><p className="text-[9px] uppercase tracking-[.2em] text-[#299BF0]">Outcome</p><p className="mt-2 text-[11px] leading-5 text-slate-400"><strong className="block font-serif text-2xl font-normal text-white">{project.results[0].value}</strong>{project.results[0].label}</p></div>
+        <div className="mx-auto mt-14 grid w-full max-w-[1450px] gap-5 md:grid-cols-2 xl:grid-cols-3">
+          {projects.map((project, index) => <motion.article key={project.id} initial={{ opacity: 0, y: 34 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .07, ease }} className="group flex min-h-[480px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#071326] transition duration-500 hover:-translate-y-1 hover:border-cyan-300/35">
+            <div className="relative aspect-video overflow-hidden">
+              {project.videoId
+                ? <iframe src={`https://www.youtube-nocookie.com/embed/${project.videoId}?rel=0`} title={`${project.name} project video`} loading="lazy" className="h-full w-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
+                : <><img src={project.image} alt={`${project.name} — ${project.location}`} loading="lazy" className="h-full w-full object-cover transition duration-[1200ms] group-hover:scale-[1.045]" /><div className="absolute inset-0 bg-gradient-to-t from-[#071326] via-[#071326]/10 to-transparent" /></>}
+              <span className="absolute bottom-4 left-5 rounded-full border border-white/15 bg-[#061326]/75 px-3 py-1.5 font-mono text-[8px] uppercase tracking-[.18em] text-[#299BF0] backdrop-blur-xl">{project.industry}</span>
+            </div>
+            <div className="flex flex-1 flex-col p-5 sm:p-6">
+              <p className="font-mono text-[9px] uppercase tracking-[.24em] text-slate-500">Case study {String(index + 1).padStart(2, '0')}</p>
+              <h3 className="mt-4 font-serif text-[clamp(1.8rem,2.6vw,2.65rem)] leading-[1.04] text-white">{project.name}</h3>
+              <p className="mt-3 text-xs font-semibold text-[#23C7FF]">{project.location}</p>
+              <p className="mt-5 text-[13px] leading-6 text-slate-400">{project.description}</p>
+              <div className="mt-6 space-y-2 border-t border-white/10 pt-5">
+                {project.highlights.map(highlight => <p key={highlight} className="text-xs font-semibold text-[#23C7FF]">{highlight}</p>)}
               </div>
-              <Link to={`/projects/${project.id}`} className="mt-7 inline-flex w-fit items-center gap-2 text-xs font-semibold text-white transition hover:gap-3 hover:text-[#299BF0]">Read the full story <HiOutlineArrowUpRight /></Link>
+              <Link to={`/projects/${project.id}`} className="mt-auto inline-flex w-fit items-center gap-2 pt-7 text-xs font-semibold text-white transition hover:gap-3 hover:text-[#299BF0]">Read the full story <HiOutlineArrowUpRight /></Link>
             </div>
           </motion.article>)}
         </div>
@@ -351,35 +356,37 @@ export default function Home() {
     </section>
 
     <section id="home-about" className="home-major-section relative scroll-mt-20 overflow-hidden border-t border-white/10 bg-[#061326]">
-      <div className="absolute right-0 top-0 h-[28rem] w-[28rem] rounded-full bg-blue-500/10 blur-[140px]" />
+      <div className="home-grid absolute inset-0 opacity-20 [mask-image:radial-gradient(circle_at_center,black,transparent_78%)]" />
+      <div className="absolute -left-40 bottom-0 h-[30rem] w-[30rem] rounded-full bg-primary/10 blur-[140px]" />
       <div className="container-ems relative">
-        <div className="grid gap-5 lg:grid-cols-[1.18fr_.82fr]">
-          <div className="home-about-image home-reveal group relative overflow-hidden rounded-2xl border border-white/10">
-            <img src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2200&q=86" alt="Intelligent commercial architecture" loading="lazy" className="home-parallax-image absolute inset-0 h-[116%] w-full object-cover transition duration-[1400ms] group-hover:scale-[1.035]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#020812] via-[#061326]/30 to-black/10" />
-            <div className="home-about-content absolute inset-x-0 bottom-0">
-              <Eyebrow>04 / About EMS</Eyebrow>
-              <h2 className="home-about-title mt-5 max-w-3xl font-serif leading-[.96] tracking-[-.025em]">Engineering the systems behind intelligent places.</h2>
-              <p className="mt-6 max-w-2xl text-sm leading-7 text-slate-300">Since 2016, EMS has brought MEP engineering, automation, SCADA and digital operations into one disciplined approach—helping modern infrastructure become safer, more efficient and easier to understand.</p>
-            </div>
-          </div>
+        <div className="home-reveal mx-auto max-w-4xl text-center">
+          <Eyebrow>04 / About</Eyebrow>
+          <h2 className="mt-5 font-serif text-[clamp(2rem,3.5vw,3.5rem)] leading-[1.05]">Meet the visionary behind EMS&apos;s innovative smart infrastructure solutions.</h2>
+        </div>
 
-          <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-1">
-            <div className="home-about-panel home-reveal rounded-2xl border border-white/10 bg-white/[.045] backdrop-blur-xl">
-              <p className="font-mono text-[9px] uppercase tracking-[.25em] text-[#299BF0]">Mission · Vision · Philosophy</p>
-              <div className="mt-7 space-y-6">
-                <div><h3 className="font-serif text-2xl">Build it right.</h3><p className="mt-2 text-[12px] leading-6 text-slate-400">Create reliable physical engineering as the foundation for intelligent operation.</p></div>
-                <div className="border-t border-white/10 pt-6"><h3 className="font-serif text-2xl">Make it visible.</h3><p className="mt-2 text-[12px] leading-6 text-slate-400">Connect systems and data so every facility is clearer to operate and improve.</p></div>
-                <div className="border-t border-white/10 pt-6"><h3 className="font-serif text-2xl">Think long term.</h3><p className="mt-2 text-[12px] leading-6 text-slate-400">Engineer for resilience, efficiency and the changing needs of modern infrastructure.</p></div>
-              </div>
+        <div className="mx-auto mt-10 grid w-full max-w-[1450px] gap-8 md:grid-cols-[.9fr_1.1fr] md:items-center lg:gap-12">
+          <article className="home-reveal flex flex-col justify-center px-1 py-5 sm:px-3 lg:px-5">
+            <div className="relative w-fit">
+              <img src="/ahmed-elzayat.jpeg" alt="Ahmed Elzayat, CEO and Founder of EMS" loading="lazy" className="h-44 w-44 rounded-full border-[3px] border-[#299BF0]/35 object-cover object-top shadow-[0_18px_55px_rgba(0,0,0,.35)] sm:h-48 sm:w-48" />
+              <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#299BF0] px-4 py-2 text-[10px] font-bold uppercase tracking-[.12em] text-white">CEO &amp; Founder</span>
             </div>
+            <p className="mt-8 font-mono text-[8px] uppercase tracking-[.22em] text-[#299BF0]">Executive leadership</p>
+            <h3 className="mt-2 font-serif text-[clamp(1.65rem,2.6vw,2.25rem)]">Eng. Ahmed El-Zayat</h3>
+            <p className="mt-4 max-w-xl text-[12px] leading-6 text-slate-300">A mechanical power engineer and business leader with two decades of experience across Egypt and GCC markets. Ahmed leads EMS in connecting rigorous engineering delivery with intelligent automation, digital transformation and sustainable facility operations.</p>
+            <div className="mt-6 flex flex-wrap gap-2">
+              <Link to="/about" className="inline-flex items-center gap-2 rounded-lg bg-[rgb(33,124,154)] px-4 py-2.5 text-[11px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#299BF0]">Read Full Bio <HiOutlineArrowRight /></Link>
+              <a href="https://eg.linkedin.com/in/ahmed-elzayat-a8325b41" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-[#299BF0]/60 px-4 py-2.5 text-[11px] font-semibold text-[#72E5FF] transition hover:-translate-y-0.5 hover:border-[#72E5FF] hover:bg-white/5">Connect on LinkedIn <HiOutlineArrowUpRight /></a>
+            </div>
+          </article>
 
-            <div className="home-reveal home-float rounded-2xl border border-cyan-300/20 bg-[#07182e]/90 p-5 shadow-[0_30px_80px_rgba(0,0,0,.35)] backdrop-blur-xl sm:p-6">
-              <div className="flex items-center gap-4"><img src="/ahmed-elzayat.jpeg" alt="Ahmed Elzayat, CEO and Founder of EMS" loading="lazy" className="h-20 w-20 rounded-xl object-cover object-top" /><div><p className="font-mono text-[8px] uppercase tracking-[.2em] text-[#299BF0]">Leadership preview</p><h3 className="mt-2 font-serif text-2xl">Ahmed Elzayat</h3><p className="mt-1 text-[10px] uppercase tracking-[.14em] text-slate-500">CEO &amp; Founder</p></div></div>
-              <blockquote className="mt-6 border-l border-cyan-300/40 pl-5 font-serif text-xl leading-relaxed text-slate-200">“Intelligent infrastructure begins with engineering discipline.”</blockquote>
-              <Link to="/about" className="mt-7 inline-flex items-center gap-2 rounded-lg bg-[#299BF0] px-5 py-3 text-xs font-semibold shadow-[0_12px_35px_rgba(41,155,240,.25)] transition hover:-translate-y-0.5 hover:bg-[#23C7FF]">Learn More <HiOutlineArrowRight /></Link>
+          <article className="home-reveal flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0B2548]/55 shadow-[0_24px_70px_rgba(0,0,0,.28)]">
+            <div className="p-[clamp(1.15rem,1.8vw,1.5rem)]">
+              <p className="font-mono text-[9px] uppercase tracking-[.24em] text-[#299BF0]">Featured Podcast</p>
+              <h3 className="mt-2 font-serif text-[clamp(1.45rem,2vw,1.8rem)]">Artificial intelligence and the future of daily life</h3>
+              <p className="mt-2 max-w-3xl text-[12px] leading-6 text-slate-300">Engineer Ahmed El-Zayat discusses the significance of artificial intelligence in enhancing and improving our daily lives in a special podcast episode.</p>
             </div>
-          </div>
+            <iframe title="Ahmed Elzayat featured podcast about artificial intelligence" src="https://www.youtube-nocookie.com/embed/_xLHsVvXjvE?rel=0" loading="lazy" className="aspect-[16/8.5] w-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
+          </article>
         </div>
       </div>
     </section>
