@@ -34,7 +34,7 @@ export default function ServiceDetails() {
   const Icon = service.icon
 
   return (
-    <main className="overflow-hidden bg-[#010B1F] text-white">
+    <main className="service-detail-page overflow-hidden bg-[#010B1F] text-white">
       <section ref={heroRef} className="relative flex min-h-[760px] items-end overflow-hidden pb-20 pt-28 md:min-h-[860px] md:pb-28">
         <motion.img style={{ y: heroY }} initial={{ scale: 1.1 }} animate={{ scale: 1 }} transition={{ duration: 1.8 }} src={service.image} alt="" className="absolute -inset-y-[12%] inset-x-0 h-[124%] w-full object-cover" />
         <div className="absolute inset-0 bg-gradient-to-r from-[#040d1a]/95 via-[#061326]/75 to-[#061326]/20" />

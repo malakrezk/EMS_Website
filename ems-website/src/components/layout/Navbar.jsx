@@ -15,6 +15,7 @@ const links = [
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
+  const [pastHomeHero, setPastHomeHero] = useState(false)
   const location = useLocation()
 
   useEffect(() => {
@@ -29,19 +30,28 @@ export default function Navbar() {
   }, [location.pathname])
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 24)
+    const onScroll = () => {
+      setScrolled(window.scrollY > 24)
+      const servicesSection = document.getElementById('home-services')
+      const servicesTop = servicesSection?.offsetTop ?? window.innerHeight
+      setPastHomeHero(location.pathname === '/' && window.scrollY >= servicesTop - 90)
+    }
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [])
+  }, [location.pathname])
 
   return (
     <header
       className={cn(
         'fixed left-0 right-0 top-0 z-50 transition-all duration-500',
-        scrolled || open
-          ? 'border-b border-white/10 bg-[#061326]/90 shadow-[0_10px_28px_rgba(3,13,28,0.25)] backdrop-blur-xl'
-          : 'border-b border-transparent bg-gradient-to-b from-[#061326]/75 to-transparent',
+        open
+          ? 'border-b border-white/10 bg-[#061326]/95 shadow-[0_10px_28px_rgba(3,13,28,0.25)] backdrop-blur-xl'
+          : pastHomeHero
+            ? 'border-b border-transparent bg-transparent shadow-none backdrop-blur-none'
+            : scrolled
+              ? 'border-b border-white/10 bg-[#061326]/90 shadow-[0_10px_28px_rgba(3,13,28,0.25)] backdrop-blur-xl'
+              : 'border-b border-transparent bg-gradient-to-b from-[#061326]/75 to-transparent',
         open && 'shadow-lg'
       )}
     >

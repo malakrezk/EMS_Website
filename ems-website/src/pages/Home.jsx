@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom'
 import { AnimatePresence, motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
-import Lenis from 'lenis'
 import {
   HiOutlineArrowDown, HiOutlineArrowLeft, HiOutlineArrowRight,
-  HiOutlineArrowUpRight, HiOutlineCheck, HiOutlineCheckBadge,
-  HiOutlineGlobeAlt, HiOutlinePlay, HiOutlineShieldCheck,
+  HiOutlineArrowUpRight, HiOutlineBuildingOffice2, HiOutlineCheck, HiOutlineCheckBadge,
+  HiOutlineEye, HiOutlineGlobeAlt, HiOutlinePlay, HiOutlineShieldCheck, HiOutlineXMark,
 } from 'react-icons/hi2'
 import { servicesShowcase } from '../data/servicesShowcase'
 import { projects } from '../data/projects'
+import { partners } from '../data/partners'
 
 gsap.registerPlugin(ScrollTrigger)
 
@@ -37,20 +37,21 @@ const homeStyles = `
   .home-page-shell #home-hero .home-hero-trust-item { transition:transform .25s ease,color .25s ease; }
   .home-page-shell #home-hero .home-hero-trust-item:hover { transform:translateY(-2px);color:#fff; }
   .home-page-shell .home-section-title { font-size:clamp(2.35rem,5vw,5rem); }
-  .home-page-shell #home-services .home-section-title { font-size:clamp(2rem,4vw,4.25rem); }
-  .home-page-shell #home-solutions .home-section-title { font-size:clamp(2rem,4vw,4.25rem); }
-  .home-page-shell #home-case-studies .home-section-title { font-size:clamp(2rem,4vw,4.25rem); }
+  .home-page-shell #home-services .home-section-title { font-size:clamp(1.9rem,3.5vw,3.7rem); }
+  .home-page-shell #home-solutions .home-section-title { font-size:clamp(1.9rem,3.5vw,3.7rem); }
+  .home-page-shell #home-case-studies .home-section-title { font-size:clamp(1.85rem,3vw,3.25rem); }
+  .home-page-shell #home-case-studies { padding-block:clamp(3.5rem,6vw,5.5rem); }
   .home-page-shell .home-section-copy { font-size:clamp(.86rem,1.2vw,1rem); }
   .home-page-shell #home-services .home-section-copy { color:rgb(86,170,198); }
   .home-page-shell #home-solutions .home-section-copy { color:rgb(86,170,198); }
   .home-page-shell #home-case-studies .home-section-copy { color:rgb(86,170,198); }
-  .home-page-shell .home-services-section { padding-block:clamp(5.5rem,9vw,8.5rem); }
-  .home-page-shell .home-carousel-stage { height:clamp(380px,42vw,480px); }
-  .home-page-shell .home-service-card { height:clamp(350px,38vw,420px);width:min(66vw,550px); }
-  .home-page-shell .home-service-content { padding:clamp(1.35rem,4vw,2.5rem); }
-  .home-page-shell .home-service-title { font-size:clamp(2rem,5vw,4.4rem); }
+  .home-page-shell .home-services-section { padding-block:clamp(3.75rem,6vw,6rem); }
+  .home-page-shell .home-carousel-stage { height:clamp(330px,40vw,420px); }
+  .home-page-shell .home-service-card { height:clamp(310px,35vw,380px);width:min(62vw,500px); }
+  .home-page-shell .home-service-content { padding:clamp(1.15rem,3vw,2rem); }
+  .home-page-shell .home-service-title { font-size:clamp(1.75rem,4.2vw,3.5rem); }
   .home-page-shell .home-hero-content { padding-bottom:clamp(4rem,8vw,7rem); }
-  .home-page-shell .home-major-section { padding-block:clamp(6rem,11vw,10rem); }
+  .home-page-shell .home-major-section { padding-block:clamp(4.5rem,8vw,7.5rem); }
   .home-page-shell .home-solution-content { padding:clamp(1.4rem,3vw,2.25rem); }
   .home-page-shell .home-solution-title { font-size:clamp(1.8rem,3.2vw,3.1rem); }
   .home-page-shell .home-case-content { padding:clamp(1.6rem,5vw,4.5rem); }
@@ -59,6 +60,9 @@ const homeStyles = `
   .home-page-shell .home-about-content { padding:clamp(1.7rem,5vw,4rem); }
   .home-page-shell .home-about-title { font-size:clamp(2.5rem,5.5vw,5.5rem); }
   .home-page-shell .home-about-panel { padding:clamp(1.6rem,4vw,2.6rem); }
+  .home-page-shell #home-about { padding-block:clamp(4rem,6.5vw,6.5rem); }
+  .home-page-shell #home-about .home-about-intro > p:first-child,
+  .home-page-shell :is(#home-services,#home-solutions,#home-case-studies) .home-section-heading > p:first-child { font-size:clamp(1.25rem,2.2vw,1.8rem);font-weight:800;letter-spacing:.18em; }
   .home-page-shell .home-scroll-line::after { content:'';position:absolute;inset:0;background:#23C7FF;transform:translateY(-100%);animation:homeScrollLine 2.2s cubic-bezier(.77,0,.18,1) infinite; }
   .home-page-shell .home-network-path { stroke-dasharray:7 14;animation:homeNetworkFlow 9s linear infinite; }
   .home-page-shell .home-data-particle { animation:homeDataFloat 5s ease-in-out infinite; }
@@ -78,19 +82,26 @@ const homeStyles = `
   @keyframes homeScan { 0%,18%{transform:translateY(-120%);opacity:0} 28%{opacity:.28} 72%{opacity:.12} 82%,100%{transform:translateY(120%);opacity:0} }
   @keyframes homeFloat { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-9px,0)} }
   @media (hover:none) { .home-page-shell .home-solution-description { opacity:1;transform:none; } }
-  @media (max-width:767px) { .home-page-shell .home-hero-title{font-size:clamp(2.45rem,12vw,3.45rem)}.home-page-shell .home-hero-content{padding-top:6rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none} }
+  @media (max-width:767px) { .home-page-shell .home-hero-title{font-size:clamp(2.15rem,11vw,3.1rem)}.home-page-shell .home-hero-content{padding-top:6rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-service-card{height:350px;width:min(88vw,440px)}.home-page-shell .home-carousel-stage{height:380px}.home-page-shell .home-service-title{font-size:clamp(1.65rem,9vw,2.6rem)} }
   @media (max-width:639px) { .home-page-shell #home-hero .home-hero-trust-items{align-items:flex-start;flex-direction:column}.home-page-shell #home-hero .home-hero-trust-separator{display:none} }
+  @media (max-height:850px) and (min-width:1024px) { .home-page-shell .home-services-section{padding-block:3rem}.home-page-shell .home-carousel-stage{height:350px;margin-top:2rem}.home-page-shell .home-service-card{height:330px;width:min(56vw,470px)}.home-page-shell .home-service-content{padding:1.15rem}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-service-title{font-size:clamp(1.8rem,3.5vw,3rem)}.home-page-shell .home-section-copy{margin-top:1rem}.home-page-shell .home-major-section{padding-block:4.5rem} }
   @media (prefers-reduced-motion: reduce) { .home-page-shell .home-network-path,.home-page-shell .home-data-particle,.home-page-shell .home-scan,.home-page-shell .home-float,.home-page-shell .home-scroll-line::after{animation:none!important}.home-page-shell #home-hero .home-hero-trust-item{transition:none!important} }
 `
 
 const ease = [0.22, 1, 0.36, 1]
+const aboutMilestones = [
+  ['Founded in UAE', 'Established as a premier MEP contracting company in the United Arab Emirates.', HiOutlineBuildingOffice2],
+  ['Expansion to Egypt', 'Opened operations in Egypt to serve the broader Middle East market.', HiOutlineGlobeAlt],
+  ['Siemens Certified Partner', 'Achieved official Siemens partnership for BMS and automation systems.', HiOutlineCheckBadge],
+]
+const featuredPartners = partners.filter(partner => ['siemens', 'cisco', 'aws', 'oracle'].includes(partner.id))
 
 function Eyebrow({ children }) {
-  return <p className="font-mono text-[10px] font-semibold uppercase tracking-[.3em] text-[#299BF0]">{children}</p>
+  return <p className="font-mono text-[clamp(.72rem,1vw,.9rem)] font-semibold uppercase tracking-[.3em] text-[#299BF0]">{children}</p>
 }
 
 function SectionTitle({ eyebrow, title, text, align = 'left' }) {
-  return <div className={`home-reveal max-w-3xl ${align === 'center' ? 'mx-auto text-center' : ''}`}>
+  return <div className={`home-reveal home-section-heading max-w-3xl ${align === 'center' ? 'mx-auto text-center' : ''}`}>
     <Eyebrow>{eyebrow}</Eyebrow>
     <h2 className="home-section-title mt-5 font-serif leading-[.98] tracking-[-.025em] text-white">{title}</h2>
     {text && <p className={`home-section-copy mt-6 max-w-2xl leading-7 text-slate-400 ${align === 'center' ? 'mx-auto' : ''}`}>{text}</p>}
@@ -118,9 +129,10 @@ function ServiceCarousel() {
     return difference
   }
   const gap = viewportWidth < 640 ? viewportWidth * .68 : Math.min(viewportWidth * .31, 470)
+  const cardWidth = viewportWidth < 768 ? Math.min(viewportWidth * .88, 440) : Math.min(viewportWidth * .62, 500)
 
   const onWheel = event => {
-    const horizontalIntent = event.shiftKey || Math.abs(event.deltaX) > Math.abs(event.deltaY) * .7
+    const horizontalIntent = event.shiftKey || (Math.abs(event.deltaX) > 12 && Math.abs(event.deltaX) > Math.abs(event.deltaY) * 1.5)
     if (!horizontalIntent || wheelLocked.current) return
     event.preventDefault()
     const amount = event.deltaX || event.deltaY
@@ -137,7 +149,7 @@ function ServiceCarousel() {
     <div className="home-grid absolute inset-0 opacity-30 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)]" />
 
     <div className="container-ems relative">
-      <SectionTitle eyebrow="01 / Engineering services" title="Every discipline. One connected system." text="Explore EMS capabilities without interrupting your journey. Drag, swipe, use the arrows, or move horizontally with your trackpad—the page always remains free to scroll." align="center" />
+      <SectionTitle eyebrow="Engineering services" title="Every discipline. One connected system." text="Explore EMS capabilities without interrupting your journey. Drag, swipe, use the arrows, or move horizontally with your trackpad—the page always remains free to scroll." align="center" />
 
       <div onWheel={onWheel} onKeyDown={event => { if (event.key === 'ArrowRight') move(1); if (event.key === 'ArrowLeft') move(-1) }} tabIndex="0" aria-label="EMS engineering services carousel" className="home-carousel-stage relative mt-12 outline-none [perspective:1400px]">
         {servicesShowcase.map((service, index) => {
@@ -154,7 +166,7 @@ function ServiceCarousel() {
             onMouseEnter={() => !isActive && setActive(index)}
             onClick={() => !isActive && setActive(index)}
             initial={false}
-            animate={{ x: position * gap - Math.min(viewportWidth * .66, 550) / 2, scale: isActive ? 1 : Math.abs(position) === 1 ? .84 : .7, rotateY: position * -9, opacity: Math.abs(position) === 2 ? .22 : isActive ? 1 : .52, z: isActive ? 80 : -Math.abs(position) * 90 }}
+            animate={{ x: position * gap - cardWidth / 2, scale: isActive ? 1 : Math.abs(position) === 1 ? .84 : .7, rotateY: position * -9, opacity: Math.abs(position) === 2 ? .22 : isActive ? 1 : .52, z: isActive ? 80 : -Math.abs(position) * 90 }}
             transition={{ type: 'spring', stiffness: 92, damping: 22, mass: 1.05 }}
             style={{ zIndex: 10 - Math.abs(position), pointerEvents: Math.abs(position) <= 1 ? 'auto' : 'none', cursor: isActive ? 'grab' : 'pointer' }}
             className={`home-service-card group absolute left-1/2 top-0 overflow-hidden rounded-[1.4rem] border bg-[#061326] shadow-[0_40px_120px_rgba(0,0,0,.65)] will-change-transform ${isActive ? 'border-cyan-300/45' : 'border-white/15 blur-[1px]'}`}
@@ -192,6 +204,8 @@ function ServiceCarousel() {
 export default function Home() {
   const rootRef = useRef(null)
   const heroVideoRef = useRef(null)
+  const [activeVideo, setActiveVideo] = useState(null)
+  const [partnersUnderlineVisible, setPartnersUnderlineVisible] = useState(false)
 
   useEffect(() => {
     const video = heroVideoRef.current
@@ -206,13 +220,25 @@ export default function Home() {
     return () => reducedMotion.removeEventListener('change', syncPlayback)
   }, [])
 
+  useEffect(() => {
+    if (!activeVideo) return undefined
+    const previousBodyOverflow = document.body.style.overflow
+    const previousHtmlOverflow = document.documentElement.style.overflow
+    const closeOnEscape = event => {
+      if (event.key === 'Escape') setActiveVideo(null)
+    }
+    document.body.style.overflow = 'hidden'
+    document.documentElement.style.overflow = 'hidden'
+    window.addEventListener('keydown', closeOnEscape)
+    return () => {
+      document.body.style.overflow = previousBodyOverflow
+      document.documentElement.style.overflow = previousHtmlOverflow
+      window.removeEventListener('keydown', closeOnEscape)
+    }
+  }, [activeVideo])
+
   useLayoutEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    const lenis = new Lenis({ duration: 1.55, smoothWheel: true, wheelMultiplier: .78, touchMultiplier: 1.05, syncTouch: false })
-    let frame
-    const raf = time => { lenis.raf(time); frame = requestAnimationFrame(raf) }
-    frame = requestAnimationFrame(raf)
-    lenis.on('scroll', ScrollTrigger.update)
 
     const navigation = { '/': '#home-hero', '/services': '#home-services', '/solutions': '#home-solutions', '/projects': '#home-case-studies', '/about': '#home-about' }
     const handlers = []
@@ -222,7 +248,10 @@ export default function Home() {
       const handler = event => {
         if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
         event.preventDefault()
-        lenis.scrollTo(target, { offset: -72, duration: 1.6 })
+        const section = document.querySelector(target)
+        if (!section) return
+        const top = section.getBoundingClientRect().top + window.scrollY - 72
+        window.scrollTo({ top, behavior: reducedMotion ? 'auto' : 'smooth' })
       }
       anchor.addEventListener('click', handler)
       handlers.push([anchor, handler])
@@ -242,8 +271,6 @@ export default function Home() {
     return () => {
       handlers.forEach(([anchor, handler]) => anchor.removeEventListener('click', handler))
       context.revert()
-      cancelAnimationFrame(frame)
-      lenis.destroy()
     }
   }, [])
 
@@ -274,7 +301,7 @@ export default function Home() {
           <h1 className="home-hero-title mt-7 font-serif tracking-[-.035em]">
             <span className="home-hero-word"><span>Smart Engineering.</span></span>
             <span className="home-hero-word"><span>Smart Cities.</span></span>
-            <span className="home-hero-word text-[#299BF0]"><span>Smart Future.</span></span>
+            <span className="home-hero-word text-[rgb(86,170,198)] drop-shadow-[0_8px_28px_rgba(33,124,154,.18)]"><span>Smart Future.</span></span>
           </h1>
           <p className="home-hero-copy home-hero-support mt-7 max-w-2xl leading-7 text-slate-200">Leading MEP Contracting, Intelligent Automation, SCADA, BMS and Smart Infrastructure Solutions.</p>
           <div className="home-hero-support mt-8 flex flex-wrap gap-3">
@@ -313,12 +340,12 @@ export default function Home() {
       <div className="home-grid absolute inset-0 opacity-20 [mask-image:radial-gradient(circle_at_center,black,transparent_78%)]" />
       <div className="absolute -left-48 top-1/3 h-96 w-96 rounded-full bg-cyan-500/10 blur-[130px]" />
       <div className="container-ems relative">
-        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end"><SectionTitle eyebrow="02 / Intelligent solutions" title="From physical systems to operational intelligence." text="EMS connects control, data and engineering context so teams can see more clearly and operate with confidence." /><Link to="/solutions" className="home-reveal inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">Explore all solutions <HiOutlineArrowRight /></Link></div>
-        <div className="mt-14 grid auto-rows-[minmax(270px,1fr)] gap-4 md:grid-cols-2 lg:grid-cols-3">
+        <div className="flex flex-col items-center text-center"><SectionTitle eyebrow="Solutions" title="From physical systems to operational intelligence." text="EMS connects control, data and engineering context so teams can see more clearly and operate with confidence." align="center" /><Link to="/solutions" className="home-reveal mt-6 inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">Explore all solutions <HiOutlineArrowRight /></Link></div>
+        <div className="mt-10 grid auto-rows-[minmax(235px,1fr)] gap-4 md:grid-cols-2 lg:grid-cols-3">
           {solutionCards.map((solution, index) => <motion.article key={solution.title} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .08, ease }} className={`home-solution-card group relative isolate overflow-hidden rounded-2xl border border-white/10 bg-[#07182e] ${index === 0 || index === 5 ? 'lg:col-span-2' : ''}`}>
             <img src={solution.image} alt={solution.title} loading="lazy" className="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-80 transition duration-[1200ms] group-hover:scale-105 group-hover:opacity-95" />
             <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(1,11,31,.18)_0%,rgba(1,11,31,.52)_55%,rgba(1,11,31,.94)_100%)]" />
-            <div className="home-solution-content flex h-full min-h-[290px] flex-col justify-end">
+            <div className="home-solution-content flex h-full min-h-[250px] flex-col justify-end">
               <p className="font-mono text-[9px] uppercase tracking-[.25em] text-[#299BF0]">{String(index + 1).padStart(2, '0')} · {solution.label}</p>
               <h3 className="home-solution-title mt-3 font-serif leading-none">{solution.title}</h3>
               <p className="home-solution-description mt-4 max-w-md translate-y-3 text-[13px] leading-6 text-slate-300 opacity-0 transition duration-500 group-hover:translate-y-0 group-hover:opacity-100 group-focus-within:translate-y-0 group-focus-within:opacity-100">{solution.text}</p>
@@ -331,64 +358,203 @@ export default function Home() {
 
     <section id="home-case-studies" className="home-major-section relative scroll-mt-20 bg-[#010B1F]">
       <div className="container-ems">
-        <div className="flex flex-col justify-between gap-8 lg:flex-row lg:items-end"><SectionTitle eyebrow="03 / Case studies" title="Engineering outcomes, made visible." text="Selected EMS applications show how complex infrastructure becomes a clearer, connected operating environment." /><Link to="/projects" className="home-reveal inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">View all case studies <HiOutlineArrowRight /></Link></div>
-        <div className="mx-auto mt-14 grid w-full max-w-[1450px] gap-5 md:grid-cols-2 xl:grid-cols-3">
-          {projects.map((project, index) => <motion.article key={project.id} initial={{ opacity: 0, y: 34 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .07, ease }} className="group flex min-h-[480px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#071326] transition duration-500 hover:-translate-y-1 hover:border-cyan-300/35">
-            <div className="relative aspect-video overflow-hidden">
-              {project.videoId
-                ? <iframe src={`https://www.youtube-nocookie.com/embed/${project.videoId}?rel=0`} title={`${project.name} project video`} loading="lazy" className="h-full w-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
-                : <><img src={project.image} alt={`${project.name} — ${project.location}`} loading="lazy" className="h-full w-full object-cover transition duration-[1200ms] group-hover:scale-[1.045]" /><div className="absolute inset-0 bg-gradient-to-t from-[#071326] via-[#071326]/10 to-transparent" /></>}
-              <span className="absolute bottom-4 left-5 rounded-full border border-white/15 bg-[#061326]/75 px-3 py-1.5 font-mono text-[8px] uppercase tracking-[.18em] text-[#299BF0] backdrop-blur-xl">{project.industry}</span>
+        <div className="flex flex-col items-center text-center"><SectionTitle eyebrow="Case studies" title="Engineering outcomes, made visible." text="Selected EMS applications show how complex infrastructure becomes a clearer, connected operating environment." align="center" /><Link to="/projects" className="home-reveal mt-6 inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">View all case studies <HiOutlineArrowRight /></Link></div>
+        <div className="mx-auto mt-8 grid w-full max-w-[1400px] gap-4 md:grid-cols-2 xl:grid-cols-3">
+          {projects.map((project, index) => <motion.article key={project.id} initial={{ opacity: 0, y: 34 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .07, ease }} className="group flex min-h-[380px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#071326] transition duration-500 hover:-translate-y-1 hover:border-cyan-300/35">
+            <div className="relative h-[clamp(175px,15vw,215px)] overflow-hidden border-b border-black bg-black">
+              {project.videoSrc
+                ? <button type="button" onClick={() => setActiveVideo(project)} aria-label={`Play ${project.name} video full screen`} className="group/video relative block h-full w-full overflow-hidden bg-black text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[#23C7FF]">
+                    <video
+                      key={`${project.videoSrc}-dashboard-preview`}
+                      src={project.videoSrc}
+                      preload="metadata"
+                      muted
+                      playsInline
+                      aria-hidden="true"
+                      onLoadedMetadata={event => {
+                        const video = event.currentTarget
+                        if (video.dataset.previewReady) return
+                        video.dataset.previewReady = 'true'
+                        video.currentTime = Number.isFinite(video.duration) ? Math.min(1, Math.max(.2, video.duration * .02)) : 1
+                      }}
+                      onSeeked={event => event.currentTarget.pause()}
+                      className="pointer-events-none absolute inset-x-0 top-1/2 h-[82%] w-full -translate-y-1/2 bg-black object-cover object-center"
+                    >
+                      Your browser does not support the video element.
+                    </video>
+                    <span className="absolute inset-0 bg-[#010B1F]/[.03] transition group-hover/video:bg-transparent" />
+                    <span onMouseEnter={() => setActiveVideo(project)} className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-[#010B1F]/80 text-white shadow-[0_12px_35px_rgba(0,0,0,.4)] backdrop-blur transition duration-300 group-hover/video:scale-110 group-hover/video:bg-[rgb(33,124,154)]"><HiOutlinePlay className="ml-0.5 h-6 w-6" /></span>
+                    <span className="absolute bottom-3 right-4 rounded-full bg-[#010B1F]/80 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[.16em] text-white/85 backdrop-blur">Open video</span>
+                  </button>
+                : project.videoId
+                  ? <iframe src={`https://www.youtube-nocookie.com/embed/${project.videoId}?rel=0`} title={`${project.name} project video`} loading="lazy" className="h-full w-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
+                  : <><img src={project.image} alt={`${project.name} — ${project.location}`} loading="lazy" className="h-full w-full object-cover transition duration-[1200ms] group-hover:scale-[1.045]" /><div className="absolute inset-0 bg-gradient-to-t from-[#071326] via-[#071326]/10 to-transparent" /></>}
+              {!project.videoSrc && !project.videoId && <span className="absolute bottom-4 left-5 rounded-full border border-white/15 bg-[#061326]/75 px-3 py-1.5 font-mono text-[8px] uppercase tracking-[.18em] text-[#299BF0] backdrop-blur-xl">{project.industry}</span>}
             </div>
-            <div className="flex flex-1 flex-col p-5 sm:p-6">
+            <div className="flex flex-1 flex-col p-4 sm:p-5">
               <p className="font-mono text-[9px] uppercase tracking-[.24em] text-slate-500">Case study {String(index + 1).padStart(2, '0')}</p>
-              <h3 className="mt-4 font-serif text-[clamp(1.8rem,2.6vw,2.65rem)] leading-[1.04] text-white">{project.name}</h3>
-              <p className="mt-3 text-xs font-semibold text-[#23C7FF]">{project.location}</p>
-              <p className="mt-5 text-[13px] leading-6 text-slate-400">{project.description}</p>
-              <div className="mt-6 space-y-2 border-t border-white/10 pt-5">
-                {project.highlights.map(highlight => <p key={highlight} className="text-xs font-semibold text-[#23C7FF]">{highlight}</p>)}
+              <h3 className="mt-3 font-serif text-[clamp(1.55rem,2.2vw,2.2rem)] leading-[1.04] text-white">{project.name}</h3>
+              <p className="mt-2 text-[11px] font-semibold text-[#23C7FF] sm:text-xs">{project.location}</p>
+              <p className="mt-3 text-[12px] leading-5 text-slate-400">{project.description}</p>
+              <div className="mt-4 space-y-1.5 border-t border-white/10 pt-4">
+                {project.highlights.map(highlight => <p key={highlight} className="text-[11px] font-semibold text-[#23C7FF]">{highlight}</p>)}
               </div>
-              <Link to={`/projects/${project.id}`} className="mt-auto inline-flex w-fit items-center gap-2 pt-7 text-xs font-semibold text-white transition hover:gap-3 hover:text-[#299BF0]">Read the full story <HiOutlineArrowUpRight /></Link>
+              <Link to={`/projects/${project.id}`} className="mt-auto inline-flex w-fit items-center gap-2 pt-5 text-[11px] font-semibold text-white transition hover:gap-3 hover:text-[#299BF0]">Read the full story <HiOutlineArrowUpRight /></Link>
             </div>
           </motion.article>)}
         </div>
       </div>
     </section>
 
-    <section id="home-about" className="home-major-section relative scroll-mt-20 overflow-hidden border-t border-white/10 bg-[#061326]">
-      <div className="home-grid absolute inset-0 opacity-20 [mask-image:radial-gradient(circle_at_center,black,transparent_78%)]" />
-      <div className="absolute -left-40 bottom-0 h-[30rem] w-[30rem] rounded-full bg-primary/10 blur-[140px]" />
+    <section id="home-about" className="home-major-section relative scroll-mt-20 overflow-hidden border-t border-white/10 bg-[#041126]">
+      <div className="home-grid absolute inset-0 opacity-[.12] [mask-image:radial-gradient(circle_at_50%_35%,black,transparent_74%)]" />
+      <div className="absolute -left-36 top-24 h-80 w-80 rounded-full bg-[#299BF0]/10 blur-[120px]" />
+      <div className="absolute -right-40 bottom-20 h-96 w-96 rounded-full bg-[rgb(33,124,154)]/10 blur-[150px]" />
+
       <div className="container-ems relative">
-        <div className="home-reveal mx-auto max-w-4xl text-center">
-          <Eyebrow>04 / About</Eyebrow>
-          <h2 className="mt-5 font-serif text-[clamp(2rem,3.5vw,3.5rem)] leading-[1.05]">Meet the visionary behind EMS&apos;s innovative smart infrastructure solutions.</h2>
+        <div className="mx-auto max-w-5xl text-center">
+          <div className="home-reveal home-about-intro">
+            <Eyebrow>About EMS</Eyebrow>
+            <p className="mx-auto mt-5 max-w-3xl text-[clamp(.9rem,1.3vw,1.08rem)] leading-7 text-slate-300">We are a leading provider of smart infrastructure solutions, leveraging IoT and AI to transform how organizations operate and manage their facilities.</p>
+          </div>
         </div>
 
-        <div className="mx-auto mt-10 grid w-full max-w-[1450px] gap-8 md:grid-cols-[.9fr_1.1fr] md:items-center lg:gap-12">
-          <article className="home-reveal flex flex-col justify-center px-1 py-5 sm:px-3 lg:px-5">
-            <div className="relative w-fit">
-              <img src="/ahmed-elzayat.jpeg" alt="Ahmed Elzayat, CEO and Founder of EMS" loading="lazy" className="h-44 w-44 rounded-full border-[3px] border-[#299BF0]/35 object-cover object-top shadow-[0_18px_55px_rgba(0,0,0,.35)] sm:h-48 sm:w-48" />
-              <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full bg-[#299BF0] px-4 py-2 text-[10px] font-bold uppercase tracking-[.12em] text-white">CEO &amp; Founder</span>
-            </div>
-            <p className="mt-8 font-mono text-[8px] uppercase tracking-[.22em] text-[#299BF0]">Executive leadership</p>
-            <h3 className="mt-2 font-serif text-[clamp(1.65rem,2.6vw,2.25rem)]">Eng. Ahmed El-Zayat</h3>
-            <p className="mt-4 max-w-xl text-[12px] leading-6 text-slate-300">A mechanical power engineer and business leader with two decades of experience across Egypt and GCC markets. Ahmed leads EMS in connecting rigorous engineering delivery with intelligent automation, digital transformation and sustainable facility operations.</p>
-            <div className="mt-6 flex flex-wrap gap-2">
-              <Link to="/about" className="inline-flex items-center gap-2 rounded-lg bg-[rgb(33,124,154)] px-4 py-2.5 text-[11px] font-semibold text-white transition hover:-translate-y-0.5 hover:bg-[#299BF0]">Read Full Bio <HiOutlineArrowRight /></Link>
-              <a href="https://eg.linkedin.com/in/ahmed-elzayat-a8325b41" target="_blank" rel="noreferrer" className="inline-flex items-center gap-2 rounded-lg border border-[#299BF0]/60 px-4 py-2.5 text-[11px] font-semibold text-[#72E5FF] transition hover:-translate-y-0.5 hover:border-[#72E5FF] hover:bg-white/5">Connect on LinkedIn <HiOutlineArrowUpRight /></a>
-            </div>
-          </article>
+        <div className="relative mx-auto mt-12 max-w-[1450px]">
+          <span className="absolute left-5 right-5 top-[19px] hidden h-px bg-gradient-to-r from-transparent via-[#299BF0]/55 to-transparent md:block" />
+          <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
+            {aboutMilestones.map(([title, text, Icon], index) => (
+              <motion.article key={title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} whileHover={{ y: -4 }} transition={{ duration: .55, delay: index * .08, ease }} className="group relative pt-0 md:pt-10">
+                <span className="relative z-10 mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-[#299BF0]/50 bg-[#041126] text-[#23C7FF] shadow-[0_0_25px_rgba(41,155,240,.2)] md:absolute md:left-0 md:top-0">
+                  <Icon aria-hidden="true" className="h-5 w-5 transition duration-300 group-hover:scale-110" />
+                </span>
+                <div className="h-full rounded-2xl bg-[#07182e]/80 p-6 transition duration-300 group-hover:bg-[#0B2548]/75">
+                  <p className="font-mono text-[8px] uppercase tracking-[.2em] text-slate-500">Milestone 0{index + 1}</p>
+                  <h3 className="mt-3 text-sm font-bold text-[#23C7FF]">{title}</h3>
+                  <p className="mt-2 text-[12px] leading-5 text-slate-400">{text}</p>
+                </div>
+              </motion.article>
+            ))}
+          </div>
+        </div>
 
-          <article className="home-reveal flex flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#0B2548]/55 shadow-[0_24px_70px_rgba(0,0,0,.28)]">
-            <div className="p-[clamp(1.15rem,1.8vw,1.5rem)]">
-              <p className="font-mono text-[9px] uppercase tracking-[.24em] text-[#299BF0]">Featured Podcast</p>
-              <h3 className="mt-2 font-serif text-[clamp(1.45rem,2vw,1.8rem)]">Artificial intelligence and the future of daily life</h3>
-              <p className="mt-2 max-w-3xl text-[12px] leading-6 text-slate-300">Engineer Ahmed El-Zayat discusses the significance of artificial intelligence in enhancing and improving our daily lives in a special podcast episode.</p>
+        <div className="mx-auto mt-10 grid max-w-[1450px] gap-6 lg:grid-cols-12 lg:gap-8">
+          <motion.article initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-60px' }} whileHover={{ y: -4 }} transition={{ duration: .6, ease }} className="group relative isolate overflow-hidden rounded-2xl border border-[#299BF0]/25 bg-[linear-gradient(135deg,#0B2548_0%,#07182e_72%)] p-6 lg:col-span-6">
+            <span className="absolute -right-2 -top-10 -z-10 font-serif text-[9rem] leading-none text-white/[.025]">01</span>
+            <div className="flex items-center justify-between">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#23C7FF]/25 bg-[#23C7FF]/10 text-[#23C7FF]"><HiOutlineCheckBadge className="h-6 w-6" /></span>
+              <span className="font-mono text-[8px] uppercase tracking-[.22em] text-slate-500">Our purpose</span>
             </div>
-            <iframe title="Ahmed Elzayat featured podcast about artificial intelligence" src="https://www.youtube-nocookie.com/embed/_xLHsVvXjvE?rel=0" loading="lazy" className="aspect-[16/8.5] w-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
-          </article>
+            <h3 className="mt-7 font-serif text-[clamp(1.7rem,2.5vw,2.35rem)]">Our Mission</h3>
+            <p className="mt-3 max-w-xl text-[13px] leading-6 text-slate-300">Analyze customer needs without compromising satisfaction—delivering economical, fast and high-quality solutions through full-scope MEP works and modern technologies.</p>
+            <Link to="/about" className="mt-5 inline-flex items-center gap-2 text-[11px] font-semibold text-[#23C7FF] transition hover:gap-3 hover:text-white">Read our story <HiOutlineArrowUpRight /></Link>
+          </motion.article>
+
+          <motion.article initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-60px' }} whileHover={{ y: -4 }} transition={{ duration: .6, ease }} className="group relative isolate overflow-hidden rounded-2xl border border-[#299BF0]/25 bg-[linear-gradient(135deg,#07182e_0%,#0B2548_100%)] p-6 lg:col-span-6">
+            <span className="absolute -right-2 -top-10 -z-10 font-serif text-[9rem] leading-none text-white/[.025]">02</span>
+            <div className="flex items-center justify-between">
+              <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#23C7FF]/25 bg-[#23C7FF]/10 text-[#23C7FF]"><HiOutlineEye className="h-6 w-6" /></span>
+              <span className="font-mono text-[8px] uppercase tracking-[.22em] text-slate-500">Our direction</span>
+            </div>
+            <h3 className="mt-7 font-serif text-[clamp(1.7rem,2.5vw,2.35rem)]">Our Vision</h3>
+            <p className="mt-3 max-w-xl text-[13px] leading-6 text-slate-300">Be a distinctive and independent MEP provider delivering modern, highly professional services across complete MEP requirements and the latest technologies.</p>
+            <Link to="/about" className="mt-5 inline-flex items-center gap-2 text-[11px] font-semibold text-[#23C7FF] transition hover:gap-3 hover:text-white">Explore our direction <HiOutlineArrowUpRight /></Link>
+          </motion.article>
+        </div>
+
+        <motion.article initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: .7, ease }} className="mx-auto mt-10 max-w-[1450px] overflow-hidden rounded-2xl border border-white/10 bg-[#07182e] shadow-[0_28px_80px_rgba(0,0,0,.24)]">
+          <div className="grid lg:grid-cols-[.92fr_1.08fr]">
+            <section className="grid border-b border-white/10 sm:grid-cols-[155px_1fr] lg:border-b-0 lg:border-r">
+              <div className="relative min-h-[250px] sm:min-h-[330px]">
+                <img src="/ahmed-elzayat.jpeg" alt="Ahmed Elzayat, CEO and Founder of EMS" loading="lazy" className="absolute inset-0 h-full w-full object-cover object-top" />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#07182e]/70 to-transparent sm:bg-gradient-to-r" />
+                <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-[#041126]/85 px-3 py-1.5 text-[8px] font-bold uppercase tracking-[.12em] text-white backdrop-blur">CEO &amp; Founder</span>
+              </div>
+              <div className="flex flex-col justify-center p-5 sm:p-6">
+                <p className="font-mono text-[8px] uppercase tracking-[.22em] text-[#299BF0]">Executive leadership</p>
+                <h3 className="mt-3 font-serif text-[clamp(1.7rem,2.4vw,2.2rem)]">Eng. Ahmed El-Zayat</h3>
+                <p className="mt-3 text-[12px] leading-5 text-slate-400">Two decades of engineering and business leadership across Egypt and GCC markets, connecting disciplined delivery with intelligent infrastructure.</p>
+                <div className="mt-5 flex flex-wrap gap-2">
+                  <Link to="/about" className="rounded-lg bg-[rgb(33,124,154)] px-3 py-2 text-[10px] font-semibold text-white transition hover:bg-[#299BF0]">Full biography</Link>
+                  <a href="https://eg.linkedin.com/in/ahmed-elzayat-a8325b41" target="_blank" rel="noreferrer" className="rounded-lg border border-white/15 px-3 py-2 text-[10px] font-semibold text-white transition hover:border-[#299BF0]">LinkedIn</a>
+                </div>
+              </div>
+            </section>
+
+            <section className="grid bg-[#0B2548]/45 md:grid-cols-[.8fr_1.2fr]">
+              <div className="flex flex-col justify-center p-5 sm:p-6">
+                <p className="font-mono text-[8px] uppercase tracking-[.24em] text-[#299BF0]">Featured Podcast</p>
+                <h3 className="mt-3 font-serif text-[clamp(1.5rem,2.3vw,2.05rem)] leading-tight">Artificial intelligence and the future of daily life</h3>
+                <p className="mt-3 text-[12px] leading-5 text-slate-400">Ahmed El-Zayat discusses how artificial intelligence can improve everyday life and intelligent infrastructure.</p>
+              </div>
+              <iframe title="Ahmed Elzayat featured podcast about artificial intelligence" src="https://www.youtube-nocookie.com/embed/_xLHsVvXjvE?rel=0" loading="lazy" className="h-[250px] w-full border-0 md:h-full md:min-h-[330px]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
+            </section>
+          </div>
+        </motion.article>
+
+        <div className="mx-auto mt-10 max-w-[1250px] py-4">
+          <div className="home-reveal text-center">
+            <button
+              type="button"
+              aria-pressed={partnersUnderlineVisible}
+              onClick={() => setPartnersUnderlineVisible(visible => !visible)}
+              className="rounded-sm font-mono text-[clamp(1.25rem,2.2vw,1.8rem)] font-extrabold uppercase tracking-[.18em] text-[#299BF0] outline-none transition-colors hover:text-[#56AAC6] focus-visible:ring-2 focus-visible:ring-[#299BF0] focus-visible:ring-offset-4 focus-visible:ring-offset-[#041126]"
+            >
+              Our Partners
+            </button>
+            <span
+              aria-hidden="true"
+              className={`mx-auto mt-3 block h-0.5 rounded-full bg-[#299BF0] transition-[width,opacity] duration-300 ${partnersUnderlineVisible ? 'w-20 opacity-100' : 'w-0 opacity-0'}`}
+            />
+          </div>
+
+          <div className="mx-auto mt-6 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4 sm:gap-x-8">
+            {featuredPartners.map((partner, index) => (
+              <motion.div
+                key={partner.id}
+                initial={{ opacity: 0, y: 12 }}
+                whileInView={{ opacity: 1, y: 0, scale: 1 }}
+                viewport={{ once: true, margin: '-40px' }}
+                whileHover={{ y: -3, scale: 1.04 }}
+                transition={{ duration: .4, delay: index * .06, ease }}
+                className="flex h-14 items-center justify-center px-3 sm:h-16"
+              >
+                <img src={partner.logo} alt={`${partner.name} logo`} loading="lazy" className={partner.id === 'oracle' ? 'h-auto w-[120px] max-w-none object-contain opacity-90 transition-opacity hover:opacity-100 sm:w-[135px]' : 'max-h-8 w-auto max-w-[115px] object-contain opacity-90 transition-opacity hover:opacity-100 sm:max-h-9 sm:max-w-[130px]'} />
+              </motion.div>
+            ))}
+          </div>
         </div>
       </div>
     </section>
+
+    <AnimatePresence>
+      {activeVideo && (
+        <motion.div
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${activeVideo.name} video player`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: .25 }}
+          onMouseDown={() => setActiveVideo(null)}
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/65 p-3 backdrop-blur-sm sm:p-6"
+        >
+          <motion.div
+            initial={{ opacity: 0, scale: .94, y: 18 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: .96, y: 10 }}
+            transition={{ duration: .3, ease }}
+            onMouseDown={event => event.stopPropagation()}
+            className="relative w-full max-w-[1500px]"
+          >
+            <button type="button" autoFocus onClick={() => setActiveVideo(null)} aria-label="Close video" className="absolute right-2 top-2 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-[#010B1F]/85 text-white shadow-lg backdrop-blur transition hover:border-white/60 hover:bg-[rgb(33,124,154)] sm:-right-3 sm:-top-3">
+              <HiOutlineXMark className="h-6 w-6" />
+            </button>
+            <video key={activeVideo.videoSrc} src={activeVideo.videoSrc} controls autoPlay preload="auto" playsInline className="max-h-[84vh] w-full rounded-xl border border-white/10 bg-black object-contain shadow-[0_30px_100px_rgba(0,0,0,.65)]">Your browser does not support the video element.</video>
+            <p className="mt-3 text-center text-xs font-semibold text-white/80">{activeVideo.name} · {activeVideo.location}</p>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
   </main>
 }

@@ -11,7 +11,7 @@ export const projects = [
   {
     id: 'zia-building-complex', name: 'ZIA Building Complex', location: 'New Administrative Capital, Egypt', industry: 'Smart Buildings', categories: ['commercial'], accent: 'cyan',
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=84',
-    videoId: 'rVN8JoOcQ7c',
+    videoSrc: '/zia-smart-building-dashboard.mp4',
     description: 'ZIA smart building dashboard — real-time IoT platform with EMS × Siemens integration for live monitoring and automation across the complex.',
     challenge: 'A large administrative complex required one clear operational view across connected building systems and live facility data.',
     solution: 'EMS connected the ZIA platform with Siemens building technology to deliver real-time dashboards, monitoring and coordinated automation.',
@@ -26,7 +26,7 @@ export const projects = [
   {
     id: 'water-treatment-plant-automation', name: 'Water Treatment Plant Automation', location: 'Cairo, Egypt', industry: 'Water Infrastructure', categories: ['water'], accent: 'cyan',
     image: 'https://images.unsplash.com/photo-1567789884554-0b844b597180?auto=format&fit=crop&w=1800&q=84',
-    videoId: '-edKNmLh5AM',
+    videoSrc: '/smart-water-station-dashboard.mp4',
     description: 'Complete IoT integration with AI-powered predictive maintenance, reducing downtime by 60%.',
     challenge: 'Distributed water-treatment equipment required better visibility, earlier fault detection and more efficient maintenance planning.',
     solution: 'EMS integrated plant sensors, IoT monitoring and predictive analytics into a coordinated automation environment.',
@@ -41,7 +41,7 @@ export const projects = [
   {
     id: 'smart-hospital', name: 'Smart Hospital', location: 'Dubai, UAE', industry: 'Healthcare', categories: ['healthcare'], accent: 'primary',
     image: 'https://images.unsplash.com/photo-1586773860418-d37222d8fce3?auto=format&fit=crop&w=1800&q=84',
-    videoId: 'ky3e49s3Yq0',
+    videoSrc: '/smart-hospital-monitoring.mp4',
     description: 'Integrated building management for a 500-bed hospital with real-time monitoring dashboards.',
     challenge: 'A major healthcare environment needed coordinated oversight across thousands of critical building and facility systems.',
     solution: 'EMS delivered an integrated building-management layer with real-time dashboards, energy insight and centralized monitoring.',
@@ -56,7 +56,7 @@ export const projects = [
   {
     id: 'industrial-scada-system', name: 'Industrial SCADA System', location: 'Giza, Egypt', industry: 'Industrial Automation', categories: ['industrial'], accent: 'cyan',
     image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1800&q=84',
-    videoId: '2amUaspt3cU',
+    videoSrc: '/industrial-scada-monitoring.mp4',
     description: 'Advanced PLC & SCADA implementation for a manufacturing facility with process optimization.',
     challenge: 'Production teams needed reliable supervision and control across multiple manufacturing lines and industrial processes.',
     solution: 'EMS implemented PLC control, SCADA visualization and process optimization for dependable high-availability operations.',
@@ -71,7 +71,7 @@ export const projects = [
   {
     id: 'al-attal-new-cairo', name: 'Al Attal New Cairo', location: 'New Cairo, Egypt', industry: 'Residential Development', categories: ['residential'], accent: 'primary',
     image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=1800&q=84',
-    videoId: 'dwWbhflMRT0',
+    videoSrc: '/al-attal-new-capital.mp4',
     description: 'Full MEP contracting and smart automation solutions for a premium residential development in New Cairo.',
     challenge: 'The development required coordinated MEP delivery and modern automation designed around premium residential performance.',
     solution: 'EMS combined multidisciplinary MEP contracting with integrated smart controls and building automation.',
@@ -86,7 +86,7 @@ export const projects = [
   {
     id: 'wadi-zaha-project', name: 'Wadi Zaha Project', location: 'Egypt', industry: 'Mixed-use Development', categories: ['commercial'], accent: 'cyan',
     image: 'https://images.unsplash.com/photo-1503387762-592deb58ef4e?auto=format&fit=crop&w=1800&q=84',
-    videoId: 'rwzNauryeNc',
+    videoSrc: '/wadi-zaha-smart-residential.mp4',
     description: 'Comprehensive MEP and automation systems delivered for the Wadi Zaha development project.',
     challenge: 'The project needed coordinated building services and automation delivered as one dependable engineering scope.',
     solution: 'EMS delivered integrated MEP systems, automation and coordinated commissioning across the development.',

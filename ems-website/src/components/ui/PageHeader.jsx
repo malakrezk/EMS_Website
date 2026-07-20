@@ -36,7 +36,7 @@ export default function PageHeader({ eyebrow, title, description }) {
   }
 
   return (
-    <section ref={ref} onPointerMove={onPointerMove} onPointerLeave={() => { pointerX.set(0); pointerY.set(0) }} className="relative min-h-[420px] overflow-hidden bg-[#010B1F] pb-[clamp(3rem,7vw,5rem)] pt-[clamp(8rem,14vw,10rem)] md:min-h-[500px]">
+    <section ref={ref} onPointerMove={onPointerMove} onPointerLeave={() => { pointerX.set(0); pointerY.set(0) }} className="relative min-h-[360px] overflow-hidden bg-[#010B1F] pb-[clamp(2.5rem,6vw,4rem)] pt-[clamp(7rem,12vw,8.5rem)] md:min-h-[430px]">
       <motion.div style={{ y: scrollY }} className="absolute -inset-y-[12%] inset-x-0 overflow-hidden">
         <motion.div
           style={{ x: smoothX, y: smoothY, backgroundImage: `url(${image})` }}
@@ -63,11 +63,11 @@ export default function PageHeader({ eyebrow, title, description }) {
       </>}
 
       {!isAbout && <div className="absolute inset-0 opacity-15 [background-image:radial-gradient(#9edaff_0.7px,transparent_0.7px)] [background-size:34px_34px]" />}
-      <div className="container-ems relative flex min-h-[260px] items-center md:min-h-[320px]">
+      <div className="container-ems relative flex min-h-[220px] items-center md:min-h-[270px]">
         <div className="max-w-3xl">
           {eyebrow && <motion.p initial={{ opacity: 0, x: -22 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .65 }} className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[.32em] text-cyan-300"><span className="h-px w-9 bg-cyan-300" />{eyebrow}</motion.p>}
-          <motion.h1 initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .08, ease: [0.22, 1, 0.36, 1] }} className="max-w-3xl font-serif text-[clamp(2.1rem,5vw,3.7rem)] leading-[1.1] text-white drop-shadow-[0_3px_20px_rgba(0,0,0,.45)]">{title}</motion.h1>
-          {description && <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: .18 }} className="mt-5 max-w-2xl text-sm leading-7 text-slate-200 drop-shadow-[0_2px_12px_rgba(0,0,0,.55)] sm:text-base">{description}</motion.p>}
+          <motion.h1 initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .08, ease: [0.22, 1, 0.36, 1] }} className="max-w-3xl font-serif text-[clamp(1.9rem,4.3vw,3.25rem)] leading-[1.08] text-white drop-shadow-[0_3px_20px_rgba(0,0,0,.45)]">{title}</motion.h1>
+          {description && <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: .18 }} className="mt-4 max-w-2xl text-[13px] leading-6 text-slate-200 drop-shadow-[0_2px_12px_rgba(0,0,0,.55)] sm:text-sm">{description}</motion.p>}
         </div>
       </div>
       <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.1, delay: .4 }} className="absolute bottom-0 left-0 h-px w-full origin-left bg-gradient-to-r from-cyan-300/80 via-cyan-300/20 to-transparent" />
