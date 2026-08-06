@@ -4,9 +4,9 @@ import { AnimatePresence, motion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
-  HiOutlineArrowDown, HiOutlineArrowLeft, HiOutlineArrowRight,
+  HiOutlineArrowLeft, HiOutlineArrowRight,
   HiOutlineArrowUpRight, HiOutlineBuildingOffice2, HiOutlineCheck, HiOutlineCheckBadge,
-  HiOutlineEye, HiOutlineGlobeAlt, HiOutlinePlay, HiOutlineShieldCheck, HiOutlineXMark,
+  HiOutlineEye, HiOutlineGlobeAlt, HiOutlinePause, HiOutlinePlay, HiOutlineXMark,
 } from 'react-icons/hi2'
 import { servicesShowcase } from '../data/servicesShowcase'
 import { projects } from '../data/projects'
@@ -29,16 +29,29 @@ const homeStyles = `
   .home-page-shell .home-no-scrollbar { scrollbar-width:none; }
   .home-page-shell .home-no-scrollbar::-webkit-scrollbar { display:none; }
   .home-page-shell .home-hero-word { display:block; overflow:hidden; padding-bottom:.08em; }
+  .home-page-shell .home-hero-word + .home-hero-word { margin-top:.38em; }
   .home-page-shell .home-hero-word > span { display:block; }
-  .home-page-shell .home-hero-title { font-size:clamp(2.4rem,5vw,5rem);line-height:.95;max-width:850px; }
-  .home-page-shell .home-hero-copy { font-size:clamp(.9rem,1.25vw,1.08rem); }
-  .home-page-shell .home-hero-action { min-height:48px;padding-inline:1.5rem; }
+  .home-page-shell .home-hero-title { font-size:clamp(2.25rem,3.2vw,3.45rem);line-height:.98;max-width:680px; }
+  .home-page-shell #home-hero .home-hero-column { width:min(680px,100%); }
+  .home-page-shell #home-hero .home-hero-column > .home-hero-support:first-child p { margin-left:.2rem;color:#32A9F5;font-size:clamp(.62rem,.72vw,.76rem);font-weight:700;letter-spacing:.24em; }
+  .home-page-shell #home-hero .home-hero-description { color:#AFC3DB;font-size:clamp(.9rem,1.1vw,1.02rem);line-height:1.75; }
+  .home-page-shell #home-hero .home-hero-technologies { color:#AFC3DB;font-size:clamp(.76rem,.9vw,.88rem);font-weight:500;letter-spacing:.015em; }
+  .home-page-shell #home-hero .home-hero-action { display:inline-flex;height:48px;align-items:center;justify-content:center;border-radius:.625rem;padding-inline:1.5rem;font-size:.78rem;font-weight:700;transition:transform .3s ease,background-color .3s ease,border-color .3s ease,color .3s ease; }
+  .home-page-shell #home-hero .home-hero-action:hover { transform:translateY(-2px); }
+  .home-page-shell #home-hero .home-hero-action:focus-visible { outline:2px solid #fff;outline-offset:3px; }
+  .home-page-shell #home-hero .home-hero-primary { background:#32A9F5;color:#010B1F; }
+  .home-page-shell #home-hero .home-hero-primary:hover { background:#fff; }
+  .home-page-shell #home-hero .home-hero-secondary { border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff; }
+  .home-page-shell #home-hero .home-hero-secondary:hover { border-color:#32A9F5;background:rgba(50,169,245,.08);color:#32A9F5; }
   .home-page-shell #home-hero .home-hero-trust { background:transparent; }
   .home-page-shell #home-hero .home-hero-trust-item { transition:transform .25s ease,color .25s ease; }
   .home-page-shell #home-hero .home-hero-trust-item:hover { transform:translateY(-2px);color:#fff; }
   .home-page-shell .home-section-title { font-size:clamp(2.35rem,5vw,5rem); }
   .home-page-shell #home-services .home-section-title { font-size:clamp(1.9rem,3.5vw,3.7rem); }
   .home-page-shell #home-solutions .home-section-title { font-size:clamp(1.9rem,3.5vw,3.7rem); }
+  .home-page-shell #home-solutions { padding-block:clamp(2.75rem,5vh,4rem); }
+  .home-page-shell #home-solutions .home-section-title { margin-top:1rem;font-size:clamp(1.9rem,3vw,3.2rem); }
+  .home-page-shell #home-solutions .home-section-copy { margin-top:1rem;line-height:1.65; }
   .home-page-shell #home-case-studies .home-section-title { font-size:clamp(1.85rem,3vw,3.25rem); }
   .home-page-shell #home-case-studies { padding-block:clamp(3.5rem,6vw,5.5rem); }
   .home-page-shell .home-section-copy { font-size:clamp(.86rem,1.2vw,1rem); }
@@ -53,7 +66,7 @@ const homeStyles = `
   .home-page-shell .home-hero-content { padding-bottom:clamp(4rem,8vw,7rem); }
   .home-page-shell .home-major-section { padding-block:clamp(4.5rem,8vw,7.5rem); }
   .home-page-shell .home-solution-content { padding:clamp(1.4rem,3vw,2.25rem); }
-  .home-page-shell .home-solution-title { font-size:clamp(1.8rem,3.2vw,3.1rem); }
+  .home-page-shell .home-solution-title { font-size:clamp(1.75rem,2.7vw,2.65rem); }
   .home-page-shell .home-case-content { padding:clamp(1.6rem,5vw,4.5rem); }
   .home-page-shell .home-case-title { font-size:clamp(2rem,4vw,4rem); }
   .home-page-shell .home-about-image { min-height:clamp(520px,62vw,760px); }
@@ -72,6 +85,8 @@ const homeStyles = `
   .home-page-shell .home-service-card:hover::after { transform:translateX(42%) rotate(8deg); }
   .home-page-shell .home-solution-card::before { content:'';position:absolute;inset:0;border-radius:inherit;border:1px solid transparent;background:linear-gradient(135deg,rgba(89,220,255,.55),transparent 35%,rgba(255,255,255,.12)) border-box;mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);mask-composite:exclude;opacity:0;transition:opacity .5s ease;pointer-events:none; }
   .home-page-shell .home-solution-card:hover::before { opacity:1; }
+  .home-page-shell .home-solutions-progress { animation:homeSolutionsProgress 5s linear forwards;transform-origin:left; }
+  .home-page-shell .home-solutions-progress.is-paused { animation-play-state:paused; }
   body:has(.home-page-shell) header nav > div:nth-of-type(1) a[href='/services'] { order:1; }
   body:has(.home-page-shell) header nav > div:nth-of-type(1) a[href='/solutions'] { order:2; }
   body:has(.home-page-shell) header nav > div:nth-of-type(1) a[href='/projects'] { order:3; }
@@ -81,11 +96,13 @@ const homeStyles = `
   @keyframes homeDataFloat { 0%,100%{opacity:.18;transform:translate3d(0,0,0)} 50%{opacity:.75;transform:translate3d(0,-10px,0)} }
   @keyframes homeScan { 0%,18%{transform:translateY(-120%);opacity:0} 28%{opacity:.28} 72%{opacity:.12} 82%,100%{transform:translateY(120%);opacity:0} }
   @keyframes homeFloat { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-9px,0)} }
+  @keyframes homeSolutionsProgress { from{transform:scaleX(0)} to{transform:scaleX(1)} }
   @media (hover:none) { .home-page-shell .home-solution-description { opacity:1;transform:none; } }
-  @media (max-width:767px) { .home-page-shell .home-hero-title{font-size:clamp(2.15rem,11vw,3.1rem)}.home-page-shell .home-hero-content{padding-top:6rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-service-card{height:350px;width:min(88vw,440px)}.home-page-shell .home-carousel-stage{height:380px}.home-page-shell .home-service-title{font-size:clamp(1.65rem,9vw,2.6rem)} }
+  @media (max-width:767px) { .home-page-shell .home-hero-title{font-size:clamp(2rem,9vw,2.7rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.26em}.home-page-shell .home-hero-content{padding-top:6rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-service-card{height:350px;width:min(88vw,440px)}.home-page-shell .home-carousel-stage{height:380px}.home-page-shell .home-service-title{font-size:clamp(1.65rem,9vw,2.6rem)} }
   @media (max-width:639px) { .home-page-shell #home-hero .home-hero-trust-items{align-items:flex-start;flex-direction:column}.home-page-shell #home-hero .home-hero-trust-separator{display:none} }
+  @media (max-width:479px) { .home-page-shell #home-hero .home-hero-actions{align-items:stretch;flex-direction:column}.home-page-shell #home-hero .home-hero-action{width:100%} }
   @media (max-height:850px) and (min-width:1024px) { .home-page-shell .home-services-section{padding-block:3rem}.home-page-shell .home-carousel-stage{height:350px;margin-top:2rem}.home-page-shell .home-service-card{height:330px;width:min(56vw,470px)}.home-page-shell .home-service-content{padding:1.15rem}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-service-title{font-size:clamp(1.8rem,3.5vw,3rem)}.home-page-shell .home-section-copy{margin-top:1rem}.home-page-shell .home-major-section{padding-block:4.5rem} }
-  @media (prefers-reduced-motion: reduce) { .home-page-shell .home-network-path,.home-page-shell .home-data-particle,.home-page-shell .home-scan,.home-page-shell .home-float,.home-page-shell .home-scroll-line::after{animation:none!important}.home-page-shell #home-hero .home-hero-trust-item{transition:none!important} }
+  @media (prefers-reduced-motion: reduce) { .home-page-shell .home-network-path,.home-page-shell .home-data-particle,.home-page-shell .home-scan,.home-page-shell .home-float,.home-page-shell .home-scroll-line::after,.home-page-shell .home-solutions-progress{animation:none!important}.home-page-shell #home-hero .home-hero-trust-item{transition:none!important} }
 `
 
 const ease = [0.22, 1, 0.36, 1]
@@ -93,6 +110,14 @@ const aboutMilestones = [
   ['Founded in UAE', 'Established as a premier MEP contracting company in the United Arab Emirates.', HiOutlineBuildingOffice2],
   ['Expansion to Egypt', 'Opened operations in Egypt to serve the broader Middle East market.', HiOutlineGlobeAlt],
   ['Siemens Certified Partner', 'Achieved official Siemens partnership for BMS and automation systems.', HiOutlineCheckBadge],
+]
+
+const heroImages = [
+  '/hero-control-room-01.jpg',
+  '/hero-control-room-02.jpg',
+  '/hero-control-room-03.jpg',
+  '/hero-control-room-04.jpg',
+  '/hero-control-room-05.jpg',
 ]
 const featuredPartners = partners.filter(partner => ['siemens', 'cisco', 'aws', 'oracle'].includes(partner.id))
 
@@ -112,13 +137,17 @@ function ServiceCarousel() {
   const [active, setActive] = useState(4)
   const [viewportWidth, setViewportWidth] = useState(() => typeof window === 'undefined' ? 1440 : window.innerWidth)
   const wheelLocked = useRef(false)
+  const hoverTimer = useRef(null)
   const activeService = servicesShowcase[active]
   const total = servicesShowcase.length
 
   useEffect(() => {
     const resize = () => setViewportWidth(window.innerWidth)
     window.addEventListener('resize', resize, { passive: true })
-    return () => window.removeEventListener('resize', resize)
+    return () => {
+      window.removeEventListener('resize', resize)
+      window.clearTimeout(hoverTimer.current)
+    }
   }, [])
 
   const move = useCallback((direction) => setActive(index => (index + direction + total) % total), [total])
@@ -163,11 +192,19 @@ function ServiceCarousel() {
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={.12}
             onDragEnd={(_, info) => { if (Math.abs(info.offset.x) > 65 || Math.abs(info.velocity.x) > 450) move(info.offset.x < 0 ? 1 : -1) }}
-            onMouseEnter={() => !isActive && setActive(index)}
-            onClick={() => !isActive && setActive(index)}
+            onMouseEnter={() => {
+              if (isActive) return
+              window.clearTimeout(hoverTimer.current)
+              hoverTimer.current = window.setTimeout(() => setActive(index), 320)
+            }}
+            onMouseLeave={() => window.clearTimeout(hoverTimer.current)}
+            onClick={() => {
+              window.clearTimeout(hoverTimer.current)
+              if (!isActive) setActive(index)
+            }}
             initial={false}
             animate={{ x: position * gap - cardWidth / 2, scale: isActive ? 1 : Math.abs(position) === 1 ? .84 : .7, rotateY: position * -9, opacity: Math.abs(position) === 2 ? .22 : isActive ? 1 : .52, z: isActive ? 80 : -Math.abs(position) * 90 }}
-            transition={{ type: 'spring', stiffness: 92, damping: 22, mass: 1.05 }}
+            transition={{ type: 'spring', stiffness: 68, damping: 21, mass: 1.15 }}
             style={{ zIndex: 10 - Math.abs(position), pointerEvents: Math.abs(position) <= 1 ? 'auto' : 'none', cursor: isActive ? 'grab' : 'pointer' }}
             className={`home-service-card group absolute left-1/2 top-0 overflow-hidden rounded-[1.4rem] border bg-[#061326] shadow-[0_40px_120px_rgba(0,0,0,.65)] will-change-transform ${isActive ? 'border-cyan-300/45' : 'border-white/15 blur-[1px]'}`}
           >
@@ -201,24 +238,164 @@ function ServiceCarousel() {
   </section>
 }
 
+function SolutionsShowcase() {
+  const [active, setActive] = useState(1)
+  const [paused, setPaused] = useState(false)
+  const [hovered, setHovered] = useState(false)
+  const [viewportWidth, setViewportWidth] = useState(() => typeof window === 'undefined' ? 1440 : window.innerWidth)
+  const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  const total = solutionCards.length
+  const activeSolution = solutionCards[active]
+
+  const move = useCallback(direction => setActive(index => (index + direction + total) % total), [total])
+  const relativePosition = index => {
+    let difference = index - active
+    if (difference > total / 2) difference -= total
+    if (difference < -total / 2) difference += total
+    return difference
+  }
+
+  useEffect(() => {
+    const resize = () => setViewportWidth(window.innerWidth)
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const syncMotion = () => setReducedMotion(motionQuery.matches)
+    window.addEventListener('resize', resize, { passive: true })
+    motionQuery.addEventListener('change', syncMotion)
+    return () => {
+      window.removeEventListener('resize', resize)
+      motionQuery.removeEventListener('change', syncMotion)
+    }
+  }, [])
+
+  useEffect(() => {
+    if (paused || hovered || reducedMotion) return undefined
+    const timer = window.setTimeout(() => move(1), 5000)
+    return () => window.clearTimeout(timer)
+  }, [active, hovered, move, paused, reducedMotion])
+
+  const isMobile = viewportWidth < 640
+  const isTablet = viewportWidth < 1024
+  const cardWidth = isMobile ? Math.min(viewportWidth * .74, 285) : isTablet ? 270 : 300
+  const cardHeight = isMobile ? 300 : isTablet ? 325 : 350
+  const spacing = isMobile ? cardWidth * .62 : isTablet ? cardWidth * .72 : cardWidth * .82
+  const visibleRange = isMobile ? 1 : 2
+
+  return <div
+    onMouseEnter={() => setHovered(true)}
+    onMouseLeave={() => setHovered(false)}
+    className="home-reveal mx-auto mt-6 w-full max-w-[1450px] overflow-hidden rounded-[1.75rem] border border-[#299BF0]/25 bg-[#07182e] shadow-[0_35px_100px_rgba(0,0,0,.38)]"
+  >
+    <div className="flex items-center justify-between gap-5 border-b border-white/10 bg-[#041126]/85 px-5 py-4 sm:px-7">
+      <div className="flex items-center gap-4">
+        <span className="font-serif text-lg font-semibold tracking-[.14em] text-white">EMS</span>
+        <span className="hidden h-4 w-px bg-white/15 sm:block" />
+        <span className="hidden font-mono text-[8px] uppercase tracking-[.22em] text-[#56AAC6] sm:block">Solutions portfolio</span>
+      </div>
+      <div className="hidden items-center gap-5 font-mono text-[7px] uppercase tracking-[.16em] text-white/45 md:flex">
+        {solutionCards.slice(0, 4).map((solution, index) => <button key={solution.title} type="button" onClick={() => setActive(index)} className={`transition hover:text-white ${active === index ? 'text-[#56AAC6]' : ''}`}>{solution.label}</button>)}
+      </div>
+      <Link to="/solutions" className="rounded-full border border-[#299BF0]/40 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[.12em] text-white transition hover:bg-[#299BF0]">View all</Link>
+    </div>
+
+    <div className="relative isolate overflow-hidden bg-[#020a16]">
+      <AnimatePresence mode="popLayout">
+        <motion.img key={activeSolution.image} src={activeSolution.image} alt="" initial={{ opacity: 0 }} animate={{ opacity: .18 }} exit={{ opacity: 0 }} transition={{ duration: .7 }} className="absolute inset-0 -z-10 h-full w-full scale-110 object-cover blur-xl" />
+      </AnimatePresence>
+      <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,rgba(1,11,31,.92),rgba(1,11,31,.38)_50%,rgba(1,11,31,.92))]" />
+
+      <motion.div
+        drag="x"
+        dragConstraints={{ left: 0, right: 0 }}
+        dragElastic={.1}
+        onDragEnd={(_, info) => { if (Math.abs(info.offset.x) > 55 || Math.abs(info.velocity.x) > 450) move(info.offset.x < 0 ? 1 : -1) }}
+        className="relative h-[clamp(325px,38vw,390px)] overflow-hidden [perspective:1500px]"
+      >
+        {solutionCards.map((solution, index) => {
+          const position = relativePosition(index)
+          if (Math.abs(position) > visibleRange) return null
+          const isActive = position === 0
+          const distance = Math.abs(position)
+          const scale = isActive ? 1 : distance === 1 ? .82 : .68
+          return <motion.article
+            key={solution.title}
+            role="button"
+            tabIndex={0}
+            aria-label={`${solution.title}${isActive ? ', selected' : ', select solution'}`}
+            onClick={() => setActive(index)}
+            onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setActive(index) } }}
+            initial={false}
+            animate={{
+              x: position * spacing - cardWidth / 2,
+              y: isActive ? 12 : 28 + distance * 10,
+              z: isActive ? 80 : distance === 1 ? 5 : -45,
+              rotateY: position * -12,
+              scale,
+              opacity: isActive ? 1 : distance === 1 ? .76 : .42,
+              filter: distance === 2 ? 'blur(1.5px)' : 'blur(0px)',
+            }}
+            whileHover={!isActive ? { scale: scale + .035, opacity: Math.min(1, distance === 1 ? .88 : .55) } : { scale: 1.01 }}
+            transition={{ duration: reducedMotion ? 0 : .68, ease }}
+            style={{ left: '50%', top: 0, width: cardWidth, height: cardHeight, zIndex: 10 - distance }}
+            className={`group absolute cursor-pointer overflow-hidden rounded-2xl border bg-[#061326] shadow-[0_22px_65px_rgba(0,0,0,.55)] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[#56AAC6] ${isActive ? 'border-[#56AAC6]/70 shadow-[0_28px_80px_rgba(0,0,0,.6),0_0_30px_rgba(41,155,240,.12)]' : 'border-white/15'}`}
+          >
+            <img src={solution.image} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,11,31,.08),rgba(1,11,31,.25)_45%,rgba(1,11,31,.94))]" />
+            <div className="absolute inset-x-0 bottom-0 p-5 text-center">
+              <p className="font-mono text-[7px] uppercase tracking-[.22em] text-[#56AAC6]">{solution.label}</p>
+              <h3 className="mt-2 font-serif text-[clamp(1.45rem,2.3vw,2.15rem)] leading-[.95] text-white">{solution.title}</h3>
+              <motion.div animate={{ height: isActive ? 'auto' : 0, opacity: isActive ? 1 : 0 }} className="overflow-hidden">
+                <p className="mx-auto mt-3 line-clamp-2 max-w-[220px] text-[10px] leading-4 text-white/75">{solution.text}</p>
+                <Link to="/solutions" onClick={event => event.stopPropagation()} className="mt-3 inline-flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[.1em] text-white transition hover:text-[#56AAC6]">Discover <HiOutlineArrowUpRight /></Link>
+              </motion.div>
+            </div>
+          </motion.article>
+        })}
+      </motion.div>
+
+      <div className="flex items-center gap-4 border-t border-white/10 bg-[#041126]/88 px-5 py-4 sm:px-7">
+        <button type="button" onClick={() => setPaused(value => !value)} aria-label={paused ? 'Resume automatic carousel' : 'Pause automatic carousel'} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-[#56AAC6] hover:text-[#56AAC6]">{paused ? <HiOutlinePlay className="h-4 w-4" /> : <HiOutlinePause className="h-4 w-4" />}</button>
+        <span className="w-12 shrink-0 font-mono text-[10px] font-semibold text-white">{String(active + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
+        <div className="relative h-1 flex-1 overflow-hidden rounded-full bg-white/15">
+          <span key={`${active}-${paused}-${hovered}`} className={`home-solutions-progress absolute inset-y-0 left-0 w-full rounded-full bg-[#56AAC6] ${paused || hovered ? 'is-paused' : ''}`} />
+        </div>
+        <div className="flex shrink-0 gap-2">
+          <button type="button" onClick={() => move(-1)} aria-label="Previous solution" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-[#56AAC6] hover:text-[#56AAC6]"><HiOutlineArrowLeft /></button>
+          <button type="button" onClick={() => move(1)} aria-label="Next solution" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-[#56AAC6] hover:text-[#56AAC6]"><HiOutlineArrowRight /></button>
+        </div>
+      </div>
+    </div>
+  </div>
+}
+
 export default function Home() {
   const rootRef = useRef(null)
-  const heroVideoRef = useRef(null)
+  const [heroImageIndex, setHeroImageIndex] = useState(0)
+  const [heroReducedMotion, setHeroReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const [activeVideo, setActiveVideo] = useState(null)
   const [partnersUnderlineVisible, setPartnersUnderlineVisible] = useState(false)
 
   useEffect(() => {
-    const video = heroVideoRef.current
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    if (!video) return undefined
-    const syncPlayback = () => {
-      if (reducedMotion.matches) video.pause()
-      else video.play().catch(() => undefined)
+    let timer
+    const syncSlideshow = () => {
+      window.clearInterval(timer)
+      setHeroReducedMotion(reducedMotion.matches)
+      if (!reducedMotion.matches) {
+        timer = window.setInterval(() => setHeroImageIndex(index => (index + 1) % heroImages.length), 6500)
+      }
     }
-    syncPlayback()
-    reducedMotion.addEventListener('change', syncPlayback)
-    return () => reducedMotion.removeEventListener('change', syncPlayback)
+    syncSlideshow()
+    reducedMotion.addEventListener('change', syncSlideshow)
+    return () => {
+      window.clearInterval(timer)
+      reducedMotion.removeEventListener('change', syncSlideshow)
+    }
   }, [])
+
+  useEffect(() => {
+    const nextImage = new Image()
+    nextImage.src = heroImages[(heroImageIndex + 1) % heroImages.length]
+  }, [heroImageIndex])
 
   useEffect(() => {
     if (!activeVideo) return undefined
@@ -263,7 +440,7 @@ export default function Home() {
         gsap.fromTo('.home-hero-support', { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .85, stagger: .1, delay: .72, ease: 'power3.out' })
         gsap.utils.toArray('.home-reveal').forEach(element => gsap.fromTo(element, { autoAlpha: 0, y: 34 }, { autoAlpha: 1, y: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: element, start: 'top 88%', once: true } }))
         gsap.utils.toArray('.home-parallax-image').forEach(image => gsap.fromTo(image, { yPercent: -7, scale: 1.08 }, { yPercent: 7, scale: 1, ease: 'none', scrollTrigger: { trigger: image.parentElement, start: 'top bottom', end: 'bottom top', scrub: 1.2 } }))
-        gsap.to('.home-hero-video', { scale: 1.08, yPercent: 5, ease: 'none', scrollTrigger: { trigger: '#home-hero', start: 'top top', end: 'bottom top', scrub: 1.1 } })
+        gsap.to('.home-hero-media', { scale: 1.08, yPercent: 5, ease: 'none', scrollTrigger: { trigger: '#home-hero', start: 'top top', end: 'bottom top', scrub: 1.1 } })
       }
     }, rootRef)
 
@@ -278,11 +455,22 @@ export default function Home() {
     <style>{homeStyles}</style>
 
     <section id="home-hero" className="relative min-h-[100svh] scroll-mt-20 overflow-hidden">
-      <video ref={heroVideoRef} className="home-hero-video absolute inset-0 h-full w-full object-cover object-center will-change-transform" autoPlay muted loop playsInline preload="metadata" poster="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=2200&q=84" aria-label="EMS smart infrastructure, SCADA and engineering systems" onLoadedMetadata={event => { event.currentTarget.currentTime = 15.5; if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) event.currentTarget.pause() }} onTimeUpdate={event => { if (event.currentTarget.currentTime >= 25.5) event.currentTarget.currentTime = 15.5 }}>
-        <source src="/ems-infrastructure-hero-optimized.mp4" type="video/mp4" />
-      </video>
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(2,8,18,.995)_0%,rgba(2,8,18,.94)_42%,rgba(2,8,18,.32)_100%)]" />
-      <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,11,31,.5)_0%,transparent_48%,#010B1F_100%)]" />
+      <div className="home-hero-media absolute inset-0 will-change-transform">
+        <AnimatePresence initial={false}>
+          <motion.img
+            key={heroImages[heroImageIndex]}
+            src={heroImages[heroImageIndex]}
+            alt="EMS intelligent automation and digital control room"
+            initial={{ opacity: 0, scale: heroReducedMotion ? 1 : 1.025 }}
+            animate={{ opacity: 1, scale: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: heroReducedMotion ? 0 : 1.6, ease: 'easeInOut' }}
+            fetchPriority={heroImageIndex === 0 ? 'high' : 'auto'}
+            className="absolute inset-0 h-full w-full object-cover object-center"
+          />
+        </AnimatePresence>
+      </div>
+      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,11,31,1)_0%,rgba(1,11,31,.97)_30%,rgba(1,11,31,.68)_52%,rgba(1,11,31,.28)_74%,rgba(1,11,31,.1)_100%)]" />
       <div className="home-grid absolute inset-0 opacity-[.16] [mask-image:linear-gradient(to_right,black,transparent_78%)]" />
       <svg aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full opacity-25 [mask-image:linear-gradient(to_right,transparent_28%,black_70%,transparent)]">
         <g fill="none" stroke="rgba(89,220,255,.58)" strokeWidth="1">
@@ -296,36 +484,28 @@ export default function Home() {
       <div aria-hidden="true" className="home-scan pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-transparent via-cyan-300/10 to-transparent blur-sm" />
 
       <div className="home-hero-content container-ems relative flex min-h-[100svh] items-center pt-28">
-        <div className="max-w-[850px]">
-          <div className="home-hero-support flex items-center gap-3"><span className="h-px w-9 bg-cyan-300" /><Eyebrow>Engineering Management Systems · Since 2016</Eyebrow></div>
-          <h1 className="home-hero-title mt-7 font-serif tracking-[-.035em]">
-            <span className="home-hero-word"><span>Smart Engineering.</span></span>
-            <span className="home-hero-word"><span>Smart Cities.</span></span>
-            <span className="home-hero-word text-[rgb(86,170,198)] drop-shadow-[0_8px_28px_rgba(33,124,154,.18)]"><span>Smart Future.</span></span>
+        <div className="home-hero-column">
+          <div className="home-hero-support"><Eyebrow>Engineering Management Systems · Since 2016</Eyebrow></div>
+          <h1 className="home-hero-title mt-8 font-serif tracking-[-.035em] text-white">
+            <span className="home-hero-word"><span>Automation Solutions.</span></span>
+            <span className="home-hero-word"><span>AI-Powered Systems.</span></span>
+            <span className="home-hero-word text-[#32A9F5] drop-shadow-[0_8px_28px_rgba(50,169,245,.18)]"><span>Smart Digitalization.</span></span>
           </h1>
-          <p className="home-hero-copy home-hero-support mt-7 max-w-2xl leading-7 text-slate-200">Leading MEP Contracting, Intelligent Automation, SCADA, BMS and Smart Infrastructure Solutions.</p>
-          <div className="home-hero-support mt-8 flex flex-wrap gap-3">
-            <a href="#home-services" onClick={event => { event.preventDefault(); document.querySelector('header a[href="/services"]')?.click() }} className="home-hero-action inline-flex items-center gap-3 rounded-lg bg-[rgb(33,124,154)] text-xs font-semibold shadow-[0_16px_45px_rgba(33,124,154,.35)] transition duration-300 hover:-translate-y-0.5 hover:bg-[#2D72C6]">Explore Services <HiOutlineArrowDown /></a>
-            <Link to="/contact" className="home-hero-action inline-flex items-center gap-3 rounded-lg border border-white/20 bg-white/[.06] text-xs font-semibold backdrop-blur-xl transition duration-300 hover:-translate-y-0.5 hover:border-cyan-300/50 hover:bg-cyan-300/10">Contact Us <HiOutlineArrowUpRight /></Link>
+          <p className="home-hero-description home-hero-support mt-8 max-w-[620px]">
+            Intelligent automation and digital infrastructure solutions<br className="hidden sm:block" />
+            for smarter, safer and more efficient operations.
+          </p>
+          <p className="home-hero-technologies home-hero-support mt-6">BMS · SCADA · IoT · AI · Digital Twin · Robotics</p>
+          <div className="home-hero-actions home-hero-support mt-8 flex flex-wrap gap-3">
+            <Link to="/solutions" className="home-hero-action home-hero-primary gap-2">Explore Solutions <HiOutlineArrowRight aria-hidden="true" /></Link>
+            <Link to="/projects" className="home-hero-action home-hero-secondary">View Case Studies</Link>
           </div>
-          <div className="home-hero-trust home-hero-support mt-7 max-w-[850px]">
-            <div className="home-hero-trust-items flex flex-wrap items-center gap-x-3 gap-y-3 text-[11px] font-semibold text-[#AFC3DB] sm:text-xs">
-              <div className="home-hero-trust-item flex items-center gap-2">
-                <HiOutlineCheckBadge aria-hidden="true" className="h-[18px] w-[18px] shrink-0 text-[#299BF0]" />
-                <span>Siemens Certified Partner</span>
-              </div>
-              <span aria-hidden="true" className="home-hero-trust-separator text-white/45">•</span>
-              <div className="home-hero-trust-item flex items-center gap-2">
-                <HiOutlineShieldCheck aria-hidden="true" className="h-[18px] w-[18px] shrink-0 text-[#299BF0]" />
-                <span>ISO 9001:2015</span>
-              </div>
-              <span aria-hidden="true" className="home-hero-trust-separator text-white/45">•</span>
-              <div className="home-hero-trust-item flex items-center gap-2">
-                <HiOutlineGlobeAlt aria-hidden="true" className="h-[18px] w-[18px] shrink-0 text-[#299BF0]" />
-                <span>UAE · Egypt · GCC</span>
-              </div>
+          <div className="home-hero-trust home-hero-support mt-6">
+            <div className="home-hero-trust-item flex w-fit items-center gap-2 text-[11px] font-semibold text-[#AFC3DB] sm:text-xs">
+              <HiOutlineCheckBadge aria-hidden="true" className="h-[17px] w-[17px] shrink-0 text-[#32A9F5]" />
+              <span>Siemens Certified Partner</span>
+              <img src="/siemens.png" alt="Siemens" className="ml-1 h-3.5 w-auto object-contain" />
             </div>
-            <img src="/siemens.png" alt="Siemens" className="mt-4 h-5 w-auto object-contain object-left" />
           </div>
         </div>
       </div>
@@ -341,8 +521,9 @@ export default function Home() {
       <div className="absolute -left-48 top-1/3 h-96 w-96 rounded-full bg-cyan-500/10 blur-[130px]" />
       <div className="container-ems relative">
         <div className="flex flex-col items-center text-center"><SectionTitle eyebrow="Solutions" title="From physical systems to operational intelligence." text="EMS connects control, data and engineering context so teams can see more clearly and operate with confidence." align="center" /><Link to="/solutions" className="home-reveal mt-6 inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">Explore all solutions <HiOutlineArrowRight /></Link></div>
-        <div className="mt-10 grid auto-rows-[minmax(235px,1fr)] gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {solutionCards.map((solution, index) => <motion.article key={solution.title} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .08, ease }} className={`home-solution-card group relative isolate overflow-hidden rounded-2xl border border-white/10 bg-[#07182e] ${index === 0 || index === 5 ? 'lg:col-span-2' : ''}`}>
+        <SolutionsShowcase />
+        <div className="hidden">
+          {solutionCards.map((solution, index) => <motion.article key={solution.title} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .08, ease }} className="home-solution-card group relative isolate min-h-[280px] overflow-hidden rounded-2xl border border-white/10 bg-[#07182e]">
             <img src={solution.image} alt={solution.title} loading="lazy" className="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-80 transition duration-[1200ms] group-hover:scale-105 group-hover:opacity-95" />
             <div className="absolute inset-0 -z-10 bg-[linear-gradient(180deg,rgba(1,11,31,.18)_0%,rgba(1,11,31,.52)_55%,rgba(1,11,31,.94)_100%)]" />
             <div className="home-solution-content flex h-full min-h-[250px] flex-col justify-end">
@@ -363,12 +544,30 @@ export default function Home() {
           {projects.map((project, index) => <motion.article key={project.id} initial={{ opacity: 0, y: 34 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .07, ease }} className="group flex min-h-[380px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#071326] transition duration-500 hover:-translate-y-1 hover:border-cyan-300/35">
             <div className="relative h-[clamp(175px,15vw,215px)] overflow-hidden border-b border-black bg-black">
               {project.videoSrc
-                ? <button type="button" onClick={() => setActiveVideo(project)} aria-label={`Play ${project.name} video full screen`} className="group/video relative block h-full w-full overflow-hidden bg-black text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[#23C7FF]">
+                ? <button
+                    type="button"
+                    onClick={() => setActiveVideo(project)}
+                    onMouseEnter={event => {
+                      const video = event.currentTarget.querySelector('video')
+                      video?.play().catch(() => undefined)
+                    }}
+                    onMouseLeave={event => {
+                      const video = event.currentTarget.querySelector('video')
+                      if (!video) return
+                      video.pause()
+                      if (Number.isFinite(video.duration)) video.currentTime = Math.min(1, Math.max(.2, video.duration * .02))
+                    }}
+                    onFocus={event => event.currentTarget.querySelector('video')?.play().catch(() => undefined)}
+                    onBlur={event => event.currentTarget.querySelector('video')?.pause()}
+                    aria-label={`Preview ${project.name} video; click to open the large video player`}
+                    className="group/video relative block h-full w-full cursor-pointer overflow-hidden bg-black text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[#23C7FF]"
+                  >
                     <video
                       key={`${project.videoSrc}-dashboard-preview`}
                       src={project.videoSrc}
                       preload="metadata"
                       muted
+                      loop
                       playsInline
                       aria-hidden="true"
                       onLoadedMetadata={event => {
@@ -377,14 +576,13 @@ export default function Home() {
                         video.dataset.previewReady = 'true'
                         video.currentTime = Number.isFinite(video.duration) ? Math.min(1, Math.max(.2, video.duration * .02)) : 1
                       }}
-                      onSeeked={event => event.currentTarget.pause()}
                       className="pointer-events-none absolute inset-x-0 top-1/2 h-[82%] w-full -translate-y-1/2 bg-black object-cover object-center"
                     >
                       Your browser does not support the video element.
                     </video>
-                    <span className="absolute inset-0 bg-[#010B1F]/[.03] transition group-hover/video:bg-transparent" />
-                    <span onMouseEnter={() => setActiveVideo(project)} className="absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-[#010B1F]/80 text-white shadow-[0_12px_35px_rgba(0,0,0,.4)] backdrop-blur transition duration-300 group-hover/video:scale-110 group-hover/video:bg-[rgb(33,124,154)]"><HiOutlinePlay className="ml-0.5 h-6 w-6" /></span>
-                    <span className="absolute bottom-3 right-4 rounded-full bg-[#010B1F]/80 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[.16em] text-white/85 backdrop-blur">Open video</span>
+                    <span className="absolute inset-0 bg-[#010B1F]/[.04] transition duration-300 group-hover/video:bg-transparent" />
+                    <span className="pointer-events-none absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-[#010B1F]/80 text-white shadow-[0_12px_35px_rgba(0,0,0,.4)] backdrop-blur transition duration-300 group-hover/video:scale-90 group-hover/video:opacity-0 group-focus-visible/video:scale-90 group-focus-visible/video:opacity-0"><HiOutlinePlay className="ml-0.5 h-6 w-6" /></span>
+                    <span className="pointer-events-none absolute bottom-3 right-4 rounded-full bg-[#010B1F]/80 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[.16em] text-white/85 backdrop-blur transition duration-300 group-hover/video:bg-[rgb(33,124,154)]">Click to expand</span>
                   </button>
                 : project.videoId
                   ? <iframe src={`https://www.youtube-nocookie.com/embed/${project.videoId}?rel=0`} title={`${project.name} project video`} loading="lazy" className="h-full w-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
@@ -545,12 +743,12 @@ export default function Home() {
             exit={{ opacity: 0, scale: .96, y: 10 }}
             transition={{ duration: .3, ease }}
             onMouseDown={event => event.stopPropagation()}
-            className="relative w-full max-w-[1500px]"
+            className="relative w-[96vw] max-w-[1700px]"
           >
             <button type="button" autoFocus onClick={() => setActiveVideo(null)} aria-label="Close video" className="absolute right-2 top-2 z-10 flex h-11 w-11 items-center justify-center rounded-full border border-white/25 bg-[#010B1F]/85 text-white shadow-lg backdrop-blur transition hover:border-white/60 hover:bg-[rgb(33,124,154)] sm:-right-3 sm:-top-3">
               <HiOutlineXMark className="h-6 w-6" />
             </button>
-            <video key={activeVideo.videoSrc} src={activeVideo.videoSrc} controls autoPlay preload="auto" playsInline className="max-h-[84vh] w-full rounded-xl border border-white/10 bg-black object-contain shadow-[0_30px_100px_rgba(0,0,0,.65)]">Your browser does not support the video element.</video>
+            <video key={activeVideo.videoSrc} src={activeVideo.videoSrc} controls autoPlay preload="auto" playsInline className="max-h-[88vh] w-full rounded-xl border border-white/10 bg-black object-contain shadow-[0_30px_100px_rgba(0,0,0,.65)]">Your browser does not support the video element.</video>
             <p className="mt-3 text-center text-xs font-semibold text-white/80">{activeVideo.name} · {activeVideo.location}</p>
           </motion.div>
         </motion.div>
