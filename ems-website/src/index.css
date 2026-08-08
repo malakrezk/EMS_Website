@@ -2,6 +2,17 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --text-hero: clamp(48px, 5vw, 76px);
+  --text-section: clamp(38px, 4vw, 60px);
+  --text-subheading: clamp(28px, 3vw, 42px);
+  --text-card-title: clamp(22px, 2vw, 32px);
+  --text-lead: clamp(18px, 1.5vw, 22px);
+  --text-body: clamp(15px, 1.1vw, 18px);
+  --text-label: clamp(12px, .9vw, 15px);
+  --text-caption: 13px;
+}
+
 html {
   scroll-behavior: smooth;
 }
@@ -94,6 +105,46 @@ select:focus-visible {
 }
 
 @layer components {
+  .type-page-title {
+    font-size: var(--text-hero);
+    line-height: 1;
+  }
+
+  .type-section-title {
+    font-size: var(--text-section);
+    line-height: 1.06;
+  }
+
+  .type-subheading {
+    font-size: var(--text-subheading);
+    line-height: 1.12;
+  }
+
+  .type-card-title {
+    font-size: var(--text-card-title);
+    line-height: 1.16;
+  }
+
+  .type-lead {
+    font-size: var(--text-lead);
+    line-height: 1.62;
+  }
+
+  .type-body {
+    font-size: var(--text-body);
+    line-height: 1.7;
+  }
+
+  .type-label {
+    font-size: var(--text-label);
+    line-height: 1.35;
+  }
+
+  .type-caption {
+    font-size: var(--text-caption);
+    line-height: 1.55;
+  }
+
   .container-ems {
     @apply mx-auto w-full;
     max-width: 1500px;
@@ -105,7 +156,9 @@ select:focus-visible {
   }
 
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-xs font-mono font-semibold tracking-[0.2em] uppercase text-cyan-400;
+    @apply inline-flex items-center gap-2 font-mono font-semibold tracking-[0.2em] uppercase text-cyan-400;
+    font-size: var(--text-label);
+    line-height: 1.35;
   }
 
   .btn-primary {
@@ -140,24 +193,45 @@ select:focus-visible {
   .container-ems { max-width: 1680px; padding-inline: 4rem; }
 }
 
+/* Shared semantic hierarchy for standalone pages. The Home hero is intentionally excluded. */
+:where(.about-page-shell, .services-page, .solutions-page, .project-detail-page, .service-detail-page, .industry-detail-page) > section:first-child h1 {
+  font-size: var(--text-hero);
+  line-height: 1;
+}
+
+:where(.about-page-shell, .services-page, .solutions-page, .project-detail-page, .service-detail-page, .industry-detail-page) > section:first-child h1 + p {
+  font-size: var(--text-lead);
+  line-height: 1.62;
+}
+
+:where(.about-page-shell, .services-page, .solutions-page, .project-detail-page, .service-detail-page, .industry-detail-page) section h2:not(.type-card-title) {
+  font-size: var(--text-section);
+  line-height: 1.06;
+}
+
+:where(.about-page-shell, .services-page, .solutions-page, .project-detail-page, .service-detail-page, .industry-detail-page) article h3 {
+  font-size: var(--text-card-title);
+  line-height: 1.16;
+}
+
+:where(.about-page-shell, .services-page, .solutions-page, .project-detail-page, .service-detail-page, .industry-detail-page) section h2:not(.type-card-title) + p,
+:where(.about-page-shell, .services-page, .solutions-page, .project-detail-page, .service-detail-page, .industry-detail-page) article h3 + p {
+  font-size: var(--text-body);
+  line-height: 1.7;
+}
+
 @media (max-width: 374px) {
   .btn-primary, .btn-outline { width: 100%; padding-inline: 1rem; }
 }
 
 @media (max-width: 767px) {
   .section-padding { padding-block: 3.5rem; }
-  .eyebrow { font-size: .65rem; letter-spacing: .15em; }
+  .eyebrow { letter-spacing: .15em; }
   .service-detail-page > section:first-child,
   .industry-detail-page > section:first-child,
   .solutions-page > section:first-child,
   .project-detail-page > section:first-child {
     min-height: 520px;
-  }
-  .service-detail-page > section:first-child h1,
-  .industry-detail-page > section:first-child h1,
-  .solutions-page > section:first-child h1,
-  .project-detail-page > section:first-child h1 {
-    font-size: clamp(2rem, 10vw, 3rem);
   }
   .service-detail-page section:nth-of-type(3) article { min-height: 320px; }
 }
@@ -165,9 +239,7 @@ select:focus-visible {
 @media (max-height: 850px) and (min-width: 1024px) {
   .section-padding { padding-block: 3.75rem; }
   .about-page-shell > section:first-child > .container-ems { min-height: 500px; padding-block: 3.5rem; }
-  .about-page-shell > section:first-child h1 { font-size: clamp(2.5rem, 5vw, 4.5rem); }
   .service-detail-page > section:first-child { min-height: 680px; padding-bottom: 4rem; }
-  .service-detail-page > section:first-child h1 { font-size: clamp(2.4rem, 4vw, 3.5rem); }
   .service-detail-page section:nth-of-type(3) article { min-height: 310px; }
   .industry-detail-page > section:first-child { min-height: 600px; padding-bottom: 4rem; }
   .solutions-page > section:first-child { min-height: 600px; }

@@ -11,17 +11,26 @@ import {
 import { servicesShowcase } from '../data/servicesShowcase'
 import { projects } from '../data/projects'
 import { partners } from '../data/partners'
+import IndustriesAccordionCarousel from '../components/home/IndustriesAccordionCarousel'
 
 gsap.registerPlugin(ScrollTrigger)
 
 const solutionCards = [
-  { title: 'SCADA', label: 'Infrastructure control', image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1800&q=84', text: 'Live command, alarms and operational visibility across distributed assets.' },
-  { title: 'Building Management', label: 'Intelligent buildings', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=84', text: 'One coordinated view for HVAC, power, lighting and life-safety systems.' },
-  { title: 'Digital Operations', label: 'Connected context', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=84', text: 'Facility information transformed into clear, useful operating intelligence.' },
-  { title: 'Energy Management', label: 'Visible performance', image: 'https://images.unsplash.com/photo-1473341304170-971dccb5ac1e?auto=format&fit=crop&w=1800&q=84', text: 'Metering, analytics and control strategies that expose avoidable demand.' },
-  { title: 'Industrial Automation', label: 'Precision and uptime', image: 'https://images.unsplash.com/photo-1581092160607-ee22621dd758?auto=format&fit=crop&w=1800&q=84', text: 'PLC, instrumentation and process control engineered as one reliable system.' },
-  { title: 'Smart Buildings', label: 'Adaptive environments', image: 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=1800&q=84', text: 'Responsive places that connect physical engineering with digital insight.' },
+  { id: 'building-management', title: 'BMS', label: 'Intelligent buildings', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=88', text: 'Centralized building management for intelligent monitoring, control and energy efficiency.', to: '/services/building-management' },
+  { id: 'scada', title: 'SCADA', label: 'Infrastructure control', image: 'https://images.unsplash.com/photo-1581092918056-0c4c3acd3789?auto=format&fit=crop&w=1800&q=88', text: 'Real-time supervision and control for industrial systems and critical infrastructure.', to: '/services/scada' },
+  { id: 'iot', title: 'IoT', label: 'Connected operations', image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=88', text: 'Connected sensors, devices and infrastructure that turn operational data into intelligent action.', to: '/services/iot' },
+  { id: 'artificial-intelligence', title: 'Artificial Intelligence', label: 'Operational intelligence', image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=88', text: 'AI-powered automation, prediction and decision support for smarter operations.', to: '/services/artificial-intelligence' },
+  { id: 'digital-twin', title: 'Digital Twin', label: 'Virtual operations', image: '/hero-control-room-04.jpg', text: 'Virtual representations of physical systems for monitoring, simulation and optimization.', to: '/services/digital-twin' },
+  { id: 'robotics-iot', title: 'Robotics & IoT', label: 'Smart automation', image: 'https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?auto=format&fit=crop&w=1800&q=88', text: 'Connected robotic automation combining intelligent machines, sensors and real-time control.', to: '/services/robotics-iot' },
 ]
+
+const homeSolutionSectors = [
+  'Towers · Hospitals · Factories',
+  'Warehouses · Schools · Malls',
+  'Oil · Water · Electrical Plants',
+]
+
+const homeSolutionsSpring = { type: 'spring', stiffness: 120, damping: 22, mass: .8 }
 
 const homeStyles = `
   .home-page-shell { --home-cyan: #23C7FF; }
@@ -47,9 +56,9 @@ const homeStyles = `
   .home-page-shell #home-hero .home-hero-trust-item { transition:transform .25s ease,color .25s ease; }
   .home-page-shell #home-hero .home-hero-trust-item:hover { transform:translateY(-2px);color:#fff; }
   .home-page-shell .home-section-title { font-size:clamp(2.35rem,5vw,5rem); }
-  .home-page-shell #home-services .home-section-title { font-size:clamp(1.9rem,3.5vw,3.7rem); }
+  .home-page-shell #home-services .home-section-title { font-size:clamp(1.75rem,3vw,3rem); }
   .home-page-shell #home-solutions .home-section-title { font-size:clamp(1.9rem,3.5vw,3.7rem); }
-  .home-page-shell #home-solutions { padding-block:clamp(2.75rem,5vh,4rem); }
+  .home-page-shell #home-solutions { padding-top:clamp(4.5rem,8vh,6.5rem);padding-bottom:clamp(2.75rem,5vh,4rem); }
   .home-page-shell #home-solutions .home-section-title { margin-top:1rem;font-size:clamp(1.9rem,3vw,3.2rem); }
   .home-page-shell #home-solutions .home-section-copy { margin-top:1rem;line-height:1.65; }
   .home-page-shell #home-case-studies .home-section-title { font-size:clamp(1.85rem,3vw,3.25rem); }
@@ -58,11 +67,13 @@ const homeStyles = `
   .home-page-shell #home-services .home-section-copy { color:rgb(86,170,198); }
   .home-page-shell #home-solutions .home-section-copy { color:rgb(86,170,198); }
   .home-page-shell #home-case-studies .home-section-copy { color:rgb(86,170,198); }
-  .home-page-shell .home-services-section { padding-block:clamp(3.75rem,6vw,6rem); }
-  .home-page-shell .home-carousel-stage { height:clamp(330px,40vw,420px); }
-  .home-page-shell .home-service-card { height:clamp(310px,35vw,380px);width:min(62vw,500px); }
-  .home-page-shell .home-service-content { padding:clamp(1.15rem,3vw,2rem); }
-  .home-page-shell .home-service-title { font-size:clamp(1.75rem,4.2vw,3.5rem); }
+  .home-page-shell #home-services .home-section-heading > p:first-child { font-size:clamp(1rem,1.5vw,1.3rem); }
+  .home-page-shell #home-services .home-section-copy { font-size:clamp(.78rem,1vw,.9rem);line-height:1.6; }
+  .home-page-shell .home-services-section { padding-block:clamp(2.5rem,4vw,4rem); }
+  .home-page-shell .home-carousel-stage { height:clamp(285px,32vw,350px); }
+  .home-page-shell .home-service-card { height:clamp(270px,29vw,320px);width:min(56vw,440px); }
+  .home-page-shell .home-service-content { padding:clamp(.9rem,2vw,1.35rem); }
+  .home-page-shell .home-service-title { font-size:clamp(1.55rem,3.2vw,2.65rem); }
   .home-page-shell .home-hero-content { padding-bottom:clamp(4rem,8vw,7rem); }
   .home-page-shell .home-major-section { padding-block:clamp(4.5rem,8vw,7.5rem); }
   .home-page-shell .home-solution-content { padding:clamp(1.4rem,3vw,2.25rem); }
@@ -85,7 +96,7 @@ const homeStyles = `
   .home-page-shell .home-service-card:hover::after { transform:translateX(42%) rotate(8deg); }
   .home-page-shell .home-solution-card::before { content:'';position:absolute;inset:0;border-radius:inherit;border:1px solid transparent;background:linear-gradient(135deg,rgba(89,220,255,.55),transparent 35%,rgba(255,255,255,.12)) border-box;mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);mask-composite:exclude;opacity:0;transition:opacity .5s ease;pointer-events:none; }
   .home-page-shell .home-solution-card:hover::before { opacity:1; }
-  .home-page-shell .home-solutions-progress { animation:homeSolutionsProgress 5s linear forwards;transform-origin:left; }
+  .home-page-shell .home-solutions-progress { animation:homeSolutionsProgress 6.2s linear forwards;transform-origin:left; }
   .home-page-shell .home-solutions-progress.is-paused { animation-play-state:paused; }
   body:has(.home-page-shell) header nav > div:nth-of-type(1) a[href='/services'] { order:1; }
   body:has(.home-page-shell) header nav > div:nth-of-type(1) a[href='/solutions'] { order:2; }
@@ -98,10 +109,22 @@ const homeStyles = `
   @keyframes homeFloat { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-9px,0)} }
   @keyframes homeSolutionsProgress { from{transform:scaleX(0)} to{transform:scaleX(1)} }
   @media (hover:none) { .home-page-shell .home-solution-description { opacity:1;transform:none; } }
-  @media (max-width:767px) { .home-page-shell .home-hero-title{font-size:clamp(2rem,9vw,2.7rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.26em}.home-page-shell .home-hero-content{padding-top:6rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-service-card{height:350px;width:min(88vw,440px)}.home-page-shell .home-carousel-stage{height:380px}.home-page-shell .home-service-title{font-size:clamp(1.65rem,9vw,2.6rem)} }
+  @media (max-width:1023px) { .home-page-shell .home-service-content ul{display:none}.home-page-shell .home-carousel-stage{margin-top:2rem} }
+  @media (max-width:767px) { .home-page-shell .home-hero-title{font-size:clamp(2rem,9vw,2.7rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.26em}.home-page-shell .home-hero-content{padding-top:6rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-services-section{padding-block:2.4rem}.home-page-shell .home-service-card{height:300px;width:min(86vw,360px)}.home-page-shell .home-carousel-stage{height:320px}.home-page-shell .home-service-title{font-size:clamp(1.45rem,7.5vw,2.15rem)}.home-page-shell #home-services .home-section-copy{max-width:34rem;padding-inline:.75rem}.home-page-shell #home-services .home-section-title{font-size:clamp(1.7rem,8vw,2.35rem)} }
+  @media (max-width:479px) { .home-page-shell #home-services .home-section-heading > p:first-child{font-size:.9rem}.home-page-shell .home-service-card{height:280px;width:min(88vw,330px)}.home-page-shell .home-carousel-stage{height:300px}.home-page-shell .home-service-content{padding:.85rem}.home-page-shell #home-services .home-section-copy{font-size:.76rem;line-height:1.55} }
   @media (max-width:639px) { .home-page-shell #home-hero .home-hero-trust-items{align-items:flex-start;flex-direction:column}.home-page-shell #home-hero .home-hero-trust-separator{display:none} }
   @media (max-width:479px) { .home-page-shell #home-hero .home-hero-actions{align-items:stretch;flex-direction:column}.home-page-shell #home-hero .home-hero-action{width:100%} }
-  @media (max-height:850px) and (min-width:1024px) { .home-page-shell .home-services-section{padding-block:3rem}.home-page-shell .home-carousel-stage{height:350px;margin-top:2rem}.home-page-shell .home-service-card{height:330px;width:min(56vw,470px)}.home-page-shell .home-service-content{padding:1.15rem}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-service-title{font-size:clamp(1.8rem,3.5vw,3rem)}.home-page-shell .home-section-copy{margin-top:1rem}.home-page-shell .home-major-section{padding-block:4.5rem} }
+  @media (max-height:850px) and (min-width:1024px) { .home-page-shell .home-services-section{padding-block:2.25rem}.home-page-shell .home-carousel-stage{height:290px;margin-top:1.5rem}.home-page-shell .home-service-card{height:275px;width:min(50vw,410px)}.home-page-shell .home-service-content{padding:.95rem}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-service-title{font-size:clamp(1.5rem,2.7vw,2.3rem)}.home-page-shell .home-section-copy{margin-top:.75rem}.home-page-shell .home-major-section{padding-block:4.5rem} }
+  .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-title { font-size:var(--text-section);line-height:1.06; }
+  .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-copy { font-size:var(--text-body);line-height:1.7; }
+  .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-heading > p:first-child { font-size:var(--text-label);line-height:1.35; }
+  .home-page-shell #home-services .home-service-title,
+  .home-page-shell #home-case-studies .home-case-title { font-size:var(--text-card-title);line-height:1.16; }
+  @media (min-width:1024px) {
+    .home-page-shell :is(#home-services,#home-solutions,#home-case-studies) .home-section-heading { width:100%;max-width:none; }
+    .home-page-shell :is(#home-services,#home-solutions,#home-case-studies) .home-section-title { font-size:clamp(2rem,3vw,3.15rem);white-space:nowrap; }
+    .home-page-shell #home-solutions .home-section-heading { max-width:68rem; }
+  }
   @media (prefers-reduced-motion: reduce) { .home-page-shell .home-network-path,.home-page-shell .home-data-particle,.home-page-shell .home-scan,.home-page-shell .home-float,.home-page-shell .home-scroll-line::after,.home-page-shell .home-solutions-progress{animation:none!important}.home-page-shell #home-hero .home-hero-trust-item{transition:none!important} }
 `
 
@@ -119,6 +142,48 @@ const heroImages = [
   '/hero-control-room-04.jpg',
   '/hero-control-room-05.jpg',
 ]
+
+const homeServiceCards = [
+  {
+    ...servicesShowcase.find(service => service.id === 'building-management-systems'),
+    title: 'BMS',
+    description: 'Unified building management for HVAC, power, lighting, security and life-safety systems.',
+    features: ['Unified building dashboards', 'HVAC and lighting control', 'Energy and fault reporting'],
+  },
+  {
+    ...servicesShowcase.find(service => service.id === 'scada'),
+    title: 'SCADA',
+    description: 'Real-time supervisory control, alarms and operational visibility across distributed infrastructure.',
+    features: ['Live process visualization', 'Remote telemetry and alarms', 'Historian and reporting'],
+  },
+  {
+    ...servicesShowcase.find(service => service.id === 'light-current-systems'),
+    title: 'IoT',
+    description: 'Connected sensors and devices that transform facility data into clear, actionable insight.',
+    features: ['Connected sensors and gateways', 'Real-time device monitoring', 'Secure data integration'],
+  },
+  {
+    ...servicesShowcase.find(service => service.id === 'control-systems'),
+    title: 'AI',
+    description: 'AI-powered analytics for smarter decisions, predictive maintenance and efficient operations.',
+    features: ['Predictive maintenance', 'Operational analytics', 'Intelligent recommendations'],
+  },
+  {
+    ...servicesShowcase.find(service => service.id === 'industrial-automation'),
+    title: 'Robotics',
+    description: 'Connected robotic automation engineered to improve precision, throughput and workplace safety.',
+    features: ['Robotic process integration', 'Production automation', 'Performance monitoring'],
+  },
+  {
+    ...servicesShowcase.find(service => service.id === 'energy-management'),
+    id: 'digital-twin',
+    title: 'Digital Twin',
+    image: '/hero-control-room-04.jpg',
+    description: 'A connected digital representation of physical systems for simulation, monitoring and remote insight.',
+    features: ['Live operational context', 'Remote system understanding', 'Simulation and maintenance support'],
+    to: '/digital-twin',
+  },
+]
 const featuredPartners = partners.filter(partner => ['siemens', 'cisco', 'aws', 'oracle'].includes(partner.id))
 
 function Eyebrow({ children }) {
@@ -134,12 +199,12 @@ function SectionTitle({ eyebrow, title, text, align = 'left' }) {
 }
 
 function ServiceCarousel() {
-  const [active, setActive] = useState(4)
+  const [active, setActive] = useState(0)
   const [viewportWidth, setViewportWidth] = useState(() => typeof window === 'undefined' ? 1440 : window.innerWidth)
   const wheelLocked = useRef(false)
   const hoverTimer = useRef(null)
-  const activeService = servicesShowcase[active]
-  const total = servicesShowcase.length
+  const activeService = homeServiceCards[active]
+  const total = homeServiceCards.length
 
   useEffect(() => {
     const resize = () => setViewportWidth(window.innerWidth)
@@ -157,8 +222,14 @@ function ServiceCarousel() {
     if (difference < -total / 2) difference += total
     return difference
   }
-  const gap = viewportWidth < 640 ? viewportWidth * .68 : Math.min(viewportWidth * .31, 470)
-  const cardWidth = viewportWidth < 768 ? Math.min(viewportWidth * .88, 440) : Math.min(viewportWidth * .62, 500)
+  const gap = viewportWidth < 640 ? viewportWidth * .62 : Math.min(viewportWidth * .28, 410)
+  const cardWidth = viewportWidth < 480
+    ? Math.min(viewportWidth * .88, 330)
+    : viewportWidth < 768
+      ? Math.min(viewportWidth * .86, 360)
+      : viewportWidth >= 1024 && typeof window !== 'undefined' && window.innerHeight <= 850
+        ? Math.min(viewportWidth * .5, 410)
+        : Math.min(viewportWidth * .56, 440)
 
   const onWheel = event => {
     const horizontalIntent = event.shiftKey || (Math.abs(event.deltaX) > 12 && Math.abs(event.deltaX) > Math.abs(event.deltaY) * 1.5)
@@ -178,10 +249,10 @@ function ServiceCarousel() {
     <div className="home-grid absolute inset-0 opacity-30 [mask-image:linear-gradient(to_bottom,transparent,black_25%,black_75%,transparent)]" />
 
     <div className="container-ems relative">
-      <SectionTitle eyebrow="Engineering services" title="Every discipline. One connected system." text="Explore EMS capabilities without interrupting your journey. Drag, swipe, use the arrows, or move horizontally with your trackpad—the page always remains free to scroll." align="center" />
+      <SectionTitle eyebrow="Engineering services" title="Integrated Engineering. Intelligent Operations." text="Explore EMS capabilities without interrupting your journey. Drag, swipe, use the arrows, or move horizontally with your trackpad—the page always remains free to scroll." align="center" />
 
-      <div onWheel={onWheel} onKeyDown={event => { if (event.key === 'ArrowRight') move(1); if (event.key === 'ArrowLeft') move(-1) }} tabIndex="0" aria-label="EMS engineering services carousel" className="home-carousel-stage relative mt-12 outline-none [perspective:1400px]">
-        {servicesShowcase.map((service, index) => {
+      <div onWheel={onWheel} onKeyDown={event => { if (event.key === 'ArrowRight') move(1); if (event.key === 'ArrowLeft') move(-1) }} tabIndex="0" aria-label="EMS engineering services carousel" className="home-carousel-stage relative mt-8 outline-none [perspective:1400px]">
+        {homeServiceCards.map((service, index) => {
           const position = relativePosition(index)
           if (Math.abs(position) > 2) return null
           const isActive = position === 0
@@ -211,16 +282,16 @@ function ServiceCarousel() {
             <img src={service.image} alt={service.title} loading={isActive ? 'eager' : 'lazy'} className="absolute inset-0 h-full w-full object-cover transition duration-[1400ms] ease-out group-hover:scale-[1.055]" />
             <div className="absolute inset-0 bg-gradient-to-t from-[#020812] via-[#071629]/35 to-black/5" />
             <div className="home-service-content absolute inset-x-0 bottom-0">
-              <div className="flex h-11 w-11 items-center justify-center rounded-xl border border-cyan-300/25 bg-[#07182e]/80 text-[rgb(33,124,154)] backdrop-blur-xl"><Icon className="h-5 w-5" /></div>
-              <p className="mt-5 font-mono text-[9px] uppercase tracking-[.26em] text-[#299BF0]">Service {String(index + 1).padStart(2, '0')} / EMS Engineering</p>
-              <h3 className="home-service-title mt-3 max-w-2xl font-serif leading-none tracking-[-.025em]">{service.title}</h3>
+              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-300/25 bg-[#07182e]/80 text-[rgb(33,124,154)] backdrop-blur-xl"><Icon className="h-[18px] w-[18px]" /></div>
+              <p className="mt-3 font-mono text-[8px] uppercase tracking-[.24em] text-[#299BF0]">Service {String(index + 1).padStart(2, '0')} / EMS Engineering</p>
+              <h3 className="home-service-title mt-2 max-w-2xl font-serif leading-none tracking-[-.025em]">{service.title}</h3>
               <motion.div animate={{ height: isActive ? 'auto' : 0, opacity: isActive ? 1 : 0 }} transition={{ duration: .55, ease }} className="overflow-hidden">
-                <div className="mt-5 max-w-xl rounded-xl border border-white/10 bg-[#07101e]/75 p-5 backdrop-blur-xl sm:p-6">
-                  <p className="text-[13px] leading-6 text-slate-300">{service.description}</p>
+                <div className="mt-3 max-w-xl rounded-xl border border-white/10 bg-[#07101e]/75 p-4 backdrop-blur-xl">
+                  <p className="text-[12px] leading-5 text-slate-300">{service.description}</p>
                   <ul className="mt-4 hidden grid-cols-2 gap-x-5 gap-y-2 text-[11px] text-slate-300 sm:grid">
                     {service.features.slice(0, 3).map(feature => <li key={feature} className="flex items-center gap-2"><HiOutlineCheck className="shrink-0 text-[#299BF0]" />{feature}</li>)}
                   </ul>
-                  <Link to={`/services/${service.id}`} className="mt-5 inline-flex items-center gap-2 rounded-lg bg-[rgb(33,124,154)] px-5 py-3 text-xs font-semibold text-white shadow-[0_12px_35px_rgba(33,124,154,.28)] transition hover:-translate-y-0.5 hover:bg-[#23C7FF]">Explore Service <HiOutlineArrowUpRight /></Link>
+                  <Link to={service.to ?? `/services/${service.id}`} className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[rgb(33,124,154)] px-4 py-2.5 text-[11px] font-semibold text-white shadow-[0_12px_35px_rgba(33,124,154,.28)] transition hover:-translate-y-0.5 hover:bg-[#23C7FF]">Explore Service <HiOutlineArrowUpRight /></Link>
                 </div>
               </motion.div>
             </div>
@@ -239,15 +310,32 @@ function ServiceCarousel() {
 }
 
 function SolutionsShowcase() {
-  const [active, setActive] = useState(1)
+  const [active, setActive] = useState(0)
   const [paused, setPaused] = useState(false)
   const [hovered, setHovered] = useState(false)
+  const [interacting, setInteracting] = useState(false)
+  const [tabVisible, setTabVisible] = useState(() => typeof document === 'undefined' || !document.hidden)
   const [viewportWidth, setViewportWidth] = useState(() => typeof window === 'undefined' ? 1440 : window.innerWidth)
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  const interactionTimer = useRef(null)
+  const wheelLocked = useRef(false)
   const total = solutionCards.length
   const activeSolution = solutionCards[active]
 
   const move = useCallback(direction => setActive(index => (index + direction + total) % total), [total])
+  const registerInteraction = useCallback(() => {
+    window.clearTimeout(interactionTimer.current)
+    setInteracting(true)
+    interactionTimer.current = window.setTimeout(() => setInteracting(false), 4200)
+  }, [])
+  const moveManually = useCallback(direction => {
+    move(direction)
+    registerInteraction()
+  }, [move, registerInteraction])
+  const selectManually = useCallback(index => {
+    setActive(index)
+    registerInteraction()
+  }, [registerInteraction])
   const relativePosition = index => {
     let difference = index - active
     if (difference > total / 2) difference -= total
@@ -257,44 +345,68 @@ function SolutionsShowcase() {
 
   useEffect(() => {
     const resize = () => setViewportWidth(window.innerWidth)
+    const visibility = () => setTabVisible(!document.hidden)
     const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)')
     const syncMotion = () => setReducedMotion(motionQuery.matches)
     window.addEventListener('resize', resize, { passive: true })
+    document.addEventListener('visibilitychange', visibility)
     motionQuery.addEventListener('change', syncMotion)
     return () => {
       window.removeEventListener('resize', resize)
+      document.removeEventListener('visibilitychange', visibility)
       motionQuery.removeEventListener('change', syncMotion)
+      window.clearTimeout(interactionTimer.current)
     }
   }, [])
 
   useEffect(() => {
-    if (paused || hovered || reducedMotion) return undefined
-    const timer = window.setTimeout(() => move(1), 5000)
+    if (paused || hovered || interacting || reducedMotion || !tabVisible) return undefined
+    const timer = window.setTimeout(() => move(1), 6200)
     return () => window.clearTimeout(timer)
-  }, [active, hovered, move, paused, reducedMotion])
+  }, [active, hovered, interacting, move, paused, reducedMotion, tabVisible])
 
   const isMobile = viewportWidth < 640
   const isTablet = viewportWidth < 1024
-  const cardWidth = isMobile ? Math.min(viewportWidth * .74, 285) : isTablet ? 270 : 300
-  const cardHeight = isMobile ? 300 : isTablet ? 325 : 350
-  const spacing = isMobile ? cardWidth * .62 : isTablet ? cardWidth * .72 : cardWidth * .82
+  const cardWidth = isMobile ? Math.min(viewportWidth * .82, 310) : isTablet ? 320 : 360
+  const cardHeight = isMobile ? 370 : isTablet ? 390 : 420
+  const spacing = isMobile ? cardWidth * .74 : isTablet ? cardWidth * .78 : cardWidth * .86
   const visibleRange = isMobile ? 1 : 2
+
+  const handleWheel = event => {
+    const horizontalAmount = event.deltaX || (event.shiftKey ? event.deltaY : 0)
+    const horizontalIntent = Math.abs(event.deltaX) > Math.abs(event.deltaY) * 1.2 || event.shiftKey
+    if (!horizontalIntent || Math.abs(horizontalAmount) < 10 || wheelLocked.current) return
+    event.preventDefault()
+    moveManually(horizontalAmount > 0 ? 1 : -1)
+    wheelLocked.current = true
+    window.setTimeout(() => { wheelLocked.current = false }, 520)
+  }
 
   return <div
     onMouseEnter={() => setHovered(true)}
     onMouseLeave={() => setHovered(false)}
-    className="home-reveal mx-auto mt-6 w-full max-w-[1450px] overflow-hidden rounded-[1.75rem] border border-[#299BF0]/25 bg-[#07182e] shadow-[0_35px_100px_rgba(0,0,0,.38)]"
+    onWheel={handleWheel}
+    onKeyDown={event => {
+      if (event.key === 'ArrowLeft') { event.preventDefault(); moveManually(-1) }
+      if (event.key === 'ArrowRight') { event.preventDefault(); moveManually(1) }
+    }}
+    tabIndex="0"
+    aria-label="EMS solutions carousel"
+    className="home-reveal mx-auto mt-6 w-full max-w-[1450px] overflow-hidden rounded-[1.75rem] bg-[#07182e] shadow-[0_35px_100px_rgba(0,0,0,.38)] outline-none focus-visible:ring-2 focus-visible:ring-[#299BF0]"
   >
-    <div className="flex items-center justify-between gap-5 border-b border-white/10 bg-[#041126]/85 px-5 py-4 sm:px-7">
+    <div className="flex items-center justify-between gap-5 bg-[#041126]/85 px-5 py-4 sm:px-7">
       <div className="flex items-center gap-4">
         <span className="font-serif text-lg font-semibold tracking-[.14em] text-white">EMS</span>
         <span className="hidden h-4 w-px bg-white/15 sm:block" />
         <span className="hidden font-mono text-[8px] uppercase tracking-[.22em] text-[#56AAC6] sm:block">Solutions portfolio</span>
       </div>
-      <div className="hidden items-center gap-5 font-mono text-[7px] uppercase tracking-[.16em] text-white/45 md:flex">
-        {solutionCards.slice(0, 4).map((solution, index) => <button key={solution.title} type="button" onClick={() => setActive(index)} className={`transition hover:text-white ${active === index ? 'text-[#56AAC6]' : ''}`}>{solution.label}</button>)}
+      <div className="hidden items-center gap-5 font-mono text-[7px] uppercase tracking-[.16em] text-white/50 xl:flex" aria-label="Industries served">
+        {homeSolutionSectors.map(sector => <span key={sector}>{sector}</span>)}
       </div>
       <Link to="/solutions" className="rounded-full border border-[#299BF0]/40 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[.12em] text-white transition hover:bg-[#299BF0]">View all</Link>
+    </div>
+    <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-1 bg-[#041126]/78 px-4 py-2.5 font-mono text-[7px] uppercase tracking-[.13em] text-white/50 xl:hidden" aria-label="Industries served">
+      {homeSolutionSectors.map(sector => <span key={sector}>{sector}</span>)}
     </div>
 
     <div className="relative isolate overflow-hidden bg-[#020a16]">
@@ -306,61 +418,78 @@ function SolutionsShowcase() {
       <motion.div
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
-        dragElastic={.1}
-        onDragEnd={(_, info) => { if (Math.abs(info.offset.x) > 55 || Math.abs(info.velocity.x) > 450) move(info.offset.x < 0 ? 1 : -1) }}
-        className="relative h-[clamp(325px,38vw,390px)] overflow-hidden [perspective:1500px]"
+        dragElastic={.16}
+        dragMomentum={false}
+        dragSnapToOrigin
+        onDragStart={() => {
+          window.clearTimeout(interactionTimer.current)
+          setInteracting(true)
+        }}
+        onDragEnd={(_, info) => {
+          if (Math.abs(info.offset.x) > 55 || Math.abs(info.velocity.x) > 450) moveManually(info.offset.x < 0 ? 1 : -1)
+          else registerInteraction()
+        }}
+        className="relative h-[clamp(400px,43vw,470px)] cursor-grab overflow-hidden active:cursor-grabbing [perspective:1700px] [transform-style:preserve-3d]"
       >
         {solutionCards.map((solution, index) => {
           const position = relativePosition(index)
           if (Math.abs(position) > visibleRange) return null
           const isActive = position === 0
           const distance = Math.abs(position)
-          const scale = isActive ? 1 : distance === 1 ? .82 : .68
+          const scale = isActive ? 1 : distance === 1 ? .82 : .66
+          const titleSize = isActive
+            ? (isMobile ? '1.85rem' : '2.45rem')
+            : distance === 1
+              ? (isMobile ? '1.4rem' : '1.85rem')
+              : '1.55rem'
           return <motion.article
-            key={solution.title}
-            role="button"
-            tabIndex={0}
+            key={solution.id}
+            role={isActive ? 'group' : 'button'}
+            tabIndex={isActive ? -1 : 0}
+            aria-current={isActive ? 'true' : undefined}
             aria-label={`${solution.title}${isActive ? ', selected' : ', select solution'}`}
-            onClick={() => setActive(index)}
-            onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); setActive(index) } }}
+            onClick={() => !isActive && selectManually(index)}
+            onKeyDown={event => { if (event.key === 'Enter' || event.key === ' ') { event.preventDefault(); selectManually(index) } }}
             initial={false}
             animate={{
               x: position * spacing - cardWidth / 2,
-              y: isActive ? 12 : 28 + distance * 10,
-              z: isActive ? 80 : distance === 1 ? 5 : -45,
-              rotateY: position * -12,
+              y: isActive ? 12 : 27 + distance * 8,
+              z: isActive ? 80 : distance === 1 ? 0 : -80,
+              rotateY: position * (isMobile ? -6 : distance === 1 ? -10 : -9),
               scale,
-              opacity: isActive ? 1 : distance === 1 ? .76 : .42,
-              filter: distance === 2 ? 'blur(1.5px)' : 'blur(0px)',
+              opacity: isActive ? 1 : distance === 1 ? .74 : .4,
+              filter: isActive ? 'blur(0px) brightness(1)' : distance === 1 ? 'blur(1px) brightness(.78)' : 'blur(3px) brightness(.62)',
             }}
             whileHover={!isActive ? { scale: scale + .035, opacity: Math.min(1, distance === 1 ? .88 : .55) } : { scale: 1.01 }}
-            transition={{ duration: reducedMotion ? 0 : .68, ease }}
-            style={{ left: '50%', top: 0, width: cardWidth, height: cardHeight, zIndex: 10 - distance }}
+            transition={reducedMotion ? { duration: 0 } : homeSolutionsSpring}
+            style={{ left: '50%', top: 0, width: cardWidth, height: cardHeight, zIndex: 10 - distance, transformStyle: 'preserve-3d' }}
             className={`group absolute cursor-pointer overflow-hidden rounded-2xl border bg-[#061326] shadow-[0_22px_65px_rgba(0,0,0,.55)] outline-none transition-colors focus-visible:ring-2 focus-visible:ring-[#56AAC6] ${isActive ? 'border-[#56AAC6]/70 shadow-[0_28px_80px_rgba(0,0,0,.6),0_0_30px_rgba(41,155,240,.12)]' : 'border-white/15'}`}
           >
-            <img src={solution.image} alt="" className="absolute inset-0 h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105" />
+            <img src={solution.image} alt={`${solution.title} solution`} loading={isActive ? 'eager' : 'lazy'} className="absolute inset-0 h-full w-full object-cover transition duration-[1200ms] group-hover:scale-105" />
             <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,11,31,.08),rgba(1,11,31,.25)_45%,rgba(1,11,31,.94))]" />
             <div className="absolute inset-x-0 bottom-0 p-5 text-center">
               <p className="font-mono text-[7px] uppercase tracking-[.22em] text-[#56AAC6]">{solution.label}</p>
-              <h3 className="mt-2 font-serif text-[clamp(1.45rem,2.3vw,2.15rem)] leading-[.95] text-white">{solution.title}</h3>
+              <motion.h3 animate={{ fontSize: titleSize }} transition={reducedMotion ? { duration: 0 } : homeSolutionsSpring} className="mt-2 font-serif leading-[.95] text-white">{solution.title}</motion.h3>
               <motion.div animate={{ height: isActive ? 'auto' : 0, opacity: isActive ? 1 : 0 }} className="overflow-hidden">
-                <p className="mx-auto mt-3 line-clamp-2 max-w-[220px] text-[10px] leading-4 text-white/75">{solution.text}</p>
-                <Link to="/solutions" onClick={event => event.stopPropagation()} className="mt-3 inline-flex items-center gap-1.5 text-[9px] font-semibold uppercase tracking-[.1em] text-white transition hover:text-[#56AAC6]">Discover <HiOutlineArrowUpRight /></Link>
+                <p className="mx-auto mt-3 max-w-[280px] text-[10px] leading-4 text-[#AFC3DB]">{solution.text}</p>
+                <Link to={solution.to} onClick={event => event.stopPropagation()} className="mt-4 inline-flex items-center gap-2 rounded-full border border-[#299BF0]/55 bg-[#010B1F]/70 px-4 py-2 text-[9px] font-bold uppercase tracking-[.08em] text-white backdrop-blur transition hover:border-[#299BF0] hover:bg-[#299BF0] hover:text-[#010B1F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#299BF0]">Explore Solution <HiOutlineArrowRight aria-hidden="true" /></Link>
               </motion.div>
             </div>
           </motion.article>
         })}
+        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 z-30 w-[clamp(2rem,9vw,9rem)] bg-gradient-to-r from-[#010B1F]/85 via-[#010B1F]/30 to-transparent backdrop-blur-[2px] [mask-image:linear-gradient(to_right,black,rgba(0,0,0,.7)_45%,transparent)]" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 z-30 w-[clamp(2rem,9vw,9rem)] bg-gradient-to-l from-[#010B1F]/85 via-[#010B1F]/30 to-transparent backdrop-blur-[2px] [mask-image:linear-gradient(to_left,black,rgba(0,0,0,.7)_45%,transparent)]" />
       </motion.div>
 
-      <div className="flex items-center gap-4 border-t border-white/10 bg-[#041126]/88 px-5 py-4 sm:px-7">
-        <button type="button" onClick={() => setPaused(value => !value)} aria-label={paused ? 'Resume automatic carousel' : 'Pause automatic carousel'} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-[#56AAC6] hover:text-[#56AAC6]">{paused ? <HiOutlinePlay className="h-4 w-4" /> : <HiOutlinePause className="h-4 w-4" />}</button>
+      <div className="flex items-center gap-4 bg-[#041126]/88 px-5 py-4 sm:px-7">
+        <button type="button" onClick={() => setPaused(value => !value)} aria-label={paused ? 'Resume automatic carousel' : 'Pause automatic carousel'} className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-[#56AAC6] hover:text-[#56AAC6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#299BF0]">{paused ? <HiOutlinePlay className="h-4 w-4" /> : <HiOutlinePause className="h-4 w-4" />}</button>
         <span className="w-12 shrink-0 font-mono text-[10px] font-semibold text-white">{String(active + 1).padStart(2, '0')} / {String(total).padStart(2, '0')}</span>
         <div className="relative h-1 flex-1 overflow-hidden rounded-full bg-white/15">
-          <span key={`${active}-${paused}-${hovered}`} className={`home-solutions-progress absolute inset-y-0 left-0 w-full rounded-full bg-[#56AAC6] ${paused || hovered ? 'is-paused' : ''}`} />
+          <span key={`${active}-${paused}-${hovered}-${interacting}`} className={`home-solutions-progress absolute inset-y-0 left-0 w-full rounded-full bg-[#56AAC6] ${paused || hovered || interacting ? 'is-paused' : ''}`} />
         </div>
         <div className="flex shrink-0 gap-2">
-          <button type="button" onClick={() => move(-1)} aria-label="Previous solution" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-[#56AAC6] hover:text-[#56AAC6]"><HiOutlineArrowLeft /></button>
-          <button type="button" onClick={() => move(1)} aria-label="Next solution" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-[#56AAC6] hover:text-[#56AAC6]"><HiOutlineArrowRight /></button>
+          <button type="button" onClick={() => moveManually(-1)} aria-label="Previous solution" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-[#56AAC6] hover:text-[#56AAC6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#299BF0]"><HiOutlineArrowLeft /></button>
+          <button type="button" onClick={() => moveManually(1)} aria-label="Next solution" className="flex h-10 w-10 items-center justify-center rounded-full border border-white/15 text-white transition hover:border-[#56AAC6] hover:text-[#56AAC6] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#299BF0]"><HiOutlineArrowRight /></button>
         </div>
       </div>
     </div>
@@ -491,11 +620,7 @@ export default function Home() {
             <span className="home-hero-word"><span>AI-Powered Systems.</span></span>
             <span className="home-hero-word text-[#32A9F5] drop-shadow-[0_8px_28px_rgba(50,169,245,.18)]"><span>Smart Digitalization.</span></span>
           </h1>
-          <p className="home-hero-description home-hero-support mt-8 max-w-[620px]">
-            Intelligent automation and digital infrastructure solutions<br className="hidden sm:block" />
-            for smarter, safer and more efficient operations.
-          </p>
-          <p className="home-hero-technologies home-hero-support mt-6">BMS · SCADA · IoT · AI · Digital Twin · Robotics</p>
+          <p className="home-hero-technologies home-hero-support mt-8">BMS · SCADA · IoT · AI · Digital Twin · Robotics</p>
           <div className="home-hero-actions home-hero-support mt-8 flex flex-wrap gap-3">
             <Link to="/solutions" className="home-hero-action home-hero-primary gap-2">Explore Solutions <HiOutlineArrowRight aria-hidden="true" /></Link>
             <Link to="/projects" className="home-hero-action home-hero-secondary">View Case Studies</Link>
@@ -520,8 +645,8 @@ export default function Home() {
       <div className="home-grid absolute inset-0 opacity-20 [mask-image:radial-gradient(circle_at_center,black,transparent_78%)]" />
       <div className="absolute -left-48 top-1/3 h-96 w-96 rounded-full bg-cyan-500/10 blur-[130px]" />
       <div className="container-ems relative">
-        <div className="flex flex-col items-center text-center"><SectionTitle eyebrow="Solutions" title="From physical systems to operational intelligence." text="EMS connects control, data and engineering context so teams can see more clearly and operate with confidence." align="center" /><Link to="/solutions" className="home-reveal mt-6 inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">Explore all solutions <HiOutlineArrowRight /></Link></div>
-        <SolutionsShowcase />
+        <div className="flex flex-col items-center text-center"><SectionTitle eyebrow="Solutions" title="Where Engineering Meets Intelligence." text="EMS connects control, data and engineering context so teams can see more clearly and operate with confidence." align="center" /><Link to="/solutions" className="home-reveal mt-6 inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">Explore all solutions <HiOutlineArrowRight /></Link></div>
+        <IndustriesAccordionCarousel />
         <div className="hidden">
           {solutionCards.map((solution, index) => <motion.article key={solution.title} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .08, ease }} className="home-solution-card group relative isolate min-h-[280px] overflow-hidden rounded-2xl border border-white/10 bg-[#07182e]">
             <img src={solution.image} alt={solution.title} loading="lazy" className="absolute inset-0 -z-10 h-full w-full object-cover object-center opacity-80 transition duration-[1200ms] group-hover:scale-105 group-hover:opacity-95" />
@@ -539,7 +664,7 @@ export default function Home() {
 
     <section id="home-case-studies" className="home-major-section relative scroll-mt-20 bg-[#010B1F]">
       <div className="container-ems">
-        <div className="flex flex-col items-center text-center"><SectionTitle eyebrow="Case studies" title="Engineering outcomes, made visible." text="Selected EMS applications show how complex infrastructure becomes a clearer, connected operating environment." align="center" /><Link to="/projects" className="home-reveal mt-6 inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">View all case studies <HiOutlineArrowRight /></Link></div>
+        <div className="flex flex-col items-center text-center"><SectionTitle eyebrow="Case studies" title="Complex Systems. Clear Results." text="Selected EMS applications show how complex infrastructure becomes a clearer, connected operating environment." align="center" /><Link to="/projects" className="home-reveal mt-6 inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">View all case studies <HiOutlineArrowRight /></Link></div>
         <div className="mx-auto mt-8 grid w-full max-w-[1400px] gap-4 md:grid-cols-2 xl:grid-cols-3">
           {projects.map((project, index) => <motion.article key={project.id} initial={{ opacity: 0, y: 34 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .07, ease }} className="group flex min-h-[380px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#071326] transition duration-500 hover:-translate-y-1 hover:border-cyan-300/35">
             <div className="relative h-[clamp(175px,15vw,215px)] overflow-hidden border-b border-black bg-black">

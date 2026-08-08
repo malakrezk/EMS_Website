@@ -91,8 +91,8 @@ function SectionHeading({ eyebrow, title, text, center = false }) {
   return (
     <Reveal className={center ? 'mx-auto max-w-3xl text-center' : 'max-w-3xl'}>
       <p className="eyebrow">{eyebrow}</p>
-      <h2 className="mt-4 font-serif text-[clamp(2rem,4vw,3.5rem)] leading-[1.04]">{title}</h2>
-      {text && <p className={`mt-4 max-w-2xl text-[13px] leading-6 text-slate-400 sm:text-sm sm:leading-7 ${center ? 'mx-auto' : ''}`}>{text}</p>}
+      <h2 className="type-section-title mt-4 font-serif">{title}</h2>
+      {text && <p className={`type-body mt-4 max-w-2xl text-slate-400 ${center ? 'mx-auto' : ''}`}>{text}</p>}
     </Reveal>
   )
 }
@@ -119,10 +119,10 @@ export default function About() {
         <div className="container-ems relative grid min-h-[560px] items-center gap-10 py-[clamp(4rem,8vw,7rem)] lg:grid-cols-[1.15fr_.85fr]">
           <motion.div initial={reducedMotion ? false : { opacity: 0, y: 28 }} animate={reducedMotion ? undefined : { opacity: 1, y: 0 }} transition={{ duration: .85, ease }} className="max-w-4xl">
             <p className="eyebrow">About EMS · Since 2016</p>
-            <h1 className="mt-5 font-serif text-[clamp(2.7rem,5.8vw,5.5rem)] leading-[.98] tracking-[-.03em]">
+            <h1 className="type-page-title mt-5 font-serif tracking-[-.03em]">
               Engineering the systems behind <span className="text-[rgb(86,170,198)]">intelligent places.</span>
             </h1>
-            <p className="mt-6 max-w-2xl text-sm leading-7 text-slate-200 sm:text-base">
+            <p className="type-lead mt-6 max-w-2xl text-slate-200">
               EMS connects MEP engineering, automation, SCADA and digital operations to make modern infrastructure safer, more efficient and easier to understand.
             </p>
             <div className="mt-7 flex flex-wrap gap-3">
@@ -153,7 +153,7 @@ export default function About() {
             <Reveal>
               <article className="h-full rounded-2xl border border-[#299BF0]/25 bg-[#0B2548]/55 p-[clamp(1.25rem,3vw,2rem)] transition duration-300 hover:-translate-y-1 hover:border-[#23C7FF]/55">
                 <HiOutlineCheckBadge className="h-7 w-7 text-[#23C7FF]" />
-                <h3 className="mt-5 text-xl font-bold">Our Mission</h3>
+                <h3 className="type-card-title mt-5 font-bold">Our Mission</h3>
                 <p className="mt-3 text-[13px] leading-6 text-slate-300">
                   Analyze customer needs without compromising satisfaction, delivering economical, fast and high-quality solutions through full-scope MEP works and modern technologies.
                 </p>
@@ -162,7 +162,7 @@ export default function About() {
             <Reveal delay={.08}>
               <article className="h-full rounded-2xl border border-[#299BF0]/25 bg-[#0B2548]/55 p-[clamp(1.25rem,3vw,2rem)] transition duration-300 hover:-translate-y-1 hover:border-[#23C7FF]/55">
                 <HiOutlineEye className="h-7 w-7 text-[#23C7FF]" />
-                <h3 className="mt-5 text-xl font-bold">Our Vision</h3>
+                <h3 className="type-card-title mt-5 font-bold">Our Vision</h3>
                 <p className="mt-3 text-[13px] leading-6 text-slate-300">
                   Be a distinctive and independent MEP provider delivering modern, highly professional services across complete MEP requirements and the latest technologies.
                 </p>
@@ -180,7 +180,7 @@ export default function About() {
               <Reveal key={title} delay={index * .07}>
                 <article className="group h-full rounded-2xl border border-white/10 bg-[#07182e] p-6 transition duration-300 hover:-translate-y-1 hover:border-[#299BF0]/50">
                   <Icon className="h-7 w-7 text-[#299BF0] transition group-hover:text-[#23C7FF]" />
-                  <h3 className="mt-6 text-lg font-semibold">{title}</h3>
+                  <h3 className="type-card-title mt-6 font-semibold">{title}</h3>
                   <p className="mt-3 text-[13px] leading-6 text-slate-400">{text}</p>
                 </article>
               </Reveal>
@@ -192,7 +192,7 @@ export default function About() {
               <Reveal key={title} delay={index * .05}>
                 <article className="h-full border-l border-[#299BF0]/45 bg-white/[.025] p-5">
                   <span className="font-mono text-[9px] text-[#299BF0]">0{index + 1}</span>
-                  <h3 className="mt-3 text-sm font-semibold">{title}</h3>
+                  <h3 className="type-card-title mt-3 font-semibold">{title}</h3>
                   <p className="mt-2 text-[12px] leading-5 text-slate-400">{text}</p>
                 </article>
               </Reveal>
@@ -214,7 +214,7 @@ export default function About() {
                 </div>
                 <div className="flex flex-col justify-center p-6">
                   <p className="text-[9px] uppercase tracking-[.22em] text-[#299BF0]">Founder &amp; CEO</p>
-                  <h3 className="mt-3 font-serif text-[clamp(1.8rem,3vw,2.5rem)]">Ahmed Elzayat</h3>
+                  <h3 className="type-subheading mt-3 font-serif">Ahmed Elzayat</h3>
                   <p className="mt-4 text-[13px] leading-6 text-slate-400">
                     A mechanical power engineer and business leader with two decades of experience across Egypt and GCC markets, connecting rigorous engineering delivery with intelligent automation and digital transformation.
                   </p>
@@ -239,7 +239,7 @@ export default function About() {
                 )}
                 <div className="p-5 sm:p-6">
                   <p className="text-[9px] uppercase tracking-[.22em] text-[#299BF0]">Featured conversation</p>
-                  <h3 className="mt-2 font-serif text-xl">Artificial intelligence and the future of daily life</h3>
+                  <h3 className="type-card-title mt-2 font-serif">Artificial intelligence and the future of daily life</h3>
                   <p className="mt-2 text-[12px] leading-5 text-slate-400">A closer look at the experience, innovation and ambition shaping EMS.</p>
                 </div>
               </article>
@@ -273,7 +273,7 @@ export default function About() {
               <Reveal key={title} delay={index * .05}>
                 <article className="h-full rounded-xl border border-white/10 bg-[#07182e]/80 p-5 text-center transition duration-300 hover:-translate-y-1 hover:border-[#299BF0]/45">
                   <Icon className="mx-auto h-6 w-6 text-[#299BF0]" />
-                  <h3 className="mt-4 text-sm font-semibold">{title}</h3>
+                  <h3 className="type-card-title mt-4 font-semibold">{title}</h3>
                   <p className="mt-2 text-[12px] leading-5 text-slate-400">{text}</p>
                 </article>
               </Reveal>
@@ -283,14 +283,14 @@ export default function About() {
           <div className="mt-12 grid gap-8 rounded-2xl border border-white/10 bg-[#07182e]/65 p-[clamp(1.25rem,3vw,2rem)] lg:grid-cols-2">
             <Reveal>
               <HiOutlineGlobeAlt className="h-7 w-7 text-[#299BF0]" />
-              <h3 className="mt-4 font-serif text-2xl">Regional presence</h3>
+              <h3 className="type-subheading mt-4 font-serif">Regional presence</h3>
               <div className="mt-5 grid grid-cols-2 gap-3">
                 {regionalMarkets.map(market => <div key={market} className="rounded-lg border border-white/10 bg-white/[.035] p-4 text-xs font-semibold text-slate-300">{market}</div>)}
               </div>
             </Reveal>
             <Reveal delay={.08}>
               <HiOutlineBuildingOffice2 className="h-7 w-7 text-[#299BF0]" />
-              <h3 className="mt-4 font-serif text-2xl">Where we work</h3>
+              <h3 className="type-subheading mt-4 font-serif">Where we work</h3>
               <div className="mt-5 flex flex-wrap gap-2">
                 {sectors.map(sector => <span key={sector} className="rounded-full border border-white/10 bg-white/[.04] px-3 py-2 text-[11px] text-slate-300">{sector}</span>)}
               </div>
@@ -304,8 +304,8 @@ export default function About() {
         <div className="absolute inset-0 bg-[#010B1F]/85" />
         <Reveal className="container-ems relative">
           <HiOutlineBolt className="mx-auto h-7 w-7 text-[#299BF0]" />
-          <h2 className="mx-auto mt-5 max-w-3xl font-serif text-[clamp(2.2rem,4.5vw,4rem)] leading-tight">Let&apos;s engineer what comes next.</h2>
-          <p className="mx-auto mt-4 max-w-xl text-sm leading-7 text-slate-400">Bring us your facility, infrastructure challenge or digital-transformation ambition.</p>
+          <h2 className="type-section-title mx-auto mt-5 max-w-3xl font-serif">Let&apos;s engineer what comes next.</h2>
+          <p className="type-body mx-auto mt-4 max-w-xl text-slate-400">Bring us your facility, infrastructure challenge or digital-transformation ambition.</p>
           <div className="mt-7 flex flex-wrap justify-center gap-3">
             <Link to="/contact" className="btn-primary">Start a Conversation <HiOutlineArrowRight /></Link>
             <Link to="/services" className="btn-outline">Explore Services</Link>

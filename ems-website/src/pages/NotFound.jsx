@@ -8,9 +8,9 @@ export default function NotFound() {
       <div className="absolute inset-0 grid-bg opacity-40" />
       <div className="absolute inset-0 bg-radial-glow" />
       <div className="container-ems relative text-center">
-        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="font-mono text-sm uppercase tracking-[0.3em] text-cyan-300">Signal Lost</motion.p>
-        <motion.h1 initial={{ opacity: 0, scale: .8 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: 'spring', stiffness: 100 }} className="mt-4 font-serif text-7xl text-white sm:text-9xl">404</motion.h1>
-        <p className="mx-auto mt-4 max-w-md text-white/60">
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="type-label font-mono uppercase tracking-[0.3em] text-cyan-300">Signal Lost</motion.p>
+        <motion.h1 initial={{ opacity: 0, scale: .8 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: 'spring', stiffness: 100 }} className="type-page-title mt-4 font-serif text-white">404</motion.h1>
+        <p className="type-body mx-auto mt-4 max-w-md text-white/60">
           The page you're looking for has been disconnected from the network. Let's get you back online.
         </p>
         <Link to="/" className="btn-primary mt-8 inline-flex">

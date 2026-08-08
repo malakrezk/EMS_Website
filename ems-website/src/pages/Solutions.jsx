@@ -10,10 +10,55 @@ const layerImages = {
   iot: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=88',
   'artificial-intelligence': 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1800&q=88',
   'digital-twin': 'https://images.unsplash.com/photo-1480714378408-67cf0d13bc1b?auto=format&fit=crop&w=1800&q=88',
-  'robotics-iot': 'https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=1800&q=88',
+  'robotics-iot': 'https://images.unsplash.com/photo-1561557944-6e7860d1a7eb?auto=format&fit=crop&w=1800&q=88',
 }
 
-const carouselLayers = platformLayers.map(layer => ({ ...layer, image: layerImages[layer.id] }))
+const solutionPresentation = {
+  'building-management': {
+    title: 'BMS',
+    label: 'Intelligent buildings',
+    description: 'Centralized building management for intelligent monitoring, control and energy efficiency.',
+  },
+  scada: {
+    title: 'SCADA',
+    label: 'Infrastructure control',
+    description: 'Real-time supervision and control for industrial systems and critical infrastructure.',
+  },
+  iot: {
+    title: 'IoT',
+    label: 'Connected operations',
+    description: 'Connected sensors, devices and infrastructure that turn operational data into intelligent action.',
+  },
+  'artificial-intelligence': {
+    title: 'Artificial Intelligence',
+    label: 'Operational intelligence',
+    description: 'AI-powered automation, prediction and decision support for smarter operations.',
+  },
+  'digital-twin': {
+    title: 'Digital Twin',
+    label: 'Virtual operations',
+    description: 'Virtual representations of physical systems for monitoring, simulation and optimization.',
+  },
+  'robotics-iot': {
+    title: 'Robotics & IoT',
+    label: 'Smart automation',
+    description: 'Connected robotic automation combining intelligent machines, sensors and real-time control.',
+  },
+}
+
+const carouselLayers = platformLayers.map(layer => ({
+  ...layer,
+  ...solutionPresentation[layer.id],
+  image: layerImages[layer.id],
+  to: `/services/${layer.id}`,
+}))
+
+const solutionSectors = [
+  'Towers · Hospitals · Factories',
+  'Warehouses · Schools · Malls',
+  'Oil · Water · Electrical plants',
+]
+
 const carouselEase = [0.22, 1, 0.36, 1]
 
 function SolutionsCarousel() {
@@ -25,6 +70,7 @@ function SolutionsCarousel() {
   const [viewportWidth, setViewportWidth] = useState(() => typeof window === 'undefined' ? 1440 : window.innerWidth)
   const [reducedMotion, setReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
   const interactionTimer = useRef(null)
+  const wheelLocked = useRef(false)
   const total = carouselLayers.length
   const activeLayer = carouselLayers[active]
 
@@ -39,19 +85,21 @@ function SolutionsCarousel() {
     setActive(index => (index + direction + total) % total)
   }, [total])
 
-  const selectManually = useCallback(index => {
+  const registerInteraction = useCallback(() => {
     window.clearTimeout(interactionTimer.current)
-    setActive(index)
     setInteracting(true)
-    interactionTimer.current = window.setTimeout(() => setInteracting(false), 2400)
+    interactionTimer.current = window.setTimeout(() => setInteracting(false), 3000)
   }, [])
 
+  const selectManually = useCallback(index => {
+    setActive(index)
+    registerInteraction()
+  }, [registerInteraction])
+
   const moveManually = useCallback(direction => {
-    window.clearTimeout(interactionTimer.current)
     move(direction)
-    setInteracting(true)
-    interactionTimer.current = window.setTimeout(() => setInteracting(false), 2400)
-  }, [move])
+    registerInteraction()
+  }, [move, registerInteraction])
 
   useEffect(() => {
     const resize = () => setViewportWidth(window.innerWidth)
@@ -77,15 +125,26 @@ function SolutionsCarousel() {
 
   const isMobile = viewportWidth < 640
   const isTablet = viewportWidth < 1024
-  const cardWidth = isMobile ? Math.min(viewportWidth * .76, 300) : isTablet ? 320 : 355
-  const cardHeight = isMobile ? 390 : isTablet ? 455 : 515
-  const spacing = isMobile ? cardWidth * .62 : isTablet ? cardWidth * .72 : cardWidth * .82
+  const cardWidth = isMobile ? Math.min(viewportWidth * .82, 320) : isTablet ? 350 : 430
+  const cardHeight = isMobile ? 410 : isTablet ? 475 : 540
+  const spacing = isMobile ? cardWidth * .72 : isTablet ? cardWidth * .76 : cardWidth * .75
   const visibleRange = isMobile ? 1 : 2
+
+  const handleWheel = event => {
+    const horizontalAmount = event.deltaX || (event.shiftKey ? event.deltaY : 0)
+    const horizontalIntent = Math.abs(event.deltaX) > Math.abs(event.deltaY) * 1.2 || event.shiftKey
+    if (!horizontalIntent || Math.abs(horizontalAmount) < 10 || wheelLocked.current) return
+    event.preventDefault()
+    moveManually(horizontalAmount > 0 ? 1 : -1)
+    wheelLocked.current = true
+    window.setTimeout(() => { wheelLocked.current = false }, 520)
+  }
 
   return <section
     aria-label="ZETA platform solution layers"
     onMouseEnter={() => setHovered(true)}
     onMouseLeave={() => setHovered(false)}
+    onWheel={handleWheel}
     onKeyDown={event => {
       if (event.key === 'ArrowLeft') { event.preventDefault(); moveManually(-1) }
       if (event.key === 'ArrowRight') { event.preventDefault(); moveManually(1) }
@@ -126,7 +185,6 @@ function SolutionsCarousel() {
           </div>
           <span className="rounded-full border border-[#299BF0]/40 px-4 py-2 text-[9px] font-bold uppercase tracking-[.12em] text-white">View all</span>
         </div>
-
         <motion.div
           drag="x"
           dragConstraints={{ left: 0, right: 0 }}

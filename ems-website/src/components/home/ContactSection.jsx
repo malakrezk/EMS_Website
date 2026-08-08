@@ -52,7 +52,7 @@ export default function ContactSection() {
                 <div className="flex items-start gap-3">
                   <HiOutlineMapPin className="mt-1 h-5 w-5 flex-shrink-0 text-cyan-400" />
                   <div>
-                    <h3 className="font-serif text-lg font-medium text-white">{office.title}</h3>
+                    <h3 className="type-card-title font-serif font-medium text-white">{office.title}</h3>
                     {office.lines.map((line) => (
                       <p key={line} className="mt-1 text-sm text-white/60">{line}</p>
                     ))}
@@ -71,7 +71,7 @@ export default function ContactSection() {
               <div className="flex items-start gap-3">
                 <HiOutlineEnvelope className="mt-1 h-5 w-5 flex-shrink-0 text-cyan-400" />
                 <div>
-                  <h3 className="font-serif text-lg font-medium text-white">Email</h3>
+                  <h3 className="type-card-title font-serif font-medium text-white">Email</h3>
                   <p className="mt-1 text-sm text-white/60">info@ems-me.com</p>
                   <p className="text-sm text-white/60">General inquiries and support</p>
                 </div>

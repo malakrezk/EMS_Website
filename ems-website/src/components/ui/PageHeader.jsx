@@ -65,9 +65,9 @@ export default function PageHeader({ eyebrow, title, description }) {
       {!isAbout && <div className="absolute inset-0 opacity-15 [background-image:radial-gradient(#9edaff_0.7px,transparent_0.7px)] [background-size:34px_34px]" />}
       <div className="container-ems relative flex min-h-[220px] items-center md:min-h-[270px]">
         <div className="max-w-3xl">
-          {eyebrow && <motion.p initial={{ opacity: 0, x: -22 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .65 }} className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[.32em] text-cyan-300"><span className="h-px w-9 bg-cyan-300" />{eyebrow}</motion.p>}
-          <motion.h1 initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .08, ease: [0.22, 1, 0.36, 1] }} className="max-w-3xl font-serif text-[clamp(1.9rem,4.3vw,3.25rem)] leading-[1.08] text-white drop-shadow-[0_3px_20px_rgba(0,0,0,.45)]">{title}</motion.h1>
-          {description && <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: .18 }} className="mt-4 max-w-2xl text-[13px] leading-6 text-slate-200 drop-shadow-[0_2px_12px_rgba(0,0,0,.55)] sm:text-sm">{description}</motion.p>}
+          {eyebrow && <motion.p initial={{ opacity: 0, x: -22 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .65 }} className="type-label mb-5 flex items-center gap-3 font-semibold uppercase tracking-[.32em] text-cyan-300"><span className="h-px w-9 bg-cyan-300" />{eyebrow}</motion.p>}
+          <motion.h1 initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .08, ease: [0.22, 1, 0.36, 1] }} className="type-page-title max-w-3xl font-serif text-white drop-shadow-[0_3px_20px_rgba(0,0,0,.45)]">{title}</motion.h1>
+          {description && <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: .18 }} className="type-lead mt-4 max-w-2xl text-slate-200 drop-shadow-[0_2px_12px_rgba(0,0,0,.55)]">{description}</motion.p>}
         </div>
       </div>
       <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.1, delay: .4 }} className="absolute bottom-0 left-0 h-px w-full origin-left bg-gradient-to-r from-cyan-300/80 via-cyan-300/20 to-transparent" />
