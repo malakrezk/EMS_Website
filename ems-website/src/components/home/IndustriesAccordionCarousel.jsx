@@ -14,44 +14,16 @@ const industryGroups = [
   {
     id: 'hospitals',
     title: 'HOSPITALS',
-    image: '/industry-hospitals-dashboard.png',
+    image: '/suez-medical-complex.jpg',
     description: 'Resilient, clinically safe infrastructure supporting uninterrupted patient care and critical operations.',
     to: '/industries/hospitals',
   },
   {
-    id: 'factories',
-    title: 'FACTORIES',
-    image: 'https://images.unsplash.com/photo-1565793298595-6a879b1d9492?auto=format&fit=crop&w=2000&q=88',
-    description: 'Integrated industrial automation and monitoring engineered for productivity, precision and uptime.',
-    to: '/industries/industrial',
-  },
-  {
-    id: 'warehouses',
-    title: 'WAREHOUSES',
-    image: 'https://images.unsplash.com/photo-1586528116311-ad8dd3c8310d?auto=format&fit=crop&w=2000&q=88',
-    description: 'Connected facility controls that improve logistics visibility, safety and operational efficiency.',
-    to: '/industries/industrial',
-  },
-  {
-    id: 'schools',
-    title: 'SCHOOLS',
-    image: '/industry-schools.jpg',
-    description: 'Safe, connected learning environments designed for comfort, security and efficient operation.',
-    to: '/industries/schools',
-  },
-  {
     id: 'malls',
-    title: 'MALLS',
+    title: 'COMPOUNDS',
     image: '/industry-malls-dashboard.png',
     description: 'Smart retail environments balancing visitor comfort, asset performance and energy efficiency.',
     to: '/industries/commercial-buildings',
-  },
-  {
-    id: 'oil',
-    title: 'OIL',
-    image: 'https://images.unsplash.com/photo-1504917595217-d4dc5ebe6122?auto=format&fit=crop&w=2000&q=88',
-    description: 'Rugged automation, instrumentation and safety systems for high-consequence energy operations.',
-    to: '/industries/oil-gas',
   },
   {
     id: 'water',
@@ -59,13 +31,6 @@ const industryGroups = [
     image: '/industry-water-dashboard.png',
     description: 'Real-time automation, telemetry and energy control across treatment and distribution networks.',
     to: '/industries/water-systems',
-  },
-  {
-    id: 'electrical-plants',
-    title: 'ELECTRICAL PLANTS',
-    image: '/industry-factories.jpg',
-    description: 'Reliable supervision, protection and power management for critical electrical infrastructure.',
-    to: '/industries/industrial',
   },
 ]
 
@@ -137,7 +102,7 @@ export default function IndustriesAccordionCarousel() {
 
   return (
     <div
-      className="home-reveal mx-auto mt-5 w-full max-w-[1400px] overflow-x-clip outline-none focus-visible:ring-2 focus-visible:ring-[#32A9F5]"
+      className="home-reveal mx-auto mt-5 w-full max-w-[1180px] overflow-x-clip outline-none focus-visible:ring-2 focus-visible:ring-[#32A9F5]"
       role="region"
       aria-roledescription="carousel"
       aria-label="Industries EMS serves"
@@ -154,7 +119,7 @@ export default function IndustriesAccordionCarousel() {
       }}
     >
       <motion.div
-        className="relative isolate h-[clamp(390px,44vw,620px)] touch-pan-y overflow-hidden [--industry-gap:8px] [--industry-side:46px] sm:[--industry-gap:12px] sm:[--industry-side:80px] lg:[--industry-gap:16px] lg:[--industry-side:clamp(105px,10vw,138px)]"
+        className="relative isolate h-[clamp(340px,37vw,520px)] touch-pan-y overflow-hidden [--industry-gap:8px] [--industry-side:36px] sm:[--industry-gap:12px] sm:[--industry-side:64px] lg:[--industry-gap:18px] lg:[--industry-side:clamp(82px,7.5vw,105px)]"
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.12}
@@ -201,16 +166,31 @@ export default function IndustriesAccordionCarousel() {
                 loading="lazy"
                 className="absolute inset-0 h-full w-full scale-105 object-cover opacity-45 blur-[3px]"
               />
-              <img
-                src={card.image}
-                alt={`${card.title.toLowerCase()} infrastructure`}
-                loading="lazy"
-                className={`absolute inset-0 h-full w-full object-contain transition duration-700 ${
-                  isActive
-                    ? 'scale-100'
-                    : 'scale-[1.02] brightness-[.76] group-hover:scale-100 group-hover:brightness-[.9]'
-                }`}
-              />
+              {isActive && card.video ? (
+                <video
+                  key={card.video}
+                  src={card.video}
+                  poster={card.image}
+                  aria-label={`${card.title.toLowerCase()} infrastructure video`}
+                  autoPlay
+                  muted
+                  loop
+                  playsInline
+                  preload="metadata"
+                  className="absolute inset-0 h-full w-full object-cover object-center"
+                />
+              ) : (
+                <img
+                  src={card.image}
+                  alt={`${card.title.toLowerCase()} infrastructure`}
+                  loading="lazy"
+                  className={`absolute inset-0 h-full w-full object-contain transition duration-700 ${
+                    isActive
+                      ? 'scale-100'
+                      : 'scale-[1.02] brightness-[.76] group-hover:scale-100 group-hover:brightness-[.9]'
+                  }`}
+                />
+              )}
               <div
                 className={`absolute inset-0 ${
                   isActive
@@ -224,18 +204,15 @@ export default function IndustriesAccordionCarousel() {
                   initial={reducedMotion ? false : { opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
                   transition={reducedMotion ? { duration: 0 } : { duration: 0.3, delay: 0.18 }}
-                  className="absolute inset-x-0 bottom-0 max-w-[52rem] px-6 pb-7 pt-12 sm:px-10 sm:pb-10 sm:pt-16 lg:px-12 lg:pb-12"
+                  className="absolute inset-0 flex flex-col items-center justify-end px-5 pb-6 pt-12 text-center sm:px-8 sm:pb-8 lg:px-10 lg:pb-9"
                 >
-                  <p className="type-label font-mono uppercase tracking-[.22em] text-[#32A9F5]">
-                    Industries we serve
-                  </p>
-                  <h3 className="type-card-title mt-4 max-w-2xl font-serif leading-[1.08] text-white">
+                  <h3 className="mx-auto max-w-2xl font-serif text-[clamp(20px,1.7vw,28px)] leading-[1.08] text-white">
                     {card.title}
                   </h3>
-                  <p className="type-body mt-5 max-w-[46rem] leading-relaxed text-[#AFC3DB]">{card.description}</p>
+                  <p className="mx-auto mt-4 max-w-[42rem] text-[clamp(13px,1vw,16px)] leading-relaxed text-[#AFC3DB]">{card.description}</p>
                   <Link
                     to={card.to}
-                    className="mt-7 inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:gap-3 hover:text-[#32A9F5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#32A9F5]"
+                    className="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-white transition hover:gap-3 hover:text-[#32A9F5] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#32A9F5]"
                   >
                     Explore <HiOutlineArrowRight aria-hidden="true" />
                   </Link>

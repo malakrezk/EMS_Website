@@ -9,6 +9,21 @@ export const projectCategories = [
 
 export const projects = [
   {
+    id: 'data-center-operations', name: 'Data Center', location: 'Connected Digital Infrastructure', industry: 'Data Centers', categories: ['commercial'], accent: 'cyan',
+    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=84',
+    videoSrc: '/data-center.mp4',
+    description: 'Centralized monitoring and intelligent control for resilient, high-availability data-center operations.',
+    challenge: 'Critical digital infrastructure requires continuous visibility across power, cooling, security and equipment performance.',
+    solution: 'EMS brings operational systems into one coordinated monitoring environment for clearer control and dependable facility performance.',
+    services: ['Data Center Monitoring', 'BMS', 'Power Management', 'Cooling Control'],
+    technologies: ['Live infrastructure monitoring', 'Critical power visibility', 'Cooling supervision', 'Integrated alarms'],
+    highlights: ['24/7 Infrastructure Visibility', 'Integrated Critical Systems'],
+    results: [
+      { value: '24/7', label: 'Operational visibility' }, { value: 'Live', label: 'System monitoring' },
+      { value: 'One', label: 'Control environment' }, { value: 'Critical', label: 'Infrastructure oversight' },
+    ], gallery: 4,
+  },
+  {
     id: 'zia-building-complex', name: 'ZIA Building Complex', location: 'New Administrative Capital, Egypt', industry: 'Smart Buildings', categories: ['commercial'], accent: 'cyan',
     image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=84',
     videoSrc: '/zia-smart-building-dashboard.mp4',

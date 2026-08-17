@@ -5,7 +5,7 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   HiOutlineArrowLeft, HiOutlineArrowRight,
-  HiOutlineArrowUpRight, HiOutlineBuildingOffice2, HiOutlineCheck, HiOutlineCheckBadge,
+  HiOutlineArrowUpRight, HiOutlineBuildingOffice2, HiOutlineCheckBadge,
   HiOutlineEye, HiOutlineGlobeAlt, HiOutlinePause, HiOutlinePlay, HiOutlineXMark,
 } from 'react-icons/hi2'
 import { servicesShowcase } from '../data/servicesShowcase'
@@ -31,6 +31,32 @@ const homeSolutionSectors = [
 ]
 
 const homeSolutionsSpring = { type: 'spring', stiffness: 120, damping: 22, mass: .8 }
+
+const homeCaseStudyOrder = [
+  ['data-center-operations', 'Data Center', undefined, '/Gemini_Generated_Image_1ujzed1ujzed1ujz.jpg', 'Connected Digital Infrastructure', 'Centralized monitoring and intelligent control for resilient data-center operations.', ['24/7 Infrastructure Visibility', 'Integrated Critical Systems']],
+  ['water-treatment-plant-automation', 'Water Infrastructure', '/investors-water.mp4', '/industry-water-dashboard.png', 'Smart Water Management', 'Connected monitoring and intelligent control for safer, more efficient water operations.', ['Real-Time Monitoring', 'Predictive Maintenance']],
+  ['smart-hospital', 'Hospital', undefined, undefined, 'Integrated Healthcare Infrastructure', 'Connected facility systems provide clear, real-time oversight across healthcare operations.', ['Integrated Building Management', 'Real-Time Monitoring']],
+  ['wadi-zaha-project', 'Residential Compounds', '/park-lane-compounds.mp4', '/industry-malls-dashboard.png', 'Connected Residential Infrastructure', 'Integrated MEP and automation systems support connected residential communities.', ['Integrated MEP Systems', 'Smart Residential Automation']],
+  ['zia-building-complex', 'Smart Buildings', '/cn-05-buildings.mp4', '/industry-towers-dashboard.png', 'Intelligent Building Management', 'Unified smart-building visibility supports coordinated and efficient facility operations.', ['Unified Building Visibility', 'Siemens-Integrated Controls']],
+  ['industrial-scada-system', 'Industrial Facilities', '/abdellatef-industrial.mp4', '/industrial-abdellatef-poster.png', 'Integrated Industrial Automation', 'Integrated PLC and SCADA control supports reliable manufacturing operations.', ['Live Process Visibility', 'Integrated PLC & SCADA']],
+]
+
+const homeCaseStudies = homeCaseStudyOrder
+  .map(([id, name, videoSrc, poster, subtitle, description, highlights]) => {
+    const project = projects.find(item => item.id === id)
+    return project
+      ? {
+          ...project,
+          name,
+          location: subtitle,
+          description,
+          highlights,
+          ...(videoSrc ? { videoSrc } : {}),
+          ...(poster ? { poster } : {}),
+        }
+      : null
+  })
+  .filter(Boolean)
 
 const homeStyles = `
   .home-page-shell { --home-cyan: #23C7FF; }
@@ -71,9 +97,10 @@ const homeStyles = `
   .home-page-shell #home-services .home-section-copy { font-size:clamp(.78rem,1vw,.9rem);line-height:1.6; }
   .home-page-shell .home-services-section { padding-block:clamp(2.5rem,4vw,4rem); }
   .home-page-shell .home-carousel-stage { height:clamp(285px,32vw,350px); }
-  .home-page-shell .home-service-card { height:clamp(270px,29vw,320px);width:min(56vw,440px); }
+  .home-page-shell .home-service-card { height:clamp(270px,29vw,320px);width:min(56vw,440px);border-radius:1.4rem;overflow:hidden;clip-path:inset(0 round 1.4rem);-webkit-clip-path:inset(0 round 1.4rem);isolation:isolate;contain:paint;-webkit-backface-visibility:hidden;backface-visibility:hidden; }
   .home-page-shell .home-service-content { padding:clamp(.9rem,2vw,1.35rem); }
   .home-page-shell .home-service-title { font-size:clamp(1.55rem,3.2vw,2.65rem); }
+  .home-page-shell .home-service-overlay { background:linear-gradient(90deg,rgba(1,11,31,.5) 0%,rgba(1,11,31,.18) 48%,rgba(1,11,31,.04) 78%),linear-gradient(to top,rgba(1,11,31,.97) 0%,rgba(1,11,31,.72) 30%,rgba(1,11,31,.2) 64%,rgba(1,11,31,.08) 100%); }
   .home-page-shell .home-hero-content { padding-bottom:clamp(4rem,8vw,7rem); }
   .home-page-shell .home-major-section { padding-block:clamp(4.5rem,8vw,7.5rem); }
   .home-page-shell .home-solution-content { padding:clamp(1.4rem,3vw,2.25rem); }
@@ -92,7 +119,9 @@ const homeStyles = `
   .home-page-shell .home-data-particle { animation:homeDataFloat 5s ease-in-out infinite; }
   .home-page-shell .home-scan { animation:homeScan 8s ease-in-out infinite; }
   .home-page-shell .home-float { animation:homeFloat 5.5s ease-in-out infinite; }
-  .home-page-shell .home-service-card::after { content:'';position:absolute;inset:-45% -80%;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.12) 50%,transparent 58%);transform:translateX(-38%) rotate(8deg);transition:transform 1s cubic-bezier(.22,1,.36,1);pointer-events:none; }
+  .home-page-shell .home-service-card::before { content:'';position:absolute;inset:0;z-index:30;border-radius:inherit;box-shadow:inset 0 0 0 1px transparent;pointer-events:none;transition:box-shadow .45s ease; }
+  .home-page-shell .home-service-card.is-active::before { box-shadow:inset 0 0 0 1px rgba(50,169,245,.72); }
+  .home-page-shell .home-service-card::after { content:'';position:absolute;inset:-45% -80%;z-index:20;background:linear-gradient(105deg,transparent 42%,rgba(255,255,255,.12) 50%,transparent 58%);transform:translateX(-38%) rotate(8deg);transition:transform 1s cubic-bezier(.22,1,.36,1);pointer-events:none; }
   .home-page-shell .home-service-card:hover::after { transform:translateX(42%) rotate(8deg); }
   .home-page-shell .home-solution-card::before { content:'';position:absolute;inset:0;border-radius:inherit;border:1px solid transparent;background:linear-gradient(135deg,rgba(89,220,255,.55),transparent 35%,rgba(255,255,255,.12)) border-box;mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);mask-composite:exclude;opacity:0;transition:opacity .5s ease;pointer-events:none; }
   .home-page-shell .home-solution-card:hover::before { opacity:1; }
@@ -153,24 +182,28 @@ const homeServiceCards = [
   {
     ...servicesShowcase.find(service => service.id === 'scada'),
     title: 'SCADA',
+    image: '/service-scada-control-room.png',
     description: 'Real-time supervisory control, alarms and operational visibility across distributed infrastructure.',
     features: ['Live process visualization', 'Remote telemetry and alarms', 'Historian and reporting'],
   },
   {
     ...servicesShowcase.find(service => service.id === 'light-current-systems'),
     title: 'IoT',
+    image: '/service-iot.png',
     description: 'Connected sensors and devices that transform facility data into clear, actionable insight.',
     features: ['Connected sensors and gateways', 'Real-time device monitoring', 'Secure data integration'],
   },
   {
     ...servicesShowcase.find(service => service.id === 'control-systems'),
     title: 'AI',
+    image: '/service-ai.png',
     description: 'AI-powered analytics for smarter decisions, predictive maintenance and efficient operations.',
     features: ['Predictive maintenance', 'Operational analytics', 'Intelligent recommendations'],
   },
   {
     ...servicesShowcase.find(service => service.id === 'industrial-automation'),
     title: 'Robotics',
+    image: '/service-robotics.png',
     description: 'Connected robotic automation engineered to improve precision, throughput and workplace safety.',
     features: ['Robotic process integration', 'Production automation', 'Performance monitoring'],
   },
@@ -203,6 +236,8 @@ function ServiceCarousel() {
   const [viewportWidth, setViewportWidth] = useState(() => typeof window === 'undefined' ? 1440 : window.innerWidth)
   const wheelLocked = useRef(false)
   const hoverTimer = useRef(null)
+  const switchTimer = useRef(null)
+  const switchLocked = useRef(false)
   const activeService = homeServiceCards[active]
   const total = homeServiceCards.length
 
@@ -212,24 +247,40 @@ function ServiceCarousel() {
     return () => {
       window.removeEventListener('resize', resize)
       window.clearTimeout(hoverTimer.current)
+      window.clearTimeout(switchTimer.current)
     }
   }, [])
 
-  const move = useCallback((direction) => setActive(index => (index + direction + total) % total), [total])
+  const lockSwitch = useCallback(() => {
+    switchLocked.current = true
+    window.clearTimeout(switchTimer.current)
+    switchTimer.current = window.setTimeout(() => { switchLocked.current = false }, 720)
+  }, [])
+  const move = useCallback((direction) => {
+    lockSwitch()
+    setActive(index => (index + direction + total) % total)
+  }, [lockSwitch, total])
   const relativePosition = index => {
     let difference = index - active
     if (difference > total / 2) difference -= total
     if (difference < -total / 2) difference += total
     return difference
   }
-  const gap = viewportWidth < 640 ? viewportWidth * .62 : Math.min(viewportWidth * .28, 410)
-  const cardWidth = viewportWidth < 480
+  const baseCardWidth = viewportWidth < 480
     ? Math.min(viewportWidth * .88, 330)
     : viewportWidth < 768
       ? Math.min(viewportWidth * .86, 360)
       : viewportWidth >= 1024 && typeof window !== 'undefined' && window.innerHeight <= 850
         ? Math.min(viewportWidth * .5, 410)
         : Math.min(viewportWidth * .56, 440)
+  const activeCardWidth = Math.min(
+    baseCardWidth * 1.16,
+    viewportWidth - (viewportWidth < 640 ? 24 : 64),
+    510,
+  )
+  const gap = (
+    viewportWidth < 640 ? viewportWidth * .62 : Math.min(viewportWidth * .28, 410)
+  ) + (activeCardWidth - baseCardWidth) * .58
 
   const onWheel = event => {
     const horizontalIntent = event.shiftKey || (Math.abs(event.deltaX) > 12 && Math.abs(event.deltaX) > Math.abs(event.deltaY) * 1.5)
@@ -264,35 +315,59 @@ function ServiceCarousel() {
             dragElastic={.12}
             onDragEnd={(_, info) => { if (Math.abs(info.offset.x) > 65 || Math.abs(info.velocity.x) > 450) move(info.offset.x < 0 ? 1 : -1) }}
             onMouseEnter={() => {
-              if (isActive) return
+              if (isActive || switchLocked.current) return
               window.clearTimeout(hoverTimer.current)
-              hoverTimer.current = window.setTimeout(() => setActive(index), 320)
+              hoverTimer.current = window.setTimeout(() => {
+                if (switchLocked.current) return
+                lockSwitch()
+                setActive(index)
+              }, 320)
             }}
             onMouseLeave={() => window.clearTimeout(hoverTimer.current)}
             onClick={() => {
               window.clearTimeout(hoverTimer.current)
-              if (!isActive) setActive(index)
+              if (!isActive) {
+                lockSwitch()
+                setActive(index)
+              }
             }}
             initial={false}
-            animate={{ x: position * gap - cardWidth / 2, scale: isActive ? 1 : Math.abs(position) === 1 ? .84 : .7, rotateY: position * -9, opacity: Math.abs(position) === 2 ? .22 : isActive ? 1 : .52, z: isActive ? 80 : -Math.abs(position) * 90 }}
+            animate={{
+              x: position * gap - (isActive ? activeCardWidth : baseCardWidth) / 2,
+              width: isActive ? activeCardWidth : baseCardWidth,
+              scale: isActive ? 1 : Math.abs(position) === 1 ? .84 : .7,
+              rotateY: position * -9,
+              opacity: Math.abs(position) === 2 ? .22 : isActive ? 1 : .52,
+              z: isActive ? 80 : -Math.abs(position) * 90,
+            }}
             transition={{ type: 'spring', stiffness: 68, damping: 21, mass: 1.15 }}
             style={{ zIndex: 10 - Math.abs(position), pointerEvents: Math.abs(position) <= 1 ? 'auto' : 'none', cursor: isActive ? 'grab' : 'pointer' }}
-            className={`home-service-card group absolute left-1/2 top-0 overflow-hidden rounded-[1.4rem] border bg-[#061326] shadow-[0_40px_120px_rgba(0,0,0,.65)] will-change-transform ${isActive ? 'border-cyan-300/45' : 'border-white/15 blur-[1px]'}`}
+            className={`home-service-card group absolute left-1/2 top-0 bg-[#061326] shadow-[0_40px_120px_rgba(0,0,0,.65)] will-change-transform ${isActive ? 'is-active' : 'blur-[1px]'}`}
           >
             <img src={service.image} alt={service.title} loading={isActive ? 'eager' : 'lazy'} className="absolute inset-0 h-full w-full object-cover transition duration-[1400ms] ease-out group-hover:scale-[1.055]" />
-            <div className="absolute inset-0 bg-gradient-to-t from-[#020812] via-[#071629]/35 to-black/5" />
-            <div className="home-service-content absolute inset-x-0 bottom-0">
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl border border-cyan-300/25 bg-[#07182e]/80 text-[rgb(33,124,154)] backdrop-blur-xl"><Icon className="h-[18px] w-[18px]" /></div>
-              <p className="mt-3 font-mono text-[8px] uppercase tracking-[.24em] text-[#299BF0]">Service {String(index + 1).padStart(2, '0')} / EMS Engineering</p>
-              <h3 className="home-service-title mt-2 max-w-2xl font-serif leading-none tracking-[-.025em]">{service.title}</h3>
-              <motion.div animate={{ height: isActive ? 'auto' : 0, opacity: isActive ? 1 : 0 }} transition={{ duration: .55, ease }} className="overflow-hidden">
-                <div className="mt-3 max-w-xl rounded-xl border border-white/10 bg-[#07101e]/75 p-4 backdrop-blur-xl">
-                  <p className="text-[12px] leading-5 text-slate-300">{service.description}</p>
-                  <ul className="mt-4 hidden grid-cols-2 gap-x-5 gap-y-2 text-[11px] text-slate-300 sm:grid">
-                    {service.features.slice(0, 3).map(feature => <li key={feature} className="flex items-center gap-2"><HiOutlineCheck className="shrink-0 text-[#299BF0]" />{feature}</li>)}
-                  </ul>
-                  <Link to={service.to ?? `/services/${service.id}`} className="mt-4 inline-flex items-center gap-2 rounded-lg bg-[rgb(33,124,154)] px-4 py-2.5 text-[11px] font-semibold text-white shadow-[0_12px_35px_rgba(33,124,154,.28)] transition hover:-translate-y-0.5 hover:bg-[#23C7FF]">Explore Service <HiOutlineArrowUpRight /></Link>
+            <div className="home-service-overlay absolute inset-0" />
+            <div className="home-service-content absolute inset-0 z-[21] flex flex-col">
+              <div className="flex items-start gap-3">
+                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg border border-[#32A9F5]/35 bg-[#07182e]/65 text-[#32A9F5] backdrop-blur-md"><Icon className="h-4 w-4" /></div>
+                <div>
+                  <p className="font-mono text-[8px] uppercase tracking-[.24em] text-[#32A9F5]">Service {String(index + 1).padStart(2, '0')} / EMS Engineering</p>
+                  <h3 className="home-service-title mt-2 max-w-2xl font-serif leading-none tracking-[-.025em] text-[#C7E5F7] [text-shadow:0_2px_18px_rgba(1,11,31,.65)]">{service.title}</h3>
                 </div>
+              </div>
+              <motion.div
+                animate={{ opacity: isActive ? 1 : 0, y: isActive ? 0 : 10 }}
+                transition={{ duration: .45, ease }}
+                className="mt-auto max-w-xl"
+                aria-hidden={!isActive}
+              >
+                <p className="text-[12px] leading-5 text-[#AFC3DB] [text-shadow:0_1px_12px_rgba(1,11,31,.8)]">{service.description}</p>
+                <Link
+                  to={service.to ?? `/services/${service.id}`}
+                  tabIndex={isActive ? 0 : -1}
+                  className="mt-3 inline-flex items-center gap-2 text-[11px] font-semibold text-[#32A9F5] transition-all duration-300 hover:gap-3 hover:text-[#C7E5F7] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#32A9F5]"
+                >
+                  Explore <HiOutlineArrowRight aria-hidden="true" />
+                </Link>
               </motion.div>
             </div>
           </motion.article>
@@ -595,7 +670,7 @@ export default function Home() {
             exit={{ opacity: 0 }}
             transition={{ duration: heroReducedMotion ? 0 : 1.6, ease: 'easeInOut' }}
             fetchPriority={heroImageIndex === 0 ? 'high' : 'auto'}
-            className="absolute inset-0 h-full w-full object-cover object-center"
+            className="absolute left-0 top-0 h-full w-full object-cover object-center lg:w-[112%] lg:max-w-none lg:object-left"
           />
         </AnimatePresence>
       </div>
@@ -666,8 +741,13 @@ export default function Home() {
       <div className="container-ems">
         <div className="flex flex-col items-center text-center"><SectionTitle eyebrow="Case studies" title="Complex Systems. Clear Results." text="Selected EMS applications show how complex infrastructure becomes a clearer, connected operating environment." align="center" /><Link to="/projects" className="home-reveal mt-6 inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">View all case studies <HiOutlineArrowRight /></Link></div>
         <div className="mx-auto mt-8 grid w-full max-w-[1400px] gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {projects.map((project, index) => <motion.article key={project.id} initial={{ opacity: 0, y: 34 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .07, ease }} className="group flex min-h-[380px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#071326] transition duration-500 hover:-translate-y-1 hover:border-cyan-300/35">
-            <div className="relative h-[clamp(175px,15vw,215px)] overflow-hidden border-b border-black bg-black">
+          {homeCaseStudies.map((project, index) => <motion.article key={project.id} initial={{ opacity: 0, y: 34 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .07, ease }} className="group flex min-h-[500px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#071326] transition duration-500 hover:-translate-y-1 hover:border-[#32A9F5]/60 hover:shadow-[0_18px_45px_rgba(0,0,0,.2)]">
+            <header className="min-h-[122px] px-4 py-4 sm:px-5">
+              <p className="font-mono text-[9px] uppercase tracking-[.24em] text-slate-500">Case study {String(index + 1).padStart(2, '0')}</p>
+              <h3 className="mt-2 font-serif text-[clamp(1.45rem,2vw,2rem)] leading-[1.08] text-white">{project.name}</h3>
+              <p className="mt-2 text-[11px] font-semibold text-[#23C7FF] sm:text-xs">{project.location}</p>
+            </header>
+            <div className="relative aspect-video shrink-0 overflow-hidden bg-[#071326]">
               {project.videoSrc
                 ? <button
                     type="button"
@@ -680,16 +760,26 @@ export default function Home() {
                       const video = event.currentTarget.querySelector('video')
                       if (!video) return
                       video.pause()
+                      if (project.poster) {
+                        video.load()
+                        return
+                      }
                       if (Number.isFinite(video.duration)) video.currentTime = Math.min(1, Math.max(.2, video.duration * .02))
                     }}
                     onFocus={event => event.currentTarget.querySelector('video')?.play().catch(() => undefined)}
-                    onBlur={event => event.currentTarget.querySelector('video')?.pause()}
+                    onBlur={event => {
+                      const video = event.currentTarget.querySelector('video')
+                      if (!video) return
+                      video.pause()
+                      if (project.poster) video.load()
+                    }}
                     aria-label={`Preview ${project.name} video; click to open the large video player`}
-                    className="group/video relative block h-full w-full cursor-pointer overflow-hidden bg-black text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[#23C7FF]"
+                    className="group/video relative block h-full w-full cursor-pointer overflow-hidden bg-[#071326] text-left focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-3px] focus-visible:outline-[#23C7FF]"
                   >
                     <video
                       key={`${project.videoSrc}-dashboard-preview`}
                       src={project.videoSrc}
+                      poster={project.poster}
                       preload="metadata"
                       muted
                       loop
@@ -697,17 +787,17 @@ export default function Home() {
                       aria-hidden="true"
                       onLoadedMetadata={event => {
                         const video = event.currentTarget
+                        if (project.poster) return
                         if (video.dataset.previewReady) return
                         video.dataset.previewReady = 'true'
                         video.currentTime = Number.isFinite(video.duration) ? Math.min(1, Math.max(.2, video.duration * .02)) : 1
                       }}
-                      className="pointer-events-none absolute inset-x-0 top-1/2 h-[82%] w-full -translate-y-1/2 bg-black object-cover object-center"
+                      className={`pointer-events-none absolute inset-0 h-full w-full object-cover object-center ${project.id === 'smart-hospital' ? 'scale-[1.025]' : ''} ${project.id === 'industrial-scada-system' ? 'scale-[1.02]' : ''}`}
                     >
                       Your browser does not support the video element.
                     </video>
                     <span className="absolute inset-0 bg-[#010B1F]/[.04] transition duration-300 group-hover/video:bg-transparent" />
                     <span className="pointer-events-none absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-[#010B1F]/80 text-white shadow-[0_12px_35px_rgba(0,0,0,.4)] backdrop-blur transition duration-300 group-hover/video:scale-90 group-hover/video:opacity-0 group-focus-visible/video:scale-90 group-focus-visible/video:opacity-0"><HiOutlinePlay className="ml-0.5 h-6 w-6" /></span>
-                    <span className="pointer-events-none absolute bottom-3 right-4 rounded-full bg-[#010B1F]/80 px-3 py-1.5 text-[9px] font-semibold uppercase tracking-[.16em] text-white/85 backdrop-blur transition duration-300 group-hover/video:bg-[rgb(33,124,154)]">Click to expand</span>
                   </button>
                 : project.videoId
                   ? <iframe src={`https://www.youtube-nocookie.com/embed/${project.videoId}?rel=0`} title={`${project.name} project video`} loading="lazy" className="h-full w-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
@@ -715,14 +805,11 @@ export default function Home() {
               {!project.videoSrc && !project.videoId && <span className="absolute bottom-4 left-5 rounded-full border border-white/15 bg-[#061326]/75 px-3 py-1.5 font-mono text-[8px] uppercase tracking-[.18em] text-[#299BF0] backdrop-blur-xl">{project.industry}</span>}
             </div>
             <div className="flex flex-1 flex-col p-4 sm:p-5">
-              <p className="font-mono text-[9px] uppercase tracking-[.24em] text-slate-500">Case study {String(index + 1).padStart(2, '0')}</p>
-              <h3 className="mt-3 font-serif text-[clamp(1.55rem,2.2vw,2.2rem)] leading-[1.04] text-white">{project.name}</h3>
-              <p className="mt-2 text-[11px] font-semibold text-[#23C7FF] sm:text-xs">{project.location}</p>
-              <p className="mt-3 text-[12px] leading-5 text-slate-400">{project.description}</p>
+              <p className="text-[11px] leading-5 text-slate-400 sm:text-[12px]">{project.description}</p>
               <div className="mt-4 space-y-1.5 border-t border-white/10 pt-4">
                 {project.highlights.map(highlight => <p key={highlight} className="text-[11px] font-semibold text-[#23C7FF]">{highlight}</p>)}
               </div>
-              <Link to={`/projects/${project.id}`} className="mt-auto inline-flex w-fit items-center gap-2 pt-5 text-[11px] font-semibold text-white transition hover:gap-3 hover:text-[#299BF0]">Read the full story <HiOutlineArrowUpRight /></Link>
+              <Link to={`/projects/${project.id}`} className="mt-auto inline-flex w-fit items-center gap-2 pt-5 text-[11px] font-semibold text-[#AFC3DB] transition hover:gap-3 hover:text-[#32A9F5] focus-visible:text-[#32A9F5]">Read the full story <HiOutlineArrowUpRight /></Link>
             </div>
           </motion.article>)}
         </div>
@@ -738,22 +825,21 @@ export default function Home() {
         <div className="mx-auto max-w-5xl text-center">
           <div className="home-reveal home-about-intro">
             <Eyebrow>About EMS</Eyebrow>
-            <p className="mx-auto mt-5 max-w-3xl text-[clamp(.9rem,1.3vw,1.08rem)] leading-7 text-slate-300">We are a leading provider of smart infrastructure solutions, leveraging IoT and AI to transform how organizations operate and manage their facilities.</p>
+            <p className="mx-auto mt-5 max-w-4xl text-[clamp(.9rem,1.3vw,1.08rem)] leading-7 text-slate-300">EMS delivers integrated MEP, automation and smart infrastructure solutions that connect buildings, operations and technology across Egypt, the UAE and the GCC.</p>
           </div>
         </div>
 
-        <div className="relative mx-auto mt-12 max-w-[1450px]">
-          <span className="absolute left-5 right-5 top-[19px] hidden h-px bg-gradient-to-r from-transparent via-[#299BF0]/55 to-transparent md:block" />
-          <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
+        <div className="relative mx-auto mt-9 max-w-[1450px]">
+          <span className="absolute left-5 right-5 top-[17px] hidden h-px bg-gradient-to-r from-transparent via-[#299BF0]/55 to-transparent md:block" />
+          <div className="grid gap-5 md:grid-cols-3 lg:gap-6">
             {aboutMilestones.map(([title, text, Icon], index) => (
-              <motion.article key={title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} whileHover={{ y: -4 }} transition={{ duration: .55, delay: index * .08, ease }} className="group relative pt-0 md:pt-10">
-                <span className="relative z-10 mb-4 flex h-10 w-10 items-center justify-center rounded-full border border-[#299BF0]/50 bg-[#041126] text-[#23C7FF] shadow-[0_0_25px_rgba(41,155,240,.2)] md:absolute md:left-0 md:top-0">
+              <motion.article key={title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} whileHover={{ y: -4 }} transition={{ duration: .55, delay: index * .08, ease }} className="group relative pt-0 md:pt-8">
+                <span className="relative z-10 mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-[#299BF0]/50 bg-[#041126] text-[#23C7FF] shadow-[0_0_25px_rgba(41,155,240,.2)] md:absolute md:left-0 md:top-0">
                   <Icon aria-hidden="true" className="h-5 w-5 transition duration-300 group-hover:scale-110" />
                 </span>
-                <div className="h-full rounded-2xl bg-[#07182e]/80 p-6 transition duration-300 group-hover:bg-[#0B2548]/75">
-                  <p className="font-mono text-[8px] uppercase tracking-[.2em] text-slate-500">Milestone 0{index + 1}</p>
-                  <h3 className="mt-3 text-sm font-bold text-[#23C7FF]">{title}</h3>
-                  <p className="mt-2 text-[12px] leading-5 text-slate-400">{text}</p>
+                <div className="h-full rounded-2xl bg-[#07182e]/80 p-5 transition duration-300 group-hover:bg-[#0B2548]/75">
+                  <h3 className="text-sm font-bold text-[#23C7FF]">{title}</h3>
+                  <p className="mt-1.5 text-[12px] leading-[1.55] text-slate-400">{text}</p>
                 </div>
               </motion.article>
             ))}
@@ -761,60 +847,59 @@ export default function Home() {
         </div>
 
         <div className="mx-auto mt-10 grid max-w-[1450px] gap-6 lg:grid-cols-12 lg:gap-8">
-          <motion.article initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-60px' }} whileHover={{ y: -4 }} transition={{ duration: .6, ease }} className="group relative isolate overflow-hidden rounded-2xl border border-[#299BF0]/25 bg-[linear-gradient(135deg,#0B2548_0%,#07182e_72%)] p-6 lg:col-span-6">
+          <motion.article initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-60px' }} whileHover={{ y: -4 }} transition={{ duration: .6, ease }} className="group relative isolate overflow-hidden rounded-2xl border border-[#299BF0]/25 bg-[linear-gradient(135deg,#0B2548_0%,#07182e_72%)] p-5 lg:col-span-6">
             <span className="absolute -right-2 -top-10 -z-10 font-serif text-[9rem] leading-none text-white/[.025]">01</span>
             <div className="flex items-center justify-between">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#23C7FF]/25 bg-[#23C7FF]/10 text-[#23C7FF]"><HiOutlineCheckBadge className="h-6 w-6" /></span>
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#23C7FF]/25 bg-[#23C7FF]/10 text-[#23C7FF]"><HiOutlineCheckBadge className="h-5 w-5" /></span>
               <span className="font-mono text-[8px] uppercase tracking-[.22em] text-slate-500">Our purpose</span>
             </div>
-            <h3 className="mt-7 font-serif text-[clamp(1.7rem,2.5vw,2.35rem)]">Our Mission</h3>
+            <h3 className="mt-5 font-serif text-[clamp(1.65rem,2.35vw,2.2rem)]">Our Mission</h3>
             <p className="mt-3 max-w-xl text-[13px] leading-6 text-slate-300">Analyze customer needs without compromising satisfaction—delivering economical, fast and high-quality solutions through full-scope MEP works and modern technologies.</p>
-            <Link to="/about" className="mt-5 inline-flex items-center gap-2 text-[11px] font-semibold text-[#23C7FF] transition hover:gap-3 hover:text-white">Read our story <HiOutlineArrowUpRight /></Link>
+            <Link to="/about" className="mt-4 inline-flex items-center gap-2 text-[11px] font-semibold text-[#23C7FF] transition hover:gap-3 hover:text-white">Read our story <HiOutlineArrowUpRight /></Link>
           </motion.article>
 
-          <motion.article initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-60px' }} whileHover={{ y: -4 }} transition={{ duration: .6, ease }} className="group relative isolate overflow-hidden rounded-2xl border border-[#299BF0]/25 bg-[linear-gradient(135deg,#07182e_0%,#0B2548_100%)] p-6 lg:col-span-6">
+          <motion.article initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-60px' }} whileHover={{ y: -4 }} transition={{ duration: .6, ease }} className="group relative isolate overflow-hidden rounded-2xl border border-[#299BF0]/25 bg-[linear-gradient(135deg,#07182e_0%,#0B2548_100%)] p-5 lg:col-span-6">
             <span className="absolute -right-2 -top-10 -z-10 font-serif text-[9rem] leading-none text-white/[.025]">02</span>
             <div className="flex items-center justify-between">
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl border border-[#23C7FF]/25 bg-[#23C7FF]/10 text-[#23C7FF]"><HiOutlineEye className="h-6 w-6" /></span>
+              <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#23C7FF]/25 bg-[#23C7FF]/10 text-[#23C7FF]"><HiOutlineEye className="h-5 w-5" /></span>
               <span className="font-mono text-[8px] uppercase tracking-[.22em] text-slate-500">Our direction</span>
             </div>
-            <h3 className="mt-7 font-serif text-[clamp(1.7rem,2.5vw,2.35rem)]">Our Vision</h3>
+            <h3 className="mt-5 font-serif text-[clamp(1.65rem,2.35vw,2.2rem)]">Our Vision</h3>
             <p className="mt-3 max-w-xl text-[13px] leading-6 text-slate-300">Be a distinctive and independent MEP provider delivering modern, highly professional services across complete MEP requirements and the latest technologies.</p>
-            <Link to="/about" className="mt-5 inline-flex items-center gap-2 text-[11px] font-semibold text-[#23C7FF] transition hover:gap-3 hover:text-white">Explore our direction <HiOutlineArrowUpRight /></Link>
+            <Link to="/about" className="mt-4 inline-flex items-center gap-2 text-[11px] font-semibold text-[#23C7FF] transition hover:gap-3 hover:text-white">Explore our direction <HiOutlineArrowUpRight /></Link>
           </motion.article>
         </div>
 
-        <motion.article initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: .7, ease }} className="mx-auto mt-10 max-w-[1450px] overflow-hidden rounded-2xl border border-white/10 bg-[#07182e] shadow-[0_28px_80px_rgba(0,0,0,.24)]">
-          <div className="grid lg:grid-cols-[.92fr_1.08fr]">
-            <section className="grid border-b border-white/10 sm:grid-cols-[155px_1fr] lg:border-b-0 lg:border-r">
-              <div className="relative min-h-[250px] sm:min-h-[330px]">
-                <img src="/ahmed-elzayat.jpeg" alt="Ahmed Elzayat, CEO and Founder of EMS" loading="lazy" className="absolute inset-0 h-full w-full object-cover object-top" />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#07182e]/70 to-transparent sm:bg-gradient-to-r" />
-                <span className="absolute left-4 top-4 rounded-full border border-white/15 bg-[#041126]/85 px-3 py-1.5 text-[8px] font-bold uppercase tracking-[.12em] text-white backdrop-blur">CEO &amp; Founder</span>
-              </div>
-              <div className="flex flex-col justify-center p-5 sm:p-6">
-                <p className="font-mono text-[8px] uppercase tracking-[.22em] text-[#299BF0]">Executive leadership</p>
-                <h3 className="mt-3 font-serif text-[clamp(1.7rem,2.4vw,2.2rem)]">Eng. Ahmed El-Zayat</h3>
-                <p className="mt-3 text-[12px] leading-5 text-slate-400">Two decades of engineering and business leadership across Egypt and GCC markets, connecting disciplined delivery with intelligent infrastructure.</p>
-                <div className="mt-5 flex flex-wrap gap-2">
-                  <Link to="/about" className="rounded-lg bg-[rgb(33,124,154)] px-3 py-2 text-[10px] font-semibold text-white transition hover:bg-[#299BF0]">Full biography</Link>
-                  <a href="https://eg.linkedin.com/in/ahmed-elzayat-a8325b41" target="_blank" rel="noreferrer" className="rounded-lg border border-white/15 px-3 py-2 text-[10px] font-semibold text-white transition hover:border-[#299BF0]">LinkedIn</a>
-                </div>
-              </div>
-            </section>
+        <div className="mx-auto mt-10 max-w-[1450px]">
+          <p className="mx-auto max-w-4xl text-center text-[clamp(1rem,1.5vw,1.3rem)] leading-relaxed text-[#AFC3DB]">Meet the visionary behind EMS&apos;s innovative smart infrastructure solutions.</p>
+        </div>
 
-            <section className="grid bg-[#0B2548]/45 md:grid-cols-[.8fr_1.2fr]">
-              <div className="flex flex-col justify-center p-5 sm:p-6">
-                <p className="font-mono text-[8px] uppercase tracking-[.24em] text-[#299BF0]">Featured Podcast</p>
-                <h3 className="mt-3 font-serif text-[clamp(1.5rem,2.3vw,2.05rem)] leading-tight">Artificial intelligence and the future of daily life</h3>
-                <p className="mt-3 text-[12px] leading-5 text-slate-400">Ahmed El-Zayat discusses how artificial intelligence can improve everyday life and intelligent infrastructure.</p>
-              </div>
-              <iframe title="Ahmed Elzayat featured podcast about artificial intelligence" src="https://www.youtube-nocookie.com/embed/_xLHsVvXjvE?rel=0" loading="lazy" className="h-[250px] w-full border-0 md:h-full md:min-h-[330px]" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
-            </section>
-          </div>
-        </motion.article>
+        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: .7, ease }} className="mx-auto mt-7 grid max-w-[1450px] items-center gap-8 lg:grid-cols-[.92fr_1.08fr] lg:gap-10">
+          <section className="px-2 sm:px-4">
+            <div className="relative w-fit">
+              <img src="/ahmed-elzayat.jpeg" alt="Ahmed Elzayat, CEO and Founder of EMS" loading="lazy" className="h-52 w-52 rounded-full border-4 border-[#299BF0]/35 object-cover object-top shadow-[0_20px_55px_rgba(0,0,0,.35)] sm:h-56 sm:w-56" />
+              <span className="absolute -bottom-3 left-1/2 -translate-x-1/2 whitespace-nowrap rounded-full border border-[#299BF0]/40 bg-[#299BF0] px-4 py-2 text-[11px] font-bold uppercase tracking-[.08em] text-[#010B1F] shadow-lg">CEO &amp; Founder</span>
+            </div>
+            <h3 className="mt-9 font-sans text-[clamp(1.55rem,2.2vw,2rem)] font-bold text-white">Eng. Ahmed El-Zayat</h3>
+            <p className="mt-4 max-w-2xl text-[clamp(.85rem,1.1vw,1rem)] leading-7 text-[#AFC3DB]">With over 15 years of experience in IoT and AI technologies, Engineer Ahmed El-Zayat has led EMS to become a pioneer in smart infrastructure solutions. His vision is to transform how organizations operate through innovative technology integration.</p>
+            <div className="mt-6 flex flex-wrap gap-3">
+              <Link to="/about" className="rounded-lg bg-[rgb(33,124,154)] px-5 py-3 text-[12px] font-semibold text-white transition hover:bg-[#299BF0] hover:text-[#010B1F]">Read Full Bio</Link>
+              <a href="https://eg.linkedin.com/in/ahmed-elzayat-a8325b41" target="_blank" rel="noreferrer" className="rounded-lg border border-[#299BF0] px-5 py-3 text-[12px] font-semibold text-[#299BF0] transition hover:bg-[#299BF0] hover:text-[#010B1F]">Connect on LinkedIn</a>
+            </div>
+          </section>
 
-        <div className="mx-auto mt-10 max-w-[1250px] py-4">
+          <section className="overflow-hidden rounded-2xl border border-[#299BF0]/25 bg-[#07182e] shadow-[0_28px_80px_rgba(0,0,0,.24)]">
+            <div className="p-6 sm:px-7 sm:py-6">
+              <h3 className="font-sans text-[clamp(1.3rem,1.8vw,1.65rem)] font-bold text-white">Featured Podcast</h3>
+              <p className="mt-2 text-[clamp(.84rem,1.05vw,.98rem)] leading-6 text-[#AFC3DB]">Engineer Ahmed El-Zayat discusses the significance of Artificial Intelligence in enhancing and improving our daily lives in a special podcast episode.</p>
+            </div>
+            <div className="overflow-hidden border-t border-[#299BF0]/25 bg-[#041126]">
+              <iframe title="Ahmed Elzayat featured podcast about artificial intelligence" src="https://www.youtube-nocookie.com/embed/_xLHsVvXjvE?rel=0" loading="lazy" className="aspect-video w-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
+            </div>
+          </section>
+        </motion.div>
+
+        <div className="mx-auto mt-8 max-w-[1250px]">
           <div className="home-reveal text-center">
             <button
               type="button"
@@ -830,7 +915,7 @@ export default function Home() {
             />
           </div>
 
-          <div className="mx-auto mt-6 grid max-w-5xl grid-cols-2 gap-x-6 gap-y-5 sm:grid-cols-4 sm:gap-x-8">
+          <div className="mx-auto mt-4 grid max-w-5xl grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-4 sm:gap-x-7">
             {featuredPartners.map((partner, index) => (
               <motion.div
                 key={partner.id}
@@ -839,9 +924,9 @@ export default function Home() {
                 viewport={{ once: true, margin: '-40px' }}
                 whileHover={{ y: -3, scale: 1.04 }}
                 transition={{ duration: .4, delay: index * .06, ease }}
-                className="flex h-14 items-center justify-center px-3 sm:h-16"
+                className="flex h-12 items-center justify-center px-3 sm:h-14"
               >
-                <img src={partner.logo} alt={`${partner.name} logo`} loading="lazy" className={partner.id === 'oracle' ? 'h-auto w-[120px] max-w-none object-contain opacity-90 transition-opacity hover:opacity-100 sm:w-[135px]' : 'max-h-8 w-auto max-w-[115px] object-contain opacity-90 transition-opacity hover:opacity-100 sm:max-h-9 sm:max-w-[130px]'} />
+                <img src={partner.logo} alt={`${partner.name} logo`} loading="lazy" className="h-8 w-28 object-contain opacity-90 transition-opacity hover:opacity-100 sm:h-9 sm:w-32" />
               </motion.div>
             ))}
           </div>
