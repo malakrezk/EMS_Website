@@ -14,7 +14,7 @@ function FAQItem({ item, isOpen, onToggle }) {
         className="flex w-full items-center justify-between gap-4 p-6 text-left"
         aria-expanded={isOpen}
       >
-        <span className="font-serif text-base font-medium text-white sm:text-lg">{item.question}</span>
+        <span className="type-card-title font-serif font-medium text-white">{item.question}</span>
         <motion.span animate={{ rotate: isOpen ? 45 : 0 }} transition={{ duration: 0.25 }} className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full border border-cyan-400/30 text-cyan-300">
           <HiPlus className="h-4 w-4" />
         </motion.span>
@@ -28,7 +28,7 @@ function FAQItem({ item, isOpen, onToggle }) {
             transition={{ duration: 0.3, ease: 'easeInOut' }}
             className="overflow-hidden"
           >
-            <p className="px-6 pb-6 text-sm leading-relaxed text-muted/80">{item.answer}</p>
+            <p className="type-body px-6 pb-6 text-muted/80">{item.answer}</p>
           </motion.div>
         )}
       </AnimatePresence>
@@ -62,8 +62,8 @@ export default function FAQSection() {
               <span className="flex h-14 w-14 items-center justify-center rounded-full border border-cyan-400/30 bg-cyan-400/10 text-cyan-300">
                 <HiOutlineSupport className="h-7 w-7" />
               </span>
-              <h3 className="font-serif text-lg font-medium text-white">Still have questions?</h3>
-              <p className="text-sm leading-relaxed text-muted/80">
+              <h3 className="type-card-title font-serif font-medium text-white">Still have questions?</h3>
+              <p className="type-body text-muted/80">
                 Our engineering team is happy to discuss your project requirements in detail.
               </p>
               <Link to="/contact" className="btn-primary mt-2 w-full sm:w-auto">

@@ -36,7 +36,7 @@ export default function PageHeader({ eyebrow, title, description }) {
   }
 
   return (
-    <section ref={ref} onPointerMove={onPointerMove} onPointerLeave={() => { pointerX.set(0); pointerY.set(0) }} className="relative min-h-[420px] overflow-hidden bg-[#061326] pb-[clamp(3rem,7vw,5rem)] pt-[clamp(8rem,14vw,10rem)] md:min-h-[500px]">
+    <section ref={ref} onPointerMove={onPointerMove} onPointerLeave={() => { pointerX.set(0); pointerY.set(0) }} className="relative min-h-[360px] overflow-hidden bg-[#010B1F] pb-[clamp(2.5rem,6vw,4rem)] pt-[clamp(7rem,12vw,8.5rem)] md:min-h-[430px]">
       <motion.div style={{ y: scrollY }} className="absolute -inset-y-[12%] inset-x-0 overflow-hidden">
         <motion.div
           style={{ x: smoothX, y: smoothY, backgroundImage: `url(${image})` }}
@@ -47,14 +47,14 @@ export default function PageHeader({ eyebrow, title, description }) {
         />
       </motion.div>
 
-      <div className={isAbout ? 'absolute inset-0 bg-[linear-gradient(90deg,rgba(3,10,19,.93)_0%,rgba(4,17,34,.72)_55%,rgba(4,17,34,.62)_100%)]' : 'absolute inset-0 bg-gradient-to-r from-[#061326]/95 via-[#061326]/75 to-[#061326]/25'} />
-      <div className="absolute inset-0 bg-gradient-to-t from-[#061326] via-transparent to-[#061326]/35" />
+      <div className={isAbout ? 'absolute inset-0 bg-[linear-gradient(90deg,rgba(1,11,31,.96)_0%,rgba(1,11,31,.76)_55%,rgba(1,11,31,.64)_100%)]' : 'absolute inset-0 bg-gradient-to-r from-[#010B1F]/95 via-[#010B1F]/75 to-[#010B1F]/25'} />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#010B1F] via-transparent to-[#010B1F]/35" />
 
       {isAbout && <>
         <div className="absolute inset-0 opacity-30 [background-image:linear-gradient(rgba(67,211,255,.09)_1px,transparent_1px),linear-gradient(90deg,rgba(67,211,255,.09)_1px,transparent_1px)] [background-size:64px_64px] [mask-image:linear-gradient(to_right,black,transparent_86%)]" />
         <motion.div animate={reducedMotion ? undefined : { x: ['-20%', '65%'], opacity: [0, .3, 0] }} transition={{ duration: 9, repeat: Infinity, ease: 'easeInOut' }} className="absolute -top-1/3 left-0 h-[150%] w-28 rotate-[18deg] bg-gradient-to-r from-transparent via-cyan-200/15 to-transparent blur-2xl" />
         <svg aria-hidden="true" viewBox="0 0 1200 520" preserveAspectRatio="none" className="absolute inset-0 h-full w-full opacity-40">
-          <defs><linearGradient id="about-line" x1="0" x2="1"><stop offset="0" stopColor="#00c8ff" stopOpacity="0" /><stop offset=".45" stopColor="#5ddcff" stopOpacity=".75" /><stop offset="1" stopColor="#0066ff" stopOpacity="0" /></linearGradient></defs>
+          <defs><linearGradient id="about-line" x1="0" x2="1"><stop offset="0" stopColor="#23C7FF" stopOpacity="0" /><stop offset=".45" stopColor="#72E5FF" stopOpacity=".75" /><stop offset="1" stopColor="#299BF0" stopOpacity="0" /></linearGradient></defs>
           <motion.path d="M570 400 C720 325 770 210 920 190 S1080 125 1200 80" fill="none" stroke="url(#about-line)" strokeWidth="1.2" strokeDasharray="8 14" animate={reducedMotion ? undefined : { strokeDashoffset: [0, -88] }} transition={{ duration: 8, repeat: Infinity, ease: 'linear' }} />
           <motion.path d="M690 500 C760 405 900 390 980 300 S1110 250 1200 225" fill="none" stroke="url(#about-line)" strokeWidth=".8" strokeDasharray="5 18" animate={reducedMotion ? undefined : { strokeDashoffset: [0, -92] }} transition={{ duration: 11, repeat: Infinity, ease: 'linear' }} />
         </svg>
@@ -63,11 +63,11 @@ export default function PageHeader({ eyebrow, title, description }) {
       </>}
 
       {!isAbout && <div className="absolute inset-0 opacity-15 [background-image:radial-gradient(#9edaff_0.7px,transparent_0.7px)] [background-size:34px_34px]" />}
-      <div className="container-ems relative flex min-h-[260px] items-center md:min-h-[320px]">
+      <div className="container-ems relative flex min-h-[220px] items-center md:min-h-[270px]">
         <div className="max-w-3xl">
-          {eyebrow && <motion.p initial={{ opacity: 0, x: -22 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .65 }} className="mb-5 flex items-center gap-3 text-xs font-semibold uppercase tracking-[.32em] text-cyan-300"><span className="h-px w-9 bg-cyan-300" />{eyebrow}</motion.p>}
-          <motion.h1 initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .08, ease: [0.22, 1, 0.36, 1] }} className="max-w-3xl font-serif text-[clamp(2.1rem,5vw,3.7rem)] leading-[1.1] text-white drop-shadow-[0_3px_20px_rgba(0,0,0,.45)]">{title}</motion.h1>
-          {description && <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: .18 }} className="mt-5 max-w-2xl text-sm leading-7 text-slate-200 drop-shadow-[0_2px_12px_rgba(0,0,0,.55)] sm:text-base">{description}</motion.p>}
+          {eyebrow && <motion.p initial={{ opacity: 0, x: -22 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: .65 }} className="type-label mb-5 flex items-center gap-3 font-semibold uppercase tracking-[.32em] text-cyan-300"><span className="h-px w-9 bg-cyan-300" />{eyebrow}</motion.p>}
+          <motion.h1 initial={{ opacity: 0, y: 22 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .65, delay: .08, ease: [0.22, 1, 0.36, 1] }} className="type-page-title max-w-3xl font-serif text-white drop-shadow-[0_3px_20px_rgba(0,0,0,.45)]">{title}</motion.h1>
+          {description && <motion.p initial={{ opacity: 0, y: 16 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: .6, delay: .18 }} className="type-lead mt-4 max-w-2xl text-slate-200 drop-shadow-[0_2px_12px_rgba(0,0,0,.55)]">{description}</motion.p>}
         </div>
       </div>
       <motion.div initial={{ scaleX: 0 }} animate={{ scaleX: 1 }} transition={{ duration: 1.1, delay: .4 }} className="absolute bottom-0 left-0 h-px w-full origin-left bg-gradient-to-r from-cyan-300/80 via-cyan-300/20 to-transparent" />
