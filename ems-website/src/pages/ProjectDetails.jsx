@@ -1,189 +1,20 @@
-import { useParams, Link, Navigate } from 'react-router-dom'
+import { Link, Navigate, useParams } from 'react-router-dom'
 import { motion } from 'framer-motion'
-import {
-  HiOutlineArrowLeft,
-  HiOutlineMapPin,
-  HiOutlineCalendarDays,
-  HiOutlineBuildingOffice,
-  HiOutlineClock
-} from 'react-icons/hi2'
-import CircuitPlaceholder from '../components/ui/CircuitPlaceholder'
+import { HiOutlineArrowLeft, HiOutlineArrowRight, HiOutlineCheck } from 'react-icons/hi2'
 import ProjectCard from '../components/projects/ProjectCard'
 import { getProjectById, getRelatedProjects } from '../data/projects'
-
-const architectureLayers = [
-  'Field Level — RTUs, IEDs, sensors, and actuators',
-  'Station Level — Bay controllers, station HMI, local automation',
-  'Control Center — SCADA master, EMS applications, historian',
-  'Enterprise Level — Reporting, analytics, and business systems'
-]
 
 export default function ProjectDetails() {
   const { id } = useParams()
   const project = getProjectById(id)
-
   if (!project) return <Navigate to="/projects" replace />
-
   const related = getRelatedProjects(project)
 
-  return (
-    <>
-      {/* Hero image */}
-      <section className="relative">
-        <CircuitPlaceholder seed={project.name.length} accent={project.accent} className="h-[50vh] min-h-[360px] w-full" />
-        <div className="absolute inset-0 bg-gradient-to-t from-navy via-navy/40 to-transparent" />
-        <div className="container-ems absolute inset-x-0 bottom-0 pb-10">
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
-            <Link to="/projects" className="mb-6 inline-flex items-center gap-2 text-sm font-medium text-white/70 hover:text-white">
-              <HiOutlineArrowLeft className="h-4 w-4" />
-              Back to Projects
-            </Link>
-            <h1 className="font-serif text-4xl font-medium text-white sm:text-5xl md:text-6xl">{project.name}</h1>
-            <div className="mt-4 flex flex-wrap gap-x-6 gap-y-2 text-sm text-white/70">
-              <span className="flex items-center gap-1.5">
-                <HiOutlineMapPin className="h-4 w-4 text-cyan-400" /> {project.country}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <HiOutlineBuildingOffice className="h-4 w-4 text-cyan-400" /> {project.industry}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <HiOutlineCalendarDays className="h-4 w-4 text-cyan-400" /> {project.year}
-              </span>
-              <span className="flex items-center gap-1.5">
-                <HiOutlineClock className="h-4 w-4 text-cyan-400" /> {project.duration}
-              </span>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+  return <main className="bg-[#030a13] text-white">
+    <section className="relative min-h-[610px] overflow-hidden pt-24"><img src={project.image} alt="" className="absolute inset-0 h-full w-full object-cover opacity-45" /><div className="absolute inset-0 bg-gradient-to-r from-[#030a13] via-[#030a13]/80 to-transparent" /><div className="absolute inset-0 bg-gradient-to-t from-[#030a13] via-transparent to-transparent" /><div className="container-ems relative flex min-h-[520px] items-end pb-16"><motion.div initial={{ opacity: 0, y: 24 }} animate={{ opacity: 1, y: 0 }} className="max-w-3xl"><Link to="/projects" className="inline-flex items-center gap-2 text-xs text-slate-300 hover:text-cyan-200"><HiOutlineArrowLeft /> Back to case studies</Link><p className="eyebrow mt-8">{project.industry}</p><h1 className="mt-4 font-serif text-4xl sm:text-5xl">{project.name}</h1><p className="mt-5 max-w-2xl text-sm leading-7 text-slate-300">{project.description}</p></motion.div></div></section>
 
-      <section className="section-padding bg-navy">
-        <div className="container-ems grid grid-cols-1 gap-16 lg:grid-cols-12">
-          <div className="lg:col-span-8">
-            <motion.div initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ duration: 0.5 }}>
-              <h2 className="font-serif text-3xl font-medium text-white">Project Overview</h2>
-              <p className="mt-4 text-base leading-relaxed text-muted/80">{project.description}</p>
-            </motion.div>
+    <section className="section-padding"><div className="container-ems grid gap-12 lg:grid-cols-[1fr_.72fr]"><div className="space-y-12"><div><p className="eyebrow">The operating context</p><h2 className="mt-4 font-serif text-3xl">The challenge</h2><p className="mt-4 text-sm leading-7 text-slate-400">{project.challenge}</p></div><div><p className="eyebrow">Connected response</p><h2 className="mt-4 font-serif text-3xl">The ZETA solution</h2><p className="mt-4 text-sm leading-7 text-slate-400">{project.solution}</p></div><div><h2 className="font-serif text-3xl">Capabilities demonstrated</h2><div className="mt-6 grid gap-3 sm:grid-cols-2">{project.technologies.map(item => <div key={item} className="flex items-center gap-3 rounded-lg border border-white/10 bg-white/[.035] p-4 text-sm text-slate-300"><HiOutlineCheck className="text-cyan-300" />{item}</div>)}</div></div></div><aside className="rounded-xl border border-white/10 bg-[#07182e] p-7 lg:sticky lg:top-28 lg:h-fit"><p className="text-[10px] uppercase tracking-[.23em] text-cyan-300">Operational view</p><div className="mt-6 grid grid-cols-2 gap-px overflow-hidden rounded-lg bg-white/10">{project.results.map(result => <div key={result.label} className="bg-[#0a203b] p-5"><p className="font-serif text-xl text-cyan-100">{result.value}</p><p className="mt-1 text-[11px] leading-5 text-slate-500">{result.label}</p></div>)}</div><Link to="/contact" className="btn-primary mt-7 w-full">Discuss your facility <HiOutlineArrowRight /></Link></aside></div></section>
 
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.1 }}
-              className="mt-12"
-            >
-              <h2 className="font-serif text-3xl font-medium text-white">Client Challenge</h2>
-              <p className="mt-4 text-base leading-relaxed text-muted/80">{project.challenge}</p>
-            </motion.div>
-
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.15 }}
-              className="mt-12"
-            >
-              <h2 className="font-serif text-3xl font-medium text-white">The EMS Solution</h2>
-              <p className="mt-4 text-base leading-relaxed text-muted/80">{project.solution}</p>
-            </motion.div>
-
-            {/* Architecture diagram */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.18 }}
-              className="mt-12"
-            >
-              <h2 className="font-serif text-3xl font-medium text-white">System Architecture</h2>
-              <div className="mt-5 overflow-hidden rounded-xl border border-white/[0.08]">
-                <CircuitPlaceholder
-                  seed={project.name.length + 99}
-                  accent={project.accent}
-                  label="Illustrative Architecture"
-                  className="h-56 w-full"
-                />
-                <div className="grid grid-cols-1 gap-px bg-white/[0.08] sm:grid-cols-2">
-                  {architectureLayers.map((layer) => (
-                    <div key={layer} className="bg-card px-5 py-4 text-sm text-muted/80">
-                      {layer}
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </motion.div>
-
-            {/* Gallery placeholders */}
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.5, delay: 0.2 }}
-              className="mt-12"
-            >
-              <h2 className="font-serif text-3xl font-medium text-white">Project Gallery</h2>
-              <div className="mt-5 grid grid-cols-2 gap-4">
-                {Array.from({ length: project.gallery }).map((_, i) => (
-                  <CircuitPlaceholder key={i} seed={project.name.length + i * 3} accent={project.accent} className="h-40 w-full rounded-lg" />
-                ))}
-              </div>
-            </motion.div>
-          </div>
-
-          <div className="lg:col-span-4">
-            <div className="sticky top-28 space-y-6">
-              <div className="card-surface p-6">
-                <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-muted/60">Client</h3>
-                <p className="mt-2 text-base font-semibold text-white">{project.client}</p>
-              </div>
-
-              <div className="card-surface p-6">
-                <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-muted/60">
-                  Technologies Used
-                </h3>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {project.technologies.map((t) => (
-                    <span key={t} className="rounded-full bg-primary/15 px-3 py-1.5 text-xs font-medium text-cyan-300">
-                      {t}
-                    </span>
-                  ))}
-                </div>
-              </div>
-
-              <div className="card-surface p-6">
-                <h3 className="font-display text-sm font-semibold uppercase tracking-wider text-muted/60">
-                  Results &amp; KPIs
-                </h3>
-                <div className="mt-4 grid grid-cols-2 gap-4">
-                  {project.results.map((r) => (
-                    <div key={r.label}>
-                      <p className="font-display text-xl font-bold text-cyan-400">{r.value}</p>
-                      <p className="mt-1 text-[11px] leading-snug text-muted/60">{r.label}</p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              <Link to="/contact" className="btn-primary w-full">
-                Start a Similar Project
-              </Link>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {related.length > 0 && (
-        <section className="section-padding bg-navy-900">
-          <div className="container-ems">
-            <h2 className="font-serif text-3xl font-medium text-white sm:text-4xl">Related Projects</h2>
-            <div className="mt-10 grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3">
-              {related.map((p, i) => (
-                <ProjectCard key={p.id} project={p} index={i} />
-              ))}
-            </div>
-          </div>
-        </section>
-      )}
-    </>
-  )
+    {related.length > 0 && <section className="section-padding border-t border-white/10 bg-[#071629]"><div className="container-ems"><h2 className="font-serif text-3xl">Explore another environment</h2><div className="mt-9 grid gap-6 md:grid-cols-2">{related.map((item, index) => <ProjectCard key={item.id} project={item} index={index} />)}</div></div></section>}
+  </main>
 }

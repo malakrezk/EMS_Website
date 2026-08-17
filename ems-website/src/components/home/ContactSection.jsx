@@ -3,7 +3,7 @@ import { motion } from 'framer-motion'
 import { HiOutlinePaperAirplane, HiOutlineMapPin, HiOutlineEnvelope } from 'react-icons/hi2'
 import SectionHeading from '../ui/SectionHeading'
 
-const services = ['MEP Contracting', 'BMS & Automation (Siemens)', 'ZETA Platform', 'Maintenance & Support', 'Other']
+const services = ['Building Management Systems', 'SCADA', 'IoT', 'Artificial Intelligence', 'Digital Twin', 'Robotics & IoT', 'ZETA Platform']
 
 const offices = [
   {
@@ -11,12 +11,6 @@ const offices = [
     lines: ['Villa 17, Bayram El-Tunsi St., El Nargis 2', '5th Settlement, New Cairo'],
     tel: '+226418271',
     mob: '+201202542095'
-  },
-  {
-    title: 'UAE Office',
-    lines: ['Mourad Building, Fire Roundabout', 'Sharjah, United Arab Emirates'],
-    tel: '+97165690908',
-    mob: '+971563750916'
   }
 ]
 
@@ -38,8 +32,8 @@ export default function ContactSection() {
       <div className="container-ems">
         <SectionHeading
           eyebrow="Get In Touch"
-          title="Get In Touch"
-          description="Contact our team for your MEP & Automation needs"
+          title="Discuss your connected facility"
+          description="Tell us about your systems, operating environment and ZETA platform requirements."
           align="center"
           light
           className="mx-auto"
