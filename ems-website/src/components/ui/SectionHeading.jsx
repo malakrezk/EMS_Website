@@ -33,13 +33,13 @@ export default function SectionHeading({
       )}
       <h2
         className={cn(
-          'font-serif text-2xl sm:text-3xl md:text-[2.55rem] font-medium leading-[1.18] text-white'
+          'type-section-title font-serif font-medium text-white'
         )}
       >
         {title}
       </h2>
       {description && (
-        <p className="mt-4 text-sm sm:text-base leading-7 text-muted/85">{description}</p>
+        <p className="type-body mt-4 text-muted/85">{description}</p>
       )}
     </motion.div>
   )

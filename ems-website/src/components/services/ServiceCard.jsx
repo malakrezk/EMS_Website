@@ -26,9 +26,9 @@ export default function ServiceCard({ service, index, className = '' }) {
       <motion.div style={{ background: glow }} className="absolute inset-0 opacity-0 transition-opacity duration-500 group-hover:opacity-100" />
       <div className="absolute inset-x-0 bottom-0 z-10 p-6">
         <div className="flex h-10 w-10 items-center justify-center rounded border border-cyan-200/25 bg-[#061326]/55 text-cyan-200 backdrop-blur-md transition duration-300 group-hover:border-cyan-200/60"><Icon className="h-5 w-5" /></div>
-        <p className="mt-5 text-[10px] font-semibold uppercase tracking-[.28em] text-cyan-300">Engineering service</p>
-        <h2 className="mt-2 font-serif text-2xl leading-[1.2] text-white">{service.title}</h2>
-        <p className="mt-3 max-w-xl text-[13px] leading-6 text-slate-300">{service.short}</p>
+        <p className="type-label mt-5 font-semibold uppercase tracking-[.28em] text-cyan-300">Engineering service</p>
+        <h2 className="type-card-title mt-2 font-serif text-white">{service.title}</h2>
+        <p className="type-body mt-3 max-w-xl text-slate-300">{service.short}</p>
         <span className="mt-5 inline-flex items-center gap-2 text-[13px] font-semibold text-white transition group-hover:text-cyan-200">Explore Service <HiOutlineArrowUpRight className="h-4 w-4 transition-transform group-hover:translate-x-1 group-hover:-translate-y-1" /></span>
       </div>
       <span className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-cyan-300 transition-transform duration-700 group-hover:scale-x-100" />

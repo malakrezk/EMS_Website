@@ -72,15 +72,15 @@ export default function DashboardPreview() {
                   <AreaChart data={loadCurveData} margin={{ top: 4, right: 8, left: -20, bottom: 0 }}>
                     <defs>
                       <linearGradient id="loadFill" x1="0" y1="0" x2="0" y2="1">
-                        <stop offset="0%" stopColor="#00C8FF" stopOpacity={0.4} />
-                        <stop offset="100%" stopColor="#00C8FF" stopOpacity={0} />
+                        <stop offset="0%" stopColor="#23C7FF" stopOpacity={0.4} />
+                        <stop offset="100%" stopColor="#23C7FF" stopOpacity={0} />
                       </linearGradient>
                     </defs>
                     <CartesianGrid stroke="rgba(255,255,255,0.06)" vertical={false} />
                     <XAxis dataKey="time" stroke="rgba(255,255,255,0.3)" fontSize={11} tickLine={false} axisLine={false} />
                     <YAxis stroke="rgba(255,255,255,0.3)" fontSize={11} tickLine={false} axisLine={false} />
                     <Tooltip content={<CustomTooltip />} />
-                    <Area type="monotone" dataKey="mw" stroke="#00C8FF" strokeWidth={2} fill="url(#loadFill)" />
+                    <Area type="monotone" dataKey="mw" stroke="#23C7FF" strokeWidth={2} fill="url(#loadFill)" />
                   </AreaChart>
                 </ResponsiveContainer>
               </div>
@@ -142,7 +142,7 @@ export default function DashboardPreview() {
                       y1={a.y}
                       x2={b.x}
                       y2={b.y}
-                      stroke="#00C8FF"
+                      stroke="#23C7FF"
                       strokeOpacity="0.35"
                       strokeWidth="1.5"
                       strokeDasharray="5 5"
@@ -157,7 +157,7 @@ export default function DashboardPreview() {
                       r="9"
                       fill={n.status === 'warning' ? 'rgba(251,191,36,0.15)' : 'rgba(0,184,255,0.15)'}
                     />
-                    <circle cx={n.x} cy={n.y} r="4" fill={n.status === 'warning' ? '#fbbf24' : '#00C8FF'} />
+                    <circle cx={n.x} cy={n.y} r="4" fill={n.status === 'warning' ? '#fbbf24' : '#23C7FF'} />
                     <text x={n.x} y={n.y - 14} textAnchor="middle" fill="rgba(255,255,255,0.5)" fontSize="9" fontFamily="monospace">
                       {n.label}
                     </text>

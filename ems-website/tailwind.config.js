@@ -5,48 +5,48 @@ export default {
     extend: {
       colors: {
         navy: {
-          DEFAULT: '#07182E',
+          DEFAULT: '#010B1F',
           50: '#e8ecf2',
           100: '#c3cedd',
           200: '#9aadc4',
           300: '#708cab',
-          400: '#4d6d93',
-          500: '#2c4f7c',
+          400: 'rgb(1, 116, 154)',
+          500: '#2c4c75',
           600: '#173a63',
-          700: '#0c2947',
-          800: '#102A43',
-          900: '#07182E',
-          950: '#040d1a'
+          700: '#0A2A52',
+          800: '#061A3A',
+          900: '#010B1F',
+          950: '#000817'
         },
         primary: {
-          DEFAULT: '#0066FF',
-          50: '#e6f0ff',
-          100: '#bcd7ff',
-          200: '#8fbcff',
-          300: '#5fa0ff',
-          400: '#3986ff',
-          500: '#0066FF',
-          600: '#0052cc',
-          700: '#003d99',
-          800: '#002d75',
-          900: '#001e53'
+          DEFAULT: '#299BF0',
+          50: '#EAF6FF',
+          100: '#CDEAFF',
+          200: '#9CD7FF',
+          300: '#6BC3FF',
+          400: '#45B2FA',
+          500: '#176aaa',
+          600: '#147FD1',
+          700: '#0D64A8',
+          800: '#0A4B7D',
+          900: '#073455'
         },
         cyan: {
-          DEFAULT: '#00C8FF',
-          50: '#e0f8ff',
-          100: '#b3edff',
-          200: '#80e1ff',
-          300: '#4dd5ff',
-          400: '#26caff',
-          500: '#00C8FF',
-          600: '#00a3cc',
-          700: '#007e99',
-          800: '#005a66',
-          900: '#002533'
+          DEFAULT: '#23C7FF',
+          50: '#E8FAFF',
+          100: '#C9F4FF',
+          200: '#9BEAFF',
+          300: '#72E5FF',
+          400: '#42D9FF',
+          500: '#23C7FF',
+          600: '#0BA5D8',
+          700: '#087FA8',
+          800: '#075C79',
+          900: '#063A4D'
         },
-        surface: '#07182E',
-        card: '#132F4C',
-        muted: '#B8C5D1',
+        surface: '#010B1F',
+        card: '#0B2548',
+        muted: '#AFC3DB',
         ink: '#FFFFFF'
       },
       fontFamily: {
@@ -56,14 +56,14 @@ export default {
         mono: ['"JetBrains Mono"', 'monospace']
       },
       backgroundImage: {
-        'grid-lines': 'linear-gradient(rgba(0,184,255,0.06) 1px, transparent 1px), linear-gradient(90deg, rgba(0,184,255,0.06) 1px, transparent 1px)',
-        'radial-glow': 'radial-gradient(circle at 50% 0%, rgba(0,102,255,0.28), transparent 60%)'
+        'grid-lines': 'linear-gradient(rgba(35,199,255,0.07) 1px, transparent 1px), linear-gradient(90deg, rgba(35,199,255,0.07) 1px, transparent 1px)',
+        'radial-glow': 'radial-gradient(circle at 50% 0%, rgba(41,155,240,0.3), transparent 60%)'
       },
       backgroundSize: {
         grid: '40px 40px'
       },
       boxShadow: {
-        glow: '0 0 40px rgba(0,200,255,0.25)',
+        glow: '0 0 40px rgba(35,199,255,0.25)',
         card: '0 10px 40px -12px rgba(4,13,26,0.45)'
       },
       keyframes: {

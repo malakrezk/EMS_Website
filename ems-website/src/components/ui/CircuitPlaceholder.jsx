@@ -22,7 +22,7 @@ export default function CircuitPlaceholder({ seed = 1, accent = 'cyan', classNam
     y: 30 + rand() * 180
   }))
 
-  const accentColor = accent === 'cyan' ? '#00C8FF' : '#3986ff'
+  const accentColor = accent === 'cyan' ? '#23C7FF' : '#299BF0'
 
   return (
     <div className={cn('relative overflow-hidden bg-navy-800', className)}>
