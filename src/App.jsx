@@ -1,4 +1,4 @@
-import { Navigate, Route, Routes } from 'react-router-dom'
+import { Navigate, Route, Routes, useParams } from 'react-router-dom'
 import Layout from './components/layout/Layout'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -12,6 +12,11 @@ import Partners from './pages/Partners'
 import Contact from './pages/Contact'
 import NotFound from './pages/NotFound'
 
+function LegacyProjectRedirect() {
+  const { id } = useParams()
+  return <Navigate to={`/case-studies/${id}`} replace />
+}
+
 export default function App() {
   return <Routes><Route element={<Layout />}>
     <Route path="/" element={<Home />} />
@@ -21,8 +26,10 @@ export default function App() {
     <Route path="/industries/:industryId" element={<IndustryDetails />} />
     <Route path="/solutions" element={<Solutions />} />
     <Route path="/digital-twin" element={<Navigate to="/solutions#digital-twin" replace />} />
-    <Route path="/projects" element={<Projects />} />
-    <Route path="/projects/:id" element={<ProjectDetails />} />
+    <Route path="/projects" element={<Navigate to="/case-studies" replace />} />
+    <Route path="/projects/:id" element={<LegacyProjectRedirect />} />
+    <Route path="/case-studies" element={<Projects />} />
+    <Route path="/case-studies/:id" element={<ProjectDetails />} />
     <Route path="/partners" element={<Partners />} />
     <Route path="/contact" element={<Contact />} />
     <Route path="*" element={<NotFound />} />

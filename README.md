@@ -1,62 +1,60 @@
-# EMS — Energy Management & Automation Solutions Website
+# EMS Engineering Website
 
-A modern, production-ready corporate website for an engineering company (EMS) specializing in SCADA, Energy
-Management Systems, substation automation, protection & control, and smart grid solutions.
+Corporate website for EMS engineering, automation, SCADA, energy management, and smart infrastructure services.
 
-Built with React + Vite, Tailwind CSS, React Router, Framer Motion, React Icons, and Recharts.
+## Requirements
 
-## Getting Started
+- Node.js 20.19 or newer
+- npm
+
+## Run locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-The app will start at `http://localhost:5173`.
+Vite serves the site at `http://localhost:5173` by default.
 
-To build for production:
+## Verify and build
 
 ```bash
-npm run build
+npm run check
 npm run preview
 ```
 
-## Project Structure
+`npm run check` runs the source lint check and creates the production build in `dist/`.
 
-```
+## Project structure
+
+```text
 ems-website/
-├── index.html
-├── package.json
-├── vite.config.js
-├── tailwind.config.js
-├── postcss.config.js
-├── public/
-│   └── favicon.svg
-└── src/
-    ├── main.jsx              # App entry point
-    ├── App.jsx                # Route definitions
-    ├── index.css              # Tailwind directives + global styles
-    ├── components/
-    │   ├── layout/            # Navbar, Footer, Layout wrapper
-    │   ├── home/               # Landing page sections (Hero, About, Services, etc.)
-    │   ├── projects/           # ProjectCard, ProjectFilters
-    │   └── ui/                 # Reusable primitives (SectionHeading, StatCard, CircuitPlaceholder, PageHeader)
-    ├── pages/                  # Route-level pages (Home, About, Services, Solutions,
-    │                           #   Projects, ProjectDetails, Partners, Contact, NotFound)
-    ├── data/                   # Sample content: services, industries, projects, partners,
-    │                           #   timeline, dashboard metrics
-    ├── hooks/                  # useScrollToTop, useCountUp
-    └── utils/                  # cn() class-name helper
+|-- public/              Static images, videos, logos, and favicon
+|-- src/
+|   |-- components/      Shared layout and interface components
+|   |-- data/            Website content and project data
+|   |-- hooks/           Reusable React hooks
+|   |-- pages/           Route-level page components
+|   |-- utils/           Shared utilities
+|   |-- App.jsx          Route definitions
+|   |-- index.css        Global styles and Tailwind layers
+|   `-- main.jsx         Application entry point
+|-- eslint.config.js     Source validation rules
+|-- index.html           HTML entry point
+|-- package.json         Commands and dependencies
+|-- tailwind.config.js   Design-system configuration
+|-- vercel.json          Vercel build and SPA routing configuration
+`-- vite.config.js       Development and production build configuration
 ```
 
-## Notes
+## Deployment
 
-- No backend is wired up. The contact form and newsletter signup simulate a successful submission client-side, and
-  all project / dashboard data lives in `src/data/` as static sample data — replace with real API calls when ready.
-- Project imagery uses a generative SVG "circuit" placeholder (`CircuitPlaceholder`) instead of photography, so the
-  project runs immediately with no external image dependencies. Swap in real photography by replacing
-  `CircuitPlaceholder` usages with an `<img>`.
-- **Color system** (dark-first, enterprise): Background `#07182E`, Secondary Background `#102A43`, Cards `#132F4C`,
-  Primary `#0066FF`, Accent `#00C8FF`, Text `#FFFFFF`, Secondary Text `#B8C5D1`, Borders `rgba(255,255,255,.08)`.
-  Defined in `tailwind.config.js` as `navy` / `card` / `primary` / `cyan` / `muted`.
-- Typography uses Inter throughout (headings and body) plus JetBrains Mono for data readouts, loaded in `index.html`.
+The folder is deployable as its own Vercel project. Set the Vercel root directory to this folder; `vercel.json` builds with `npm run build` and publishes `dist`.
+
+Client-side routes use a fallback rewrite to `index.html`, including `/about`, `/services`, `/solutions`, `/case-studies`, `/partners`, and `/contact`.
+
+## External content
+
+All local file references are contained in this project. Some page content still requires an internet connection because it uses Google Fonts, Unsplash images, YouTube embeds, and external company/social links.
+
+The contact form and newsletter interface currently simulate submission in the browser; no backend or email service is connected.
