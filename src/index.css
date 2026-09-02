@@ -1,0 +1,393 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --text-hero: clamp(48px, 5vw, 76px);
+  --text-section: clamp(38px, 4vw, 60px);
+  --text-subheading: clamp(28px, 3vw, 42px);
+  --text-card-title: clamp(22px, 2vw, 32px);
+  --text-lead: clamp(18px, 1.5vw, 22px);
+  --text-body: clamp(15px, 1.1vw, 18px);
+  --text-label: clamp(12px, .9vw, 15px);
+  --text-caption: 13px;
+}
+
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+}
+
+html,
+body,
+#root {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: hidden;
+}
+
+@supports (overflow: clip) {
+  html,
+  body,
+  #root {
+    overflow-x: clip;
+  }
+}
+
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+body {
+  min-width: 320px;
+}
+
+img, video, canvas, svg { max-width: 100%; }
+
+img, video { height: auto; }
+
+input, textarea, select, button { font: inherit; }
+
+main, section, article, div { min-width: 0; }
+
+main h1,
+main h2,
+main h3,
+main p {
+  overflow-wrap: break-word;
+}
+
+@keyframes partner-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to { transform: translate3d(-50%, 0, 0); }
+}
+
+.partner-marquee-track {
+  animation: partner-marquee 30s linear infinite;
+  will-change: transform;
+}
+
+::selection {
+  background: #23C7FF;
+  color: #010B1F;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 10px;
+}
+::-webkit-scrollbar-track {
+  background: #010B1F;
+}
+::-webkit-scrollbar-thumb {
+  background: #299BF0;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #23C7FF;
+}
+
+/* Visible keyboard focus for accessibility */
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+  outline: 2px solid #23C7FF;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@layer base {
+  body {
+    background-color: #010B1F;
+  }
+}
+
+@layer components {
+  .type-page-title {
+    font-size: var(--text-hero);
+    line-height: 1;
+  }
+
+  .type-section-title {
+    font-size: var(--text-section);
+    line-height: 1.06;
+  }
+
+  .type-subheading {
+    font-size: var(--text-subheading);
+    line-height: 1.12;
+  }
+
+  .type-card-title {
+    font-size: var(--text-card-title);
+    line-height: 1.16;
+  }
+
+  .type-lead {
+    font-size: var(--text-lead);
+    line-height: 1.62;
+  }
+
+  .type-body {
+    font-size: var(--text-body);
+    line-height: 1.7;
+  }
+
+  .type-label {
+    font-size: var(--text-label);
+    line-height: 1.35;
+  }
+
+  .type-caption {
+    font-size: var(--text-caption);
+    line-height: 1.55;
+  }
+
+  .container-ems {
+    @apply mx-auto w-full;
+    max-width: 1500px;
+    padding-inline: clamp(1rem, 3vw, 2.5rem);
+  }
+
+  .section-padding {
+    padding-block: clamp(3.5rem, 6vw, 6rem);
+  }
+
+  .eyebrow {
+    @apply inline-flex items-center gap-2 font-mono font-semibold tracking-[0.2em] uppercase text-cyan-400;
+    font-size: var(--text-label);
+    line-height: 1.35;
+  }
+
+  .btn-primary {
+    @apply inline-flex items-center justify-center gap-2 rounded-md bg-gradient-to-r from-primary to-cyan-500 px-5 py-3 text-[13px] font-semibold text-white shadow-[0_8px_24px_rgba(41,155,240,.26)] transition-all duration-300 hover:from-primary-400 hover:to-cyan-400 hover:-translate-y-0.5 hover:shadow-[0_10px_30px_rgba(35,199,255,.28)] active:translate-y-0;
+  }
+
+  .btn-outline {
+    @apply inline-flex items-center justify-center gap-2 rounded-md border border-white/20 px-5 py-3 text-[13px] font-semibold text-white transition-all duration-300 hover:border-cyan-400 hover:bg-white/5 hover:-translate-y-0.5 active:translate-y-0;
+  }
+
+  /* Alias kept for backward compatibility with any remaining call sites */
+  .btn-outline-dark {
+    @apply btn-outline;
+  }
+
+  .card-surface {
+    @apply relative rounded-md border border-white/[0.09] bg-[#0B2548]/90 shadow-card backdrop-blur-sm transition-all duration-300;
+  }
+
+  .card-hover-glow {
+    @apply transition-all duration-300 hover:-translate-y-1 hover:border-cyan-300/30 hover:bg-[#102b4c] hover:shadow-[0_18px_42px_rgba(0,0,0,.28)];
+  }
+
+  .grid-bg {
+    background-image: linear-gradient(rgba(35, 199, 255, 0.07) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(35, 199, 255, 0.07) 1px, transparent 1px);
+    background-size: 44px 44px;
+  }
+}
+
+@media (min-width: 1920px) {
+  .container-ems { max-width: 1680px; padding-inline: 4rem; }
+}
+
+/* Shared semantic hierarchy for standalone pages. The Home hero is intentionally excluded. */
+:where(.about-page-shell, .services-page, .solutions-page, .project-detail-page, .service-detail-page, .industry-detail-page) > section:first-child h1 {
+  font-size: var(--text-hero);
+  line-height: 1;
+}
+
+:where(.about-page-shell, .services-page, .solutions-page, .project-detail-page, .service-detail-page, .industry-detail-page) > section:first-child h1 + p {
+  font-size: var(--text-lead);
+  line-height: 1.62;
+}
+
+:where(.about-page-shell, .services-page, .solutions-page, .project-detail-page, .service-detail-page, .industry-detail-page) section h2:not(.type-card-title) {
+  font-size: var(--text-section);
+  line-height: 1.06;
+}
+
+:where(.about-page-shell, .services-page, .solutions-page, .project-detail-page, .service-detail-page, .industry-detail-page) article h3 {
+  font-size: var(--text-card-title);
+  line-height: 1.16;
+}
+
+:where(.about-page-shell, .services-page, .solutions-page, .project-detail-page, .service-detail-page, .industry-detail-page) section h2:not(.type-card-title) + p,
+:where(.about-page-shell, .services-page, .solutions-page, .project-detail-page, .service-detail-page, .industry-detail-page) article h3 + p {
+  font-size: var(--text-body);
+  line-height: 1.7;
+}
+
+@media (max-width: 374px) {
+  .btn-primary, .btn-outline { width: 100%; padding-inline: 1rem; }
+}
+
+@media (max-width: 479px) {
+  :root {
+    --text-hero: clamp(38px, 12vw, 46px);
+    --text-section: clamp(30px, 9vw, 38px);
+    --text-subheading: clamp(24px, 7.5vw, 30px);
+    --text-card-title: clamp(20px, 6vw, 25px);
+    --text-lead: clamp(16px, 4.8vw, 18px);
+    --text-body: clamp(14px, 4vw, 16px);
+    --text-label: 11px;
+    --text-caption: 12px;
+  }
+
+  input, textarea, select { font-size: 16px; }
+  .section-padding { padding-block: 3rem; }
+  .card-surface { border-radius: .75rem; }
+}
+
+@media (max-width: 767px) {
+  .section-padding { padding-block: clamp(3rem, 8vw, 3.5rem); }
+  .eyebrow { letter-spacing: .15em; }
+  .service-detail-page > section:first-child,
+  .industry-detail-page > section:first-child,
+  .solutions-page > section:first-child,
+  .project-detail-page > section:first-child {
+    min-height: 520px;
+  }
+  .about-page-shell > section:first-child { min-height: 560px; }
+  .service-detail-page section:nth-of-type(3) article { min-height: 320px; }
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .card-hover-glow:hover,
+  .btn-primary:hover,
+  .btn-outline:hover { transform: none; }
+}
+
+@media (max-height: 620px) and (orientation: landscape) and (max-width: 1023px) {
+  .service-detail-page > section:first-child,
+  .industry-detail-page > section:first-child,
+  .solutions-page > section:first-child,
+  .project-detail-page > section:first-child,
+  .about-page-shell > section:first-child { min-height: 620px; }
+}
+
+@media (max-height: 850px) and (min-width: 1024px) {
+  .section-padding { padding-block: 3.75rem; }
+  .about-page-shell > section:first-child > .container-ems { min-height: 500px; padding-block: 3.5rem; }
+  .service-detail-page > section:first-child { min-height: 680px; padding-bottom: 4rem; }
+  .service-detail-page section:nth-of-type(3) article { min-height: 310px; }
+  .industry-detail-page > section:first-child { min-height: 600px; padding-bottom: 4rem; }
+  .solutions-page > section:first-child { min-height: 600px; }
+  .project-detail-page > section:first-child { min-height: 540px; }
+}
+
+.inner-page-route {
+  --inner-ink: #010B1F;
+  --inner-panel: #07182e;
+  --inner-blue: #299BF0;
+  --inner-cyan: #23C7FF;
+  background-color: var(--inner-ink);
+  background-image: linear-gradient(rgba(89, 220, 255, .028) 1px, transparent 1px), linear-gradient(90deg, rgba(89, 220, 255, .028) 1px, transparent 1px);
+  background-size: 72px 72px;
+}
+
+.inner-page-route :is(.section-padding, .solutions-carousel) {
+  position: relative;
+}
+
+.inner-page-route :is(.section-padding, .solutions-carousel)::before {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: radial-gradient(circle at 85% 15%, rgba(41, 155, 240, .08), transparent 32rem);
+  content: '';
+  pointer-events: none;
+}
+
+.inner-page-route :is(.section-padding, .solutions-carousel) > * {
+  position: relative;
+  z-index: 1;
+}
+
+.inner-page-route :is(.section-padding, section[class*='py-']) {
+  border-color: rgba(255, 255, 255, .1);
+}
+
+.inner-page-route :is(.bg-navy, .bg-navy-800, [class*='bg-[#061326]'], [class*='bg-[#071629]'], [class*='bg-[#091b32]'], [class*='bg-[#091c34]']) {
+  background-color: rgba(6, 19, 38, .88);
+}
+
+.inner-page-route :is(.card-surface, article[class*='rounded-2xl'], article[class*='rounded-xl'], article[class*='rounded-sm']) {
+  border-color: rgba(255, 255, 255, .1);
+  background-color: rgba(7, 24, 46, .86);
+  box-shadow: 0 18px 55px rgba(0, 0, 0, .18);
+}
+
+.inner-page-route :is(.card-surface, article[class*='rounded-2xl'], article[class*='rounded-xl'], article[class*='rounded-sm']):hover {
+  border-color: rgba(50, 169, 245, .55);
+}
+
+.inner-page-route :is(h1, h2, h3) {
+  color: #fff;
+}
+
+.inner-page-route :is(.eyebrow, [class*='uppercase'][class*='tracking-']) {
+  color: var(--inner-cyan);
+}
+
+.inner-page-route :is(.btn-primary, .btn-outline) {
+  min-height: 48px;
+  border-radius: .625rem;
+}
+
+.inner-page-route a:not(.btn-primary):not(.btn-outline) {
+  transition: color .3s ease, gap .3s ease, border-color .3s ease, background-color .3s ease;
+}
+
+.inner-page-route :is(input, textarea, select) {
+  border-color: rgba(255, 255, 255, .16);
+  background-color: rgba(7, 24, 46, .9);
+  color: #fff;
+}
+
+.inner-page-route :is(input, textarea, select):focus {
+  border-color: var(--inner-cyan);
+  outline: 2px solid rgba(35, 199, 255, .25);
+  outline-offset: 2px;
+}
+
+.inner-page-route .container-ems {
+  max-width: 1500px;
+}
+
+@media (max-width: 767px) {
+  .inner-page-route {
+    background-size: 48px 48px;
+  }
+
+  .inner-page-route :is(.section-padding, .solutions-carousel) {
+    padding-block: 4rem;
+  }
+
+  .inner-page-route :is(.btn-primary, .btn-outline) {
+    width: 100%;
+  }
+}
