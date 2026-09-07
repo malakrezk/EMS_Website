@@ -48,17 +48,17 @@ function NavbarRegions({ className = '' }) {
       <HiOutlineGlobeAlt aria-hidden="true" className="h-5 w-5 shrink-0 text-white" />
       <div className="flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold">
         <EgyptFlag />
-        <span>EG</span>
+        <span>Egypt</span>
       </div>
       <span aria-hidden="true" className="h-4 w-px bg-white/25" />
       <div className="flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold">
         <SaudiFlag />
-        <span>SA</span>
+        <span>Saudi Arabia</span>
       </div>
       <span aria-hidden="true" className="h-4 w-px bg-white/25" />
       <div className="flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold">
         <EnglandFlag />
-        <span>UK</span>
+        <span>England</span>
       </div>
     </div>
   )
@@ -144,7 +144,6 @@ export default function Navbar() {
         </div>
         <div className="hidden items-center justify-self-end gap-5 lg:flex">
           <NavbarRegions className="hidden xl:flex" />
-          <Link to="/contact" className="inline-flex items-center rounded-full border border-[#32A9F5] bg-[#010B1F]/70 px-5 py-2 text-xs font-semibold text-white transition duration-300 hover:bg-[#32A9F5] hover:text-[#010B1F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#32A9F5]">Contact Us</Link>
         </div>
 
         <button
@@ -190,7 +189,6 @@ export default function Navbar() {
                 </motion.div>
               ))}
               <NavbarRegions className="my-3 flex flex-wrap border-y border-white/10 px-4 py-4" />
-              <NavLink to="/contact" onClick={() => setOpen(false)} className="mt-2 block rounded-full border border-[#32A9F5] bg-[#010B1F]/70 px-5 py-3 text-center text-base font-semibold text-white transition duration-300 hover:bg-[#32A9F5] hover:text-[#010B1F] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[#32A9F5]">Contact Us</NavLink>
             </div>
           </motion.div>
         )}

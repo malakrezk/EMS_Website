@@ -65,9 +65,9 @@ const homeStyles = `
   .home-page-shell .home-no-scrollbar { scrollbar-width:none; }
   .home-page-shell .home-no-scrollbar::-webkit-scrollbar { display:none; }
   .home-page-shell .home-hero-word { display:block; overflow:hidden; padding-bottom:.08em; }
-  .home-page-shell .home-hero-word + .home-hero-word { margin-top:.52em; }
+  .home-page-shell .home-hero-word + .home-hero-word { margin-top:.62em; }
   .home-page-shell .home-hero-word > span { display:block; }
-  .home-page-shell .home-hero-title { font-size:clamp(2rem,2.8vw,3rem);line-height:.98;max-width:680px; }
+  .home-page-shell .home-hero-title { font-size:clamp(1.85rem,2.45vw,2.65rem);line-height:.98;max-width:680px; }
   .home-page-shell #home-hero .home-hero-column { width:min(680px,100%); }
   .home-page-shell #home-hero .home-hero-column > .home-hero-support:first-child p { margin-left:.2rem;color:#32A9F5;font-size:clamp(.62rem,.72vw,.76rem);font-weight:700;letter-spacing:.24em; }
   .home-page-shell #home-hero .home-hero-description { color:#AFC3DB;font-size:clamp(.9rem,1.1vw,1.02rem);line-height:1.75; }
@@ -161,12 +161,12 @@ const homeStyles = `
   @keyframes homeSolutionsProgress { from{transform:scaleX(0)} to{transform:scaleX(1)} }
   @media (hover:none) { .home-page-shell .home-solution-description { opacity:1;transform:none; } }
   @media (max-width:1023px) { .home-page-shell .home-hero-gallery-slot:nth-child(n+7):not(.is-active){opacity:.14}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-carousel-stage{margin-top:2rem} }
-  @media (max-width:767px) { .home-page-shell #home-hero{min-height:max(100svh,680px)}.home-page-shell .home-hero-gallery{inset:0 0 0 35%}.home-page-shell .home-hero-collage{inset:6rem 0 4% 0}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-slot:nth-child(n){left:6%;right:auto;top:34%;width:88%;opacity:0;filter:brightness(.65);transform:translate3d(0,0,0) scale(.93);--focus-x:0;--focus-y:0;--focus-scale:1}.home-page-shell .home-hero-gallery.has-focus .home-hero-gallery-slot:not(.is-active){opacity:0;transform:translate3d(0,0,-30px) scale(.93)}.home-page-shell .home-hero-gallery-slot.is-active,.home-page-shell .home-hero-gallery-slot:nth-child(n).is-active{opacity:.88;filter:brightness(1) saturate(1.02);transform:translate3d(0,0,70px) scale(1)}.home-page-shell .home-hero-gallery-shade{background:linear-gradient(90deg,rgba(1,11,31,.995) 0%,rgba(1,11,31,.92) 52%,rgba(1,11,31,.52) 100%),linear-gradient(180deg,rgba(1,11,31,.62),transparent 24%,transparent 72%,rgba(1,11,31,.72))}.home-page-shell .home-hero-title{font-size:clamp(1.4rem,6.2vw,1.9rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.4em}.home-page-shell .home-hero-content{min-height:max(100svh,680px);padding-top:6rem;padding-bottom:3rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-services-section{padding-block:2.4rem}.home-page-shell .home-service-card{height:300px;width:min(86vw,360px)}.home-page-shell .home-carousel-stage{height:320px}.home-page-shell .home-service-title{font-size:clamp(1.45rem,7.5vw,2.15rem)}.home-page-shell #home-services .home-section-copy{max-width:34rem;padding-inline:.75rem}.home-page-shell #home-services .home-section-title{font-size:clamp(1.7rem,8vw,2.35rem)}.home-page-shell #home-case-studies article{min-height:440px}.home-page-shell #home-case-studies article>header{min-height:auto} }
+  @media (max-width:767px) { .home-page-shell #home-hero{min-height:max(100svh,680px)}.home-page-shell .home-hero-gallery{inset:0 0 0 35%}.home-page-shell .home-hero-collage{inset:6rem 0 4% 0}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-slot:nth-child(n){left:6%;right:auto;top:34%;width:88%;opacity:0;filter:brightness(.65);transform:translate3d(0,0,0) scale(.93);--focus-x:0;--focus-y:0;--focus-scale:1}.home-page-shell .home-hero-gallery.has-focus .home-hero-gallery-slot:not(.is-active){opacity:0;transform:translate3d(0,0,-30px) scale(.93)}.home-page-shell .home-hero-gallery-slot.is-active,.home-page-shell .home-hero-gallery-slot:nth-child(n).is-active{opacity:.88;filter:brightness(1) saturate(1.02);transform:translate3d(0,0,70px) scale(1)}.home-page-shell .home-hero-gallery-shade{background:linear-gradient(90deg,rgba(1,11,31,.995) 0%,rgba(1,11,31,.92) 52%,rgba(1,11,31,.52) 100%),linear-gradient(180deg,rgba(1,11,31,.62),transparent 24%,transparent 72%,rgba(1,11,31,.72))}.home-page-shell .home-hero-title{font-size:clamp(1.25rem,5.6vw,1.7rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.5em}.home-page-shell .home-hero-content{min-height:max(100svh,680px);padding-top:6rem;padding-bottom:3rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-services-section{padding-block:2.4rem}.home-page-shell .home-service-card{height:300px;width:min(86vw,360px)}.home-page-shell .home-carousel-stage{height:320px}.home-page-shell .home-service-title{font-size:clamp(1.45rem,7.5vw,2.15rem)}.home-page-shell #home-services .home-section-copy{max-width:34rem;padding-inline:.75rem}.home-page-shell #home-services .home-section-title{font-size:clamp(1.7rem,8vw,2.35rem)}.home-page-shell #home-case-studies article{min-height:440px}.home-page-shell #home-case-studies article>header{min-height:auto} }
   @media (max-width:479px) { .home-page-shell #home-services .home-section-heading > p:first-child{font-size:.9rem}.home-page-shell .home-service-card{height:280px;width:min(88vw,330px)}.home-page-shell .home-carousel-stage{height:300px}.home-page-shell .home-service-content{padding:.85rem}.home-page-shell #home-services .home-section-copy{font-size:.76rem;line-height:1.55} }
   @media (max-width:639px) { .home-page-shell #home-hero .home-hero-trust-items{align-items:flex-start;flex-direction:column}.home-page-shell #home-hero .home-hero-trust-separator{display:none} }
   @media (max-width:479px) { .home-page-shell #home-hero .home-hero-actions{align-items:stretch;flex-direction:column}.home-page-shell #home-hero .home-hero-action{width:100%} }
   @media (max-height:850px) and (min-width:1024px) { .home-page-shell .home-services-section{padding-block:2.25rem}.home-page-shell .home-carousel-stage{height:290px;margin-top:1.5rem}.home-page-shell .home-service-card{height:275px;width:min(50vw,410px)}.home-page-shell .home-service-content{padding:.95rem}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-service-title{font-size:clamp(1.5rem,2.7vw,2.3rem)}.home-page-shell .home-section-copy{margin-top:.75rem}.home-page-shell .home-major-section{padding-block:4.5rem} }
-  @media (max-height:700px) and (min-width:1024px) { .home-page-shell .home-hero-title{font-size:clamp(1.8rem,2.6vw,2.5rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.34em}.home-page-shell .home-hero-content{padding-top:5.5rem;padding-bottom:2.5rem}.home-page-shell #home-hero .home-hero-support.mt-8{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-actions{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-trust{margin-top:1rem} }
+  @media (max-height:700px) and (min-width:1024px) { .home-page-shell .home-hero-title{font-size:clamp(1.8rem,2.6vw,2.5rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.42em}.home-page-shell .home-hero-content{padding-top:5.5rem;padding-bottom:2.5rem}.home-page-shell #home-hero .home-hero-support.mt-8{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-actions{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-trust{margin-top:1rem} }
   .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-title { font-size:var(--text-section);line-height:1.06; }
   .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-copy { font-size:var(--text-body);line-height:1.7; }
   .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-heading > p:first-child { font-size:var(--text-label);line-height:1.35; }
@@ -605,7 +605,7 @@ export default function Home() {
   useEffect(() => {
     const video = heroVideoRef.current
     if (!video) return
-    video.currentTime = 45
+    video.currentTime = 47
     const handleSeeked = () => {
       video.play().catch(() => undefined)
     }
@@ -694,17 +694,17 @@ export default function Home() {
       <div className="home-hero-content container-ems relative z-10 flex min-h-[100svh] items-center pt-28">
         <div className="home-hero-column">
           <div className="home-hero-support"><Eyebrow>Engineering Management Systems · Since 2016</Eyebrow></div>
-          <h1 className="home-hero-title mt-8 font-serif tracking-[-.035em] text-white">
+          <h1 className="home-hero-title mt-12 font-serif tracking-[-.035em] text-white">
             <span className="home-hero-word"><span>Automation Solutions.</span></span>
             <span className="home-hero-word text-[#32A9F5] drop-shadow-[0_8px_28px_rgba(50,169,245,.18)]"><span>AI/IOT Platforms.</span></span>
             <span className="home-hero-word"><span>Smart Digitalization.</span></span>
           </h1>
-          <p className="home-hero-technologies home-hero-support mt-10">BMS · SCADA · IoT · AI · Digital Twin · Robotics</p>
-          <div className="home-hero-actions home-hero-support mt-20 flex flex-wrap gap-3">
+          <p className="home-hero-technologies home-hero-support mt-16">BMS · SCADA · IoT · AI · Digital Twin · Robotics</p>
+          <div className="home-hero-actions home-hero-support mt-12 flex flex-wrap gap-3">
             <Link to="/solutions" className="home-hero-action home-hero-primary gap-2">Explore Solutions <HiOutlineArrowRight aria-hidden="true" /></Link>
             <Link to="/projects" className="home-hero-action home-hero-secondary">View Case Studies</Link>
           </div>
-          <div className="home-hero-trust home-hero-support mt-6">
+          <div className="home-hero-trust home-hero-support mt-8">
             <div className="home-hero-trust-item flex w-fit items-center gap-2 text-[11px] font-semibold text-[#AFC3DB] sm:text-xs">
               <HiOutlineCheckBadge aria-hidden="true" className="h-[17px] w-[17px] shrink-0 text-[#32A9F5]" />
               <span>Siemens Certified Partner</span>
@@ -959,7 +959,7 @@ export default function Home() {
                 transition={{ duration: .4, delay: index * .06, ease }}
                 className="flex h-12 items-center justify-center px-3 sm:h-14"
               >
-                <img src={partner.logo} alt={`${partner.name} logo`} loading="lazy" className="h-8 w-28 object-contain opacity-90 transition-opacity hover:opacity-100 sm:h-9 sm:w-32" />
+                <img src={partner.logo} alt={`${partner.name} logo`} loading="lazy" className={`h-8 w-28 object-contain opacity-90 transition-opacity hover:opacity-100 sm:h-9 sm:w-32 ${partner.id === 'oracle' ? 'scale-[2.35]' : ''}`} />
               </motion.div>
             ))}
           </div>
