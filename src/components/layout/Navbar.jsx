@@ -33,18 +33,32 @@ function SaudiFlag() {
   )
 }
 
+function EnglandFlag() {
+  return (
+    <svg viewBox="0 0 36 24" role="img" aria-label="England flag" className="h-3.5 w-[22px] shrink-0 overflow-hidden rounded-[2px]">
+      <rect width="36" height="24" fill="#fff" />
+      <path d="M15 0h6v9h15v6H21v9h-6v-9H0V9h15z" fill="#cf142b" />
+    </svg>
+  )
+}
+
 function NavbarRegions({ className = '' }) {
   return (
     <div className={cn('items-center gap-3 text-white', className)} aria-label="EMS regional presence">
       <HiOutlineGlobeAlt aria-hidden="true" className="h-5 w-5 shrink-0 text-white" />
       <div className="flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold">
         <EgyptFlag />
-        <span>Egypt</span>
+        <span>EG</span>
       </div>
       <span aria-hidden="true" className="h-4 w-px bg-white/25" />
       <div className="flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold">
         <SaudiFlag />
-        <span>Saudi Arabia</span>
+        <span>SA</span>
+      </div>
+      <span aria-hidden="true" className="h-4 w-px bg-white/25" />
+      <div className="flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold">
+        <EnglandFlag />
+        <span>UK</span>
       </div>
     </div>
   )
@@ -85,11 +99,9 @@ export default function Navbar() {
         'fixed left-0 right-0 top-0 z-50 transition-all duration-500',
         open
           ? 'border-b border-white/10 bg-[#0B2548]/95 shadow-[0_10px_28px_rgba(3,13,28,0.25)] backdrop-blur-xl'
-          : pastHomeHero
-            ? 'border-b border-transparent bg-transparent shadow-none backdrop-blur-none'
-            : scrolled
-              ? 'border-b border-transparent bg-transparent shadow-none backdrop-blur-none'
-              : 'border-b border-transparent bg-transparent shadow-none backdrop-blur-none',
+          : scrolled
+            ? 'border-b border-white/[.06] bg-[#010B1F]/60 shadow-none backdrop-blur-md'
+            : 'border-b border-transparent bg-gradient-to-b from-[#010B1F]/70 via-[#010B1F]/30 to-transparent shadow-none backdrop-blur-[3px]',
         open && 'shadow-lg'
       )}
     >

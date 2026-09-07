@@ -18,7 +18,7 @@ export default function Partners() {
               transition={{ duration: 0.4, delay: i * 0.08 }}
               className="group flex h-28 items-center justify-center rounded-lg border border-white/[0.08] bg-card px-6 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-glow"
             >
-              <img src={p.logo} alt={p.name} className="h-9 w-auto opacity-90 transition-opacity duration-300 group-hover:opacity-100" />
+              <img src={p.logo} alt={p.name} className={`${p.id === 'oracle' ? 'h-16' : 'h-9'} w-auto opacity-90 transition-opacity duration-300 group-hover:opacity-100`} />
             </motion.div>
           ))}
         </div>

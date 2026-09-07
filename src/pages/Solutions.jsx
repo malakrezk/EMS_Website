@@ -7,7 +7,7 @@ import {
   HiOutlineArrowRight, HiOutlineArrowUpRight, HiOutlineBeaker,
   HiOutlineBuildingOffice2, HiOutlineChartBarSquare, HiOutlineCheck,
   HiOutlineChevronLeft, HiOutlineChevronRight, HiOutlineCog6Tooth,
-  HiOutlineCpuChip, HiOutlineCubeTransparent, HiOutlineEye, HiOutlineHeart,
+  HiOutlineCpuChip, HiOutlineCubeTransparent, HiOutlineHeart,
   HiOutlineHomeModern, HiOutlineLightBulb, HiOutlinePause, HiOutlinePlay,
   HiOutlineSignal,
 } from 'react-icons/hi2'
@@ -50,12 +50,6 @@ const sectors = [
     tags: ['SCADA', 'PUMPS', 'FLOW', 'TELEMETRY'], image: '/sector-water-investors.png', dashboard: '/industry-water-dashboard.png', cardImage: '/sector-water-investors.png', video: '/investors-water.mp4', icon: HiOutlineBeaker,
     status: 'Water infrastructure', value: '7 pumps running', metric: '7.75', metricLabel: 'Bar line pressure', accent: '#23C7FF', position: '50% 52%',
   },
-]
-
-const challenges = [
-  { number: '01', title: 'Fragmented systems', text: 'Building, power, water and process systems operating in isolation create blind spots and slow decisions.', icon: HiOutlineCubeTransparent },
-  { number: '02', title: 'Reactive operations', text: 'Teams discover faults after performance, continuity or occupant experience has already been affected.', icon: HiOutlineSignal },
-  { number: '03', title: 'Unclear performance', text: 'Disconnected data makes energy use, asset health and operational priorities difficult to understand.', icon: HiOutlineEye },
 ]
 
 const approach = [
@@ -118,6 +112,7 @@ const solutionsStyles = `
   .solutions-stage-title { font-size:clamp(1.75rem,2.5vw,3rem)!important; }
   .solutions-challenge-title { font-size:clamp(1.8rem,3vw,3rem)!important; }
   .solutions-section-grid { background-image:linear-gradient(rgba(89,220,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(89,220,255,.045) 1px,transparent 1px);background-size:72px 72px; }
+  .solutions-sector-section .solutions-sector-heading h2 { margin-top:1rem;font-size:clamp(2.35rem,3.7vw,3.9rem);line-height:.98; }
   .solutions-work-card::after { content:'';position:absolute;inset:-55% -90%;z-index:20;background:linear-gradient(105deg,transparent 44%,rgba(255,255,255,.12) 50%,transparent 56%);transform:translateX(-38%) rotate(7deg);transition:transform 1.15s cubic-bezier(.22,1,.36,1);pointer-events:none; }
   .solutions-work-card:hover::after { transform:translateX(42%) rotate(7deg); }
   .solutions-approach-line::before { content:'';position:absolute;left:19px;top:2rem;bottom:2rem;width:1px;background:linear-gradient(to bottom,#32A9F5,rgba(50,169,245,.08)); }
@@ -202,11 +197,11 @@ function SectorCard({ item, index }) {
   return (
     <Link
       to={item.route}
-      className={`solutions-sector-card solutions-reveal group block ${index % 2 === 1 ? 'lg:translate-y-24' : ''}`}
+      className={`solutions-sector-card solutions-reveal group block ${index % 2 === 1 ? 'lg:translate-y-8' : ''}`}
     >
       <article>
-        <div className="relative aspect-[1.32/1] overflow-hidden bg-[#07182e]">
-          <div className="absolute inset-0 transition duration-1000 ease-out group-hover:scale-[1.035]"><img src={item.cardImage} alt={`${item.name} physical environment`} loading="lazy" className="solutions-parallax absolute inset-0 h-[112%] w-full object-cover" /></div>
+        <div className="relative aspect-[1.85/1] overflow-hidden bg-[#07182e]">
+          <div className="absolute inset-0 transition duration-1000 ease-out group-hover:scale-[1.035]"><img src={item.dashboard} alt={`${item.name} operations dashboard`} loading="lazy" className="solutions-parallax absolute inset-0 h-[112%] w-full object-cover" /></div>
           <div className="absolute inset-0 bg-gradient-to-t from-[#010B1F]/25 via-transparent to-[#010B1F]/5" />
           <span className="absolute left-5 top-5 z-10 min-w-16 bg-[#010B1F] px-4 py-3 text-center font-mono text-[11px] font-bold tracking-[.16em] text-white sm:left-7 sm:top-7">{item.number}</span>
           <div className="absolute inset-x-0 bottom-0 h-px origin-left scale-x-0 bg-[#32A9F5] transition-transform duration-700 group-hover:scale-x-100" />
@@ -387,27 +382,10 @@ export default function Solutions() {
         <div className="absolute bottom-[7.5rem] left-1/2 z-40 hidden -translate-x-1/2 flex-col items-center gap-2 lg:flex"><span className="font-mono text-[7px] uppercase tracking-[.25em] text-white/35">Scroll</span><span className="solutions-scroll-line relative h-8 w-px overflow-hidden bg-white/15" /></div>
       </section>
 
-      <section className="solutions-section-grid relative overflow-hidden border-b border-white/10 bg-[#030d1d] py-[clamp(5.5rem,10vw,9rem)]">
-        <div className="absolute right-[-12rem] top-[-12rem] h-[36rem] w-[36rem] rounded-full border border-cyan-300/[.08]" />
-        <div className="container-ems relative">
-          <SectionIntro number="02" label="Challenges we solve" title="Complex operations should not feel fragmented." text="EMS removes the gaps between equipment, systems and teams—creating the visibility required to operate with clarity." />
-          <div className="mt-16 border-y border-white/10">
-            {challenges.map(({ number, title, text, icon: Icon }, index) => (
-              <article key={title} className="solutions-reveal group grid gap-6 border-b border-white/10 py-8 last:border-0 md:grid-cols-[80px_1fr_1.15fr_48px] md:items-center md:py-10">
-                <span className="font-mono text-[9px] tracking-[.2em] text-[#32A9F5]">{number}</span>
-                <h3 className="solutions-challenge-title font-serif leading-none tracking-[-.03em] text-white transition group-hover:text-[#32A9F5]">{title}</h3>
-                <p className="max-w-xl text-sm leading-7 text-[#AFC3DB]">{text}</p>
-                <span className="flex h-11 w-11 items-center justify-center border border-white/10 text-white/35 transition duration-300 group-hover:border-[#32A9F5] group-hover:text-[#32A9F5]"><Icon className="h-5 w-5" /></span>
-              </article>
-            ))}
-          </div>
-        </div>
-      </section>
-
       <section className="relative overflow-hidden bg-[#010B1F] py-[clamp(5.5rem,10vw,9rem)]">
         <div className="container-ems grid gap-14 lg:grid-cols-[.9fr_1.1fr] lg:gap-20">
           <div className="lg:sticky lg:top-28 lg:self-start">
-            <SectionIntro number="03" label="Our solution approach" title="Engineered as one connected system." text="We begin with the operation—not the product. Every layer is then designed around performance, resilience and the people responsible for both." />
+            <SectionIntro number="02" label="Our solution approach" title="Engineered as one connected system." text="We begin with the operation—not the product. Every layer is then designed around performance, resilience and the people responsible for both." />
             <div className="solutions-photo-rail solutions-reveal relative mt-10 aspect-[1.45/1] overflow-hidden border border-white/10">
               <img src="/hero-control-room-03.jpg" alt="EMS integrated engineering control environment" loading="lazy" className="solutions-parallax absolute inset-0 h-[115%] w-full object-cover opacity-75" />
               <div className="absolute inset-0 bg-gradient-to-t from-[#010B1F]/80 via-transparent to-transparent" />
@@ -425,20 +403,20 @@ export default function Solutions() {
         </div>
       </section>
 
-      <section className="solutions-section-grid relative overflow-hidden border-y border-white/10 bg-[#061426] py-[clamp(5.5rem,10vw,9rem)] lg:pb-[15rem]">
+      <section className="solutions-sector-section solutions-section-grid relative overflow-hidden border-y border-white/10 bg-[#061426] py-[clamp(3rem,5vw,4.5rem)] lg:pb-[6rem]">
         <div className="container-ems">
-          <div className="grid gap-8 lg:grid-cols-[1fr_.75fr] lg:items-end">
-            <SectionIntro number="04" label="Solutions by sector" title="Designed around the way each environment works." />
+          <div className="solutions-sector-heading grid gap-6 lg:grid-cols-[1fr_.75fr] lg:items-end">
+            <SectionIntro number="03" label="Solutions by sector" title="Designed around the way each environment works." />
             <p className="solutions-reveal max-w-xl text-sm leading-7 text-[#AFC3DB] lg:justify-self-end">Five distinct operational environments, each supported by an EMS digital layer engineered around its infrastructure, systems and people.</p>
           </div>
-          <div className="mt-14 grid gap-x-10 gap-y-16 lg:grid-cols-2 lg:gap-y-28">{sectors.map((item, index) => <SectorCard key={item.id} item={item} index={index} />)}</div>
+          <div className="mt-8 grid gap-x-10 gap-y-12 lg:grid-cols-2 lg:gap-y-16">{sectors.map((item, index) => <SectorCard key={item.id} item={item} index={index} />)}</div>
         </div>
       </section>
 
       <section className="relative overflow-hidden bg-[#010B1F] py-[clamp(5.5rem,10vw,9rem)]">
         <div className="container-ems">
           <div className="flex flex-col gap-8 border-b border-white/10 pb-10 lg:flex-row lg:items-end lg:justify-between">
-            <SectionIntro number="05" label="Selected work" title="Operational intelligence, already at work." />
+            <SectionIntro number="04" label="Selected work" title="Operational intelligence, already at work." />
             <Link to="/projects" className="solutions-reveal group inline-flex w-fit items-center gap-3 text-[10px] font-bold uppercase tracking-[.16em] text-[#32A9F5] transition hover:text-white">View all case studies <HiOutlineArrowRight className="transition group-hover:translate-x-1" /></Link>
           </div>
           <div className="mt-8 grid gap-4 lg:grid-cols-2">{selectedWork.map((item, index) => <WorkCard key={item.name} item={item} index={index} />)}</div>
@@ -448,7 +426,7 @@ export default function Solutions() {
       <section className="relative overflow-hidden border-y border-white/10 bg-[#061426] py-[clamp(5.5rem,9vw,8rem)]">
         <div className="absolute inset-0 solutions-grid opacity-20 [mask-image:radial-gradient(circle_at_center,black,transparent_80%)]" />
         <div className="container-ems relative">
-          <SectionIntro number="06" label="Technology capabilities" title="The systems behind every connected operation." text="A coordinated technology stack—from field control to operational intelligence—engineered and integrated by one EMS team." align="center" />
+          <SectionIntro number="05" label="Technology capabilities" title="The systems behind every connected operation." text="A coordinated technology stack—from field control to operational intelligence—engineered and integrated by one EMS team." align="center" />
           <div className="mt-14 grid gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             {capabilities.map(({ name, label, icon: Icon }, index) => (
               <Link key={name} to="/services" className="solutions-capability solutions-reveal group min-h-56 bg-[#061426] p-6 transition duration-500 hover:bg-[#091c34]">
