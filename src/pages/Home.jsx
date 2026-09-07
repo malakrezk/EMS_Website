@@ -6,7 +6,8 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
   HiOutlineArrowLeft, HiOutlineArrowRight,
   HiOutlineArrowUpRight, HiOutlineBuildingOffice2, HiOutlineCheckBadge,
-  HiOutlineEye, HiOutlineGlobeAlt, HiOutlinePause, HiOutlinePlay, HiOutlineXMark,
+  HiOutlineEye, HiOutlineGlobeAlt, HiOutlinePause, HiOutlinePlay,
+  HiOutlineSpeakerWave, HiOutlineSpeakerXMark, HiOutlineXMark,
 } from 'react-icons/hi2'
 import { servicesShowcase } from '../data/servicesShowcase'
 import { projects } from '../data/projects'
@@ -64,9 +65,9 @@ const homeStyles = `
   .home-page-shell .home-no-scrollbar { scrollbar-width:none; }
   .home-page-shell .home-no-scrollbar::-webkit-scrollbar { display:none; }
   .home-page-shell .home-hero-word { display:block; overflow:hidden; padding-bottom:.08em; }
-  .home-page-shell .home-hero-word + .home-hero-word { margin-top:.38em; }
+  .home-page-shell .home-hero-word + .home-hero-word { margin-top:.52em; }
   .home-page-shell .home-hero-word > span { display:block; }
-  .home-page-shell .home-hero-title { font-size:clamp(2.25rem,3.2vw,3.45rem);line-height:.98;max-width:680px; }
+  .home-page-shell .home-hero-title { font-size:clamp(2rem,2.8vw,3rem);line-height:.98;max-width:680px; }
   .home-page-shell #home-hero .home-hero-column { width:min(680px,100%); }
   .home-page-shell #home-hero .home-hero-column > .home-hero-support:first-child p { margin-left:.2rem;color:#32A9F5;font-size:clamp(.62rem,.72vw,.76rem);font-weight:700;letter-spacing:.24em; }
   .home-page-shell #home-hero .home-hero-description { color:#AFC3DB;font-size:clamp(.9rem,1.1vw,1.02rem);line-height:1.75; }
@@ -81,6 +82,27 @@ const homeStyles = `
   .home-page-shell #home-hero .home-hero-trust { background:transparent; }
   .home-page-shell #home-hero .home-hero-trust-item { transition:transform .25s ease,color .25s ease; }
   .home-page-shell #home-hero .home-hero-trust-item:hover { transform:translateY(-2px);color:#fff; }
+  .home-page-shell .home-hero-gallery { position:absolute;inset:0 0 0 35%;z-index:5;overflow:hidden;pointer-events:none;perspective:1200px;transform-style:preserve-3d; }
+  .home-page-shell .home-hero-gallery::after { content:'';position:absolute;inset:0 auto 0 0;z-index:90;width:clamp(2rem,5vw,6rem);background:linear-gradient(90deg,#010B1F 0%,rgba(1,11,31,.72) 28%,transparent 100%);pointer-events:none; }
+  .home-page-shell .home-hero-collage { position:absolute;inset:clamp(5rem,9vh,7rem) 0 3% 0;overflow:visible;transform-style:preserve-3d; }
+  .home-page-shell .home-hero-gallery-slot { position:absolute;z-index:var(--card-layer,1);aspect-ratio:16/10;overflow:visible;opacity:.66;filter:brightness(.78) saturate(.92);transform:translate3d(0,0,0) scale(1);transform-origin:center center;transform-style:preserve-3d;transition:transform 900ms cubic-bezier(.22,1,.36,1),opacity 700ms ease,filter 700ms ease,z-index 0s linear 900ms;will-change:transform,opacity,filter;backface-visibility:hidden;-webkit-backface-visibility:hidden; }
+  .home-page-shell .home-hero-gallery.has-focus .home-hero-gallery-slot:not(.is-active) { opacity:.32;filter:brightness(.58) saturate(.78);transform:translate3d(0,0,-50px) scale(.93); }
+  .home-page-shell .home-hero-gallery .home-hero-gallery-slot.is-active { z-index:80;opacity:1;filter:brightness(1.12) contrast(1.04) saturate(1.1);transform:translate3d(var(--focus-x,0),var(--focus-y,0),170px) scale(var(--focus-scale,1.6));transition:transform 900ms cubic-bezier(.22,1,.36,1),opacity 700ms ease,filter 700ms ease,z-index 0s linear 0s; }
+  .home-page-shell .home-hero-gallery-slot:nth-child(1) { left:27%;top:26%;width:47%;--card-layer:8;--focus-x:-.325vw;--focus-y:5vh;--focus-scale:1.87; }
+  .home-page-shell .home-hero-gallery-slot:nth-child(2) { left:62%;top:3%;width:36%;--card-layer:4;--focus-x:-19.5vw;--focus-y:29vh;--focus-scale:2.44; }
+  .home-page-shell .home-hero-gallery-slot:nth-child(3) { left:2%;top:7%;width:34%;--card-layer:3;--focus-x:20.15vw;--focus-y:25vh;--focus-scale:2.59; }
+  .home-page-shell .home-hero-gallery-slot:nth-child(4) { left:73%;top:38%;width:31%;--card-layer:5;--focus-x:-25.025vw;--focus-y:-1vh;--focus-scale:2.84; }
+  .home-page-shell .home-hero-gallery-slot:nth-child(5) { left:47%;top:68%;width:40%;--card-layer:6;--focus-x:-11.05vw;--focus-y:-26vh;--focus-scale:2.2; }
+  .home-page-shell .home-hero-gallery-slot:nth-child(6) { left:0;top:37%;width:30%;--card-layer:4;--focus-x:22.75vw;--focus-y:-1vh;--focus-scale:2.93; }
+  .home-page-shell .home-hero-gallery-slot:nth-child(7) { left:76%;top:72%;width:31%;--card-layer:2;--focus-x:-26.975vw;--focus-y:-29vh;--focus-scale:2.84; }
+  .home-page-shell .home-hero-gallery-slot:nth-child(8) { left:8%;top:65%;width:35%;--card-layer:3;--focus-x:15.925vw;--focus-y:-24vh;--focus-scale:2.51; }
+  .home-page-shell .home-hero-gallery-slot:nth-child(9) { left:38%;top:2%;width:32%;--card-layer:3;--focus-x:-2.6vw;--focus-y:27vh;--focus-scale:2.75; }
+  .home-page-shell .home-hero-gallery-slot:nth-child(10) { left:62%;top:4%;width:36%;--card-layer:4;--focus-x:-19.5vw;--focus-y:28vh;--focus-scale:2.44; }
+  .home-page-shell .home-hero-gallery-card { position:absolute;inset:0;overflow:hidden;border:0;border-radius:clamp(.7rem,.8vw,.95rem);background:transparent;box-shadow:0 18px 48px rgba(0,0,0,.42);backface-visibility:hidden;-webkit-backface-visibility:hidden; }
+  .home-page-shell .home-hero-gallery-slot.is-active .home-hero-gallery-card { box-shadow:0 28px 70px rgba(0,0,0,.66); }
+  .home-page-shell .home-hero-gallery-media { display:block;height:100%;width:100%;object-fit:contain;transform:scale(1);transition:transform 1.4s cubic-bezier(.22,1,.36,1); }
+  .home-page-shell .home-hero-gallery-slot.is-active .home-hero-gallery-media { object-fit:contain;transform:scale(1); }
+  .home-page-shell .home-hero-gallery-shade { position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,#010B1F 0%,rgba(1,11,31,.99) 33%,rgba(1,11,31,.8) 44%,rgba(1,11,31,.2) 57%,rgba(1,11,31,.025) 100%),linear-gradient(180deg,rgba(1,11,31,.46),transparent 19%,transparent 80%,rgba(1,11,31,.32)); }
   .home-page-shell .home-section-title { font-size:clamp(2.35rem,5vw,5rem); }
   .home-page-shell #home-services .home-section-title { font-size:clamp(1.75rem,3vw,3rem); }
   .home-page-shell #home-solutions .home-section-title { font-size:clamp(1.9rem,3.5vw,3.7rem); }
@@ -138,13 +160,13 @@ const homeStyles = `
   @keyframes homeFloat { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-9px,0)} }
   @keyframes homeSolutionsProgress { from{transform:scaleX(0)} to{transform:scaleX(1)} }
   @media (hover:none) { .home-page-shell .home-solution-description { opacity:1;transform:none; } }
-  @media (max-width:1023px) { .home-page-shell .home-service-content ul{display:none}.home-page-shell .home-carousel-stage{margin-top:2rem} }
-  @media (max-width:767px) { .home-page-shell #home-hero{min-height:max(100svh,680px)}.home-page-shell .home-hero-title{font-size:clamp(2rem,9vw,2.7rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.26em}.home-page-shell .home-hero-content{min-height:max(100svh,680px);padding-top:6rem;padding-bottom:3rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-services-section{padding-block:2.4rem}.home-page-shell .home-service-card{height:300px;width:min(86vw,360px)}.home-page-shell .home-carousel-stage{height:320px}.home-page-shell .home-service-title{font-size:clamp(1.45rem,7.5vw,2.15rem)}.home-page-shell #home-services .home-section-copy{max-width:34rem;padding-inline:.75rem}.home-page-shell #home-services .home-section-title{font-size:clamp(1.7rem,8vw,2.35rem)}.home-page-shell #home-case-studies article{min-height:440px}.home-page-shell #home-case-studies article>header{min-height:auto} }
+  @media (max-width:1023px) { .home-page-shell .home-hero-gallery-slot:nth-child(n+7):not(.is-active){opacity:.14}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-carousel-stage{margin-top:2rem} }
+  @media (max-width:767px) { .home-page-shell #home-hero{min-height:max(100svh,680px)}.home-page-shell .home-hero-gallery{inset:0 0 0 35%}.home-page-shell .home-hero-collage{inset:6rem 0 4% 0}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-slot:nth-child(n){left:6%;right:auto;top:34%;width:88%;opacity:0;filter:brightness(.65);transform:translate3d(0,0,0) scale(.93);--focus-x:0;--focus-y:0;--focus-scale:1}.home-page-shell .home-hero-gallery.has-focus .home-hero-gallery-slot:not(.is-active){opacity:0;transform:translate3d(0,0,-30px) scale(.93)}.home-page-shell .home-hero-gallery-slot.is-active,.home-page-shell .home-hero-gallery-slot:nth-child(n).is-active{opacity:.88;filter:brightness(1) saturate(1.02);transform:translate3d(0,0,70px) scale(1)}.home-page-shell .home-hero-gallery-shade{background:linear-gradient(90deg,rgba(1,11,31,.995) 0%,rgba(1,11,31,.92) 52%,rgba(1,11,31,.52) 100%),linear-gradient(180deg,rgba(1,11,31,.62),transparent 24%,transparent 72%,rgba(1,11,31,.72))}.home-page-shell .home-hero-title{font-size:clamp(1.4rem,6.2vw,1.9rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.4em}.home-page-shell .home-hero-content{min-height:max(100svh,680px);padding-top:6rem;padding-bottom:3rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-services-section{padding-block:2.4rem}.home-page-shell .home-service-card{height:300px;width:min(86vw,360px)}.home-page-shell .home-carousel-stage{height:320px}.home-page-shell .home-service-title{font-size:clamp(1.45rem,7.5vw,2.15rem)}.home-page-shell #home-services .home-section-copy{max-width:34rem;padding-inline:.75rem}.home-page-shell #home-services .home-section-title{font-size:clamp(1.7rem,8vw,2.35rem)}.home-page-shell #home-case-studies article{min-height:440px}.home-page-shell #home-case-studies article>header{min-height:auto} }
   @media (max-width:479px) { .home-page-shell #home-services .home-section-heading > p:first-child{font-size:.9rem}.home-page-shell .home-service-card{height:280px;width:min(88vw,330px)}.home-page-shell .home-carousel-stage{height:300px}.home-page-shell .home-service-content{padding:.85rem}.home-page-shell #home-services .home-section-copy{font-size:.76rem;line-height:1.55} }
   @media (max-width:639px) { .home-page-shell #home-hero .home-hero-trust-items{align-items:flex-start;flex-direction:column}.home-page-shell #home-hero .home-hero-trust-separator{display:none} }
   @media (max-width:479px) { .home-page-shell #home-hero .home-hero-actions{align-items:stretch;flex-direction:column}.home-page-shell #home-hero .home-hero-action{width:100%} }
   @media (max-height:850px) and (min-width:1024px) { .home-page-shell .home-services-section{padding-block:2.25rem}.home-page-shell .home-carousel-stage{height:290px;margin-top:1.5rem}.home-page-shell .home-service-card{height:275px;width:min(50vw,410px)}.home-page-shell .home-service-content{padding:.95rem}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-service-title{font-size:clamp(1.5rem,2.7vw,2.3rem)}.home-page-shell .home-section-copy{margin-top:.75rem}.home-page-shell .home-major-section{padding-block:4.5rem} }
-  @media (max-height:700px) and (min-width:1024px) { .home-page-shell .home-hero-title{font-size:clamp(2rem,3vw,2.85rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.22em}.home-page-shell .home-hero-content{padding-top:5.5rem;padding-bottom:2.5rem}.home-page-shell #home-hero .home-hero-support.mt-8{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-actions{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-trust{margin-top:1rem} }
+  @media (max-height:700px) and (min-width:1024px) { .home-page-shell .home-hero-title{font-size:clamp(1.8rem,2.6vw,2.5rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.34em}.home-page-shell .home-hero-content{padding-top:5.5rem;padding-bottom:2.5rem}.home-page-shell #home-hero .home-hero-support.mt-8{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-actions{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-trust{margin-top:1rem} }
   .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-title { font-size:var(--text-section);line-height:1.06; }
   .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-copy { font-size:var(--text-body);line-height:1.7; }
   .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-heading > p:first-child { font-size:var(--text-label);line-height:1.35; }
@@ -155,24 +177,17 @@ const homeStyles = `
     .home-page-shell :is(#home-services,#home-solutions,#home-case-studies) .home-section-title { font-size:clamp(2rem,3vw,3.15rem);white-space:nowrap; }
     .home-page-shell #home-solutions .home-section-heading { max-width:68rem; }
   }
-  @media (prefers-reduced-motion: reduce) { .home-page-shell .home-network-path,.home-page-shell .home-data-particle,.home-page-shell .home-scan,.home-page-shell .home-float,.home-page-shell .home-scroll-line::after,.home-page-shell .home-solutions-progress{animation:none!important}.home-page-shell #home-hero .home-hero-trust-item{transition:none!important} }
+  @media (prefers-reduced-motion: reduce) { .home-page-shell .home-network-path,.home-page-shell .home-data-particle,.home-page-shell .home-scan,.home-page-shell .home-float,.home-page-shell .home-scroll-line::after,.home-page-shell .home-solutions-progress{animation:none!important}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-card,.home-page-shell .home-hero-gallery-media{transition:none!important}.home-page-shell #home-hero .home-hero-trust-item{transition:none!important} }
 `
 
 const ease = [0.22, 1, 0.36, 1]
 const aboutMilestones = [
-  ['Founded in UAE', 'Established as a premier MEP contracting company in the United Arab Emirates.', HiOutlineBuildingOffice2],
-  ['Expansion to Egypt', 'Opened operations in Egypt to serve the broader Middle East market.', HiOutlineGlobeAlt],
-  ['Siemens Certified Partner', 'Achieved official Siemens partnership for BMS and automation systems.', HiOutlineCheckBadge],
+  ['Founded in Egypt', 'Established as a premier MEP contracting company in Egypt.', HiOutlineBuildingOffice2],
+  ['Expanded in Saudi Arabia', 'Expanded operations in Saudi Arabia to serve the wider regional market.', HiOutlineGlobeAlt],
+  ['Expanded in England', 'Expanded operations in England to connect EMS with international markets.', HiOutlineCheckBadge],
 ]
 
-const heroSlides = [
-  { image: '/hero-data-3.jpg', alt: 'EMS engineering management control room' },
-  { image: '/industry-towers-dashboard.png', alt: 'CN-05 intelligent tower management dashboard' },
-  { image: '/industry-malls-dashboard.png', alt: 'Park Lane connected residential operations dashboard' },
-  { image: '/industry-water-dashboard.png', alt: 'Investors water infrastructure monitoring dashboard' },
-  { image: '/data-center-1.jpg', alt: 'EMS intelligent data center control environment' },
-  { image: '/suez-medical-complex.jpg', alt: 'Suez Medical Complex smart hospital dashboard' },
-]
+
 
 const homeServiceCards = [
   {
@@ -582,33 +597,21 @@ function SolutionsShowcase() {
 
 export default function Home() {
   const rootRef = useRef(null)
-  const [heroImageIndex, setHeroImageIndex] = useState(0)
-  const [heroReducedMotion, setHeroReducedMotion] = useState(() => typeof window !== 'undefined' && window.matchMedia('(prefers-reduced-motion: reduce)').matches)
+  const heroVideoRef = useRef(null)
+  const [heroMuted, setHeroMuted] = useState(true)
   const [activeVideo, setActiveVideo] = useState(null)
   const [partnersUnderlineVisible, setPartnersUnderlineVisible] = useState(false)
 
   useEffect(() => {
-    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    let timer
-    const syncSlideshow = () => {
-      window.clearInterval(timer)
-      setHeroReducedMotion(reducedMotion.matches)
-      if (!reducedMotion.matches) {
-        timer = window.setInterval(() => setHeroImageIndex(index => (index + 1) % heroSlides.length), 5000)
-      }
+    const video = heroVideoRef.current
+    if (!video) return
+    video.currentTime = 45
+    const handleSeeked = () => {
+      video.play().catch(() => undefined)
     }
-    syncSlideshow()
-    reducedMotion.addEventListener('change', syncSlideshow)
-    return () => {
-      window.clearInterval(timer)
-      reducedMotion.removeEventListener('change', syncSlideshow)
-    }
+    video.addEventListener('seeked', handleSeeked, { once: true })
+    return () => video.removeEventListener('seeked', handleSeeked)
   }, [])
-
-  useEffect(() => {
-    const nextImage = new Image()
-    nextImage.src = heroSlides[(heroImageIndex + 1) % heroSlides.length].image
-  }, [heroImageIndex])
 
   useEffect(() => {
     if (!activeVideo) return undefined
@@ -653,7 +656,6 @@ export default function Home() {
         gsap.fromTo('.home-hero-support', { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .85, stagger: .1, delay: .72, ease: 'power3.out' })
         gsap.utils.toArray('.home-reveal').forEach(element => gsap.fromTo(element, { autoAlpha: 0, y: 34 }, { autoAlpha: 1, y: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: element, start: 'top 88%', once: true } }))
         gsap.utils.toArray('.home-parallax-image').forEach(image => gsap.fromTo(image, { yPercent: -7, scale: 1.08 }, { yPercent: 7, scale: 1, ease: 'none', scrollTrigger: { trigger: image.parentElement, start: 'top bottom', end: 'bottom top', scrub: 1.2 } }))
-        gsap.to('.home-hero-media', { scale: 1.08, yPercent: 5, ease: 'none', scrollTrigger: { trigger: '#home-hero', start: 'top top', end: 'bottom top', scrub: 1.1 } })
       }
     }, rootRef)
 
@@ -668,44 +670,37 @@ export default function Home() {
     <style>{homeStyles}</style>
 
     <section id="home-hero" className="relative min-h-[100svh] scroll-mt-20 overflow-hidden">
-      <div className="home-hero-media absolute inset-x-0 bottom-0 top-[82px] w-full max-w-none will-change-transform">
-        <AnimatePresence initial={false}>
-          <motion.img
-            key={heroSlides[heroImageIndex].image}
-            src={heroSlides[heroImageIndex].image}
-            alt={heroSlides[heroImageIndex].alt}
-            initial={{ opacity: 0, scale: heroReducedMotion ? 1 : 1.025 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: heroReducedMotion ? 0 : 1.6, ease: 'easeInOut' }}
-            fetchPriority={heroImageIndex === 0 ? 'high' : 'auto'}
-            className="absolute inset-0 block h-full min-w-full max-w-none object-cover object-right"
-          />
-        </AnimatePresence>
+      {/* Full-width hero video with smooth left-panel shade */}
+      <div aria-hidden="true" className="absolute inset-0 z-[1] overflow-hidden">
+        <video
+          ref={heroVideoRef}
+          muted
+          loop
+          playsInline
+          preload="auto"
+          style={{ willChange: 'transform' }}
+          className="pointer-events-none absolute inset-0 h-full w-full object-contain object-right"
+        >
+          <source src="/EMS%20VID.mp4" type="video/mp4" />
+        </video>
+        {/* Smooth left-panel shade — wide gradient for cinematic fade */}
+        <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,#010B1F_0%,#010B1F_22%,rgba(1,11,31,.92)_30%,rgba(1,11,31,.65)_40%,rgba(1,11,31,.3)_52%,rgba(1,11,31,.1)_62%,transparent_75%)]" />
+        {/* Top fade behind navbar */}
+        <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,#010B1F_0%,rgba(1,11,31,.7)_5%,rgba(1,11,31,.25)_12%,transparent_20%)]" />
+        {/* Bottom vignette */}
+        <div className="absolute inset-0 z-10 bg-[linear-gradient(0deg,rgba(1,11,31,.6)_0%,rgba(1,11,31,.2)_8%,transparent_18%)]" />
       </div>
-      <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,11,31,1)_0%,rgba(1,11,31,.97)_30%,rgba(1,11,31,.68)_52%,rgba(1,11,31,.28)_74%,rgba(1,11,31,.1)_100%)]" />
-      <div className="home-grid absolute inset-0 opacity-[.16] [mask-image:linear-gradient(to_right,black,transparent_78%)]" />
-      <svg aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full opacity-25 [mask-image:linear-gradient(to_right,transparent_28%,black_70%,transparent)]">
-        <g fill="none" stroke="rgba(89,220,255,.58)" strokeWidth="1">
-          <path className="home-network-path" d="M620 710 L790 620 L930 665 L1080 510 L1260 565 L1435 410" />
-          <path className="home-network-path" style={{ animationDelay: '-3s' }} d="M720 250 L850 340 L1010 290 L1160 400 L1350 300" />
-          <path className="home-network-path" style={{ animationDelay: '-6s' }} d="M830 820 L960 735 L1120 770 L1250 650 L1440 700" />
-        </g>
-        <g fill="#23C7FF">{[[790,620],[930,665],[1080,510],[1260,565],[850,340],[1010,290],[1160,400],[960,735],[1120,770],[1250,650]].map(([x,y], index) => <circle key={`${x}-${y}`} cx={x} cy={y} r={index % 3 === 0 ? 3 : 2} opacity={index % 2 ? .5 : .9} />)}</g>
-      </svg>
-      <div aria-hidden="true" className="pointer-events-none absolute inset-0">{[[68,22],[78,35],[86,18],[72,62],[91,54],[82,77],[64,83]].map(([left, top], index) => <span key={`${left}-${top}`} style={{ left: `${left}%`, top: `${top}%`, animationDelay: `${index * -.72}s` }} className="home-data-particle absolute h-1 w-1 rounded-full bg-cyan-200 shadow-[0_0_12px_#23C7FF]" />)}</div>
-      <div aria-hidden="true" className="home-scan pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-transparent via-cyan-300/10 to-transparent blur-sm" />
 
-      <div className="home-hero-content container-ems relative flex min-h-[100svh] items-center pt-28">
+      <div className="home-hero-content container-ems relative z-10 flex min-h-[100svh] items-center pt-28">
         <div className="home-hero-column">
           <div className="home-hero-support"><Eyebrow>Engineering Management Systems · Since 2016</Eyebrow></div>
           <h1 className="home-hero-title mt-8 font-serif tracking-[-.035em] text-white">
             <span className="home-hero-word"><span>Automation Solutions.</span></span>
-            <span className="home-hero-word"><span>AI-Powered Systems.</span></span>
-            <span className="home-hero-word text-[#32A9F5] drop-shadow-[0_8px_28px_rgba(50,169,245,.18)]"><span>Smart Digitalization.</span></span>
+            <span className="home-hero-word text-[#32A9F5] drop-shadow-[0_8px_28px_rgba(50,169,245,.18)]"><span>AI/IOT Platforms.</span></span>
+            <span className="home-hero-word"><span>Smart Digitalization.</span></span>
           </h1>
-          <p className="home-hero-technologies home-hero-support mt-8">BMS · SCADA · IoT · AI · Digital Twin · Robotics</p>
-          <div className="home-hero-actions home-hero-support mt-8 flex flex-wrap gap-3">
+          <p className="home-hero-technologies home-hero-support mt-10">BMS · SCADA · IoT · AI · Digital Twin · Robotics</p>
+          <div className="home-hero-actions home-hero-support mt-20 flex flex-wrap gap-3">
             <Link to="/solutions" className="home-hero-action home-hero-primary gap-2">Explore Solutions <HiOutlineArrowRight aria-hidden="true" /></Link>
             <Link to="/projects" className="home-hero-action home-hero-secondary">View Case Studies</Link>
           </div>
@@ -719,8 +714,26 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="absolute bottom-7 left-1/2 hidden -translate-x-1/2 flex-col items-center gap-3 sm:flex"><span className="font-mono text-[8px] uppercase tracking-[.28em] text-white/50">Scroll to explore</span><span className="home-scroll-line relative h-10 w-px overflow-hidden bg-white/15" /></div>
-      <div className="absolute bottom-8 right-[max(1.5rem,4vw)] hidden items-center gap-3 text-[9px] uppercase tracking-[.2em] text-white/45 lg:flex"><HiOutlinePlay className="text-[#299BF0]" /> Cinematic infrastructure</div>
+      <div className="absolute bottom-7 left-1/2 z-10 hidden -translate-x-1/2 flex-col items-center gap-3 sm:flex"><span className="font-mono text-[8px] uppercase tracking-[.28em] text-white/50">Scroll to explore</span><span className="home-scroll-line relative h-10 w-px overflow-hidden bg-white/15" /></div>
+      <div className="absolute bottom-8 right-[max(1.5rem,4vw)] z-10 flex items-center gap-4">
+        <button
+          type="button"
+          onClick={() => {
+            const video = heroVideoRef.current
+            if (!video) return
+            video.muted = !video.muted
+            setHeroMuted(video.muted)
+          }}
+          aria-label={heroMuted ? 'Unmute video' : 'Mute video'}
+          className="group flex h-10 w-10 items-center justify-center rounded-full border border-white/20 bg-[#010B1F]/60 text-white/70 backdrop-blur-md transition-all duration-300 hover:border-[#32A9F5]/60 hover:bg-[#010B1F]/80 hover:text-white hover:shadow-[0_0_20px_rgba(50,169,245,.15)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#32A9F5]"
+        >
+          {heroMuted
+            ? <HiOutlineSpeakerXMark className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+            : <HiOutlineSpeakerWave className="h-4 w-4 transition-transform duration-300 group-hover:scale-110" />
+          }
+        </button>
+        <span className="hidden font-mono text-[9px] uppercase tracking-[.2em] text-white/45 lg:flex lg:items-center lg:gap-3"><HiOutlinePlay className="text-[#299BF0]" /> Cinematic infrastructure</span>
+      </div>
     </section>
 
     <ServiceCarousel />
@@ -834,7 +847,7 @@ export default function Home() {
         <div className="mx-auto max-w-5xl text-center">
           <div className="home-reveal home-about-intro">
             <Eyebrow>About EMS</Eyebrow>
-            <p className="mx-auto mt-5 max-w-4xl text-[clamp(.9rem,1.3vw,1.08rem)] leading-7 text-slate-300">EMS delivers integrated MEP, automation and smart infrastructure solutions that connect buildings, operations and technology across Egypt, the UAE and the GCC.</p>
+            <p className="mx-auto mt-5 max-w-4xl text-[clamp(.9rem,1.3vw,1.08rem)] leading-7 text-slate-300">EMS delivers integrated MEP, automation and smart infrastructure solutions that connect buildings, operations and technology across Egypt, England and the GCC.</p>
           </div>
         </div>
 
@@ -892,7 +905,7 @@ export default function Home() {
             <h3 className="mt-9 font-sans text-[clamp(1.55rem,2.2vw,2rem)] font-bold text-white">Eng. Ahmed El-Zayat</h3>
             <p className="mt-4 max-w-2xl text-[clamp(.85rem,1.1vw,1rem)] leading-7 text-[#AFC3DB]">With over 15 years of experience in IoT and AI technologies, Engineer Ahmed El-Zayat has led EMS to become a pioneer in smart infrastructure solutions. His vision is to transform how organizations operate through innovative technology integration.</p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <Link to="/about" className="rounded-lg bg-[rgb(33,124,154)] px-5 py-3 text-[12px] font-semibold text-white transition hover:bg-[#299BF0] hover:text-[#010B1F]">Read Full Bio</Link>
+              <a href="https://www.facebook.com/share/1LkNgGndZa/?mibextid=wwXIfr" target="_blank" rel="noreferrer" className="rounded-lg bg-[rgb(33,124,154)] px-5 py-3 text-[12px] font-semibold text-white transition hover:bg-[#299BF0] hover:text-[#010B1F]">View Facebook Profile</a>
               <a href="https://eg.linkedin.com/in/ahmed-elzayat-a8325b41" target="_blank" rel="noreferrer" className="rounded-lg border border-[#299BF0] px-5 py-3 text-[12px] font-semibold text-[#299BF0] transition hover:bg-[#299BF0] hover:text-[#010B1F]">Connect on LinkedIn</a>
             </div>
           </section>
@@ -903,7 +916,18 @@ export default function Home() {
               <p className="mt-2 text-[clamp(.84rem,1.05vw,.98rem)] leading-6 text-[#AFC3DB]">Engineer Ahmed El-Zayat discusses the significance of Artificial Intelligence in enhancing and improving our daily lives in a special podcast episode.</p>
             </div>
             <div className="overflow-hidden border-t border-[#299BF0]/25 bg-[#041126]">
-              <iframe title="Ahmed Elzayat featured podcast about artificial intelligence" src="https://www.youtube-nocookie.com/embed/_xLHsVvXjvE?rel=0" loading="lazy" className="aspect-video w-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
+              <video
+                title="Ahmed Elzayat featured podcast about artificial intelligence"
+                src="/CBC%20TALK.mp4"
+                controls
+                autoPlay
+                muted
+                preload="metadata"
+                playsInline
+                className="aspect-video w-full bg-black object-contain"
+              >
+                Your browser does not support the video element.
+              </video>
             </div>
           </section>
         </motion.div>
