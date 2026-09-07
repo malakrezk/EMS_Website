@@ -704,7 +704,7 @@ export default function Home() {
             <Link to="/solutions" className="home-hero-action home-hero-primary gap-2">Explore Solutions <HiOutlineArrowRight aria-hidden="true" /></Link>
             <Link to="/projects" className="home-hero-action home-hero-secondary">View Case Studies</Link>
           </div>
-          <div className="home-hero-trust home-hero-support mt-8">
+          <div className="home-hero-trust home-hero-support mt-10">
             <div className="home-hero-trust-item flex w-fit items-center gap-2 text-[11px] font-semibold text-[#AFC3DB] sm:text-xs">
               <HiOutlineCheckBadge aria-hidden="true" className="h-[17px] w-[17px] shrink-0 text-[#32A9F5]" />
               <span>Siemens Certified Partner</span>
