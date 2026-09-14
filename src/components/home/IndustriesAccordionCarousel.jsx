@@ -126,7 +126,7 @@ export default function IndustriesAccordionCarousel() {
       }}
     >
       <motion.div
-        className="relative isolate h-[clamp(340px,37vw,520px)] touch-pan-y overflow-hidden [--industry-gap:8px] [--industry-side:36px] sm:[--industry-gap:14px] sm:[--industry-side:clamp(90px,15vw,130px)] lg:[--industry-gap:18px] lg:[--industry-side:clamp(120px,9.5vw,180px)]"
+        className="relative isolate h-[clamp(340px,37vw,520px)] touch-pan-y overflow-hidden [--industry-gap:10px] [--industry-side:48px] sm:[--industry-gap:18px] sm:[--industry-side:clamp(100px,18vw,160px)] lg:[--industry-gap:24px] lg:[--industry-side:clamp(160px,17vw,240px)]"
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.12}
@@ -158,9 +158,9 @@ export default function IndustriesAccordionCarousel() {
                 }
               }}
               style={getCardStyle(position)}
-              className={`group absolute inset-y-0 overflow-hidden rounded-xl bg-[#02152E] shadow-[0_24px_70px_rgba(0,0,0,.35)] outline-none transition-[left,width,opacity] focus-visible:ring-2 focus-visible:ring-[#32A9F5] [contain:layout_paint] [will-change:left,width,opacity] ${
+                  className={`group absolute inset-y-0 overflow-hidden rounded-xl bg-[#02152E] shadow-[0_24px_70px_rgba(0,0,0,.35)] outline-none transition-[left,width,opacity,box-shadow] focus-visible:ring-2 focus-visible:ring-[#32A9F5] [contain:layout_paint] [will-change:left,width,opacity] ${
                 isActive
-                  ? 'border border-[#32A9F5]/25'
+                    ? 'border border-[#32A9F5]/45 shadow-[0_28px_80px_rgba(0,0,0,.48)]'
                   : isPreview
                     ? 'cursor-pointer border border-white/10 hover:brightness-110'
                     : 'pointer-events-none border border-transparent'

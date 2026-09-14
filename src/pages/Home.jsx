@@ -605,7 +605,7 @@ export default function Home() {
   useEffect(() => {
     const video = heroVideoRef.current
     if (!video) return
-    video.currentTime = 47
+    video.currentTime = 48
     const handleSeeked = () => {
       video.play().catch(() => undefined)
     }
@@ -681,7 +681,7 @@ export default function Home() {
           style={{ willChange: 'transform' }}
           className="pointer-events-none absolute inset-0 h-full w-full object-contain object-right"
         >
-          <source src="/EMS%20VID.mp4" type="video/mp4" />
+          <source src="/Al-Nama%20Final%20Project.mp4" type="video/mp4" />
         </video>
         {/* Smooth left-panel shade — wide gradient for cinematic fade */}
         <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,#010B1F_0%,#010B1F_22%,rgba(1,11,31,.92)_30%,rgba(1,11,31,.65)_40%,rgba(1,11,31,.3)_52%,rgba(1,11,31,.1)_62%,transparent_75%)]" />
