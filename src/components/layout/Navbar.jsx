@@ -9,7 +9,7 @@ const links = [
   { to: '/', label: 'Home' },
   { to: '/solutions', label: 'Solutions' },
   { to: '/services', label: 'Services' },
-  { to: '/projects', label: 'Projects' },
+  { to: '/case-studies', label: 'Projects' },
   { to: '/store', label: 'Products' },
   { to: '/about', label: 'About' },
 ]
@@ -28,7 +28,7 @@ function SaudiFlag() {
 
 function NavbarRegions({ className = '' }) {
   return (
-    <div className={cn("h-11 max-w-full items-center gap-3 font-['Manrope'] text-[13px] font-semibold text-white/85", className)} aria-label="EMS regional presence">
+    <div className={cn("h-11 max-w-full items-center gap-3 font-['Manrope'] text-[11px] font-semibold text-white/85", className)} aria-label="EMS regional presence">
       <HiOutlineGlobeAlt aria-hidden="true" className="h-[19px] w-[19px] shrink-0 text-[#55c7f5]" />
       <div className="flex items-center gap-2 whitespace-nowrap"><EgyptFlag /><span>Egypt</span></div>
       <span aria-hidden="true" className="h-5 w-px shrink-0 bg-[#8aa0b5]/25" />
@@ -101,11 +101,11 @@ export default function Navbar() {
 
         <div className="flex items-center justify-self-end gap-2 xl:gap-4">
           <Link
-            to="/cart"
-            aria-label={`Open cart with ${itemCount} items`}
+            to={itemCount > 0 ? '/cart' : '/store'}
+            aria-label={itemCount > 0 ? `Open cart with ${itemCount} items` : 'Open products page'}
             className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#29445e]/80 bg-[#07182e]/75 text-white/90 backdrop-blur-md transition-colors duration-300 hover:border-[#3f7da1] hover:bg-[#0a2038] hover:text-[#76d8ff]"
           >
-            <HiOutlineShoppingCart className="h-5 w-5" />
+            <HiOutlineShoppingCart className="h-[22px] w-[22px]" />
             {itemCount > 0 && (
               <span className="absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full border-2 border-[#010B1F] bg-[#23C7FF] px-1 font-['Manrope'] text-[9px] font-bold leading-none text-[#010B1F]">
                 {itemCount}

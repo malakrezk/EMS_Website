@@ -88,6 +88,7 @@ const homeStyles = `
   .home-page-shell #home-hero .home-hero-trust { background:transparent; }
   .home-page-shell #home-hero .home-hero-trust-item { transition:transform .25s ease,color .25s ease; }
   .home-page-shell #home-hero .home-hero-trust-item:hover { transform:translateY(-2px);color:#fff; }
+  .home-page-shell .home-hero-video-shade { position:absolute;inset:0;z-index:10;pointer-events:none;background:linear-gradient(90deg,rgba(2,12,28,.98) 0%,rgba(2,12,28,.92) 30%,rgba(3,19,38,.70) 52%,rgba(4,28,50,.38) 72%,rgba(4,28,50,.08) 100%); }
   .home-page-shell .home-hero-gallery { position:absolute;inset:0 0 0 35%;z-index:5;overflow:hidden;pointer-events:none;perspective:1200px;transform-style:preserve-3d; }
   .home-page-shell .home-hero-gallery::after { content:'';position:absolute;inset:0 auto 0 0;z-index:90;width:clamp(2rem,5vw,6rem);background:linear-gradient(90deg,#000816 0%,rgba(0,8,22,.72) 28%,transparent 100%);pointer-events:none; }
   .home-page-shell .home-hero-collage { position:absolute;inset:clamp(5rem,9vh,7rem) 0 3% 0;overflow:visible;transform-style:preserve-3d; }
@@ -123,7 +124,7 @@ const homeStyles = `
   .home-page-shell #home-case-studies .home-section-copy { color:rgb(86,170,198); }
   .home-page-shell #home-services .home-section-heading > p:first-child { font-size:clamp(1rem,1.5vw,1.3rem); }
   .home-page-shell #home-services .home-section-copy { font-size:clamp(.78rem,1vw,.9rem);line-height:1.6; }
-  .home-page-shell .home-services-section { padding-block:clamp(2.5rem,4vw,4rem); }
+  .home-page-shell .home-services-section { min-height:100svh;padding-block:clamp(2.5rem,4vw,4rem); }
   .home-page-shell .home-carousel-stage { height:clamp(285px,32vw,350px); }
   .home-page-shell .home-service-card { height:clamp(270px,29vw,320px);width:min(56vw,440px);border-radius:1.4rem;overflow:hidden;clip-path:inset(0 round 1.4rem);-webkit-clip-path:inset(0 round 1.4rem);isolation:isolate;contain:paint;-webkit-backface-visibility:hidden;backface-visibility:hidden; }
   .home-page-shell .home-service-content { padding:clamp(.9rem,2vw,1.35rem); }
@@ -141,7 +142,7 @@ const homeStyles = `
   .home-page-shell .home-about-panel { padding:clamp(1.6rem,4vw,2.6rem); }
   .home-page-shell #home-about { padding-block:clamp(4rem,6.5vw,6.5rem); }
   .home-page-shell #home-about .home-about-intro > p:first-child,
-  .home-page-shell :is(#home-services,#home-solutions,#home-case-studies) .home-section-heading > p:first-child { font-size:clamp(1.25rem,2.2vw,1.8rem);font-weight:800;letter-spacing:.18em; }
+  .home-page-shell :is(#home-services,#home-solutions,#home-case-studies) .home-section-heading > p:first-child { font-size:var(--text-label);font-weight:800;line-height:1.35;letter-spacing:.18em; }
   .home-page-shell .home-scroll-line::after { content:'';position:absolute;inset:0;background:#23C7FF;transform:translateY(-100%);animation:homeScrollLine 2.2s cubic-bezier(.77,0,.18,1) infinite; }
   .home-page-shell .home-network-path { stroke-dasharray:7 14;animation:homeNetworkFlow 9s linear infinite; }
   .home-page-shell .home-data-particle { animation:homeDataFloat 5s ease-in-out infinite; }
@@ -166,6 +167,10 @@ const homeStyles = `
   .home-page-shell .home-case-card:focus-within .home-case-copy { transform:translateY(-3px); }
   .home-page-shell .home-solutions-progress { animation:homeSolutionsProgress 6.2s linear forwards;transform-origin:left; }
   .home-page-shell .home-solutions-progress.is-paused { animation-play-state:paused; }
+  .home-page-shell .home-partners-title { background:linear-gradient(90deg,#299BF0 0%,#23C7FF 28%,#21D3B8 52%,#6CA7F8 76%,#299BF0 100%);background-size:240% 100%;background-clip:text;-webkit-background-clip:text;color:transparent;-webkit-text-fill-color:transparent;animation:homePartnerGradient 7s ease-in-out infinite; }
+  .home-page-shell .home-partners-aura { animation:homePartnerAura 8s ease-in-out infinite; }
+  .home-page-shell .home-partner-logo-card { position:relative;isolation:isolate;overflow:hidden;border:1px solid rgba(50,169,245,.16);background:linear-gradient(145deg,rgba(11,37,72,.7),rgba(7,24,46,.42));box-shadow:0 16px 36px rgba(0,0,0,.16); }
+  .home-page-shell .home-partner-logo-card::after { content:'';position:absolute;inset:-60% -90%;z-index:0;background:linear-gradient(110deg,transparent 42%,rgba(35,199,255,.12) 50%,transparent 58%);transform:translateX(-42%);animation:homePartnerSweep 7s ease-in-out infinite;pointer-events:none; }
   @keyframes homeScrollLine { 0%{transform:translateY(-100%)} 45%,55%{transform:translateY(0)} 100%{transform:translateY(100%)} }
   @keyframes homeNetworkFlow { to{stroke-dashoffset:-84} }
   @keyframes homeDataFloat { 0%,100%{opacity:.18;transform:translate3d(0,0,0)} 50%{opacity:.75;transform:translate3d(0,-10px,0)} }
@@ -173,10 +178,14 @@ const homeStyles = `
   @keyframes homeFloat { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-9px,0)} }
   @keyframes homeCaseOrb { 0%,100%{transform:translate3d(0,0,0) scale(1);opacity:.2} 50%{transform:translate3d(18px,-16px,0) scale(1.08);opacity:.38} }
   @keyframes homeSolutionsProgress { from{transform:scaleX(0)} to{transform:scaleX(1)} }
+  @keyframes homePartnerGradient { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
+  @keyframes homePartnerAura { 0%,100%{transform:translate3d(-4%,0,0) scale(.96);opacity:.3} 50%{transform:translate3d(4%,-8px,0) scale(1.06);opacity:.55} }
+  @keyframes homePartnerSweep { 0%,20%{transform:translateX(-48%)} 65%,100%{transform:translateX(48%)} }
   @media (hover:none) { .home-page-shell .home-solution-description { opacity:1;transform:none; } }
   @media (max-width:1023px) { .home-page-shell .home-hero-gallery-slot:nth-child(n+7):not(.is-active){opacity:.14}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-carousel-stage{margin-top:2rem} }
   @media (max-width:767px) { .home-page-shell #home-hero{min-height:max(100svh,680px)}.home-page-shell .home-hero-gallery{inset:0 0 0 35%}.home-page-shell .home-hero-collage{inset:6rem 0 4% 0}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-slot:nth-child(n){left:6%;right:auto;top:34%;width:88%;opacity:0;filter:brightness(.65);transform:translate3d(0,0,0) scale(.93);--focus-x:0;--focus-y:0;--focus-scale:1}.home-page-shell .home-hero-gallery.has-focus .home-hero-gallery-slot:not(.is-active){opacity:0;transform:translate3d(0,0,-30px) scale(.93)}.home-page-shell .home-hero-gallery-slot.is-active,.home-page-shell .home-hero-gallery-slot:nth-child(n).is-active{opacity:.88;filter:brightness(1) saturate(1.02);transform:translate3d(0,0,70px) scale(1)}.home-page-shell .home-hero-gallery-shade{background:linear-gradient(90deg,rgba(0,8,22,.995) 0%,rgba(0,8,22,.92) 52%,rgba(0,8,22,.52) 100%),linear-gradient(180deg,rgba(0,8,22,.62),transparent 24%,transparent 72%,rgba(0,8,22,.72))}.home-page-shell .home-hero-title{font-size:clamp(1.55rem,7.3vw,2.1rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.9em}.home-page-shell .home-hero-content{min-height:max(100svh,680px);padding-top:6rem;padding-bottom:3rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-services-section{padding-block:2.4rem}.home-page-shell .home-service-card{height:300px;width:min(86vw,360px)}.home-page-shell .home-carousel-stage{height:320px}.home-page-shell .home-service-title{font-size:clamp(1.45rem,7.5vw,2.15rem)}.home-page-shell #home-services .home-section-copy{max-width:34rem;padding-inline:.75rem}.home-page-shell #home-services .home-section-title{font-size:clamp(1.7rem,8vw,2.35rem)}.home-page-shell #home-case-studies article{min-height:440px}.home-page-shell #home-case-studies article>header{min-height:auto} }
   @media (max-width:479px) { .home-page-shell #home-services .home-section-heading > p:first-child{font-size:.9rem}.home-page-shell .home-service-card{height:280px;width:min(88vw,330px)}.home-page-shell .home-carousel-stage{height:300px}.home-page-shell .home-service-content{padding:.85rem}.home-page-shell #home-services .home-section-copy{font-size:.76rem;line-height:1.55} }
+  @media (max-width:767px) { .home-page-shell .home-hero-video-shade{background:linear-gradient(90deg,rgba(2,12,28,.98) 0%,rgba(2,12,28,.94) 38%,rgba(3,19,38,.84) 70%,rgba(4,28,50,.64) 100%)} }
   @media (max-width:639px) { .home-page-shell #home-hero .home-hero-trust-items{align-items:flex-start;flex-direction:column}.home-page-shell #home-hero .home-hero-trust-separator{display:none} }
   @media (max-width:479px) { .home-page-shell #home-hero .home-hero-actions{align-items:stretch;flex-direction:column}.home-page-shell #home-hero .home-hero-action{width:100%} }
   @media (max-height:850px) and (min-width:1024px) { .home-page-shell .home-services-section{padding-block:2.25rem}.home-page-shell .home-carousel-stage{height:290px;margin-top:1.5rem}.home-page-shell .home-service-card{height:275px;width:min(50vw,410px)}.home-page-shell .home-service-content{padding:.95rem}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-service-title{font-size:clamp(1.5rem,2.7vw,2.3rem)}.home-page-shell .home-section-copy{margin-top:.75rem}.home-page-shell .home-major-section{padding-block:4.5rem} }
@@ -194,7 +203,7 @@ const homeStyles = `
     .home-page-shell :is(#home-services,#home-solutions,#home-case-studies) .home-section-title { font-size:clamp(2rem,3vw,3.15rem);white-space:nowrap; }
     .home-page-shell #home-solutions .home-section-heading { max-width:68rem; }
   }
-  @media (prefers-reduced-motion: reduce) { .home-page-shell .home-network-path,.home-page-shell .home-data-particle,.home-page-shell .home-scan,.home-page-shell .home-float,.home-page-shell .home-scroll-line::after,.home-page-shell .home-solutions-progress,.home-page-shell .home-case-orb{animation:none!important}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-card,.home-page-shell .home-hero-gallery-media{transition:none!important}.home-page-shell #home-hero .home-hero-trust-item{transition:none!important}.home-page-shell .home-case-card,.home-page-shell .home-case-media,.home-page-shell .home-case-sweep,.home-page-shell .home-case-play,.home-page-shell .home-case-glow,.home-page-shell .home-case-accent,.home-page-shell .home-case-copy{transition:none!important;transform:none!important} }
+  @media (prefers-reduced-motion: reduce) { .home-page-shell .home-network-path,.home-page-shell .home-data-particle,.home-page-shell .home-scan,.home-page-shell .home-float,.home-page-shell .home-scroll-line::after,.home-page-shell .home-solutions-progress,.home-page-shell .home-case-orb,.home-page-shell .home-partners-title,.home-page-shell .home-partners-aura,.home-page-shell .home-partner-logo-card::after{animation:none!important}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-card,.home-page-shell .home-hero-gallery-media{transition:none!important}.home-page-shell #home-hero .home-hero-trust-item{transition:none!important}.home-page-shell .home-case-card,.home-page-shell .home-case-media,.home-page-shell .home-case-sweep,.home-page-shell .home-case-play,.home-page-shell .home-case-glow,.home-page-shell .home-case-accent,.home-page-shell .home-case-copy{transition:none!important;transform:none!important} }
 `
 
 const ease = [0.22, 1, 0.36, 1]
@@ -246,7 +255,7 @@ const homeServiceCards = [
     ...servicesShowcase.find(service => service.id === 'energy-management'),
     id: 'digital-twin',
     title: 'Digital Twin',
-    image: '/hero-control-room-04.jpg',
+    image: '/service-digital-twin-dashboard.jpg',
     description: 'A connected digital representation of physical systems for simulation, monitoring and remote insight.',
     features: ['Live operational context', 'Remote system understanding', 'Simulation and maintenance support'],
     to: '/digital-twin',
@@ -652,23 +661,6 @@ export default function Home() {
   useLayoutEffect(() => {
     const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    const navigation = { '/': '#home-hero', '/services': '#home-services', '/solutions': '#home-solutions', '/projects': '#home-case-studies', '/about': '#home-about' }
-    const handlers = []
-    document.querySelectorAll('header a[href]').forEach(anchor => {
-      const target = navigation[anchor.getAttribute('href')]
-      if (!target) return
-      const handler = event => {
-        if (event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return
-        event.preventDefault()
-        const section = document.querySelector(target)
-        if (!section) return
-        const top = section.getBoundingClientRect().top + window.scrollY - 72
-        window.scrollTo({ top, behavior: reducedMotion ? 'auto' : 'smooth' })
-      }
-      anchor.addEventListener('click', handler)
-      handlers.push([anchor, handler])
-    })
-
     const context = gsap.context(() => {
       if (!reducedMotion) {
         gsap.fromTo('.home-hero-word > span', { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: .85, stagger: .1, delay: .2, ease: 'power3.out' })
@@ -680,7 +672,6 @@ export default function Home() {
 
     ScrollTrigger.refresh()
     return () => {
-      handlers.forEach(([anchor, handler]) => anchor.removeEventListener('click', handler))
       context.revert()
     }
   }, [])
@@ -703,7 +694,7 @@ export default function Home() {
           <source src="/Al-Nama%20Final%20Project.mp4" type="video/mp4" />
         </video>
         {/* Smooth left-panel shade — wide gradient for cinematic fade */}
-        <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,#000816_0%,#000816_22%,rgba(0,8,22,.92)_30%,rgba(0,8,22,.65)_40%,rgba(0,8,22,.3)_52%,rgba(0,8,22,.1)_62%,transparent_75%)]" />
+        <div className="home-hero-video-shade" />
         {/* Top fade behind navbar */}
         <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,#000816_0%,rgba(0,8,22,.7)_5%,rgba(0,8,22,.25)_12%,transparent_20%)]" />
         {/* Bottom vignette */}
@@ -765,9 +756,11 @@ export default function Home() {
 
     <ServiceCarousel />
 
-    <section id="home-solutions" className="home-major-section relative scroll-mt-20 overflow-hidden bg-[#071B2D]">
-      <div className="home-grid absolute inset-0 opacity-20 [mask-image:radial-gradient(circle_at_center,black,transparent_78%)]" />
-      <div className="absolute -left-48 top-1/3 h-96 w-96 rounded-full bg-cyan-500/10 blur-[130px]" />
+    <section id="home-solutions" className="home-major-section relative scroll-mt-20 overflow-hidden bg-[radial-gradient(circle_at_50%_-10%,rgba(35,199,255,.13),transparent_38%),radial-gradient(circle_at_8%_58%,rgba(41,155,240,.12),transparent_32%),radial-gradient(circle_at_92%_72%,rgba(20,88,145,.16),transparent_34%),linear-gradient(145deg,#020b19_0%,#06172b_48%,#03101f_100%)]">
+      <div className="home-grid absolute inset-0 opacity-[.14] [mask-image:radial-gradient(ellipse_at_center,black,transparent_76%)]" />
+      <div className="pointer-events-none absolute inset-x-[12%] top-0 h-px bg-gradient-to-r from-transparent via-[#23C7FF]/45 to-transparent" />
+      <div className="pointer-events-none absolute -left-48 top-1/3 h-96 w-96 rounded-full bg-cyan-500/10 blur-[130px]" />
+      <div className="pointer-events-none absolute -right-40 bottom-0 h-80 w-80 rounded-full bg-[#299BF0]/10 blur-[120px]" />
       <div className="container-ems relative">
         <div className="flex flex-col items-center text-center"><SectionTitle eyebrow="Solutions" title="Where Engineering Meets Intelligence." text="EMS connects control, data and engineering context so teams can see more clearly and operate with confidence." align="center" /><Link to="/solutions" className="home-reveal mt-6 inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">Explore all solutions <HiOutlineArrowRight /></Link></div>
         <IndustriesAccordionCarousel />
@@ -786,10 +779,17 @@ export default function Home() {
       </div>
     </section>
 
-    <section id="home-case-studies" className="home-major-section relative scroll-mt-20 overflow-hidden bg-[linear-gradient(180deg,#071B2D_0%,#06182A_12%)]">
-      <div className="home-grid pointer-events-none absolute inset-0 opacity-[.09] [mask-image:radial-gradient(circle_at_center,black,transparent_76%)]" />
+    <section id="home-case-studies" className="home-major-section relative scroll-mt-20 overflow-hidden bg-[radial-gradient(circle_at_50%_-10%,rgba(35,199,255,.13),transparent_38%),radial-gradient(circle_at_8%_58%,rgba(41,155,240,.12),transparent_32%),radial-gradient(circle_at_92%_72%,rgba(20,88,145,.16),transparent_34%),linear-gradient(145deg,#020b19_0%,#06172b_48%,#03101f_100%)]">
+      <div className="home-grid pointer-events-none absolute inset-0 opacity-[.14] [mask-image:radial-gradient(ellipse_at_center,black,transparent_76%)]" />
+      <div className="pointer-events-none absolute inset-x-[12%] top-0 h-px bg-gradient-to-r from-transparent via-[#23C7FF]/45 to-transparent" />
       <div className="home-case-orb pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-[#299BF0]/15 blur-[110px]" />
       <div className="home-case-orb is-delayed pointer-events-none absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-[#23C7FF]/10 blur-[125px]" />
+      <div className="home-case-orb pointer-events-none absolute left-1/2 top-[42%] h-64 w-[34rem] -translate-x-1/2 rounded-full bg-[#2463a2]/10 blur-[115px]" />
+      <div aria-hidden="true" className="pointer-events-none absolute -left-32 top-[36%] h-72 w-72 rotate-12 rounded-[3rem] border border-[#299BF0]/10" />
+      <div aria-hidden="true" className="pointer-events-none absolute -right-28 top-[14%] h-64 w-64 -rotate-12 rounded-full border border-[#23C7FF]/10" />
+      <div aria-hidden="true" className="home-data-particle pointer-events-none absolute left-[12%] top-[22%] h-1.5 w-1.5 rounded-full bg-[#23C7FF]/60 shadow-[0_0_16px_rgba(35,199,255,.65)]" />
+      <div aria-hidden="true" className="home-data-particle pointer-events-none absolute right-[17%] top-[42%] h-1 w-1 rounded-full bg-[#299BF0]/70 shadow-[0_0_14px_rgba(41,155,240,.7)] [animation-delay:-1.8s]" />
+      <div aria-hidden="true" className="home-data-particle pointer-events-none absolute bottom-[18%] left-[46%] h-1 w-1 rounded-full bg-[#23C7FF]/55 shadow-[0_0_12px_rgba(35,199,255,.6)] [animation-delay:-3.2s]" />
       <div className="container-ems relative">
         <div className="flex flex-col items-center text-center"><SectionTitle eyebrow="Case studies" title="Complex Systems. Clear Results." text="Selected EMS applications show how complex infrastructure becomes a clearer, connected operating environment." align="center" /><Link to="/projects" className="home-reveal mt-6 inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">View all case studies <HiOutlineArrowRight /></Link></div>
         <div className="mx-auto mt-8 grid w-full max-w-[1400px] gap-4 md:grid-cols-2 xl:grid-cols-3">
@@ -870,28 +870,29 @@ export default function Home() {
       </div>
     </section>
 
-    <section id="home-about" className="home-major-section relative scroll-mt-20 overflow-hidden border-t border-white/10 bg-[#041126]">
-      <div className="home-grid absolute inset-0 opacity-[.12] [mask-image:radial-gradient(circle_at_50%_35%,black,transparent_74%)]" />
-      <div className="absolute -left-36 top-24 h-80 w-80 rounded-full bg-[#299BF0]/10 blur-[120px]" />
-      <div className="absolute -right-40 bottom-20 h-96 w-96 rounded-full bg-[rgb(33,124,154)]/10 blur-[150px]" />
+    <section id="home-about" className="home-major-section relative scroll-mt-20 overflow-hidden border-t border-white/10 bg-[radial-gradient(circle_at_50%_-10%,rgba(35,199,255,.13),transparent_38%),radial-gradient(circle_at_8%_58%,rgba(41,155,240,.12),transparent_32%),radial-gradient(circle_at_92%_72%,rgba(20,88,145,.16),transparent_34%),linear-gradient(145deg,#020b19_0%,#06172b_48%,#03101f_100%)]">
+      <div className="home-grid pointer-events-none absolute inset-0 opacity-[.14] [mask-image:radial-gradient(ellipse_at_center,black,transparent_76%)]" />
+      <div className="pointer-events-none absolute inset-x-[12%] top-0 h-px bg-gradient-to-r from-transparent via-[#23C7FF]/45 to-transparent" />
+      <div className="home-case-orb pointer-events-none absolute -left-36 top-24 h-80 w-80 rounded-full bg-[#299BF0]/12 blur-[120px]" />
+      <div className="home-case-orb is-delayed pointer-events-none absolute -right-40 bottom-20 h-96 w-96 rounded-full bg-[#14678b]/12 blur-[150px]" />
 
       <div className="container-ems relative">
         <div className="mx-auto max-w-5xl text-center">
           <div className="home-reveal home-about-intro">
             <Eyebrow>About EMS</Eyebrow>
-            <p className="mx-auto mt-5 max-w-4xl text-[clamp(.9rem,1.3vw,1.08rem)] leading-7 text-slate-300">EMS delivers integrated MEP, automation and smart infrastructure solutions that connect buildings, operations and technology across Egypt, England and the GCC.</p>
+            <p className="mx-auto mt-6 max-w-4xl text-[clamp(.9rem,1.3vw,1.08rem)] leading-8 text-slate-300">EMS delivers integrated MEP, automation and smart infrastructure solutions that connect buildings, operations and technology across Egypt, England and the GCC.</p>
           </div>
         </div>
 
-        <div className="relative mx-auto mt-9 max-w-[1450px]">
+        <div className="relative mx-auto mt-14 max-w-[1450px] lg:mt-16">
           <span className="absolute left-5 right-5 top-[17px] hidden h-px bg-gradient-to-r from-transparent via-[#299BF0]/55 to-transparent md:block" />
-          <div className="grid gap-5 md:grid-cols-3 lg:gap-6">
+          <div className="grid gap-6 md:grid-cols-3 lg:gap-8">
             {aboutMilestones.map(([title, text, Icon], index) => (
-              <motion.article key={title} initial={{ opacity: 0, y: 20 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-50px' }} whileHover={{ y: -4 }} transition={{ duration: .55, delay: index * .08, ease }} className="group relative pt-0 md:pt-8">
+              <motion.article key={title} initial={{ opacity: 0, y: 24, scale: .97 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: '-50px' }} whileHover={{ y: -6, scale: 1.01 }} transition={{ duration: .6, delay: index * .09, ease }} className="group relative pt-0 md:pt-8">
                 <span className="relative z-10 mb-3 flex h-9 w-9 items-center justify-center rounded-full border border-[#299BF0]/50 bg-[#041126] text-[#23C7FF] shadow-[0_0_25px_rgba(41,155,240,.2)] md:absolute md:left-0 md:top-0">
                   <Icon aria-hidden="true" className="h-5 w-5 transition duration-300 group-hover:scale-110" />
                 </span>
-                <div className="h-full rounded-2xl bg-[#07182e]/80 p-5 transition duration-300 group-hover:bg-[#0B2548]/75">
+                <div className="h-full min-h-36 rounded-2xl border border-white/[.04] bg-[#07182e]/80 p-6 transition duration-500 group-hover:border-[#299BF0]/30 group-hover:bg-[#0B2548]/75 group-hover:shadow-[0_20px_45px_rgba(0,0,0,.2)]">
                   <h3 className="text-sm font-bold text-[#23C7FF]">{title}</h3>
                   <p className="mt-1.5 text-[12px] leading-[1.55] text-slate-400">{text}</p>
                 </div>
@@ -900,8 +901,8 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="mx-auto mt-10 grid max-w-[1450px] gap-6 lg:grid-cols-12 lg:gap-8">
-          <motion.article initial={{ opacity: 0, x: -20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-60px' }} whileHover={{ y: -4 }} transition={{ duration: .6, ease }} className="group relative isolate overflow-hidden rounded-2xl border border-[#299BF0]/25 bg-[linear-gradient(135deg,#0B2548_0%,#07182e_72%)] p-5 lg:col-span-6">
+        <div className="mx-auto mt-16 grid max-w-[1450px] gap-8 lg:mt-20 lg:grid-cols-12 lg:gap-10">
+          <motion.article initial={{ opacity: 0, x: -24, scale: .98 }} whileInView={{ opacity: 1, x: 0, scale: 1 }} viewport={{ once: true, margin: '-60px' }} whileHover={{ y: -6, scale: 1.01 }} transition={{ duration: .7, ease }} className="group relative isolate overflow-hidden rounded-2xl border border-[#299BF0]/25 bg-[linear-gradient(135deg,#0B2548_0%,#07182e_72%)] p-7 transition-shadow duration-500 hover:shadow-[0_24px_60px_rgba(0,0,0,.24)] sm:p-8 lg:col-span-6">
             <span className="absolute -right-2 -top-10 -z-10 font-serif text-[9rem] leading-none text-white/[.025]">01</span>
             <div className="flex items-center justify-between">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#23C7FF]/25 bg-[#23C7FF]/10 text-[#23C7FF]"><HiOutlineCheckBadge className="h-5 w-5" /></span>
@@ -912,7 +913,7 @@ export default function Home() {
             <Link to="/about" className="mt-4 inline-flex items-center gap-2 text-[11px] font-semibold text-[#23C7FF] transition hover:gap-3 hover:text-white">Read our story <HiOutlineArrowUpRight /></Link>
           </motion.article>
 
-          <motion.article initial={{ opacity: 0, x: 20 }} whileInView={{ opacity: 1, x: 0 }} viewport={{ once: true, margin: '-60px' }} whileHover={{ y: -4 }} transition={{ duration: .6, ease }} className="group relative isolate overflow-hidden rounded-2xl border border-[#299BF0]/25 bg-[linear-gradient(135deg,#07182e_0%,#0B2548_100%)] p-5 lg:col-span-6">
+          <motion.article initial={{ opacity: 0, x: 24, scale: .98 }} whileInView={{ opacity: 1, x: 0, scale: 1 }} viewport={{ once: true, margin: '-60px' }} whileHover={{ y: -6, scale: 1.01 }} transition={{ duration: .7, delay: .08, ease }} className="group relative isolate overflow-hidden rounded-2xl border border-[#299BF0]/25 bg-[linear-gradient(135deg,#07182e_0%,#0B2548_100%)] p-7 transition-shadow duration-500 hover:shadow-[0_24px_60px_rgba(0,0,0,.24)] sm:p-8 lg:col-span-6">
             <span className="absolute -right-2 -top-10 -z-10 font-serif text-[9rem] leading-none text-white/[.025]">02</span>
             <div className="flex items-center justify-between">
               <span className="flex h-10 w-10 items-center justify-center rounded-xl border border-[#23C7FF]/25 bg-[#23C7FF]/10 text-[#23C7FF]"><HiOutlineEye className="h-5 w-5" /></span>
@@ -924,11 +925,11 @@ export default function Home() {
           </motion.article>
         </div>
 
-        <div className="mx-auto mt-10 max-w-[1450px]">
+        <div className="mx-auto mt-16 max-w-[1450px] lg:mt-20">
           <p className="mx-auto max-w-4xl text-center text-[clamp(1rem,1.5vw,1.3rem)] leading-relaxed text-[#AFC3DB]">Meet the visionary behind EMS&apos;s innovative smart infrastructure solutions.</p>
         </div>
 
-        <motion.div initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: .7, ease }} className="mx-auto mt-7 grid max-w-[1450px] items-center gap-8 lg:grid-cols-[.92fr_1.08fr] lg:gap-10">
+        <motion.div initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-60px' }} transition={{ duration: .75, ease }} className="mx-auto mt-10 grid max-w-[1450px] items-center gap-12 lg:grid-cols-[.92fr_1.08fr] lg:gap-16">
           <section className="px-2 sm:px-4">
             <div className="relative w-fit">
               <img src="/ahmed-elzayat.jpeg" alt="Ahmed Elzayat, CEO and Founder of EMS" loading="lazy" className="h-52 w-52 rounded-full border-4 border-[#299BF0]/35 object-cover object-top shadow-[0_20px_55px_rgba(0,0,0,.35)] sm:h-56 sm:w-56" />
@@ -942,7 +943,7 @@ export default function Home() {
             </div>
           </section>
 
-          <section className="overflow-hidden rounded-2xl border border-[#299BF0]/25 bg-[#07182e] shadow-[0_28px_80px_rgba(0,0,0,.24)]">
+          <section className="overflow-hidden rounded-2xl border border-[#299BF0]/25 bg-[#07182e] shadow-[0_28px_80px_rgba(0,0,0,.24)] transition duration-500 hover:-translate-y-1 hover:border-[#299BF0]/45 hover:shadow-[0_32px_90px_rgba(0,0,0,.3)]">
             <div className="p-6 sm:px-7 sm:py-6">
               <h3 className="font-sans text-[clamp(1.3rem,1.8vw,1.65rem)] font-bold text-white">Featured Podcast</h3>
               <p className="mt-2 text-[clamp(.84rem,1.05vw,.98rem)] leading-6 text-[#AFC3DB]">Engineer Ahmed El-Zayat discusses the significance of Artificial Intelligence in enhancing and improving our daily lives in a special podcast episode.</p>
@@ -964,34 +965,35 @@ export default function Home() {
           </section>
         </motion.div>
 
-        <div className="mx-auto mt-14 max-w-[1250px] lg:mt-16">
+        <div className="relative mx-auto mt-20 max-w-[1250px] lg:mt-24">
+          <div aria-hidden="true" className="home-partners-aura pointer-events-none absolute inset-x-[14%] top-8 h-32 rounded-full bg-[linear-gradient(90deg,rgba(41,155,240,.16),rgba(35,199,255,.12),rgba(33,211,184,.13))] blur-[70px]" />
           <div className="home-reveal text-center">
             <button
               type="button"
               aria-pressed={partnersUnderlineVisible}
               onClick={() => setPartnersUnderlineVisible(visible => !visible)}
-              className="rounded-sm font-mono text-[clamp(1.25rem,2.2vw,1.8rem)] font-extrabold uppercase tracking-[.18em] text-[#299BF0] outline-none transition-colors hover:text-[#56AAC6] focus-visible:ring-2 focus-visible:ring-[#299BF0] focus-visible:ring-offset-4 focus-visible:ring-offset-[#041126]"
+              className="home-partners-title rounded-sm font-mono text-[clamp(1.1rem,1.8vw,1.55rem)] font-extrabold uppercase tracking-[.22em] outline-none focus-visible:ring-2 focus-visible:ring-[#299BF0] focus-visible:ring-offset-4 focus-visible:ring-offset-[#041126]"
             >
               Our Partners
             </button>
             <span
               aria-hidden="true"
-              className={`mx-auto mt-3 block h-0.5 rounded-full bg-[#299BF0] transition-[width,opacity] duration-300 ${partnersUnderlineVisible ? 'w-20 opacity-100' : 'w-0 opacity-0'}`}
+              className={`mx-auto mt-4 block h-0.5 rounded-full bg-gradient-to-r from-[#299BF0] via-[#23C7FF] to-[#21D3B8] transition-[width,opacity] duration-500 ${partnersUnderlineVisible ? 'w-24 opacity-100' : 'w-12 opacity-60'}`}
             />
           </div>
 
-          <div className="mx-auto mt-4 grid max-w-5xl grid-cols-2 gap-x-5 gap-y-3 sm:grid-cols-4 sm:gap-x-7">
+          <div className="relative mx-auto mt-10 grid max-w-5xl grid-cols-2 gap-5 sm:grid-cols-4 sm:gap-6 lg:gap-8">
             {featuredPartners.map((partner, index) => (
               <motion.div
                 key={partner.id}
-                initial={{ opacity: 0, y: 12 }}
+                initial={{ opacity: 0, y: 22, scale: .94 }}
                 whileInView={{ opacity: 1, y: 0, scale: 1 }}
                 viewport={{ once: true, margin: '-40px' }}
-                whileHover={{ y: -3, scale: 1.04 }}
-                transition={{ duration: .4, delay: index * .06, ease }}
-                className="flex h-12 items-center justify-center px-3 sm:h-14"
+                whileHover={{ y: -6, scale: 1.035 }}
+                transition={{ duration: .55, delay: index * .08, ease }}
+                className="home-partner-logo-card flex h-24 items-center justify-center rounded-2xl px-5 sm:h-28"
               >
-                <img src={partner.logo} alt={`${partner.name} logo`} loading="lazy" className={`h-8 w-28 object-contain opacity-90 transition-opacity hover:opacity-100 sm:h-9 sm:w-32 ${partner.id === 'oracle' ? 'scale-[2.35]' : ''}`} />
+                <img src={partner.logo} alt={`${partner.name} logo`} loading="lazy" className={`relative z-10 h-8 w-28 object-contain opacity-90 transition-opacity hover:opacity-100 sm:h-9 sm:w-32 ${partner.id === 'oracle' ? 'scale-[2.35]' : ''}`} />
               </motion.div>
             ))}
           </div>

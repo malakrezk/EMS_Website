@@ -28,7 +28,7 @@ export default function ProductCard({ product, index = 0 }) {
       transition={{ duration: 0.75, delay: (index % 4) * 0.12, ease }}
       className="group relative h-full transition-transform duration-500 ease-out md:hover:-translate-y-2"
     >
-      <span aria-hidden="true" className="product-card-glow pointer-events-none absolute -inset-1 rounded-2xl opacity-35 blur-xl transition-opacity duration-500 md:group-hover:opacity-60" />
+      <span aria-hidden="true" className="product-card-glow pointer-events-none absolute -inset-1 rounded-2xl opacity-20 blur-xl transition-opacity duration-500 md:group-hover:opacity-35" />
       <div className="product-card-frame relative flex h-full flex-col overflow-hidden rounded-xl text-white shadow-[0_20px_40px_rgba(0,0,0,.35)]">
         <span aria-hidden="true" className="pointer-events-none absolute inset-0 -translate-x-full bg-[linear-gradient(115deg,transparent_40%,rgba(148,224,255,.14)_50%,transparent_60%)] transition-transform duration-[1400ms] ease-out mix-blend-screen md:group-hover:translate-x-full" />
 
