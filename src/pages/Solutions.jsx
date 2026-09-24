@@ -90,16 +90,19 @@ const dashboardVariants = {
 }
 
 const solutionsStyles = `
-  .solutions-hero { --sector-accent:#32A9F5; }
-  .solutions-page :is(h1,h2,h3,h4) { font-family:"Playfair Display",Georgia,serif; }
+  .solutions-page .section-eyebrow { font-family:"Space Grotesk",sans-serif;font-size:clamp(11px,.85vw,14px);font-weight:500;line-height:1.4;letter-spacing:.22em;color:#35B9F4;text-transform:uppercase; }
+  .solutions-page .section-copy { font-size:clamp(.94rem,1.15vw,1.05rem);line-height:1.75;color:#AFC3DB; }
+  .solutions-page { position:relative;background:radial-gradient(circle at 50% -10%,rgba(35,199,255,.13),transparent 38%),radial-gradient(circle at 8% 58%,rgba(41,155,240,.12),transparent 32%),radial-gradient(circle at 92% 72%,rgba(20,88,145,.16),transparent 34%),linear-gradient(145deg,#020b19 0%,#06172b 48%,#03101f 100%) !important; }
+  .solutions-page::before,.solutions-page::after { content:'';position:fixed;z-index:0;width:42rem;height:42rem;border-radius:50%;filter:blur(380px);pointer-events:none;will-change:transform,opacity; }
+  .solutions-page::before { left:25%;top:20%;background:rgba(56,189,248,.10);animation:solutionsGlowOne 38s ease-in-out infinite; }
+  .solutions-page::after { left:80%;top:60%;background:rgba(20,69,107,.14);animation:solutionsGlowTwo 42s ease-in-out infinite; }
+  .solutions-page > section { position:relative;z-index:1;background:transparent !important; }
+  .solutions-page :is(h1,h2,h3,h4) { font-family:"Cormorant Garamond",Georgia,serif; }
   .solutions-hero-title { text-shadow:0 4px 18px rgba(0,0,0,.72),0 12px 42px rgba(0,0,0,.48); }
-  .solutions-grid { background-image:linear-gradient(rgba(89,220,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(89,220,255,.055) 1px,transparent 1px);background-size:72px 72px; }
   .solutions-stage { perspective:1500px; }
   .solutions-dashboard-plane { transform-style:preserve-3d;will-change:transform,opacity; }
   .solutions-dashboard-frame { box-shadow:0 34px 90px rgba(0,0,0,.72),0 0 42px rgba(35,199,255,.14); }
   .solutions-dashboard-frame::before { content:'';position:absolute;inset:-1px;border:1px solid color-mix(in srgb,var(--sector-accent) 65%,transparent);clip-path:polygon(0 0,20% 0,20% 1px,100% 1px,100% 80%,calc(100% - 1px) 80%,calc(100% - 1px) 100%,70% 100%,70% calc(100% - 1px),0 calc(100% - 1px));pointer-events:none; }
-  .solutions-data-path { stroke-dasharray:5 13;animation:solutionsDataFlow 8s linear infinite; }
-  .solutions-pulse-dot { animation:solutionsPulse 2.8s ease-in-out infinite; }
   .solutions-progress { transform-origin:left;animation:solutionsProgress 8s linear forwards; }
   .solutions-progress.is-paused { animation-play-state:paused; }
   .solutions-progress { box-shadow:0 0 12px rgba(35,199,255,.65); }
@@ -110,7 +113,6 @@ const solutionsStyles = `
   .solutions-sector-button:focus-visible { outline:1px solid #32A9F5;outline-offset:-3px; }
   .solutions-stage-title { font-size:clamp(1.75rem,2.5vw,3rem)!important; }
   .solutions-challenge-title { font-size:clamp(1.8rem,3vw,3rem)!important; }
-  .solutions-section-grid { background-image:linear-gradient(rgba(89,220,255,.045) 1px,transparent 1px),linear-gradient(90deg,rgba(89,220,255,.045) 1px,transparent 1px);background-size:72px 72px; }
   .solutions-sector-section .solutions-sector-heading h2 { margin-top:1rem;font-size:clamp(2rem,3vw,3.2rem);line-height:.98; }
   .solutions-capabilities-section h2 { margin-left:auto;margin-right:auto;text-align:center;font-size:clamp(2rem,3.6vw,3.6rem)!important; }
   .solutions-capabilities-section > .container-ems > .solutions-reveal { width:100%;max-width:none;margin-left:auto;margin-right:auto;text-align:center; }
@@ -119,8 +121,9 @@ const solutionsStyles = `
   .solutions-approach-line::before { content:'';position:absolute;left:19px;top:2rem;bottom:2rem;width:1px;background:linear-gradient(to bottom,#32A9F5,rgba(50,169,245,.08)); }
   .solutions-capability:hover .solutions-capability-icon { transform:translateY(-4px);border-color:#32A9F5;color:#32A9F5; }
   .solutions-photo-rail { clip-path:polygon(0 0,96% 0,100% 10%,100% 100%,4% 100%,0 90%); }
-  @keyframes solutionsDataFlow { to{stroke-dashoffset:-108} }
-  @keyframes solutionsPulse { 0%,100%{opacity:.24;transform:scale(.8)}50%{opacity:1;transform:scale(1.35)} }
+  .solutions-hero-title .solutions-title-gradient { display:inline-block;background:linear-gradient(100deg,#27B9F3 12%,#2BC7BE 100%) 0 0 / 100% 100% no-repeat;background-clip:text;-webkit-background-clip:text;color:transparent;-webkit-text-fill-color:transparent;text-shadow:none; }
+  @keyframes solutionsGlowOne { 0%,100%{transform:translate3d(-2%,-2%,0);opacity:.72} 50%{transform:translate3d(3%,2%,0);opacity:1} }
+  @keyframes solutionsGlowTwo { 0%,100%{transform:translate3d(2%,1%,0);opacity:.72} 50%{transform:translate3d(-3%,-2%,0);opacity:1} }
   @keyframes solutionsProgress { from{transform:scaleX(0)}to{transform:scaleX(1)} }
   @keyframes solutionsScan { 0%,20%{transform:translateY(-130%);opacity:0}35%{opacity:.28}75%{opacity:.1}90%,100%{transform:translateY(130%);opacity:0} }
   @media (max-width:1023px) {
@@ -149,7 +152,7 @@ const solutionsStyles = `
     .solutions-copy { padding-top:7.4rem; }
   }
   @media (prefers-reduced-motion:reduce) {
-    .solutions-data-path,.solutions-pulse-dot,.solutions-progress,.solutions-scan { animation:none!important; }
+    .solutions-page::before,.solutions-page::after,.solutions-progress,.solutions-scan { animation:none!important; }
   }
 `
 
@@ -181,9 +184,9 @@ function DashboardObject({ sector, direction, reducedMotion, pointerX, pointerY,
 function SectionIntro({ number, label, title, text, align = 'left' }) {
   return (
     <div className={`solutions-reveal ${align === 'center' ? 'mx-auto max-w-4xl text-center' : 'max-w-4xl'}`}>
-      {(number || label) && <p className="font-mono text-[9px] font-bold uppercase tracking-[.3em] text-[#32A9F5]">{number} / {label}</p>}
+      {label && <p className="section-eyebrow">{label}</p>}
       <h2 className="mt-5 font-serif text-[clamp(2.65rem,5vw,5.15rem)] font-medium leading-[.95] tracking-[-.04em] text-white">{title}</h2>
-      {text && <p className={`mt-6 max-w-2xl text-[clamp(.94rem,1.15vw,1.05rem)] leading-7 text-[#AFC3DB] ${align === 'center' ? 'mx-auto' : ''}`}>{text}</p>}
+      {text && <p className={`section-copy mt-6 max-w-2xl ${align === 'center' ? 'mx-auto' : ''}`}>{text}</p>}
     </div>
   )
 }
@@ -205,7 +208,7 @@ function SectorCard({ item, index }) {
           <h3 className="mt-5 font-serif text-[clamp(2.4rem,4.4vw,4.8rem)] font-medium leading-[.94] tracking-[-.04em] text-white transition-colors group-hover:text-[#54B8F7]">{item.name}</h3>
           <p className="mt-9 max-w-lg text-[clamp(.98rem,1.2vw,1.08rem)] leading-7 text-[#AFC3DB]">{item.description}</p>
           <div className="mt-7 flex flex-wrap gap-x-5 gap-y-2 font-mono text-[8px] uppercase tracking-[.17em] text-white/40">{item.tags.map(tag => <span key={tag}>{tag}</span>)}</div>
-          <span className="mt-9 inline-flex items-center gap-3 text-[10px] font-bold uppercase tracking-[.18em] text-[#32A9F5] transition-colors group-hover:text-white">Explore {item.name}<span className="flex h-10 w-10 items-center justify-center rounded-full border border-[#32A9F5]/60 transition duration-300 group-hover:border-white group-hover:bg-white group-hover:text-[#010B1F]"><HiOutlineArrowUpRight className="h-4 w-4 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span></span>
+          <span className="solutions-sector-cta mt-9 inline-flex items-center gap-3 rounded-full border border-[#32A9F5]/55 bg-[#020d20]/82 px-4 py-2.5 text-[10px] font-bold uppercase tracking-[.18em] text-white shadow-[0_10px_30px_rgba(0,0,0,.3)] backdrop-blur-md transition duration-300 group-hover:border-[#55D5FF] group-hover:bg-[#061b32]/90">Explore {item.name}<span className="flex h-9 w-9 items-center justify-center rounded-full bg-[#32A9F5] text-[#010B1F] shadow-[0_0_18px_rgba(50,169,245,.32)] transition duration-300 group-hover:bg-[#8DE6FF]"><HiOutlineArrowUpRight className="h-4 w-4 transition duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></span></span>
         </div>
       </article>
     </Link>
@@ -294,31 +297,22 @@ export default function Solutions() {
   }
 
   return (
-    <main ref={rootRef} className="solutions-page overflow-hidden bg-[#010B1F] text-white">
+    <main ref={rootRef} className="solutions-page relative overflow-x-hidden text-white">
       <style>{solutionsStyles}</style>
-      <section ref={heroRef} className="solutions-hero relative isolate min-h-[100svh] overflow-hidden bg-[#010B1F]" style={{ '--sector-accent': sector.accent }}>
+      <section ref={heroRef} className="solutions-hero relative isolate min-h-[100svh] overflow-hidden" style={{ '--sector-accent': sector.accent }}>
         <AnimatePresence initial={false}>
-          <motion.img key={`${sector.id}-hero-photo`} src={sector.image} alt="" aria-hidden="true" initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: .46, scale: 1 }} exit={{ opacity: 0, scale: 1.025 }} transition={{ duration: reducedMotion ? .1 : 1.1, ease }} className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-center" />
+          <motion.img key={`${sector.id}-hero-photo`} src={sector.image} alt="" aria-hidden="true" initial={{ opacity: 0, scale: 1.05 }} animate={{ opacity: .3, scale: 1 }} exit={{ opacity: 0, scale: 1.025 }} transition={{ duration: reducedMotion ? .1 : 1.1, ease }} className="pointer-events-none absolute inset-0 -z-10 h-full w-full object-cover object-center" />
         </AnimatePresence>
-        <div className="solutions-grid pointer-events-none absolute inset-0 opacity-[.18] [mask-image:linear-gradient(to_right,black,rgba(0,0,0,.55)_58%,transparent)]" />
         <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_72%_42%,rgba(30,142,220,.14),transparent_34%),linear-gradient(90deg,rgba(1,11,31,.92)_0%,rgba(1,11,31,.74)_28%,rgba(1,11,31,.26)_62%,rgba(1,11,31,.58)_100%)]" />
-        <svg aria-hidden="true" viewBox="0 0 1440 900" preserveAspectRatio="none" className="pointer-events-none absolute inset-0 h-full w-full opacity-35">
-          <g fill="none" stroke="rgba(89,220,255,.48)" strokeWidth="1">
-            <path className="solutions-data-path" d="M560 725 L745 610 L900 640 L1030 490 L1215 540 L1440 390" />
-            <path className="solutions-data-path" style={{ animationDelay: '-3s' }} d="M720 220 L860 320 L1040 260 L1190 360 L1390 270" />
-          </g>
-          <g fill="#23C7FF">{[[745,610],[900,640],[1030,490],[1215,540],[860,320],[1040,260],[1190,360]].map(([x,y], index) => <circle key={`${x}-${y}`} className="solutions-pulse-dot" style={{ transformOrigin: `${x}px ${y}px`, animationDelay: `${index * -.38}s` }} cx={x} cy={y} r="2.5" />)}</g>
-        </svg>
-
         <div className="solutions-hero-inner container-ems relative min-h-[100svh]">
           <motion.div style={{ y: copyY }} className="solutions-copy relative z-40 w-full max-w-[680px] pt-[clamp(8.5rem,17vh,11rem)] lg:w-[44%]">
-            <p className="solutions-intro-support font-mono text-[10px] font-bold uppercase tracking-[.3em] text-[#32A9F5]">01 / EMS Solutions</p>
-            <h1 className="solutions-hero-title mt-12 font-serif text-[clamp(2.5rem,4.2vw,4.8rem)] font-medium leading-[.91] tracking-[-.045em]">
+            <p className="solutions-intro-support section-eyebrow">EMS Solutions</p>
+            <h1 className="solutions-hero-title mt-12 font-serif text-[clamp(2.35rem,3.9vw,4.25rem)] font-medium leading-[.91] tracking-[-.045em]">
               <span className="solutions-intro-line block overflow-hidden pb-[.06em]"><span className="block">Intelligent systems</span></span>
               <span className="solutions-intro-line mt-[.6em] block overflow-hidden pb-[.06em]"><span className="block">for environments</span></span>
-              <span className="solutions-intro-line mt-[.6em] block overflow-hidden pb-[.06em] text-[#32A9F5]"><span className="block">that never stop.</span></span>
+              <span className="solutions-intro-line mt-[.6em] block overflow-hidden pb-[.06em]"><span className="solutions-title-gradient block">that never stop.</span></span>
             </h1>
-            <p className="solutions-intro-support mt-14 max-w-[470px] text-[clamp(.8rem,1vw,.95rem)] leading-7 text-[#AFC3DB]">EMS integrates engineering, automation, energy, control and digital intelligence across complex operational environments.</p>
+            <p className="solutions-intro-support section-copy mt-14 max-w-[470px]">EMS integrates engineering, automation, energy, control and digital intelligence across complex operational environments.</p>
             <Link to={sector.route} className="brand-gradient-button group mt-7 inline-flex h-13 items-center gap-3 rounded-lg px-6 py-4 text-xs font-bold">Explore {sector.name}<HiOutlineArrowRight className="transition group-hover:translate-x-1" /></Link>
           </motion.div>
 
@@ -350,8 +344,11 @@ export default function Solutions() {
 
       </section>
 
-      <section className="relative overflow-hidden bg-[#010B1F] py-[clamp(5.5rem,10vw,9rem)]">
-        <div className="container-ems grid gap-14 lg:grid-cols-[.9fr_1.1fr] lg:gap-20">
+      <section className="relative overflow-hidden border-y border-white/10 py-[clamp(5.5rem,10vw,9rem)]">
+        {/* Background image like Home services section */}
+        <img src="/hero-control-room-02.jpg" alt="" aria-hidden="true" className="pointer-events-none absolute inset-0 h-full w-full object-cover opacity-[.22]" />
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_50%_40%,rgba(11,50,81,.22),transparent_48%),linear-gradient(90deg,rgba(2,8,18,.96),rgba(2,8,18,.62)_50%,rgba(2,8,18,.96))]" />
+        <div className="container-ems grid gap-14 lg:grid-cols-[.9fr_1.1fr] lg:gap-20 relative z-10">
           <div className="lg:sticky lg:top-28 lg:self-start">
             <SectionIntro number="02" label="Our solution approach" title="Engineered as one connected system." text="We begin with the operation—not the product. Every layer is then designed around performance, resilience and the people responsible for both." />
             <div className="solutions-photo-rail solutions-reveal relative mt-10 aspect-[1.45/1] overflow-hidden border border-white/10">
@@ -371,10 +368,10 @@ export default function Solutions() {
         </div>
       </section>
 
-      <section className="solutions-sector-section solutions-section-grid relative overflow-hidden border-y border-white/10 bg-[#061426] py-[clamp(3rem,5vw,4.5rem)] lg:pb-[6rem]">
+      <section className="solutions-sector-section relative overflow-hidden border-y border-white/10 py-[clamp(3rem,5vw,4.5rem)] lg:pb-[6rem]">
         <div className="container-ems">
           <div className="solutions-sector-heading grid gap-6 text-center">
-            <p className="solutions-reveal font-mono text-[9px] font-bold uppercase tracking-[.3em] text-[#32A9F5]">03 / Solution Sectors</p>
+            <p className="solutions-reveal section-eyebrow">Solution Sectors</p>
             <SectionIntro title="Solutions Designed for Every Environment" align="center" />
             <p className="solutions-reveal mx-auto max-w-2xl text-sm leading-7 text-[#AFC3DB]">Six distinct operational environments, each supported by an EMS digital layer engineered around its infrastructure, systems and people.</p>
           </div>
@@ -382,8 +379,7 @@ export default function Solutions() {
         </div>
       </section>
 
-      <section className="solutions-capabilities-section relative overflow-hidden border-y border-white/10 bg-[#061426] py-[clamp(3.5rem,6vw,5rem)] text-center">
-        <div className="absolute inset-0 solutions-grid opacity-20 [mask-image:radial-gradient(circle_at_center,black,transparent_80%)]" />
+      <section className="solutions-capabilities-section relative overflow-hidden border-y border-white/10 py-[clamp(3.5rem,6vw,5rem)] text-center">
         <div className="container-ems relative flex flex-col items-center">
           <SectionIntro number="04" label="Technology capabilities" title="The systems behind every connected operation." text="A coordinated technology stack—from field control to operational intelligence—engineered and integrated by one EMS team." align="center" />
           <div className="mx-auto mt-14 grid w-full max-w-[1500px] gap-px overflow-hidden border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
@@ -404,15 +400,14 @@ export default function Solutions() {
         </div>
       </section>
 
-      <section className="relative isolate min-h-[620px] overflow-hidden bg-[#010B1F] py-[clamp(6rem,12vw,11rem)]">
+      <section className="relative isolate min-h-[620px] overflow-hidden py-[clamp(6rem,12vw,11rem)]">
         <img src="/hero-control-room-05.jpg" alt="EMS engineering control room" loading="lazy" className="solutions-parallax absolute inset-0 -z-20 h-[115%] w-full object-cover object-center opacity-45" />
         <div className="absolute inset-0 -z-10 bg-[linear-gradient(90deg,#010B1F_0%,rgba(1,11,31,.9)_48%,rgba(1,11,31,.45)_100%),linear-gradient(0deg,#010B1F,transparent_50%)]" />
-        <div className="solutions-grid absolute inset-0 -z-10 opacity-20 [mask-image:linear-gradient(to_right,black,transparent_72%)]" />
         <div className="container-ems relative">
           <div className="solutions-reveal max-w-5xl">
-            <p className="font-mono text-[9px] font-bold uppercase tracking-[.3em] text-[#32A9F5]">05 / Start a conversation</p>
+            <p className="section-eyebrow">Start a conversation</p>
             <h2 className="mt-6 font-serif text-[clamp(3.2rem,7vw,7.5rem)] leading-[.9] tracking-[-.045em]">Make your operation visible. Connected. Intelligent.</h2>
-            <p className="mt-7 max-w-2xl text-[clamp(1rem,1.35vw,1.2rem)] leading-8 text-[#AFC3DB]">Bring us the operational challenge. We will engineer the physical and digital system around it.</p>
+            <p className="section-copy mt-7 max-w-2xl">Bring us the operational challenge. We will engineer the physical and digital system around it.</p>
             <div className="mt-9 flex flex-wrap gap-3"><Link to="/contact" className="brand-gradient-button group inline-flex h-13 items-center gap-3 rounded-lg px-6 py-4 text-xs font-bold">Discuss your project <HiOutlineArrowRight className="transition group-hover:translate-x-1" /></Link><Link to="/projects" className="inline-flex h-13 items-center rounded-lg border border-white/20 px-6 py-4 text-xs font-bold text-white transition hover:border-[#32A9F5] hover:text-[#32A9F5]">Explore our work</Link></div>
           </div>
         </div>

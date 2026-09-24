@@ -61,13 +61,15 @@ const homeCaseStudies = homeCaseStudyOrder
 
 const homeStyles = `
   .home-page-shell { --home-cyan: #23C7FF; }
+  .home-page-shell .section-eyebrow { font-family:"Space Grotesk",sans-serif;font-size:clamp(11px,.85vw,14px);font-weight:500;line-height:1.4;letter-spacing:.22em;color:#35B9F4;text-transform:uppercase; }
+  .home-page-shell .section-copy { font-size:clamp(.94rem,1.15vw,1.05rem);line-height:1.75;color:#AFC3DB; }
   .home-page-shell .home-grid { background-image: linear-gradient(rgba(89,220,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(89,220,255,.055) 1px,transparent 1px);background-size:72px 72px; }
   .home-page-shell .home-no-scrollbar { scrollbar-width:none; }
   .home-page-shell .home-no-scrollbar::-webkit-scrollbar { display:none; }
   .home-page-shell .home-hero-word { display:block;overflow:visible;padding-bottom:.08em;white-space:nowrap; }
   .home-page-shell .home-hero-word + .home-hero-word { margin-top:clamp(10px,1vw,14px); }
   .home-page-shell .home-hero-word > span { display:block; }
-  .home-page-shell .home-hero-title { width:min(540px,52vw);max-width:none;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(1.85rem,3.2vw,2.75rem);font-weight:600;line-height:1.05;letter-spacing:-.025em; }
+  .home-page-shell .home-hero-title { width:min(540px,52vw);max-width:none;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(1.75rem,2.9vw,2.5rem);font-weight:600;line-height:1.05;letter-spacing:-.025em; }
   .home-page-shell .home-hero-line-primary,
   .home-page-shell .home-hero-digitalization { color:#F5F7FA; }
   .home-page-shell .home-hero-highlight,
@@ -76,6 +78,7 @@ const homeStyles = `
   .home-page-shell .home-hero-ampersand { display:inline-block;font-size:1.1em;line-height:.8; }
   .home-page-shell #home-hero .home-hero-column { width:min(560px,100%); }
   .home-page-shell #home-hero .home-hero-column > .home-hero-support:first-child p { margin-left:.2rem;color:#32A9F5;font-size:clamp(.62rem,.72vw,.76rem);font-weight:700;letter-spacing:.24em; }
+  .home-page-shell #home-hero .home-hero-eyebrow { max-width:100%;font-family:"Space Grotesk",sans-serif;font-size:clamp(11px,.85vw,14px);font-weight:500;line-height:1.4;letter-spacing:.22em;color:#35B9F4;overflow-wrap:anywhere; }
   .home-page-shell #home-hero .home-hero-description { color:#AFC3DB;font-size:clamp(.9rem,1.1vw,1.02rem);line-height:1.75; }
   .home-page-shell #home-hero .home-hero-technologies { color:#AFC3DB;font-size:clamp(.76rem,.9vw,.88rem);font-weight:500;letter-spacing:.015em; }
   .home-page-shell #home-hero .home-hero-action { display:inline-flex;height:48px;align-items:center;justify-content:center;border-radius:.625rem;padding-inline:1.5rem;font-size:.78rem;font-weight:700;transition:transform .3s ease,background-color .3s ease,border-color .3s ease,color .3s ease; }
@@ -125,7 +128,7 @@ const homeStyles = `
   .home-page-shell #home-services .home-section-heading > p:first-child { font-size:clamp(1rem,1.5vw,1.3rem); }
   .home-page-shell #home-services .home-section-copy { font-size:clamp(.78rem,1vw,.9rem);line-height:1.6; }
   .home-page-shell .home-services-section { min-height:100svh;padding-block:clamp(2.5rem,4vw,4rem); }
-  .home-page-shell .home-carousel-stage { height:clamp(285px,32vw,350px); }
+  .home-page-shell .home-carousel-stage { height:clamp(285px,32vw,350px);margin-top:5rem; }
   .home-page-shell .home-service-card { height:clamp(270px,29vw,320px);width:min(56vw,440px);border-radius:1.4rem;overflow:hidden;clip-path:inset(0 round 1.4rem);-webkit-clip-path:inset(0 round 1.4rem);isolation:isolate;contain:paint;-webkit-backface-visibility:hidden;backface-visibility:hidden; }
   .home-page-shell .home-service-content { padding:clamp(.9rem,2vw,1.35rem); }
   .home-page-shell .home-service-title { font-size:clamp(1.55rem,3.2vw,2.65rem); }
@@ -182,17 +185,17 @@ const homeStyles = `
   @keyframes homePartnerAura { 0%,100%{transform:translate3d(-4%,0,0) scale(.96);opacity:.3} 50%{transform:translate3d(4%,-8px,0) scale(1.06);opacity:.55} }
   @keyframes homePartnerSweep { 0%,20%{transform:translateX(-48%)} 65%,100%{transform:translateX(48%)} }
   @media (hover:none) { .home-page-shell .home-solution-description { opacity:1;transform:none; } }
-  @media (max-width:1023px) { .home-page-shell .home-hero-gallery-slot:nth-child(n+7):not(.is-active){opacity:.14}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-carousel-stage{margin-top:2rem} }
-  @media (max-width:767px) { .home-page-shell #home-hero{min-height:max(100svh,680px)}.home-page-shell .home-hero-gallery{inset:0 0 0 35%}.home-page-shell .home-hero-collage{inset:6rem 0 4% 0}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-slot:nth-child(n){left:6%;right:auto;top:34%;width:88%;opacity:0;filter:brightness(.65);transform:translate3d(0,0,0) scale(.93);--focus-x:0;--focus-y:0;--focus-scale:1}.home-page-shell .home-hero-gallery.has-focus .home-hero-gallery-slot:not(.is-active){opacity:0;transform:translate3d(0,0,-30px) scale(.93)}.home-page-shell .home-hero-gallery-slot.is-active,.home-page-shell .home-hero-gallery-slot:nth-child(n).is-active{opacity:.88;filter:brightness(1) saturate(1.02);transform:translate3d(0,0,70px) scale(1)}.home-page-shell .home-hero-gallery-shade{background:linear-gradient(90deg,rgba(0,8,22,.995) 0%,rgba(0,8,22,.92) 52%,rgba(0,8,22,.52) 100%),linear-gradient(180deg,rgba(0,8,22,.62),transparent 24%,transparent 72%,rgba(0,8,22,.72))}.home-page-shell .home-hero-title{font-size:clamp(1.55rem,7.3vw,2.1rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.9em}.home-page-shell .home-hero-content{min-height:max(100svh,680px);padding-top:6rem;padding-bottom:3rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-services-section{padding-block:2.4rem}.home-page-shell .home-service-card{height:300px;width:min(86vw,360px)}.home-page-shell .home-carousel-stage{height:320px}.home-page-shell .home-service-title{font-size:clamp(1.45rem,7.5vw,2.15rem)}.home-page-shell #home-services .home-section-copy{max-width:34rem;padding-inline:.75rem}.home-page-shell #home-services .home-section-title{font-size:clamp(1.7rem,8vw,2.35rem)}.home-page-shell #home-case-studies article{min-height:440px}.home-page-shell #home-case-studies article>header{min-height:auto} }
+  @media (max-width:1023px) { .home-page-shell .home-hero-gallery-slot:nth-child(n+7):not(.is-active){opacity:.14}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-carousel-stage{margin-top:3.5rem} }
+  @media (max-width:767px) { .home-page-shell #home-hero{min-height:max(100svh,680px)}.home-page-shell .home-hero-gallery{inset:0 0 0 35%}.home-page-shell .home-hero-collage{inset:6rem 0 4% 0}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-slot:nth-child(n){left:6%;right:auto;top:34%;width:88%;opacity:0;filter:brightness(.65);transform:translate3d(0,0,0) scale(.93);--focus-x:0;--focus-y:0;--focus-scale:1}.home-page-shell .home-hero-gallery.has-focus .home-hero-gallery-slot:not(.is-active){opacity:0;transform:translate3d(0,0,-30px) scale(.93)}.home-page-shell .home-hero-gallery-slot.is-active,.home-page-shell .home-hero-gallery-slot:nth-child(n).is-active{opacity:.88;filter:brightness(1) saturate(1.02);transform:translate3d(0,0,70px) scale(1)}.home-page-shell .home-hero-gallery-shade{background:linear-gradient(90deg,rgba(0,8,22,.995) 0%,rgba(0,8,22,.92) 52%,rgba(0,8,22,.52) 100%),linear-gradient(180deg,rgba(0,8,22,.62),transparent 24%,transparent 72%,rgba(0,8,22,.72))}.home-page-shell .home-hero-title{font-size:clamp(1.55rem,7.3vw,2.1rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.9em}.home-page-shell .home-hero-content{min-height:max(100svh,680px);padding-top:6rem;padding-bottom:3rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-services-section{padding-block:2.4rem}.home-page-shell .home-service-card{height:300px;width:min(86vw,360px)}.home-page-shell .home-carousel-stage{height:320px;margin-top:2.5rem}.home-page-shell .home-service-title{font-size:clamp(1.45rem,7.5vw,2.15rem)}.home-page-shell #home-services .home-section-copy{max-width:34rem;padding-inline:.75rem}.home-page-shell #home-services .home-section-title{font-size:clamp(1.7rem,8vw,2.35rem)}.home-page-shell #home-case-studies article{min-height:440px}.home-page-shell #home-case-studies article>header{min-height:auto} }
   @media (max-width:479px) { .home-page-shell #home-services .home-section-heading > p:first-child{font-size:.9rem}.home-page-shell .home-service-card{height:280px;width:min(88vw,330px)}.home-page-shell .home-carousel-stage{height:300px}.home-page-shell .home-service-content{padding:.85rem}.home-page-shell #home-services .home-section-copy{font-size:.76rem;line-height:1.55} }
   @media (max-width:767px) { .home-page-shell .home-hero-video-shade{background:linear-gradient(90deg,rgba(2,12,28,.98) 0%,rgba(2,12,28,.94) 38%,rgba(3,19,38,.84) 70%,rgba(4,28,50,.64) 100%)} }
   @media (max-width:639px) { .home-page-shell #home-hero .home-hero-trust-items{align-items:flex-start;flex-direction:column}.home-page-shell #home-hero .home-hero-trust-separator{display:none} }
   @media (max-width:479px) { .home-page-shell #home-hero .home-hero-actions{align-items:stretch;flex-direction:column}.home-page-shell #home-hero .home-hero-action{width:100%} }
-  @media (max-height:850px) and (min-width:1024px) { .home-page-shell .home-services-section{padding-block:2.25rem}.home-page-shell .home-carousel-stage{height:290px;margin-top:1.5rem}.home-page-shell .home-service-card{height:275px;width:min(50vw,410px)}.home-page-shell .home-service-content{padding:.95rem}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-service-title{font-size:clamp(1.5rem,2.7vw,2.3rem)}.home-page-shell .home-section-copy{margin-top:.75rem}.home-page-shell .home-major-section{padding-block:4.5rem} }
+  @media (max-height:850px) and (min-width:1024px) { .home-page-shell .home-services-section{padding-block:2.25rem}.home-page-shell .home-carousel-stage{height:290px;margin-top:5rem}.home-page-shell .home-service-card{height:275px;width:min(50vw,410px)}.home-page-shell .home-service-content{padding:.95rem}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-service-title{font-size:clamp(1.5rem,2.7vw,2.3rem)}.home-page-shell .home-section-copy{margin-top:.75rem}.home-page-shell .home-major-section{padding-block:4.5rem} }
   @media (max-height:700px) and (min-width:1024px) { .home-page-shell .home-hero-title{font-size:clamp(1.7rem,2.4vw,2.35rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.8em}.home-page-shell .home-hero-content{padding-top:5.5rem;padding-bottom:2.5rem}.home-page-shell #home-hero .home-hero-support.mt-8{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-actions{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-trust{margin-top:1rem} }
-  .home-page-shell .home-hero-word + .home-hero-word { margin-top:clamp(10px,1vw,14px); }
-  @media (max-width:767px) { .home-page-shell .home-hero-title{width:100%;max-width:100%;font-size:clamp(1.5rem,6.2vw,2.7rem);line-height:1.05}.home-page-shell .home-hero-line-secondary{font-size:.82em} }
-  @media (min-width:768px) and (max-width:1023px) { .home-page-shell .home-hero-title{width:min(540px,56vw);font-size:clamp(1.9rem,3.9vw,2.45rem)} }
+  .home-page-shell .home-hero-word + .home-hero-word { margin-top:clamp(14px,1.3vw,19px); }
+  @media (max-width:767px) { .home-page-shell .home-hero-title{width:100%;max-width:100%;font-size:clamp(1.45rem,5.8vw,2.25rem);line-height:1.05}.home-page-shell .home-hero-line-secondary{font-size:.82em}.home-page-shell .home-hero-word + .home-hero-word{margin-top:1em} }
+  @media (min-width:768px) and (max-width:1023px) { .home-page-shell .home-hero-title{width:min(540px,56vw);font-size:clamp(1.8rem,3.5vw,2.3rem)} }
   .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-title { font-size:var(--text-section);line-height:1.06; }
   .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-copy { font-size:var(--text-body);line-height:1.7; }
   .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-heading > p:first-child { font-size:var(--text-label);line-height:1.35; }
@@ -263,15 +266,15 @@ const homeServiceCards = [
 ]
 const featuredPartners = partners.filter(partner => ['siemens', 'cisco', 'aws', 'oracle'].includes(partner.id))
 
-function Eyebrow({ children }) {
-  return <p className="font-mono text-[clamp(.72rem,1vw,.9rem)] font-semibold uppercase tracking-[.3em] text-[#299BF0]">{children}</p>
+function Eyebrow({ children, className = '' }) {
+  return <p className={`section-eyebrow font-mono text-[clamp(.72rem,1vw,.9rem)] font-semibold uppercase tracking-[.3em] text-[#299BF0] ${className}`}>{children}</p>
 }
 
 function SectionTitle({ eyebrow, title, text, align = 'left' }) {
   return <div className={`home-reveal home-section-heading max-w-3xl ${align === 'center' ? 'mx-auto text-center' : ''}`}>
     <Eyebrow>{eyebrow}</Eyebrow>
     <h2 className="home-section-title mt-5 font-serif leading-[.98] tracking-[-.025em] text-white">{title}</h2>
-    {text && <p className={`home-section-copy mt-6 max-w-2xl leading-7 text-slate-400 ${align === 'center' ? 'mx-auto' : ''}`}>{text}</p>}
+    {text && <p className={`home-section-copy section-copy mt-6 max-w-2xl leading-7 text-slate-400 ${align === 'center' ? 'mx-auto' : ''}`}>{text}</p>}
   </div>
 }
 
@@ -346,7 +349,7 @@ function ServiceCarousel() {
     <div className="container-ems relative">
       <SectionTitle eyebrow="Engineering services" title="Integrated Engineering. Intelligent Operations." text="Explore intelligent engineering services designed for safer, smarter, and more efficient operations." align="center" />
 
-      <div onWheel={onWheel} onKeyDown={event => { if (event.key === 'ArrowRight') move(1); if (event.key === 'ArrowLeft') move(-1) }} tabIndex="0" aria-label="EMS engineering services carousel" className="home-carousel-stage relative mt-8 outline-none [perspective:1400px]">
+      <div onWheel={onWheel} onKeyDown={event => { if (event.key === 'ArrowRight') move(1); if (event.key === 'ArrowLeft') move(-1) }} tabIndex="0" aria-label="EMS engineering services carousel" className="home-carousel-stage relative outline-none [perspective:1400px]">
         {homeServiceCards.map((service, index) => {
           const position = relativePosition(index)
           if (Math.abs(position) > 2) return null
@@ -703,10 +706,10 @@ export default function Home() {
 
       <div className="home-hero-content container-ems relative z-10 flex min-h-[100svh] items-center pt-28">
         <div className="home-hero-column relative">
-          <div className="home-hero-support"><Eyebrow>Engineering Management Systems · Since 2016</Eyebrow></div>
+          <div className="home-hero-support"><Eyebrow className="home-hero-eyebrow">Engineering Management Systems · Since 2016</Eyebrow></div>
           <div className="relative">
             <div aria-hidden="true" className="pointer-events-none absolute -inset-x-8 -inset-y-6 -z-10 rounded-[2rem] bg-[linear-gradient(90deg,rgba(2,11,24,.18)_0%,rgba(16,42,67,.15)_100%)] blur-2xl" />
-            <h1 className="home-hero-title mt-14">
+            <h1 className="home-hero-title mt-16">
               <span className="home-hero-word"><span className="home-hero-line-primary">Artificial Intelligence</span></span>
               <span className="home-hero-word">
                 <span className="home-hero-line-secondary">

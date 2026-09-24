@@ -464,6 +464,16 @@ select:focus-visible {
   color: var(--inner-cyan);
 }
 
+/* One restrained eyebrow treatment across every section and page header. */
+.eyebrow,
+.section-eyebrow {
+  font-family: "Space Grotesk", sans-serif !important;
+  font-size: clamp(11px, .85vw, 14px) !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  letter-spacing: .22em !important;
+}
+
 .inner-page-route :is(.btn-primary, .btn-outline) {
   min-height: 48px;
   border-radius: .625rem;
