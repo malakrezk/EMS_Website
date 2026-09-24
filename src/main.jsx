@@ -3,6 +3,8 @@ import ReactDOM from 'react-dom/client'
 import { BrowserRouter } from 'react-router-dom'
 import App from './App.jsx'
 import { CartProvider } from './context/CartContext'
+import '@fontsource/cormorant-garamond/600.css'
+import '@fontsource/space-grotesk/500.css'
 import './index.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(
