@@ -9,7 +9,7 @@
   --text-card-title: clamp(22px, 2vw, 32px);
   --text-lead: clamp(18px, 1.5vw, 22px);
   --text-body: clamp(15px, 1.1vw, 18px);
-  --text-label: clamp(12px, .9vw, 15px);
+  --text-label: clamp(12px, 1vw, 15px);
   --text-caption: 13px;
 }
 
@@ -77,17 +77,17 @@ main p {
   will-change: transform;
 }
 
-/* Store product cards: multicolor gradient border + soft glow */
+/* Store product cards: subdued dark blue and dark green gradient border + soft glow */
 .product-card-frame {
   border: 3px solid transparent;
   background:
     radial-gradient(circle at 0% 0%, rgba(74, 169, 220, .16), transparent 40%) padding-box,
     linear-gradient(135deg, #183E5D 0%, #12324B 50%, #081B30 100%) padding-box,
-    conic-gradient(from 0deg, #7c78d0, #8d6fc6 45deg, #a19d94 135deg, #7fb49b 225deg, #6a88d0 315deg, #7c78d0) border-box;
+    conic-gradient(from 0deg, #102a43, #0b3a5b 80deg, #0d4a52 165deg, #0f513f 245deg, #123b46 315deg, #102a43) border-box;
 }
 
 .product-card-glow {
-  background: conic-gradient(from 0deg, #7c78d0, #8d6fc6 45deg, #a19d94 135deg, #7fb49b 225deg, #6a88d0 315deg, #7c78d0);
+  background: conic-gradient(from 0deg, #102a43, #0b3a5b 80deg, #0d4a52 165deg, #0f513f 245deg, #123b46 315deg, #102a43);
 }
 
 /* Store hero: Home page navy (#010B1F) two shades darker, with subtle live motion + shine sweep like the product cards */
@@ -357,7 +357,7 @@ select:focus-visible {
     --text-card-title: clamp(20px, 6vw, 25px);
     --text-lead: clamp(16px, 4.8vw, 18px);
     --text-body: clamp(14px, 4vw, 16px);
-    --text-label: 11px;
+    --text-label: 12px;
     --text-caption: 12px;
   }
 
@@ -462,6 +462,16 @@ select:focus-visible {
 
 .inner-page-route :is(.eyebrow, [class*='uppercase'][class*='tracking-']) {
   color: var(--inner-cyan);
+}
+
+/* One restrained eyebrow treatment across every section and page header. */
+.eyebrow,
+.section-eyebrow {
+  font-family: "Space Grotesk", sans-serif !important;
+  font-size: clamp(11px, .85vw, 14px) !important;
+  font-weight: 500 !important;
+  line-height: 1.4 !important;
+  letter-spacing: .22em !important;
 }
 
 .inner-page-route :is(.btn-primary, .btn-outline) {

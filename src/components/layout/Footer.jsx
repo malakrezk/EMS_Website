@@ -4,8 +4,8 @@ import { services } from '../../data/services'
 import { regionalMarkets } from '../../data/zeta'
 
 const links = [
-  ['/about', 'About'], ['/services', 'Services'], ['/solutions', 'Solutions'],
-  ['/projects', 'Case Studies'], ['/contact', 'Contact Us'],
+  ['/', 'Home'], ['/solutions', 'Solutions'], ['/services', 'Services'],
+  ['/case-studies', 'Projects'], ['/store', 'Products'], ['/about', 'About'],
 ]
 
 export default function Footer() {
