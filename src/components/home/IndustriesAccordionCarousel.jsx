@@ -126,7 +126,7 @@ export default function IndustriesAccordionCarousel() {
       }}
     >
       <motion.div
-        className="relative isolate h-[clamp(340px,37vw,520px)] touch-pan-y overflow-hidden [--industry-gap:10px] [--industry-side:48px] sm:[--industry-gap:18px] sm:[--industry-side:clamp(100px,18vw,160px)] lg:[--industry-gap:24px] lg:[--industry-side:clamp(160px,17vw,240px)]"
+        className="relative isolate h-[clamp(340px,37vw,520px)] touch-pan-y overflow-hidden [--industry-gap:10px] [--industry-side:48px] sm:[--industry-gap:18px] sm:[--industry-side:clamp(72px,12vw,105px)] lg:[--industry-gap:20px] lg:[--industry-side:clamp(96px,8vw,120px)]"
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.12}

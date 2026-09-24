@@ -232,7 +232,7 @@ export default function Solutions() {
   const heroRef = useRef(null)
   const reducedMotion = useReducedMotion()
   const [[active, direction], setActive] = useState([0, 1])
-  const initialDashboard = useRef(true)
+  const [dashboardVisible, setDashboardVisible] = useState(false)
   const [paused, setPaused] = useState(false)
   const [interacting, setInteracting] = useState(false)
   const sector = sectors[active]
@@ -262,8 +262,10 @@ export default function Solutions() {
   }, [])
 
   useEffect(() => {
-    initialDashboard.current = false
-  }, [])
+    setDashboardVisible(false)
+    const timer = window.setTimeout(() => setDashboardVisible(true), 1000)
+    return () => window.clearTimeout(timer)
+  }, [active])
 
   useEffect(() => {
     if (paused || interacting || reducedMotion) return undefined
@@ -317,21 +319,21 @@ export default function Solutions() {
               <span className="solutions-intro-line mt-[.6em] block overflow-hidden pb-[.06em] text-[#32A9F5]"><span className="block">that never stop.</span></span>
             </h1>
             <p className="solutions-intro-support mt-14 max-w-[470px] text-[clamp(.8rem,1vw,.95rem)] leading-7 text-[#AFC3DB]">EMS integrates engineering, automation, energy, control and digital intelligence across complex operational environments.</p>
-            <Link to={sector.route} className="group mt-7 inline-flex h-13 items-center gap-3 rounded-lg bg-[#32A9F5] px-6 py-4 text-xs font-bold text-[#010B1F] transition hover:bg-white">Explore {sector.name}<HiOutlineArrowRight className="transition group-hover:translate-x-1" /></Link>
+            <Link to={sector.route} className="brand-gradient-button group mt-7 inline-flex h-13 items-center gap-3 rounded-lg px-6 py-4 text-xs font-bold">Explore {sector.name}<HiOutlineArrowRight className="transition group-hover:translate-x-1" /></Link>
           </motion.div>
 
           <motion.div style={{ y: stageY, scale: stageScale }} className="solutions-stage-wrap absolute bottom-[9.2rem] right-0 top-[5.8rem] hidden w-[69%] lg:block">
             <div className="solutions-stage relative h-full" onPointerEnter={() => setInteracting(true)} onPointerLeave={() => { setInteracting(false); rawX.set(0); rawY.set(0) }} onPointerMove={handlePointerMove}>
               <div className="solutions-technical-orbit pointer-events-none absolute -right-[12%] top-[4%] aspect-square w-[72%] rounded-full border border-cyan-300/10"><div className="absolute inset-[14%] rounded-full border border-dashed border-cyan-300/[.08]" /><span className="absolute left-[13%] top-[15%] h-1.5 w-1.5 rounded-full bg-cyan-300 shadow-[0_0_14px_#23C7FF]" /></div>
               <div className="solutions-dashboard-shell absolute bottom-[4%] right-[2%] z-30 w-[60%]">
-                <AnimatePresence initial={false} custom={direction} mode="wait"><DashboardObject key={sector.id} sector={sector} direction={direction} transitionDelay={initialDashboard.current ? 1 : 0} reducedMotion={reducedMotion} pointerX={pointerX} pointerY={pointerY} /></AnimatePresence>
+                {dashboardVisible && <DashboardObject key={sector.id} sector={sector} direction={direction} reducedMotion={reducedMotion} pointerX={pointerX} pointerY={pointerY} />}
               </div>
             </div>
           </motion.div>
 
           <div className="relative mt-7 lg:hidden">
             <div className="solutions-stage relative h-[330px]" onPointerEnter={() => setInteracting(true)} onPointerLeave={() => { setInteracting(false); rawX.set(0); rawY.set(0) }} onPointerMove={handlePointerMove}>
-              <div className="solutions-dashboard-shell absolute bottom-0 right-[-9%] z-20 w-[82%]"><AnimatePresence initial={false} custom={direction} mode="wait"><DashboardObject key={sector.id} sector={sector} direction={direction} transitionDelay={initialDashboard.current ? 1 : 0} reducedMotion={reducedMotion} pointerX={pointerX} pointerY={pointerY} /></AnimatePresence></div>
+              <div className="solutions-dashboard-shell absolute bottom-0 right-[-9%] z-20 w-[82%]">{dashboardVisible && <DashboardObject key={sector.id} sector={sector} direction={direction} reducedMotion={reducedMotion} pointerX={pointerX} pointerY={pointerY} />}</div>
             </div>
           </div>
         </div>
@@ -411,7 +413,7 @@ export default function Solutions() {
             <p className="font-mono text-[9px] font-bold uppercase tracking-[.3em] text-[#32A9F5]">05 / Start a conversation</p>
             <h2 className="mt-6 font-serif text-[clamp(3.2rem,7vw,7.5rem)] leading-[.9] tracking-[-.045em]">Make your operation visible. Connected. Intelligent.</h2>
             <p className="mt-7 max-w-2xl text-[clamp(1rem,1.35vw,1.2rem)] leading-8 text-[#AFC3DB]">Bring us the operational challenge. We will engineer the physical and digital system around it.</p>
-            <div className="mt-9 flex flex-wrap gap-3"><Link to="/contact" className="group inline-flex h-13 items-center gap-3 rounded-lg bg-[#32A9F5] px-6 py-4 text-xs font-bold text-[#010B1F] transition hover:bg-white">Discuss your project <HiOutlineArrowRight className="transition group-hover:translate-x-1" /></Link><Link to="/projects" className="inline-flex h-13 items-center rounded-lg border border-white/20 px-6 py-4 text-xs font-bold text-white transition hover:border-[#32A9F5] hover:text-[#32A9F5]">Explore our work</Link></div>
+            <div className="mt-9 flex flex-wrap gap-3"><Link to="/contact" className="brand-gradient-button group inline-flex h-13 items-center gap-3 rounded-lg px-6 py-4 text-xs font-bold">Discuss your project <HiOutlineArrowRight className="transition group-hover:translate-x-1" /></Link><Link to="/projects" className="inline-flex h-13 items-center rounded-lg border border-white/20 px-6 py-4 text-xs font-bold text-white transition hover:border-[#32A9F5] hover:text-[#32A9F5]">Explore our work</Link></div>
           </div>
         </div>
       </section>

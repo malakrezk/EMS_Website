@@ -77,6 +77,85 @@ main p {
   will-change: transform;
 }
 
+/* Store product cards: multicolor gradient border + soft glow */
+.product-card-frame {
+  border: 3px solid transparent;
+  background:
+    radial-gradient(circle at 0% 0%, rgba(74, 169, 220, .16), transparent 40%) padding-box,
+    linear-gradient(135deg, #183E5D 0%, #12324B 50%, #081B30 100%) padding-box,
+    conic-gradient(from 0deg, #7c78d0, #8d6fc6 45deg, #a19d94 135deg, #7fb49b 225deg, #6a88d0 315deg, #7c78d0) border-box;
+}
+
+.product-card-glow {
+  background: conic-gradient(from 0deg, #7c78d0, #8d6fc6 45deg, #a19d94 135deg, #7fb49b 225deg, #6a88d0 315deg, #7c78d0);
+}
+
+/* Store hero: Home page navy (#010B1F) two shades darker, with subtle live motion + shine sweep like the product cards */
+@keyframes store-hero-flow {
+  from { background-position: 0% 50%; }
+  to { background-position: 100% 50%; }
+}
+
+@keyframes store-hero-drift {
+  0%, 100% { transform: translate3d(0, 0, 0) scale(1); }
+  50% { transform: translate3d(6%, -8%, 0) scale(1.12); }
+}
+
+@keyframes store-hero-shine {
+  0%, 40% { transform: translateX(-100%); }
+  100% { transform: translateX(100%); }
+}
+
+.store-hero-bg {
+  background: linear-gradient(120deg, #00040f 0%, #000816 28%, #010a1b 50%, #000816 72%, #00040f 100%) 0% 50% / 250% 100%;
+  animation: store-hero-flow 14s ease-in-out infinite alternate;
+}
+
+.store-hero-bg::before,
+.store-hero-bg::after {
+  content: "";
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(90px);
+  animation: store-hero-drift 11s ease-in-out infinite;
+}
+
+.store-hero-bg::before {
+  left: -8%;
+  top: 10%;
+  width: 45%;
+  height: 80%;
+  background: rgba(34, 174, 239, .12);
+}
+
+.store-hero-bg::after {
+  right: -8%;
+  bottom: -10%;
+  width: 40%;
+  height: 75%;
+  background: rgba(33, 211, 184, .08);
+  animation-delay: -5.5s;
+}
+
+/* Perks strip: the brand button gradient itself, flowing in sync with the hero */
+@keyframes store-perks-flow {
+  from { background-position: 0% 50%; }
+  to { background-position: 200% 50%; }
+}
+
+.store-perks-strip {
+  background: linear-gradient(90deg, #22AEEF, #18C7D1, #21D3B8, #18C7D1, #22AEEF) 0% 50% / 200% 100%;
+  box-shadow: 0 10px 34px rgba(34, 174, 239, .22), inset 0 1px 0 rgba(255, 255, 255, .25);
+  animation: store-perks-flow 10s linear infinite;
+}
+
+.store-hero-shine {
+  z-index: 1;
+  background: linear-gradient(115deg, transparent 40%, rgba(148, 224, 255, .14) 50%, transparent 60%);
+  mix-blend-mode: screen;
+  animation: store-hero-shine 6s ease-in-out infinite;
+}
+
 ::selection {
   background: #23C7FF;
   color: #010B1F;
@@ -210,6 +289,31 @@ select:focus-visible {
   }
 }
 
+/* Shared treatment for every primary action across the website. */
+.btn-primary,
+.brand-gradient-button {
+  background-color: #22AEEF;
+  background-image: linear-gradient(90deg, #22AEEF 0%, #18C7D1 55%, #21D3B8 100%);
+  background-position: 0 0;
+  background-size: 200% 100%;
+  color: #010B1F;
+  transition: background-position 400ms ease, transform 400ms ease, box-shadow 400ms ease;
+}
+
+.btn-primary:hover,
+.brand-gradient-button:hover {
+  background-position: 100% 0;
+  color: #010B1F;
+  box-shadow: 0 10px 26px rgba(34, 174, 239, .24);
+  transform: translateY(-2px);
+}
+
+.btn-primary:disabled,
+.brand-gradient-button:disabled {
+  cursor: not-allowed;
+  transform: none;
+}
+
 @media (min-width: 1920px) {
   .container-ems { max-width: 1680px; padding-inline: 4rem; }
 }
@@ -260,6 +364,10 @@ select:focus-visible {
   input, textarea, select { font-size: 16px; }
   .section-padding { padding-block: 3rem; }
   .card-surface { border-radius: .75rem; }
+
+  /* Keep long actions and labels inside narrow phone viewports. */
+  a, button { max-width: 100%; }
+  .container-ems { padding-inline: .875rem; }
 }
 
 @media (max-width: 767px) {
@@ -273,6 +381,9 @@ select:focus-visible {
   }
   .about-page-shell > section:first-child { min-height: 560px; }
   .service-detail-page section:nth-of-type(3) article { min-height: 320px; }
+
+  /* Prevent wide decorative tracking from forcing horizontal overflow. */
+  .type-label, .eyebrow { overflow-wrap: anywhere; }
 }
 
 @media (hover: none) and (pointer: coarse) {

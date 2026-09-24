@@ -10,6 +10,8 @@ import Projects from './pages/Projects'
 import ProjectDetails from './pages/ProjectDetails'
 import Partners from './pages/Partners'
 import Contact from './pages/Contact'
+import Store from './pages/Store'
+import Cart from './pages/Cart'
 import NotFound from './pages/NotFound'
 
 function LegacyProjectRedirect() {
@@ -31,6 +33,8 @@ export default function App() {
     <Route path="/case-studies" element={<Projects />} />
     <Route path="/case-studies/:id" element={<ProjectDetails />} />
     <Route path="/partners" element={<Partners />} />
+    <Route path="/store" element={<Store />} />
+    <Route path="/cart" element={<Cart />} />
     <Route path="/contact" element={<Contact />} />
     <Route path="*" element={<NotFound />} />
   </Route></Routes>
