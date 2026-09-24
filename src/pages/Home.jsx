@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import { AnimatePresence, motion } from 'framer-motion'
+import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import {
@@ -64,26 +64,32 @@ const homeStyles = `
   .home-page-shell .home-grid { background-image: linear-gradient(rgba(89,220,255,.055) 1px,transparent 1px),linear-gradient(90deg,rgba(89,220,255,.055) 1px,transparent 1px);background-size:72px 72px; }
   .home-page-shell .home-no-scrollbar { scrollbar-width:none; }
   .home-page-shell .home-no-scrollbar::-webkit-scrollbar { display:none; }
-  .home-page-shell .home-hero-word { display:block; overflow:hidden; padding-bottom:.08em; }
-  .home-page-shell .home-hero-word + .home-hero-word { margin-top:.62em; }
+  .home-page-shell .home-hero-word { display:block;overflow:visible;padding-bottom:.08em;white-space:nowrap; }
+  .home-page-shell .home-hero-word + .home-hero-word { margin-top:clamp(10px,1vw,14px); }
   .home-page-shell .home-hero-word > span { display:block; }
-  .home-page-shell .home-hero-title { font-size:clamp(1.85rem,2.45vw,2.65rem);line-height:.98;max-width:680px; }
-  .home-page-shell #home-hero .home-hero-column { width:min(680px,100%); }
+  .home-page-shell .home-hero-title { width:min(540px,52vw);max-width:none;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(1.85rem,3.2vw,2.75rem);font-weight:600;line-height:1.05;letter-spacing:-.025em; }
+  .home-page-shell .home-hero-line-primary,
+  .home-page-shell .home-hero-digitalization { color:#F5F7FA; }
+  .home-page-shell .home-hero-highlight,
+  .home-page-shell .home-hero-ampersand { background:linear-gradient(100deg,#27B9F3 12%,#2BC7BE 100%);background-clip:text;-webkit-background-clip:text;color:transparent;-webkit-text-fill-color:transparent; }
+  .home-page-shell .home-hero-line-secondary { font-size:.82em; }
+  .home-page-shell .home-hero-ampersand { display:inline-block;font-size:1.1em;line-height:.8; }
+  .home-page-shell #home-hero .home-hero-column { width:min(560px,100%); }
   .home-page-shell #home-hero .home-hero-column > .home-hero-support:first-child p { margin-left:.2rem;color:#32A9F5;font-size:clamp(.62rem,.72vw,.76rem);font-weight:700;letter-spacing:.24em; }
   .home-page-shell #home-hero .home-hero-description { color:#AFC3DB;font-size:clamp(.9rem,1.1vw,1.02rem);line-height:1.75; }
   .home-page-shell #home-hero .home-hero-technologies { color:#AFC3DB;font-size:clamp(.76rem,.9vw,.88rem);font-weight:500;letter-spacing:.015em; }
   .home-page-shell #home-hero .home-hero-action { display:inline-flex;height:48px;align-items:center;justify-content:center;border-radius:.625rem;padding-inline:1.5rem;font-size:.78rem;font-weight:700;transition:transform .3s ease,background-color .3s ease,border-color .3s ease,color .3s ease; }
   .home-page-shell #home-hero .home-hero-action:hover { transform:translateY(-2px); }
   .home-page-shell #home-hero .home-hero-action:focus-visible { outline:2px solid #fff;outline-offset:3px; }
-  .home-page-shell #home-hero .home-hero-primary { background:#32A9F5;color:#010B1F; }
-  .home-page-shell #home-hero .home-hero-primary:hover { background:#fff; }
+  .home-page-shell #home-hero .home-hero-primary { background-image:linear-gradient(90deg,#22AEEF 0%,#18C7D1 55%,#21D3B8 100%);background-position:0 0;background-size:200% 100%;color:#010B1F;transition:background-position 400ms ease,transform 400ms ease,box-shadow 400ms ease; }
+  .home-page-shell #home-hero .home-hero-primary:hover { background-position:100% 0;color:#010B1F;box-shadow:0 10px 26px rgba(34,174,239,.24);transform:translateY(-2px); }
   .home-page-shell #home-hero .home-hero-secondary { border:1px solid rgba(255,255,255,.25);background:transparent;color:#fff; }
   .home-page-shell #home-hero .home-hero-secondary:hover { border-color:#32A9F5;background:rgba(50,169,245,.08);color:#32A9F5; }
   .home-page-shell #home-hero .home-hero-trust { background:transparent; }
   .home-page-shell #home-hero .home-hero-trust-item { transition:transform .25s ease,color .25s ease; }
   .home-page-shell #home-hero .home-hero-trust-item:hover { transform:translateY(-2px);color:#fff; }
   .home-page-shell .home-hero-gallery { position:absolute;inset:0 0 0 35%;z-index:5;overflow:hidden;pointer-events:none;perspective:1200px;transform-style:preserve-3d; }
-  .home-page-shell .home-hero-gallery::after { content:'';position:absolute;inset:0 auto 0 0;z-index:90;width:clamp(2rem,5vw,6rem);background:linear-gradient(90deg,#010B1F 0%,rgba(1,11,31,.72) 28%,transparent 100%);pointer-events:none; }
+  .home-page-shell .home-hero-gallery::after { content:'';position:absolute;inset:0 auto 0 0;z-index:90;width:clamp(2rem,5vw,6rem);background:linear-gradient(90deg,#000816 0%,rgba(0,8,22,.72) 28%,transparent 100%);pointer-events:none; }
   .home-page-shell .home-hero-collage { position:absolute;inset:clamp(5rem,9vh,7rem) 0 3% 0;overflow:visible;transform-style:preserve-3d; }
   .home-page-shell .home-hero-gallery-slot { position:absolute;z-index:var(--card-layer,1);aspect-ratio:16/10;overflow:visible;opacity:.66;filter:brightness(.78) saturate(.92);transform:translate3d(0,0,0) scale(1);transform-origin:center center;transform-style:preserve-3d;transition:transform 900ms cubic-bezier(.22,1,.36,1),opacity 700ms ease,filter 700ms ease,z-index 0s linear 900ms;will-change:transform,opacity,filter;backface-visibility:hidden;-webkit-backface-visibility:hidden; }
   .home-page-shell .home-hero-gallery.has-focus .home-hero-gallery-slot:not(.is-active) { opacity:.32;filter:brightness(.58) saturate(.78);transform:translate3d(0,0,-50px) scale(.93); }
@@ -102,7 +108,7 @@ const homeStyles = `
   .home-page-shell .home-hero-gallery-slot.is-active .home-hero-gallery-card { box-shadow:0 28px 70px rgba(0,0,0,.66); }
   .home-page-shell .home-hero-gallery-media { display:block;height:100%;width:100%;object-fit:contain;transform:scale(1);transition:transform 1.4s cubic-bezier(.22,1,.36,1); }
   .home-page-shell .home-hero-gallery-slot.is-active .home-hero-gallery-media { object-fit:contain;transform:scale(1); }
-  .home-page-shell .home-hero-gallery-shade { position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,#010B1F 0%,rgba(1,11,31,.99) 33%,rgba(1,11,31,.8) 44%,rgba(1,11,31,.2) 57%,rgba(1,11,31,.025) 100%),linear-gradient(180deg,rgba(1,11,31,.46),transparent 19%,transparent 80%,rgba(1,11,31,.32)); }
+  .home-page-shell .home-hero-gallery-shade { position:absolute;inset:0;z-index:2;pointer-events:none;background:linear-gradient(90deg,#000816 0%,rgba(0,8,22,.99) 33%,rgba(0,8,22,.8) 44%,rgba(0,8,22,.2) 57%,rgba(0,8,22,.025) 100%),linear-gradient(180deg,rgba(0,8,22,.46),transparent 19%,transparent 80%,rgba(0,8,22,.32)); }
   .home-page-shell .home-section-title { font-size:clamp(2.35rem,5vw,5rem); }
   .home-page-shell #home-services .home-section-title { font-size:clamp(1.75rem,3vw,3rem); }
   .home-page-shell #home-solutions .home-section-title { font-size:clamp(1.9rem,3.5vw,3.7rem); }
@@ -147,26 +153,37 @@ const homeStyles = `
   .home-page-shell .home-service-card:hover::after { transform:translateX(42%) rotate(8deg); }
   .home-page-shell .home-solution-card::before { content:'';position:absolute;inset:0;border-radius:inherit;border:1px solid transparent;background:linear-gradient(135deg,rgba(89,220,255,.55),transparent 35%,rgba(255,255,255,.12)) border-box;mask:linear-gradient(#fff 0 0) padding-box,linear-gradient(#fff 0 0);mask-composite:exclude;opacity:0;transition:opacity .5s ease;pointer-events:none; }
   .home-page-shell .home-solution-card:hover::before { opacity:1; }
+  .home-page-shell .home-case-orb { animation:homeCaseOrb 9s ease-in-out infinite; }
+  .home-page-shell .home-case-orb.is-delayed { animation-delay:-4.5s; }
+  .home-page-shell .home-case-card .home-case-glow { opacity:0;transform:translate3d(24px,-18px,0) scale(.82);transition:opacity .65s ease,transform .8s cubic-bezier(.22,1,.36,1); }
+  .home-page-shell .home-case-card:hover .home-case-glow,
+  .home-page-shell .home-case-card:focus-within .home-case-glow { opacity:1;transform:translate3d(0,0,0) scale(1); }
+  .home-page-shell .home-case-accent { transform:scaleX(0);transform-origin:left;transition:transform .75s cubic-bezier(.22,1,.36,1); }
+  .home-page-shell .home-case-card:hover .home-case-accent,
+  .home-page-shell .home-case-card:focus-within .home-case-accent { transform:scaleX(1); }
+  .home-page-shell .home-case-copy { transition:transform .55s cubic-bezier(.22,1,.36,1); }
+  .home-page-shell .home-case-card:hover .home-case-copy,
+  .home-page-shell .home-case-card:focus-within .home-case-copy { transform:translateY(-3px); }
   .home-page-shell .home-solutions-progress { animation:homeSolutionsProgress 6.2s linear forwards;transform-origin:left; }
   .home-page-shell .home-solutions-progress.is-paused { animation-play-state:paused; }
-  body:has(.home-page-shell) header nav > div:nth-of-type(1) a[href='/services'] { order:1; }
-  body:has(.home-page-shell) header nav > div:nth-of-type(1) a[href='/solutions'] { order:2; }
-  body:has(.home-page-shell) header nav > div:nth-of-type(1) a[href='/projects'] { order:3; }
-  body:has(.home-page-shell) header nav > div:nth-of-type(1) a[href='/about'] { order:4; }
   @keyframes homeScrollLine { 0%{transform:translateY(-100%)} 45%,55%{transform:translateY(0)} 100%{transform:translateY(100%)} }
   @keyframes homeNetworkFlow { to{stroke-dashoffset:-84} }
   @keyframes homeDataFloat { 0%,100%{opacity:.18;transform:translate3d(0,0,0)} 50%{opacity:.75;transform:translate3d(0,-10px,0)} }
   @keyframes homeScan { 0%,18%{transform:translateY(-120%);opacity:0} 28%{opacity:.28} 72%{opacity:.12} 82%,100%{transform:translateY(120%);opacity:0} }
   @keyframes homeFloat { 0%,100%{transform:translate3d(0,0,0)} 50%{transform:translate3d(0,-9px,0)} }
+  @keyframes homeCaseOrb { 0%,100%{transform:translate3d(0,0,0) scale(1);opacity:.2} 50%{transform:translate3d(18px,-16px,0) scale(1.08);opacity:.38} }
   @keyframes homeSolutionsProgress { from{transform:scaleX(0)} to{transform:scaleX(1)} }
   @media (hover:none) { .home-page-shell .home-solution-description { opacity:1;transform:none; } }
   @media (max-width:1023px) { .home-page-shell .home-hero-gallery-slot:nth-child(n+7):not(.is-active){opacity:.14}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-carousel-stage{margin-top:2rem} }
-  @media (max-width:767px) { .home-page-shell #home-hero{min-height:max(100svh,680px)}.home-page-shell .home-hero-gallery{inset:0 0 0 35%}.home-page-shell .home-hero-collage{inset:6rem 0 4% 0}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-slot:nth-child(n){left:6%;right:auto;top:34%;width:88%;opacity:0;filter:brightness(.65);transform:translate3d(0,0,0) scale(.93);--focus-x:0;--focus-y:0;--focus-scale:1}.home-page-shell .home-hero-gallery.has-focus .home-hero-gallery-slot:not(.is-active){opacity:0;transform:translate3d(0,0,-30px) scale(.93)}.home-page-shell .home-hero-gallery-slot.is-active,.home-page-shell .home-hero-gallery-slot:nth-child(n).is-active{opacity:.88;filter:brightness(1) saturate(1.02);transform:translate3d(0,0,70px) scale(1)}.home-page-shell .home-hero-gallery-shade{background:linear-gradient(90deg,rgba(1,11,31,.995) 0%,rgba(1,11,31,.92) 52%,rgba(1,11,31,.52) 100%),linear-gradient(180deg,rgba(1,11,31,.62),transparent 24%,transparent 72%,rgba(1,11,31,.72))}.home-page-shell .home-hero-title{font-size:clamp(1.25rem,5.6vw,1.7rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.5em}.home-page-shell .home-hero-content{min-height:max(100svh,680px);padding-top:6rem;padding-bottom:3rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-services-section{padding-block:2.4rem}.home-page-shell .home-service-card{height:300px;width:min(86vw,360px)}.home-page-shell .home-carousel-stage{height:320px}.home-page-shell .home-service-title{font-size:clamp(1.45rem,7.5vw,2.15rem)}.home-page-shell #home-services .home-section-copy{max-width:34rem;padding-inline:.75rem}.home-page-shell #home-services .home-section-title{font-size:clamp(1.7rem,8vw,2.35rem)}.home-page-shell #home-case-studies article{min-height:440px}.home-page-shell #home-case-studies article>header{min-height:auto} }
+  @media (max-width:767px) { .home-page-shell #home-hero{min-height:max(100svh,680px)}.home-page-shell .home-hero-gallery{inset:0 0 0 35%}.home-page-shell .home-hero-collage{inset:6rem 0 4% 0}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-slot:nth-child(n){left:6%;right:auto;top:34%;width:88%;opacity:0;filter:brightness(.65);transform:translate3d(0,0,0) scale(.93);--focus-x:0;--focus-y:0;--focus-scale:1}.home-page-shell .home-hero-gallery.has-focus .home-hero-gallery-slot:not(.is-active){opacity:0;transform:translate3d(0,0,-30px) scale(.93)}.home-page-shell .home-hero-gallery-slot.is-active,.home-page-shell .home-hero-gallery-slot:nth-child(n).is-active{opacity:.88;filter:brightness(1) saturate(1.02);transform:translate3d(0,0,70px) scale(1)}.home-page-shell .home-hero-gallery-shade{background:linear-gradient(90deg,rgba(0,8,22,.995) 0%,rgba(0,8,22,.92) 52%,rgba(0,8,22,.52) 100%),linear-gradient(180deg,rgba(0,8,22,.62),transparent 24%,transparent 72%,rgba(0,8,22,.72))}.home-page-shell .home-hero-title{font-size:clamp(1.55rem,7.3vw,2.1rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.9em}.home-page-shell .home-hero-content{min-height:max(100svh,680px);padding-top:6rem;padding-bottom:3rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-services-section{padding-block:2.4rem}.home-page-shell .home-service-card{height:300px;width:min(86vw,360px)}.home-page-shell .home-carousel-stage{height:320px}.home-page-shell .home-service-title{font-size:clamp(1.45rem,7.5vw,2.15rem)}.home-page-shell #home-services .home-section-copy{max-width:34rem;padding-inline:.75rem}.home-page-shell #home-services .home-section-title{font-size:clamp(1.7rem,8vw,2.35rem)}.home-page-shell #home-case-studies article{min-height:440px}.home-page-shell #home-case-studies article>header{min-height:auto} }
   @media (max-width:479px) { .home-page-shell #home-services .home-section-heading > p:first-child{font-size:.9rem}.home-page-shell .home-service-card{height:280px;width:min(88vw,330px)}.home-page-shell .home-carousel-stage{height:300px}.home-page-shell .home-service-content{padding:.85rem}.home-page-shell #home-services .home-section-copy{font-size:.76rem;line-height:1.55} }
   @media (max-width:639px) { .home-page-shell #home-hero .home-hero-trust-items{align-items:flex-start;flex-direction:column}.home-page-shell #home-hero .home-hero-trust-separator{display:none} }
   @media (max-width:479px) { .home-page-shell #home-hero .home-hero-actions{align-items:stretch;flex-direction:column}.home-page-shell #home-hero .home-hero-action{width:100%} }
   @media (max-height:850px) and (min-width:1024px) { .home-page-shell .home-services-section{padding-block:2.25rem}.home-page-shell .home-carousel-stage{height:290px;margin-top:1.5rem}.home-page-shell .home-service-card{height:275px;width:min(50vw,410px)}.home-page-shell .home-service-content{padding:.95rem}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-service-title{font-size:clamp(1.5rem,2.7vw,2.3rem)}.home-page-shell .home-section-copy{margin-top:.75rem}.home-page-shell .home-major-section{padding-block:4.5rem} }
-  @media (max-height:700px) and (min-width:1024px) { .home-page-shell .home-hero-title{font-size:clamp(1.8rem,2.6vw,2.5rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.42em}.home-page-shell .home-hero-content{padding-top:5.5rem;padding-bottom:2.5rem}.home-page-shell #home-hero .home-hero-support.mt-8{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-actions{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-trust{margin-top:1rem} }
+  @media (max-height:700px) and (min-width:1024px) { .home-page-shell .home-hero-title{font-size:clamp(1.7rem,2.4vw,2.35rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.8em}.home-page-shell .home-hero-content{padding-top:5.5rem;padding-bottom:2.5rem}.home-page-shell #home-hero .home-hero-support.mt-8{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-actions{margin-top:1.25rem}.home-page-shell #home-hero .home-hero-trust{margin-top:1rem} }
+  .home-page-shell .home-hero-word + .home-hero-word { margin-top:clamp(10px,1vw,14px); }
+  @media (max-width:767px) { .home-page-shell .home-hero-title{width:100%;max-width:100%;font-size:clamp(1.5rem,6.2vw,2.7rem);line-height:1.05}.home-page-shell .home-hero-line-secondary{font-size:.82em} }
+  @media (min-width:768px) and (max-width:1023px) { .home-page-shell .home-hero-title{width:min(540px,56vw);font-size:clamp(1.9rem,3.9vw,2.45rem)} }
   .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-title { font-size:var(--text-section);line-height:1.06; }
   .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-copy { font-size:var(--text-body);line-height:1.7; }
   .home-page-shell :is(#home-services,#home-solutions,#home-case-studies,#home-about) .home-section-heading > p:first-child { font-size:var(--text-label);line-height:1.35; }
@@ -177,7 +194,7 @@ const homeStyles = `
     .home-page-shell :is(#home-services,#home-solutions,#home-case-studies) .home-section-title { font-size:clamp(2rem,3vw,3.15rem);white-space:nowrap; }
     .home-page-shell #home-solutions .home-section-heading { max-width:68rem; }
   }
-  @media (prefers-reduced-motion: reduce) { .home-page-shell .home-network-path,.home-page-shell .home-data-particle,.home-page-shell .home-scan,.home-page-shell .home-float,.home-page-shell .home-scroll-line::after,.home-page-shell .home-solutions-progress{animation:none!important}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-card,.home-page-shell .home-hero-gallery-media{transition:none!important}.home-page-shell #home-hero .home-hero-trust-item{transition:none!important} }
+  @media (prefers-reduced-motion: reduce) { .home-page-shell .home-network-path,.home-page-shell .home-data-particle,.home-page-shell .home-scan,.home-page-shell .home-float,.home-page-shell .home-scroll-line::after,.home-page-shell .home-solutions-progress,.home-page-shell .home-case-orb{animation:none!important}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-card,.home-page-shell .home-hero-gallery-media{transition:none!important}.home-page-shell #home-hero .home-hero-trust-item{transition:none!important}.home-page-shell .home-case-card,.home-page-shell .home-case-media,.home-page-shell .home-case-sweep,.home-page-shell .home-case-play,.home-page-shell .home-case-glow,.home-page-shell .home-case-accent,.home-page-shell .home-case-copy{transition:none!important;transform:none!important} }
 `
 
 const ease = [0.22, 1, 0.36, 1]
@@ -193,6 +210,7 @@ const homeServiceCards = [
   {
     ...servicesShowcase.find(service => service.id === 'building-management-systems'),
     title: 'BMS',
+    image: '/sector-towers-cn05.png',
     description: 'Unified building management for HVAC, power, lighting, security and life-safety systems.',
     features: ['Unified building dashboards', 'HVAC and lighting control', 'Energy and fault reporting'],
   },
@@ -220,7 +238,7 @@ const homeServiceCards = [
   {
     ...servicesShowcase.find(service => service.id === 'industrial-automation'),
     title: 'Robotics',
-    image: '/service-robotics.png',
+    image: '/Screenshot 2026-09-14 221026.png',
     description: 'Connected robotic automation engineered to improve precision, throughput and workplace safety.',
     features: ['Robotic process integration', 'Production automation', 'Performance monitoring'],
   },
@@ -576,8 +594,8 @@ function SolutionsShowcase() {
             </div>
           </motion.article>
         })}
-        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 z-30 w-[clamp(2rem,9vw,9rem)] bg-gradient-to-r from-[#010B1F]/85 via-[#010B1F]/30 to-transparent backdrop-blur-[2px] [mask-image:linear-gradient(to_right,black,rgba(0,0,0,.7)_45%,transparent)]" />
-        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 z-30 w-[clamp(2rem,9vw,9rem)] bg-gradient-to-l from-[#010B1F]/85 via-[#010B1F]/30 to-transparent backdrop-blur-[2px] [mask-image:linear-gradient(to_left,black,rgba(0,0,0,.7)_45%,transparent)]" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 left-0 z-30 w-[clamp(2rem,9vw,9rem)] bg-gradient-to-r from-[#000816]/85 via-[#000816]/30 to-transparent backdrop-blur-[2px] [mask-image:linear-gradient(to_right,black,rgba(0,0,0,.7)_45%,transparent)]" />
+        <div aria-hidden="true" className="pointer-events-none absolute inset-y-0 right-0 z-30 w-[clamp(2rem,9vw,9rem)] bg-gradient-to-l from-[#000816]/85 via-[#000816]/30 to-transparent backdrop-blur-[2px] [mask-image:linear-gradient(to_left,black,rgba(0,0,0,.7)_45%,transparent)]" />
       </motion.div>
 
       <div className="flex items-center gap-4 bg-[#041126]/88 px-5 py-4 sm:px-7">
@@ -601,11 +619,12 @@ export default function Home() {
   const [heroMuted, setHeroMuted] = useState(true)
   const [activeVideo, setActiveVideo] = useState(null)
   const [partnersUnderlineVisible, setPartnersUnderlineVisible] = useState(false)
+  const reducedMotion = useReducedMotion()
 
   useEffect(() => {
     const video = heroVideoRef.current
     if (!video) return
-    video.currentTime = 47
+    video.currentTime = 48
     const handleSeeked = () => {
       video.play().catch(() => undefined)
     }
@@ -652,7 +671,7 @@ export default function Home() {
 
     const context = gsap.context(() => {
       if (!reducedMotion) {
-        gsap.fromTo('.home-hero-word > span', { yPercent: 112 }, { yPercent: 0, duration: 1.15, stagger: .11, delay: .18, ease: 'power4.out' })
+        gsap.fromTo('.home-hero-word > span', { autoAlpha: 0, y: 22 }, { autoAlpha: 1, y: 0, duration: .85, stagger: .1, delay: .2, ease: 'power3.out' })
         gsap.fromTo('.home-hero-support', { autoAlpha: 0, y: 20 }, { autoAlpha: 1, y: 0, duration: .85, stagger: .1, delay: .72, ease: 'power3.out' })
         gsap.utils.toArray('.home-reveal').forEach(element => gsap.fromTo(element, { autoAlpha: 0, y: 34 }, { autoAlpha: 1, y: 0, duration: .9, ease: 'power3.out', scrollTrigger: { trigger: element, start: 'top 88%', once: true } }))
         gsap.utils.toArray('.home-parallax-image').forEach(image => gsap.fromTo(image, { yPercent: -7, scale: 1.08 }, { yPercent: 7, scale: 1, ease: 'none', scrollTrigger: { trigger: image.parentElement, start: 'top bottom', end: 'bottom top', scrub: 1.2 } }))
@@ -666,7 +685,7 @@ export default function Home() {
     }
   }, [])
 
-  return <main ref={rootRef} className="home-page-shell overflow-hidden bg-[#010B1F] text-white">
+  return <main ref={rootRef} className="home-page-shell overflow-hidden bg-[#000816] text-white">
     <style>{homeStyles}</style>
 
     <section id="home-hero" className="relative min-h-[100svh] scroll-mt-20 overflow-hidden">
@@ -681,30 +700,38 @@ export default function Home() {
           style={{ willChange: 'transform' }}
           className="pointer-events-none absolute inset-0 h-full w-full object-contain object-right"
         >
-          <source src="/EMS%20VID.mp4" type="video/mp4" />
+          <source src="/Al-Nama%20Final%20Project.mp4" type="video/mp4" />
         </video>
         {/* Smooth left-panel shade — wide gradient for cinematic fade */}
-        <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,#010B1F_0%,#010B1F_22%,rgba(1,11,31,.92)_30%,rgba(1,11,31,.65)_40%,rgba(1,11,31,.3)_52%,rgba(1,11,31,.1)_62%,transparent_75%)]" />
+        <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,#000816_0%,#000816_22%,rgba(0,8,22,.92)_30%,rgba(0,8,22,.65)_40%,rgba(0,8,22,.3)_52%,rgba(0,8,22,.1)_62%,transparent_75%)]" />
         {/* Top fade behind navbar */}
-        <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,#010B1F_0%,rgba(1,11,31,.7)_5%,rgba(1,11,31,.25)_12%,transparent_20%)]" />
+        <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,#000816_0%,rgba(0,8,22,.7)_5%,rgba(0,8,22,.25)_12%,transparent_20%)]" />
         {/* Bottom vignette */}
         <div className="absolute inset-0 z-10 bg-[linear-gradient(0deg,rgba(1,11,31,.6)_0%,rgba(1,11,31,.2)_8%,transparent_18%)]" />
       </div>
 
       <div className="home-hero-content container-ems relative z-10 flex min-h-[100svh] items-center pt-28">
-        <div className="home-hero-column">
+        <div className="home-hero-column relative">
           <div className="home-hero-support"><Eyebrow>Engineering Management Systems · Since 2016</Eyebrow></div>
-          <h1 className="home-hero-title mt-12 font-serif tracking-[-.035em] text-white">
-            <span className="home-hero-word"><span>Automation Solutions.</span></span>
-            <span className="home-hero-word text-[#32A9F5] drop-shadow-[0_8px_28px_rgba(50,169,245,.18)]"><span>AI/IOT Platforms.</span></span>
-            <span className="home-hero-word"><span>Smart Digitalization.</span></span>
-          </h1>
-          <p className="home-hero-technologies home-hero-support mt-16">BMS · SCADA · IoT · AI · Digital Twin · Robotics</p>
+          <div className="relative">
+            <div aria-hidden="true" className="pointer-events-none absolute -inset-x-8 -inset-y-6 -z-10 rounded-[2rem] bg-[linear-gradient(90deg,rgba(2,11,24,.18)_0%,rgba(16,42,67,.15)_100%)] blur-2xl" />
+            <h1 className="home-hero-title mt-14">
+              <span className="home-hero-word"><span className="home-hero-line-primary">Artificial Intelligence</span></span>
+              <span className="home-hero-word">
+                <span className="home-hero-line-secondary">
+                  <span className="home-hero-highlight">Automation</span>{' '}
+                  <span className="home-hero-ampersand">&amp;</span>{' '}
+                  <span className="home-hero-digitalization">Digitalization</span>
+                </span>
+              </span>
+            </h1>
+          </div>
+          <p className="home-hero-technologies home-hero-support mt-20">BMS · SCADA · IoT · AI · Digital Twin · Robotics</p>
           <div className="home-hero-actions home-hero-support mt-12 flex flex-wrap gap-3">
             <Link to="/solutions" className="home-hero-action home-hero-primary gap-2">Explore Solutions <HiOutlineArrowRight aria-hidden="true" /></Link>
             <Link to="/projects" className="home-hero-action home-hero-secondary">View Case Studies</Link>
           </div>
-          <div className="home-hero-trust home-hero-support mt-8">
+          <div className="home-hero-trust home-hero-support mt-10">
             <div className="home-hero-trust-item flex w-fit items-center gap-2 text-[11px] font-semibold text-[#AFC3DB] sm:text-xs">
               <HiOutlineCheckBadge aria-hidden="true" className="h-[17px] w-[17px] shrink-0 text-[#32A9F5]" />
               <span>Siemens Certified Partner</span>
@@ -738,7 +765,7 @@ export default function Home() {
 
     <ServiceCarousel />
 
-    <section id="home-solutions" className="home-major-section relative scroll-mt-20 overflow-hidden bg-[#061326]">
+    <section id="home-solutions" className="home-major-section relative scroll-mt-20 overflow-hidden bg-[#071B2D]">
       <div className="home-grid absolute inset-0 opacity-20 [mask-image:radial-gradient(circle_at_center,black,transparent_78%)]" />
       <div className="absolute -left-48 top-1/3 h-96 w-96 rounded-full bg-cyan-500/10 blur-[130px]" />
       <div className="container-ems relative">
@@ -759,14 +786,19 @@ export default function Home() {
       </div>
     </section>
 
-    <section id="home-case-studies" className="home-major-section relative scroll-mt-20 bg-[#010B1F]">
-      <div className="container-ems">
+    <section id="home-case-studies" className="home-major-section relative scroll-mt-20 overflow-hidden bg-[linear-gradient(180deg,#071B2D_0%,#06182A_12%)]">
+      <div className="home-grid pointer-events-none absolute inset-0 opacity-[.09] [mask-image:radial-gradient(circle_at_center,black,transparent_76%)]" />
+      <div className="home-case-orb pointer-events-none absolute -left-24 top-1/4 h-72 w-72 rounded-full bg-[#299BF0]/15 blur-[110px]" />
+      <div className="home-case-orb is-delayed pointer-events-none absolute -right-20 bottom-10 h-80 w-80 rounded-full bg-[#23C7FF]/10 blur-[125px]" />
+      <div className="container-ems relative">
         <div className="flex flex-col items-center text-center"><SectionTitle eyebrow="Case studies" title="Complex Systems. Clear Results." text="Selected EMS applications show how complex infrastructure becomes a clearer, connected operating environment." align="center" /><Link to="/projects" className="home-reveal mt-6 inline-flex w-fit items-center gap-2 text-xs font-semibold text-[#299BF0] transition hover:gap-3">View all case studies <HiOutlineArrowRight /></Link></div>
         <div className="mx-auto mt-8 grid w-full max-w-[1400px] gap-4 md:grid-cols-2 xl:grid-cols-3">
-          {homeCaseStudies.map((project, index) => <motion.article key={project.id} initial={{ opacity: 0, y: 34 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .07, ease }} className="group flex min-h-[500px] flex-col overflow-hidden rounded-2xl border border-white/10 bg-[#071326] transition duration-500 hover:-translate-y-1 hover:border-[#32A9F5]/60 hover:shadow-[0_18px_45px_rgba(0,0,0,.2)]">
-            <header className="min-h-[122px] px-4 py-4 sm:px-5">
-              <p className="font-mono text-[9px] uppercase tracking-[.24em] text-slate-500">Case study {String(index + 1).padStart(2, '0')}</p>
-              <h3 className="mt-2 font-serif text-[clamp(1.25rem,1.55vw,1.65rem)] leading-[1.12] text-white">{project.name}</h3>
+          {homeCaseStudies.map((project, index) => <motion.article key={project.id} initial={reducedMotion ? false : { opacity: 0, y: 34, scale: .96 }} whileInView={{ opacity: 1, y: 0, scale: 1 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .12, ease }} className="home-case-card group relative flex min-h-[500px] flex-col overflow-hidden rounded-2xl border border-[rgba(74,169,220,0.28)] bg-[radial-gradient(circle_at_0%_0%,rgba(74,169,220,.16),transparent_40%),linear-gradient(135deg,#183E5D_0%,#12324B_50%,#081B30_100%)] shadow-[0_20px_40px_rgba(0,0,0,.35)] transition-all duration-500 ease-out md:hover:-translate-y-2 md:hover:border-[rgba(74,169,220,0.5)] md:hover:bg-[radial-gradient(circle_at_0%_0%,rgba(74,169,220,.24),transparent_42%),linear-gradient(135deg,#183E5D_0%,#12324B_50%,#081B30_100%)] md:hover:shadow-[0_26px_54px_rgba(0,0,0,.4),0_0_30px_rgba(74,169,220,.22)]">
+            <span aria-hidden="true" className="home-case-glow pointer-events-none absolute -right-24 -top-24 z-10 h-64 w-64 rounded-full bg-[#23C7FF]/20 blur-[80px]" />
+            <span aria-hidden="true" className="home-case-accent pointer-events-none absolute inset-x-0 top-0 z-30 h-[2px] bg-gradient-to-r from-transparent via-[#23C7FF] to-transparent" />
+            <span aria-hidden="true" className="home-case-sweep pointer-events-none absolute inset-0 -translate-x-full bg-[linear-gradient(115deg,transparent_40%,rgba(148,224,255,.14)_50%,transparent_60%)] transition-transform duration-[1400ms] ease-out mix-blend-screen md:group-hover:translate-x-full" />
+            <header className="home-case-copy relative z-20 min-h-[122px] px-4 py-5 sm:px-5">
+              <h3 className="font-serif text-[clamp(1.25rem,1.55vw,1.65rem)] leading-[1.12] text-white">{project.name}</h3>
               <p className="mt-2 text-[11px] font-semibold text-[#23C7FF] sm:text-xs">{project.location}</p>
             </header>
             <div className="relative aspect-video shrink-0 overflow-hidden bg-[#071326]">
@@ -814,24 +846,24 @@ export default function Home() {
                         video.dataset.previewReady = 'true'
                         video.currentTime = Number.isFinite(video.duration) ? Math.min(1, Math.max(.2, video.duration * .02)) : 1
                       }}
-                      className={`pointer-events-none absolute inset-0 h-full w-full object-cover object-center ${project.id === 'smart-hospital' ? 'scale-[1.025]' : ''} ${project.id === 'industrial-scada-system' ? 'scale-[1.02]' : ''}`}
+                      className={`home-case-media pointer-events-none absolute inset-0 h-full w-full object-cover object-center transition-transform duration-[1200ms] ease-out md:group-hover:scale-[1.06] ${project.id === 'smart-hospital' ? 'scale-[1.025]' : ''} ${project.id === 'industrial-scada-system' ? 'scale-[1.02]' : ''}`}
                     >
                       Your browser does not support the video element.
                     </video>
                     <span className="absolute inset-0 bg-[#010B1F]/[.04] transition duration-300 group-hover/video:bg-transparent" />
-                    <span className="pointer-events-none absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-[#010B1F]/80 text-white shadow-[0_12px_35px_rgba(0,0,0,.4)] backdrop-blur transition duration-300 group-hover/video:scale-90 group-hover/video:opacity-0 group-focus-visible/video:scale-90 group-focus-visible/video:opacity-0"><HiOutlinePlay className="ml-0.5 h-6 w-6" /></span>
+                    <span className="home-case-play pointer-events-none absolute left-1/2 top-1/2 flex h-14 w-14 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-white/35 bg-[#010B1F]/80 text-white shadow-[0_12px_35px_rgba(0,0,0,.4)] backdrop-blur transition-all duration-300 md:group-hover/video:scale-110 md:group-hover/video:shadow-[0_0_22px_rgba(34,211,238,.6)] group-hover/video:scale-90 group-hover/video:opacity-0 group-focus-visible/video:scale-90 group-focus-visible/video:opacity-0"><HiOutlinePlay className="ml-0.5 h-6 w-6" /></span>
                   </button>
                 : project.videoId
                   ? <iframe src={`https://www.youtube-nocookie.com/embed/${project.videoId}?rel=0`} title={`${project.name} project video`} loading="lazy" className="h-full w-full border-0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerPolicy="strict-origin-when-cross-origin" allowFullScreen />
-                  : <><img src={project.image} alt={`${project.name} — ${project.location}`} loading="lazy" className="h-full w-full object-cover transition duration-[1200ms] group-hover:scale-[1.045]" /><div className="absolute inset-0 bg-gradient-to-t from-[#071326] via-[#071326]/10 to-transparent" /></>}
+                  : <><img src={project.image} alt={`${project.name} — ${project.location}`} loading="lazy" className="home-case-media h-full w-full object-cover transition-transform duration-[1200ms] ease-out md:group-hover:scale-[1.06]" /><div className="absolute inset-0 bg-gradient-to-t from-[#071326] via-[#071326]/10 to-transparent" /></>}
               {!project.videoSrc && !project.videoId && <span className="absolute bottom-4 left-5 rounded-full border border-white/15 bg-[#061326]/75 px-3 py-1.5 font-mono text-[8px] uppercase tracking-[.18em] text-[#299BF0] backdrop-blur-xl">{project.industry}</span>}
             </div>
-            <div className="flex flex-1 flex-col p-4 sm:p-5">
+            <div className="home-case-copy relative z-20 flex flex-1 flex-col p-4 sm:p-5">
               <p className="text-[11px] leading-5 text-slate-400 sm:text-[12px]">{project.description}</p>
               <div className="mt-4 space-y-1.5 border-t border-white/10 pt-4">
                 {project.highlights.map(highlight => <p key={highlight} className="text-[11px] font-semibold text-[#23C7FF]">{highlight}</p>)}
               </div>
-              <Link to={`/projects/${project.id}`} className="mt-auto inline-flex w-fit items-center gap-2 pt-5 text-[11px] font-semibold text-[#AFC3DB] transition hover:gap-3 hover:text-[#32A9F5] focus-visible:text-[#32A9F5]">Read the full story <HiOutlineArrowUpRight /></Link>
+              <Link to={`/projects/${project.id}`} className="mt-auto inline-flex w-fit items-center gap-2 pt-5 text-[11px] font-semibold text-[#AFC3DB] transition hover:gap-3 hover:text-[#32A9F5] focus-visible:text-[#32A9F5]">Read the full story <HiOutlineArrowUpRight className="transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5" /></Link>
             </div>
           </motion.article>)}
         </div>
@@ -905,7 +937,7 @@ export default function Home() {
             <h3 className="mt-9 font-sans text-[clamp(1.55rem,2.2vw,2rem)] font-bold text-white">Eng. Ahmed El-Zayat</h3>
             <p className="mt-4 max-w-2xl text-[clamp(.85rem,1.1vw,1rem)] leading-7 text-[#AFC3DB]">With over 15 years of experience in IoT and AI technologies, Engineer Ahmed El-Zayat has led EMS to become a pioneer in smart infrastructure solutions. His vision is to transform how organizations operate through innovative technology integration.</p>
             <div className="mt-6 flex flex-wrap gap-3">
-              <a href="https://www.facebook.com/share/1LkNgGndZa/?mibextid=wwXIfr" target="_blank" rel="noreferrer" className="rounded-lg bg-[rgb(33,124,154)] px-5 py-3 text-[12px] font-semibold text-white transition hover:bg-[#299BF0] hover:text-[#010B1F]">View Facebook Profile</a>
+              <a href="https://www.facebook.com/share/1LkNgGndZa/?mibextid=wwXIfr" target="_blank" rel="noreferrer" className="brand-gradient-button rounded-lg px-5 py-3 text-[12px] font-semibold">View Facebook Profile</a>
               <a href="https://eg.linkedin.com/in/ahmed-elzayat-a8325b41" target="_blank" rel="noreferrer" className="rounded-lg border border-[#299BF0] px-5 py-3 text-[12px] font-semibold text-[#299BF0] transition hover:bg-[#299BF0] hover:text-[#010B1F]">Connect on LinkedIn</a>
             </div>
           </section>

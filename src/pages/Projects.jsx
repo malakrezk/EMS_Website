@@ -20,10 +20,9 @@ function PortfolioCard({ project, index, featured = false }) {
     <ProjectMedia project={project} />
     <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(1,11,31,.08)_0%,rgba(1,11,31,.24)_42%,rgba(1,11,31,.97)_100%)]" />
     <div className="absolute inset-0 bg-gradient-to-r from-[#010B1F]/45 via-transparent to-transparent opacity-70" />
-    <div className="absolute left-5 top-5 flex items-center gap-3 sm:left-7 sm:top-7"><span className="font-mono text-[10px] tracking-[.2em] text-cyan-200">{String(index + 1).padStart(2, '0')}</span><span className="h-px w-8 bg-cyan-300/70" /><span className="text-[9px] font-semibold uppercase tracking-[.2em] text-white/70">{project.industry}</span></div>
     <div className="absolute inset-x-0 bottom-0 p-5 sm:p-7 lg:p-9">
-      {featured && <p className="eyebrow">Featured case study</p>}
-      <h2 className={`${featured ? 'type-section-title max-w-4xl' : 'type-card-title max-w-2xl'} mt-3 font-serif text-white`}>{project.name}</h2>
+      <h2 className={`${featured ? 'type-section-title max-w-4xl' : 'type-card-title max-w-2xl'} font-serif text-white`}>{project.name}</h2>
+      <p className="mt-2 text-[10px] font-semibold uppercase tracking-[.18em] text-cyan-200">{project.industry}</p>
       <p className="type-body mt-3 max-w-2xl text-slate-300">{project.description}</p>
       <div className="mt-5 flex flex-wrap gap-2">{project.services.slice(0, featured ? 4 : 3).map(service => <span key={service} className="rounded-full border border-white/15 bg-[#010B1F]/55 px-3 py-1.5 text-[10px] text-slate-200 backdrop-blur">{service}</span>)}</div>
       <Link to={`/case-studies/${project.id}`} className="mt-6 inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[.12em] text-cyan-200 transition-all duration-300 group-hover:gap-3 group-hover:text-white">View case study <HiOutlineArrowUpRight className="h-4 w-4 transition-transform group-hover:-translate-y-1 group-hover:translate-x-1" /></Link>

@@ -1,65 +1,38 @@
 import { useEffect, useState } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
-import { HiOutlineBars3, HiOutlineGlobeAlt, HiOutlineXMark } from 'react-icons/hi2'
+import { HiOutlineBars3, HiOutlineGlobeAlt, HiOutlineShoppingCart, HiOutlineXMark } from 'react-icons/hi2'
+import { useCart } from '../../context/CartContext'
 import { cn } from '../../utils/cn'
 
 const links = [
   { to: '/', label: 'Home' },
-  { to: '/about', label: 'About' },
-  { to: '/services', label: 'Services' },
   { to: '/solutions', label: 'Solutions' },
-  { to: '/projects', label: 'Case Studies' }
+  { to: '/services', label: 'Services' },
+  { to: '/projects', label: 'Projects' },
+  { to: '/store', label: 'Products' },
+  { to: '/about', label: 'About' },
 ]
 
 function EgyptFlag() {
   return (
-    <svg viewBox="0 0 36 24" role="img" aria-label="Egypt flag" className="h-3.5 w-[22px] shrink-0 overflow-hidden rounded-[2px]">
-      <path fill="#ce1126" d="M0 0h36v8H0z" />
-      <path fill="#fff" d="M0 8h36v8H0z" />
-      <path fill="#000" d="M0 16h36v8H0z" />
-      <path fill="#c8a54b" d="m18 9.2 2 1.1-.5 3.8h-3l-.5-3.8z" />
-    </svg>
+    <img src="/flags/egypt.svg" alt="Egypt flag" width="24" height="16" className="h-4 w-6 shrink-0 rounded-[3px] object-cover shadow-[0_0_0_1px_rgba(255,255,255,.12)]" />
   )
 }
 
 function SaudiFlag() {
   return (
-    <svg viewBox="0 0 36 24" role="img" aria-label="Saudi Arabia flag" className="h-3.5 w-[22px] shrink-0 overflow-hidden rounded-[2px]">
-      <rect width="36" height="24" fill="#087a3e" />
-      <path d="M9 16.7h18M11.5 18.3h13" stroke="#fff" strokeWidth="1.1" strokeLinecap="round" />
-      <path d="M12 8.2h12M10.5 10.4h15M13 12.6h10" stroke="#fff" strokeWidth="1" strokeLinecap="round" opacity=".95" />
-    </svg>
-  )
-}
-
-function EnglandFlag() {
-  return (
-    <svg viewBox="0 0 36 24" role="img" aria-label="England flag" className="h-3.5 w-[22px] shrink-0 overflow-hidden rounded-[2px]">
-      <rect width="36" height="24" fill="#fff" />
-      <path d="M15 0h6v9h15v6H21v9h-6v-9H0V9h15z" fill="#cf142b" />
-    </svg>
+    <img src="/flags/saudi-arabia.svg" alt="Saudi Arabia flag" width="24" height="16" className="h-4 w-6 shrink-0 rounded-[3px] object-cover shadow-[0_0_0_1px_rgba(255,255,255,.12)]" />
   )
 }
 
 function NavbarRegions({ className = '' }) {
   return (
-    <div className={cn('items-center gap-3 text-white', className)} aria-label="EMS regional presence">
-      <HiOutlineGlobeAlt aria-hidden="true" className="h-5 w-5 shrink-0 text-white" />
-      <div className="flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold">
-        <EgyptFlag />
-        <span>Egypt</span>
-      </div>
-      <span aria-hidden="true" className="h-4 w-px bg-white/25" />
-      <div className="flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold">
-        <SaudiFlag />
-        <span>Saudi Arabia</span>
-      </div>
-      <span aria-hidden="true" className="h-4 w-px bg-white/25" />
-      <div className="flex items-center gap-1.5 whitespace-nowrap text-xs font-semibold">
-        <EnglandFlag />
-        <span>England</span>
-      </div>
+    <div className={cn("h-11 max-w-full items-center gap-3 font-['Manrope'] text-[13px] font-semibold text-white/85", className)} aria-label="EMS regional presence">
+      <HiOutlineGlobeAlt aria-hidden="true" className="h-[19px] w-[19px] shrink-0 text-[#55c7f5]" />
+      <div className="flex items-center gap-2 whitespace-nowrap"><EgyptFlag /><span>Egypt</span></div>
+      <span aria-hidden="true" className="h-5 w-px shrink-0 bg-[#8aa0b5]/25" />
+      <div className="flex items-center gap-2 whitespace-nowrap"><SaudiFlag /><span>Saudi Arabia</span></div>
     </div>
   )
 }
@@ -67,44 +40,33 @@ function NavbarRegions({ className = '' }) {
 export default function Navbar() {
   const [open, setOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
-  const [pastHomeHero, setPastHomeHero] = useState(false)
   const location = useLocation()
+  const { itemCount } = useCart()
 
   useEffect(() => {
-    // Close mobile menu whenever the viewport is resized back to desktop
     const onResize = () => window.innerWidth >= 1024 && setOpen(false)
     window.addEventListener('resize', onResize)
     return () => window.removeEventListener('resize', onResize)
   }, [])
 
-  useEffect(() => {
-    setOpen(false)
-  }, [location.pathname])
+  useEffect(() => setOpen(false), [location.pathname])
 
   useEffect(() => {
-    const onScroll = () => {
-      setScrolled(window.scrollY > 24)
-      const servicesSection = document.getElementById('home-services')
-      const servicesTop = servicesSection?.offsetTop ?? window.innerHeight
-      setPastHomeHero(location.pathname === '/' && window.scrollY >= servicesTop - 90)
-    }
+    const onScroll = () => setScrolled(window.scrollY > 24)
     onScroll()
     window.addEventListener('scroll', onScroll, { passive: true })
     return () => window.removeEventListener('scroll', onScroll)
-  }, [location.pathname])
+  }, [])
 
   return (
-    <header
-      className={cn(
-        'fixed left-0 right-0 top-0 z-50 transition-all duration-500',
-        open
-          ? 'border-b border-white/10 bg-[#0B2548]/95 shadow-[0_10px_28px_rgba(3,13,28,0.25)] backdrop-blur-xl'
-          : scrolled
-            ? 'border-b border-white/[.06] bg-[#010B1F]/60 shadow-none backdrop-blur-md'
-            : 'border-b border-transparent bg-gradient-to-b from-[#010B1F]/70 via-[#010B1F]/30 to-transparent shadow-none backdrop-blur-[3px]',
-        open && 'shadow-lg'
-      )}
-    >
+    <header className={cn(
+      'fixed inset-x-0 top-0 z-50 transition-all duration-500',
+      open
+        ? 'border-b border-white/10 bg-[#0B2548]/95 shadow-[0_10px_28px_rgba(3,13,28,0.25)] backdrop-blur-xl'
+        : scrolled
+          ? 'border-b border-white/[.06] bg-[#010B1F]/75 backdrop-blur-md'
+          : 'border-b border-transparent bg-gradient-to-b from-[#010B1F]/80 via-[#010B1F]/35 to-transparent backdrop-blur-[3px]'
+    )}>
       <nav className={cn('container-ems grid grid-cols-[1fr_auto] items-center transition-all duration-500 lg:grid-cols-[1fr_auto_1fr]', scrolled ? 'h-[68px]' : 'h-[82px]')}>
         <Link to="/" className="flex min-w-0 items-center pl-2" onClick={() => setOpen(false)} aria-label="EMS home">
           <img
@@ -116,7 +78,7 @@ export default function Navbar() {
           />
         </Link>
 
-        <div className="hidden lg:flex lg:items-center lg:justify-center lg:gap-4 xl:gap-7">
+        <div className="hidden items-center justify-center gap-4 lg:flex xl:gap-7">
           {links.map((link) => {
             const isActive = link.to === '/' ? location.pathname === '/' : location.pathname.startsWith(link.to)
             return (
@@ -125,35 +87,41 @@ export default function Navbar() {
                 to={link.to}
                 end={link.to === '/'}
                 className={cn(
-                  'group relative whitespace-nowrap px-0.5 py-2 text-[13px] font-medium text-white/75 transition-colors duration-200 hover:text-white',
+                  'group relative whitespace-nowrap px-0.5 py-2 text-[13px] font-medium text-white/75 transition-colors hover:text-white',
                   isActive && 'text-white'
                 )}
               >
                 {link.label}
-                <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-cyan-300/80 transition-transform duration-300 group-hover:scale-x-100" />
-                {isActive && (
-                  <motion.span
-                    layoutId="nav-active-indicator"
-                    className="absolute -bottom-1 left-0 h-px w-full bg-cyan-300"
-                    transition={{ type: 'spring', stiffness: 380, damping: 30 }}
-                  />
-                )}
+                <span className="absolute -bottom-1 left-0 h-px w-full origin-left scale-x-0 bg-cyan-300/80 transition-transform group-hover:scale-x-100" />
+                {isActive && <motion.span layoutId="nav-active-indicator" className="absolute -bottom-1 left-0 h-px w-full bg-cyan-300" />}
               </NavLink>
             )
           })}
         </div>
-        <div className="hidden items-center justify-self-end gap-5 lg:flex">
-          <NavbarRegions className="hidden xl:flex" />
-        </div>
 
-        <button
-          className="flex h-11 w-11 items-center justify-center justify-self-end rounded-full border border-white/15 bg-white/5 text-white lg:hidden"
-          onClick={() => setOpen((v) => !v)}
-          aria-label={open ? 'Close menu' : 'Open menu'}
-          aria-expanded={open}
-        >
-          {open ? <HiOutlineXMark className="h-6 w-6" /> : <HiOutlineBars3 className="h-6 w-6" />}
-        </button>
+        <div className="flex items-center justify-self-end gap-2 xl:gap-4">
+          <Link
+            to="/cart"
+            aria-label={`Open cart with ${itemCount} items`}
+            className="relative flex h-11 w-11 shrink-0 items-center justify-center rounded-xl border border-[#29445e]/80 bg-[#07182e]/75 text-white/90 backdrop-blur-md transition-colors duration-300 hover:border-[#3f7da1] hover:bg-[#0a2038] hover:text-[#76d8ff]"
+          >
+            <HiOutlineShoppingCart className="h-5 w-5" />
+            {itemCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-[18px] min-w-[18px] items-center justify-center rounded-full border-2 border-[#010B1F] bg-[#23C7FF] px-1 font-['Manrope'] text-[9px] font-bold leading-none text-[#010B1F]">
+                {itemCount}
+              </span>
+            )}
+          </Link>
+          <NavbarRegions className="hidden xl:flex" />
+          <button
+            className="flex h-10 w-10 items-center justify-center rounded-lg border border-white/15 bg-white/5 text-white lg:hidden"
+            onClick={() => setOpen((value) => !value)}
+            aria-label={open ? 'Close menu' : 'Open menu'}
+            aria-expanded={open}
+          >
+            {open ? <HiOutlineXMark className="h-6 w-6" /> : <HiOutlineBars3 className="h-6 w-6" />}
+          </button>
+        </div>
       </nav>
 
       <AnimatePresence>
@@ -166,29 +134,23 @@ export default function Navbar() {
             className="overflow-hidden border-t border-[#16416f] bg-[#092f61] lg:hidden"
           >
             <div className="flex max-h-[calc(100dvh-68px)] flex-col gap-1 overflow-y-auto px-4 py-4 sm:px-6">
-              {links.map((link, i) => (
-                <motion.div
-                  key={link.to}
-                  initial={{ opacity: 0, x: -12 }}
-                  animate={{ opacity: 1, x: 0 }}
-                  transition={{ duration: 0.3, delay: i * 0.04 }}
-                >
+              {links.map((link, index) => (
+                <motion.div key={link.to} initial={{ opacity: 0, x: -12 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: index * 0.04 }}>
                   <NavLink
                     to={link.to}
                     end={link.to === '/'}
-                    onClick={() => setOpen(false)}
-                    className={({ isActive }) =>
-                      cn(
-                        'block rounded-md px-4 py-3 text-base font-medium transition-colors',
-                        isActive ? 'bg-white/10 text-white' : 'text-white/80 hover:bg-white/5 hover:text-white'
-                      )
-                    }
+                    className={({ isActive }) => cn(
+                      'block rounded-md px-4 py-3 text-base font-medium transition-colors',
+                      isActive ? 'bg-white/10 text-white' : 'text-white/80 hover:bg-white/5 hover:text-white'
+                    )}
                   >
                     {link.label}
                   </NavLink>
                 </motion.div>
               ))}
-              <NavbarRegions className="my-3 flex flex-wrap border-y border-white/10 px-4 py-4" />
+              <div className="mt-3 border-t border-white/10 px-4 pt-4">
+                <NavbarRegions className="flex flex-wrap" />
+              </div>
             </div>
           </motion.div>
         )}
