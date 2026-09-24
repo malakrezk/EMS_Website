@@ -184,9 +184,10 @@ const homeStyles = `
   @keyframes homePartnerGradient { 0%,100%{background-position:0% 50%} 50%{background-position:100% 50%} }
   @keyframes homePartnerAura { 0%,100%{transform:translate3d(-4%,0,0) scale(.96);opacity:.3} 50%{transform:translate3d(4%,-8px,0) scale(1.06);opacity:.55} }
   @keyframes homePartnerSweep { 0%,20%{transform:translateX(-48%)} 65%,100%{transform:translateX(48%)} }
-  @media (hover:none) { .home-page-shell .home-solution-description { opacity:1;transform:none; } }
+  @media (hover:none) { .home-page-shell .home-solution-description { opacity:1;transform:none; }.home-page-shell .home-service-card::after { display:none; } }
   @media (max-width:1023px) { .home-page-shell .home-hero-gallery-slot:nth-child(n+7):not(.is-active){opacity:.14}.home-page-shell .home-service-content ul{display:none}.home-page-shell .home-carousel-stage{margin-top:3.5rem} }
   @media (max-width:767px) { .home-page-shell #home-hero{min-height:max(100svh,680px)}.home-page-shell .home-hero-gallery{inset:0 0 0 35%}.home-page-shell .home-hero-collage{inset:6rem 0 4% 0}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-slot:nth-child(n){left:6%;right:auto;top:34%;width:88%;opacity:0;filter:brightness(.65);transform:translate3d(0,0,0) scale(.93);--focus-x:0;--focus-y:0;--focus-scale:1}.home-page-shell .home-hero-gallery.has-focus .home-hero-gallery-slot:not(.is-active){opacity:0;transform:translate3d(0,0,-30px) scale(.93)}.home-page-shell .home-hero-gallery-slot.is-active,.home-page-shell .home-hero-gallery-slot:nth-child(n).is-active{opacity:.88;filter:brightness(1) saturate(1.02);transform:translate3d(0,0,70px) scale(1)}.home-page-shell .home-hero-gallery-shade{background:linear-gradient(90deg,rgba(0,8,22,.995) 0%,rgba(0,8,22,.92) 52%,rgba(0,8,22,.52) 100%),linear-gradient(180deg,rgba(0,8,22,.62),transparent 24%,transparent 72%,rgba(0,8,22,.72))}.home-page-shell .home-hero-title{font-size:clamp(1.55rem,7.3vw,2.1rem)}.home-page-shell .home-hero-word + .home-hero-word{margin-top:.9em}.home-page-shell .home-hero-content{min-height:max(100svh,680px);padding-top:6rem;padding-bottom:3rem}.home-page-shell #home-hero .home-hero-trust-item:hover{transform:none}.home-page-shell .home-services-section{padding-block:2.4rem}.home-page-shell .home-service-card{height:300px;width:min(86vw,360px)}.home-page-shell .home-carousel-stage{height:320px;margin-top:2.5rem}.home-page-shell .home-service-title{font-size:clamp(1.45rem,7.5vw,2.15rem)}.home-page-shell #home-services .home-section-copy{max-width:34rem;padding-inline:.75rem}.home-page-shell #home-services .home-section-title{font-size:clamp(1.7rem,8vw,2.35rem)}.home-page-shell #home-case-studies article{min-height:440px}.home-page-shell #home-case-studies article>header{min-height:auto} }
+  @media (max-width:767px) { .home-page-shell #home-services .home-carousel-stage{overflow:hidden;border-radius:1.4rem}.home-page-shell #home-services .home-service-card{border-radius:1.1rem;clip-path:inset(0 round 1.1rem);-webkit-clip-path:inset(0 round 1.1rem)} }
   @media (max-width:479px) { .home-page-shell #home-services .home-section-heading > p:first-child{font-size:.9rem}.home-page-shell .home-service-card{height:280px;width:min(88vw,330px)}.home-page-shell .home-carousel-stage{height:300px}.home-page-shell .home-service-content{padding:.85rem}.home-page-shell #home-services .home-section-copy{font-size:.76rem;line-height:1.55} }
   @media (max-width:767px) { .home-page-shell .home-hero-video-shade{background:linear-gradient(90deg,rgba(2,12,28,.98) 0%,rgba(2,12,28,.94) 38%,rgba(3,19,38,.84) 70%,rgba(4,28,50,.64) 100%)} }
   @media (max-width:639px) { .home-page-shell #home-hero .home-hero-trust-items{align-items:flex-start;flex-direction:column}.home-page-shell #home-hero .home-hero-trust-separator{display:none} }
@@ -287,6 +288,7 @@ function ServiceCarousel() {
   const switchLocked = useRef(false)
   const activeService = homeServiceCards[active]
   const total = homeServiceCards.length
+  const isMobile = viewportWidth < 768
 
   useEffect(() => {
     const resize = () => setViewportWidth(window.innerWidth)
@@ -313,21 +315,19 @@ function ServiceCarousel() {
     if (difference < -total / 2) difference += total
     return difference
   }
-  const baseCardWidth = viewportWidth < 480
-    ? Math.min(viewportWidth * .88, 330)
+  const baseCardWidth = isMobile
+    ? Math.min(viewportWidth - 42, 348)
     : viewportWidth < 768
       ? Math.min(viewportWidth * .86, 360)
       : viewportWidth >= 1024 && typeof window !== 'undefined' && window.innerHeight <= 850
         ? Math.min(viewportWidth * .5, 410)
         : Math.min(viewportWidth * .56, 440)
-  const activeCardWidth = Math.min(
-    baseCardWidth * 1.16,
-    viewportWidth - (viewportWidth < 640 ? 24 : 64),
-    510,
-  )
-  const gap = (
-    viewportWidth < 640 ? viewportWidth * .62 : Math.min(viewportWidth * .28, 410)
-  ) + (activeCardWidth - baseCardWidth) * .58
+  const activeCardWidth = isMobile
+    ? baseCardWidth
+    : Math.min(baseCardWidth * 1.16, viewportWidth - 64, 510)
+  const gap = isMobile
+    ? 0
+    : Math.min(viewportWidth * .28, 410) + (activeCardWidth - baseCardWidth) * .58
 
   const onWheel = event => {
     const horizontalIntent = event.shiftKey || (Math.abs(event.deltaX) > 12 && Math.abs(event.deltaX) > Math.abs(event.deltaY) * 1.5)
@@ -352,7 +352,7 @@ function ServiceCarousel() {
       <div onWheel={onWheel} onKeyDown={event => { if (event.key === 'ArrowRight') move(1); if (event.key === 'ArrowLeft') move(-1) }} tabIndex="0" aria-label="EMS engineering services carousel" className="home-carousel-stage relative outline-none [perspective:1400px]">
         {homeServiceCards.map((service, index) => {
           const position = relativePosition(index)
-          if (Math.abs(position) > 2) return null
+          if (isMobile ? position !== 0 : Math.abs(position) > 2) return null
           const isActive = position === 0
           const Icon = service.icon
           return <motion.article
@@ -382,13 +382,13 @@ function ServiceCarousel() {
             animate={{
               x: position * gap - (isActive ? activeCardWidth : baseCardWidth) / 2,
               width: isActive ? activeCardWidth : baseCardWidth,
-              scale: isActive ? 1 : Math.abs(position) === 1 ? .84 : .7,
-              rotateY: position * -9,
-              opacity: Math.abs(position) === 2 ? .22 : isActive ? 1 : .52,
-              z: isActive ? 80 : -Math.abs(position) * 90,
+              scale: isMobile || isActive ? 1 : Math.abs(position) === 1 ? .84 : .7,
+              rotateY: isMobile ? 0 : position * -9,
+              opacity: isMobile || isActive ? 1 : Math.abs(position) === 2 ? .22 : .52,
+              z: isMobile ? 0 : isActive ? 80 : -Math.abs(position) * 90,
             }}
-            transition={{ type: 'spring', stiffness: 68, damping: 21, mass: 1.15 }}
-            style={{ zIndex: 10 - Math.abs(position), pointerEvents: Math.abs(position) <= 1 ? 'auto' : 'none', cursor: isActive ? 'grab' : 'pointer' }}
+            transition={{ type: 'spring', stiffness: isMobile ? 120 : 68, damping: isMobile ? 24 : 21, mass: isMobile ? .8 : 1.15 }}
+            style={{ zIndex: 10 - Math.abs(position), pointerEvents: isActive ? 'auto' : 'none', cursor: isActive ? 'grab' : 'default' }}
             className={`home-service-card group absolute left-1/2 top-0 bg-[#061326] shadow-[0_40px_120px_rgba(0,0,0,.65)] will-change-transform ${isActive ? 'is-active' : 'blur-[1px]'}`}
           >
             <img src={service.image} alt={service.title} loading={isActive ? 'eager' : 'lazy'} className="absolute inset-0 h-full w-full object-cover transition duration-[1400ms] ease-out group-hover:scale-[1.055]" />
