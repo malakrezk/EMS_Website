@@ -622,17 +622,6 @@ export default function Home() {
   const reducedMotion = useReducedMotion()
 
   useEffect(() => {
-    const video = heroVideoRef.current
-    if (!video) return
-    video.currentTime = 48
-    const handleSeeked = () => {
-      video.play().catch(() => undefined)
-    }
-    video.addEventListener('seeked', handleSeeked, { once: true })
-    return () => video.removeEventListener('seeked', handleSeeked)
-  }, [])
-
-  useEffect(() => {
     if (!activeVideo) return undefined
     const previousBodyOverflow = document.body.style.overflow
     const previousHtmlOverflow = document.documentElement.style.overflow
@@ -693,6 +682,7 @@ export default function Home() {
       <div aria-hidden="true" className="absolute inset-0 z-[1] overflow-hidden">
         <video
           ref={heroVideoRef}
+          autoPlay
           muted
           loop
           playsInline
@@ -700,7 +690,7 @@ export default function Home() {
           style={{ willChange: 'transform' }}
           className="pointer-events-none absolute inset-0 h-full w-full object-contain object-right"
         >
-          <source src="/Al-Nama%20Final%20Project.mp4" type="video/mp4" />
+          <source src="/al-nama-hero.mp4" type="video/mp4" />
         </video>
         {/* Smooth left-panel shade — wide gradient for cinematic fade */}
         <div className="absolute inset-0 z-10 bg-[linear-gradient(90deg,#000816_0%,#000816_22%,rgba(0,8,22,.92)_30%,rgba(0,8,22,.65)_40%,rgba(0,8,22,.3)_52%,rgba(0,8,22,.1)_62%,transparent_75%)]" />
