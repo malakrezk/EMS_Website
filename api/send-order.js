@@ -1,20 +1,19 @@
 import nodemailer from 'nodemailer'
 
-const SMTP_USER = 'emscompany2016@gmail.com'
-const SMTP_PASS = 'rgrbmcivshpruhdx' // Google App Password
-const RECIPIENT_EMAIL = 'ahmadbahaa561@gmail.com'
+
 
 /**
  * Creates the nodemailer transporter with Gmail SMTP
  */
 export function createTransporter() {
+  if (!process.env.SMTP_USER || !process.env.SMTP_PASS || !process.env.RECIPIENT_EMAIL) throw new Error('Order email is not configured')
   return nodemailer.createTransport({
     host: 'smtp.gmail.com',
     port: 465,
     secure: true, // SSL
     auth: {
-      user: SMTP_USER,
-      pass: SMTP_PASS,
+      user: process.env.SMTP_USER,
+      pass: process.env.SMTP_PASS,
     },
     tls: {
       rejectUnauthorized: true,
@@ -325,9 +324,9 @@ export async function sendOrderEmail({ orderNumber, customer, items, totalQuanti
   const html = buildHtmlEmail({ orderNumber, customer, items, totalQuantity, date })
 
   const mailOptions = {
-    from: `"EMS Procurement Portal" <${SMTP_USER}>`,
-    to: RECIPIENT_EMAIL,
-    replyTo: customer.email ? `"${customerName}" <${customer.email}>` : SMTP_USER,
+    from: `"EMS Procurement Portal" <${process.env.SMTP_USER}>`,
+    to: process.env.RECIPIENT_EMAIL,
+    replyTo: customer.email ? `"${customerName}" <${customer.email}>` : process.env.SMTP_USER,
     subject,
     text,
     html,

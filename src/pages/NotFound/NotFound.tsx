@@ -1,0 +1,25 @@
+import AppButton from '../../components/common/AppButton'
+import Container from '../../components/layout/Container'
+
+import { motion } from 'framer-motion'
+import { HiOutlineArrowLeft } from 'react-icons/hi2'
+
+export default function NotFound() {
+  return (
+    <section className="relative flex min-h-[80vh] items-center justify-center overflow-hidden bg-paint-navy">
+      <div className="absolute inset-0 grid-bg opacity-40" />
+      <div className="absolute inset-0 bg-radial-glow" />
+      <Container className="relative text-center">
+        <motion.p initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="type-label font-mono uppercase tracking-[0.3em] text-cyan-300">Signal Lost</motion.p>
+        <motion.h1 initial={{ opacity: 0, scale: .8 }} animate={{ opacity: 1, scale: 1 }} transition={{ type: 'spring', stiffness: 100 }} className="type-page-title mt-4 font-serif text-white">404</motion.h1>
+        <p className="type-body mx-auto mt-4 max-w-md text-white/60">
+          The page you're looking for has been disconnected from the network. Let's get you back online.
+        </p>
+        <AppButton to="/" className="mt-8 inline-flex">
+          <HiOutlineArrowLeft className="h-4 w-4" />
+          Back to Home
+        </AppButton>
+      </Container>
+    </section>
+  )
+}

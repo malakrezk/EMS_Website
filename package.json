@@ -11,7 +11,9 @@
     "build": "vite build",
     "preview": "vite preview",
     "lint": "eslint .",
-    "check": "npm run lint && npm run build"
+    "check": "npm run typecheck && npm run lint && npm run build",
+    "typecheck": "tsc --noEmit",
+    "test": "playwright test"
   },
   "dependencies": {
     "@fontsource/cormorant-garamond": "^5.3.0",
@@ -26,6 +28,7 @@
     "react-router-dom": "^6.26.2"
   },
   "devDependencies": {
+    "@playwright/test": "^1.63.0",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react": "^4.3.1",
@@ -33,6 +36,8 @@
     "eslint": "^10.9.1",
     "postcss": "^8.4.45",
     "tailwindcss": "^3.4.10",
+    "typescript": "~5.9.3",
+    "typescript-eslint": "^8.70.1",
     "vite": "^5.4.3"
   }
 }

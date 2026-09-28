@@ -1,9 +1,10 @@
+import tseslint from 'typescript-eslint'
 export default [
   {
-    ignores: ['dist/**', 'node_modules/**'],
+    ignores: ['dist/**', 'node_modules/**', 'artifacts/**', 'test-results/**', 'playwright-report/**'],
   },
   {
-    files: ['**/*.{js,jsx}'],
+    files: ['**/*.{js,jsx,mjs}'],
     languageOptions: {
       ecmaVersion: 'latest',
       sourceType: 'module',
@@ -35,4 +36,5 @@ export default [
       'valid-typeof': 'error',
     },
   },
+  { files: ['**/*.{ts,tsx}'], languageOptions: { parser: tseslint.parser }, plugins: { '@typescript-eslint': tseslint.plugin }, rules: { '@typescript-eslint/no-explicit-any': 'error', '@typescript-eslint/no-unused-vars': ['error', { argsIgnorePattern: '^_', varsIgnorePattern: '^_' }] } },
 ]
