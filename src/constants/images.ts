@@ -68,6 +68,7 @@ export const images = {
   "abdellatefIndustrial": "/abdellatef-industrial.mp4",
   "industrialAbdellatefPoster": "/industrial-abdellatef-poster.png",
   "sectorTowersCn05": "/sector-towers-cn05.png",
+  "homeServiceBms": "/ChatGPT Image Sep 28, 2026, 05_15_51 PM.png",
   "serviceScadaControlRoom": "/service-scada-control-room.png",
   "serviceIot": "/service-iot.png",
   "serviceAi": "/service-ai.png",

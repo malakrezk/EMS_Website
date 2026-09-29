@@ -58,7 +58,7 @@ export default function HeroSection() {
           <p className="home-hero-technologies home-hero-support mt-20">BMS · SCADA · IoT · AI · Digital Twin · Robotics</p>
           <div className="home-hero-actions home-hero-support mt-12 flex flex-wrap gap-3">
             <Link to="/solutions" className="home-hero-action home-hero-primary gap-2">Explore Solutions <HiOutlineArrowRight aria-hidden="true" /></Link>
-            <Link to="/projects" className="home-hero-action home-hero-secondary">View Case Studies</Link>
+            <Link to="/projects" className="home-hero-action home-hero-secondary">View Projects</Link>
           </div>
           <div className="home-hero-trust home-hero-support mt-10">
             <div className="home-hero-trust-item flex w-fit items-center gap-2 text-[11px] font-semibold text-paint-muted sm:text-xs">

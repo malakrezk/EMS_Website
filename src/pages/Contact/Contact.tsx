@@ -1,15 +1,11 @@
 
-import PageHeader from '../../components/ui/PageHeader'
+import HeroSection from './components/HeroSection'
 import ContactSection from './components/ContactSection'
 
 export default function Contact() {
   return (
     <>
-      <PageHeader
-        eyebrow="Contact"
-        title="Start the conversation"
-        description="Talk to EMS about connecting BMS, SCADA, IoT, AI and digital operations through the ZETA platform."
-      />
+      <HeroSection />
       <ContactSection />
     </>
   )

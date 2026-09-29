@@ -57,7 +57,7 @@ export const homeServiceCards: ShowcaseService[] = [
   {
     ...getShowcaseService('building-management-systems'),
     title: 'BMS',
-    image: images.sectorTowersCn05,
+    image: images.homeServiceBms,
     description: 'Unified building management for HVAC, power, lighting, security and life-safety systems.',
     features: ['Unified building dashboards', 'HVAC and lighting control', 'Energy and fault reporting'],
   },

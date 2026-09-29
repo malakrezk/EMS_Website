@@ -33,7 +33,7 @@ export default function ServiceCarousel() {
   const lockSwitch = useCallback(() => {
     switchLocked.current = true
     window.clearTimeout(switchTimer.current)
-    switchTimer.current = window.setTimeout(() => { switchLocked.current = false }, 720)
+    switchTimer.current = window.setTimeout(() => { switchLocked.current = false }, 560)
   }, [])
   const move = useCallback((direction: number) => {
     lockSwitch()
@@ -90,6 +90,7 @@ export default function ServiceCarousel() {
             drag={isActive ? 'x' : false}
             dragConstraints={{ left: 0, right: 0 }}
             dragElastic={.12}
+            dragMomentum={false}
             onDragEnd={(_, info) => { if (Math.abs(info.offset.x) > 65 || Math.abs(info.velocity.x) > 450) move(info.offset.x < 0 ? 1 : -1) }}
             onMouseEnter={() => {
               if (isActive || switchLocked.current) return
@@ -98,7 +99,7 @@ export default function ServiceCarousel() {
                 if (switchLocked.current) return
                 lockSwitch()
                 setActive(index)
-              }, 320)
+              }, 180)
             }}
             onMouseLeave={() => window.clearTimeout(hoverTimer.current)}
             onClick={() => {
@@ -110,16 +111,17 @@ export default function ServiceCarousel() {
             }}
             initial={false}
             animate={{
-              x: position * gap - (isActive ? activeCardWidth : baseCardWidth) / 2,
+              left: `calc(50% - ${(isActive ? activeCardWidth : baseCardWidth) / 2}px)`,
+              x: position * gap,
               width: isActive ? activeCardWidth : baseCardWidth,
               scale: isMobile || isActive ? 1 : Math.abs(position) === 1 ? .84 : .7,
               rotateY: isMobile ? 0 : position * -9,
               opacity: isMobile || isActive ? 1 : Math.abs(position) === 2 ? .22 : .52,
               z: isMobile ? 0 : isActive ? 80 : -Math.abs(position) * 90,
             }}
-            transition={{ type: 'spring', stiffness: isMobile ? 120 : 68, damping: isMobile ? 24 : 21, mass: isMobile ? .8 : 1.15 }}
-            style={{ zIndex: 10 - Math.abs(position), pointerEvents: isActive ? 'auto' : 'none', cursor: isActive ? 'grab' : 'default' }}
-            className={`home-service-card group absolute left-1/2 top-0 bg-paint-section shadow-[0_40px_120px_rgba(0,0,0,.65)] will-change-transform ${isActive ? 'is-active' : 'blur-[1px]'}`}
+            transition={{ type: 'spring', stiffness: isMobile ? 110 : 58, damping: isMobile ? 26 : 24, mass: isMobile ? .8 : 1.12 }}
+            style={{ zIndex: 10 - Math.abs(position), pointerEvents: 'auto', cursor: isActive ? 'grab' : 'pointer' }}
+            className={`home-service-card group absolute top-0 bg-paint-section shadow-[0_40px_120px_rgba(0,0,0,.65)] will-change-transform ${isActive ? 'is-active' : 'blur-[1px]'}`}
           >
             <img src={service.image} alt={service.title} loading={isActive ? 'eager' : 'lazy'} className="absolute inset-0 h-full w-full object-cover transition duration-[1400ms] ease-out group-hover:scale-[1.055]" />
             <div className="home-service-overlay absolute inset-0" />

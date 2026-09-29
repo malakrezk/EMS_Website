@@ -139,6 +139,49 @@ test('all data-backed detail routes resolve', async ({ page }) => {
   expect(errors).toEqual([])
 })
 
+test('home service cards switch on hover without clicking', async ({ page }) => {
+  await page.goto('/')
+  await expect(page.locator('.home-service-card.is-active h3')).toContainText('BMS')
+
+  const nextCard = page.locator('.home-service-card').nth(1)
+  await nextCard.hover()
+
+  await expect(page.locator('.home-service-card.is-active h3')).toContainText('SCADA', { timeout: 2000 })
+})
+
+for (const width of [1920, 768, 390]) {
+  test(`home service card stays centered after dragging at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 834 })
+    await page.emulateMedia({ reducedMotion: 'no-preference' })
+    await page.goto('/')
+    const stage = page.locator('.home-carousel-stage')
+    const card = page.locator('.home-service-card.is-active')
+    await stage.scrollIntoViewIfNeeded()
+    const expectCentered = async () => {
+      await expect.poll(async () => {
+        const stageBox = await stage.boundingBox()
+        const cardBox = await card.boundingBox()
+        if (!stageBox || !cardBox) return Infinity
+        return Math.abs(cardBox.x + cardBox.width / 2 - stageBox.x - stageBox.width / 2)
+      }).toBeLessThan(2)
+    }
+    await expectCentered()
+    for (const distance of [30, -120]) {
+      const box = await card.boundingBox()
+      if (!box) throw new Error('Active service card is missing')
+      const x = box.x + box.width / 2
+      const y = box.y + box.height / 2
+      await page.mouse.move(x, y)
+      await page.mouse.down()
+      await page.mouse.move(x + distance, y, { steps: 15 })
+      await page.waitForTimeout(150)
+      await page.mouse.up()
+      await expect(card.locator('h3')).toHaveText(distance === 30 ? 'BMS' : 'SCADA')
+      await expectCentered()
+    }
+  })
+}
+
 test('home carousels and video preview work with motion enabled', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' })
   await page.goto('/')
