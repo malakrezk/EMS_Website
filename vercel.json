@@ -1,6 +1,10 @@
 {
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
+  "redirects": [
+    { "source": "/case-studies", "destination": "/projects", "statusCode": 301 },
+    { "source": "/case-studies/:path+", "destination": "/projects/:path+", "statusCode": 301 }
+  ],
   "rewrites": [
     { "source": "/api/(.*)", "destination": "/api/$1" },
     { "source": "/(.*)", "destination": "/index.html" }

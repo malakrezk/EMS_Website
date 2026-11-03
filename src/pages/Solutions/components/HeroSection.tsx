@@ -14,6 +14,7 @@ import DashboardObject from '../components/DashboardObject'
 export default function HeroSection() {
   const reducedMotion = useReducedMotion()
   const heroRef = useRef<HTMLDivElement>(null)
+  const railRef = useRef<HTMLDivElement>(null)
   const [[active, direction], setActive] = useState([0, 1])
   const [dashboardVisible, setDashboardVisible] = useState(false)
   const [paused, setPaused] = useState(false)
@@ -50,6 +51,15 @@ export default function HeroSection() {
     const timer = window.setTimeout(() => move(1), 8000)
     return () => window.clearTimeout(timer)
   }, [active, paused, interacting, reducedMotion, move])
+  // Where the sector rail scrolls sideways (below the desktop layout), keep the active tab in view. Only the rail moves, never the page.
+  useEffect(() => {
+    const rail = railRef.current
+    const tab = rail?.children[active] as HTMLElement | undefined
+    if (!rail || !tab || rail.scrollWidth <= rail.clientWidth) return
+    const railBox = rail.getBoundingClientRect()
+    const tabBox = tab.getBoundingClientRect()
+    rail.scrollTo({ left: rail.scrollLeft + tabBox.left - railBox.left - (railBox.width - tabBox.width) / 2, behavior: reducedMotion ? 'auto' : 'smooth' })
+  }, [active, reducedMotion])
   const handlePointerMove = (event: React.PointerEvent<HTMLElement>) => {
     if (reducedMotion) return
     const rect = event.currentTarget.getBoundingClientRect()
@@ -94,7 +104,7 @@ export default function HeroSection() {
       <div className="absolute inset-x-0 bottom-0 z-40 border-t border-white/10 bg-paint-blue-03/92 backdrop-blur-xl">
         <Container className="flex items-stretch">
           <button type="button" onClick={() => setPaused(value => !value)} aria-label={paused ? 'Resume automatic sector transitions' : 'Pause automatic sector transitions'} className="hidden w-14 shrink-0 items-center justify-center border-r border-white/10 text-white/55 transition hover:text-paint-accent sm:flex">{paused ? <HiOutlinePlay /> : <HiOutlinePause />}</button>
-          <div className="solutions-sector-rail grid flex-1 auto-cols-[minmax(128px,1fr)] grid-flow-col lg:grid-cols-6 lg:grid-flow-row" onPointerEnter={() => setInteracting(true)} onPointerLeave={() => setInteracting(false)}>
+          <div ref={railRef} className="solutions-sector-rail grid flex-1 auto-cols-[minmax(128px,1fr)] grid-flow-col lg:grid-cols-6 lg:grid-flow-row" onPointerEnter={() => setInteracting(true)} onPointerLeave={() => setInteracting(false)}>
             {sectors.map((item, index) => <button key={item.id} type="button" onClick={() => selectSector(index)} onMouseEnter={() => { if (window.matchMedia('(hover:hover)').matches) selectSector(index) }} aria-pressed={active === index} className={`solutions-sector-button relative min-w-[128px] border-r border-white/10 px-4 py-4 text-left transition duration-500 last:border-r-0 sm:px-5 sm:py-5 ${active === index ? 'is-active bg-paint-blue-26 text-white' : 'text-white/40 hover:bg-white/[.06] hover:text-white'}`}><span className={`block font-mono text-[7px] tracking-[.2em] transition ${active === index ? 'text-paint-accent/75' : 'text-white/30'}`}>{item.number}</span><span className="solutions-sector-name mt-1.5 block text-[10px] font-bold uppercase tracking-[.16em] transition duration-500 sm:text-[11px]">{item.name}</span>{active === index && <span key={`${active}-${paused}-${interacting}`} className={`solutions-progress absolute inset-x-0 bottom-0 h-[2px] bg-paint-accent ${paused || interacting || reducedMotion ? 'is-paused' : ''}`} />}</button>)}
           </div>
           <div className="hidden shrink-0 items-center gap-2 border-l border-white/10 px-3 xl:flex"><button onClick={() => move(-1)} aria-label="Previous sector" className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition hover:border-paint-accent hover:text-paint-accent"><HiOutlineChevronLeft /></button><button onClick={() => move(1)} aria-label="Next sector" className="flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-white/60 transition hover:border-paint-accent hover:text-paint-accent"><HiOutlineChevronRight /></button></div>

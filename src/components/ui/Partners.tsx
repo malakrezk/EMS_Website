@@ -1,9 +1,10 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { partners } from '../../data/partners'
 import Container from '../layout/Container'
 import SectionHeading from './SectionHeading'
 
 export default function Partners() {
+  const reducedMotion = useReducedMotion()
   return (
     <section id="partners" className="section-padding bg-navy">
       <Container className="">
@@ -13,13 +14,13 @@ export default function Partners() {
           {partners.map((p, i) => (
             <motion.div
               key={p.id}
-              initial={{ opacity: 0, y: 16 }}
+              initial={reducedMotion ? false : { opacity: 0, y: 16 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: '-60px' }}
               transition={{ duration: 0.4, delay: i * 0.08 }}
               className="group flex h-28 items-center justify-center rounded-lg border border-white/[0.08] bg-card px-6 transition-all duration-300 hover:-translate-y-1 hover:border-cyan-500/40 hover:shadow-glow"
             >
-              <img src={p.logo} alt={p.name} className={`h-9 w-auto opacity-90 transition-opacity duration-300 group-hover:opacity-100 ${p.id === 'oracle' ? 'scale-[2.35]' : ''}`} />
+              <img src={p.logo} alt={p.name} className={`h-9 w-auto max-w-full object-contain opacity-90 transition-opacity duration-300 group-hover:opacity-100 ${p.id === 'oracle' ? 'scale-[2.35]' : ''}`} />
             </motion.div>
           ))}
         </div>

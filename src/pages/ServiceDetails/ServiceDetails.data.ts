@@ -1,3 +1,4 @@
+import { images } from '../../constants/images'
 import type { IconType } from 'react-icons'
 import {
   HiOutlineCheckBadge, HiOutlineClock,
@@ -35,3 +36,13 @@ export const projectByService: Record<string, string> = {
 }
 
 export const overviewStats: [string, string][] = [['Unified', 'Visibility'], ['Live', 'System data'], ['Connected', 'Operations']]
+
+/** Per-service overview pictures; other services show the shared engineering photo. `position` sets where a tall picture is cropped. */
+export const overviewOverrides: Partial<Record<string, { image: string; alt: string; position?: string }>> = {
+  'robotics-iot': { image: images.serviceRoboticsCommandHub, alt: 'EMS AI robotics assistant surrounded by dashboards, a live factory feed and robotic arm schematics', position: 'center 22%' },
+}
+
+/** Per-service hero adjustments; other services use their shared title and image. `centered` sets the text in the middle, for artwork whose subject is centred. */
+export const heroOverrides: Partial<Record<string, { title?: string; image?: string; compactTitle?: boolean; fullImage?: boolean; refined?: boolean; centered?: boolean }>> = {
+  'robotics-iot': { title: 'Robotics', image: images.serviceRoboticsHero, compactTitle: true, fullImage: true, refined: true, centered: true },
+}

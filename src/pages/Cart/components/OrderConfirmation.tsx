@@ -1,3 +1,4 @@
+import PageBackground from '../../../components/common/PageBackground'
 import { motion } from 'framer-motion'
 import {
   HiOutlineArrowLeft,
@@ -11,11 +12,9 @@ interface OrderConfirmationProps {
 }
 export default function OrderConfirmation({ submittedData }: OrderConfirmationProps) {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-paint-navy pb-28 pt-32 text-white">
+    <div className="engineering-page-background relative min-h-screen overflow-hidden pb-28 pt-32 text-white">
       {/* Ambient background glow */}
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-16 h-96 w-[700px] -translate-x-1/2 rounded-full bg-[radial-gradient(ellipse_at_center,rgba(50,169,245,0.15),transparent_70%)] blur-3xl" />
-      </div>
+      <PageBackground />
 
       <Container className="relative mx-auto max-w-3xl">
         <motion.div

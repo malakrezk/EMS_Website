@@ -1,11 +1,10 @@
 import {
   HiOutlineBeaker,
-  HiOutlineBuildingOffice2, HiOutlineChartBarSquare,
+  HiOutlineBuildingOffice2,
   HiOutlineCloud,
   HiOutlineCog6Tooth,
-  HiOutlineCpuChip, HiOutlineCubeTransparent, HiOutlineHeart,
-  HiOutlineHomeModern, HiOutlineLightBulb,
-  HiOutlineSignal
+  HiOutlineHeart,
+  HiOutlineHomeModern
 } from 'react-icons/hi2'
 import { images } from '../../constants/images'
 import { transitions } from '../../theme/transitions'
@@ -60,15 +59,6 @@ export const approach = [
   { number: '02', title: 'Engineer one architecture', text: 'Controls, field devices, networks and platforms are designed as one coordinated system.' },
   { number: '03', title: 'Connect physical and digital', text: 'BMS, SCADA, IoT and analytics turn real infrastructure into an intelligible operating model.' },
   { number: '04', title: 'Improve continuously', text: 'Live insight and automation help teams reduce waste, respond earlier and operate with confidence.' },
-]
-
-export const capabilities = [
-  { name: 'BMS', label: 'Building intelligence', image: images.heroControlRoom02, icon: HiOutlineBuildingOffice2 },
-  { name: 'SCADA', label: 'Infrastructure control', image: images.serviceScadaControlRoom, icon: HiOutlineChartBarSquare },
-  { name: 'IoT', label: 'Connected field data', image: images.serviceIot, icon: HiOutlineSignal },
-  { name: 'AI & Analytics', label: 'Operational insight', image: images.serviceAi, icon: HiOutlineCpuChip },
-  { name: 'Energy', label: 'Performance management', image: images.heroData3, icon: HiOutlineLightBulb },
-  { name: 'Digital Systems', label: 'Unified environments', image: images.heroControlRoom05, icon: HiOutlineCubeTransparent },
 ]
 
 export const ease = transitions.reveal

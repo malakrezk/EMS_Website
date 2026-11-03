@@ -1,13 +1,21 @@
-
-
+import type { ReactNode } from 'react'
 import Reveal from '../../../components/ui/Reveal'
+import { cn } from '../../../utils/cn'
 
-export default function SectionHeading({ eyebrow, title, text, center = false }: { eyebrow: string; title: React.ReactNode; text?: string; center?: boolean }) {
+interface SectionHeadingProps {
+  id: string
+  label: string
+  title: ReactNode
+  intro?: string
+  className?: string
+}
+
+export default function SectionHeading({ id, label, title, intro, className }: SectionHeadingProps) {
   return (
-    <Reveal className={center ? 'mx-auto max-w-3xl text-center' : 'max-w-3xl'}>
-      <p className="eyebrow">{eyebrow}</p>
-      <h2 className="type-section-title mt-4 font-serif">{title}</h2>
-      {text && <p className={`type-body mt-4 max-w-2xl text-slate-400 ${center ? 'mx-auto' : ''}`}>{text}</p>}
+    <Reveal className={cn('about-heading', className)}>
+      <p className="eyebrow about-label"><span aria-hidden="true" className="about-label-rule" />{label}</p>
+      <h2 id={id} className="about-title about-display">{title}</h2>
+      {intro && <p className="about-intro">{intro}</p>}
     </Reveal>
   )
 }

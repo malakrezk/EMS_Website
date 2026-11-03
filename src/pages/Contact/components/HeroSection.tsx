@@ -12,7 +12,7 @@ export default function HeroSection() {
       <Container className="relative z-10 grid min-h-[min(780px,100svh)] items-center gap-12 pb-14 pt-28 sm:pt-32 lg:grid-cols-[minmax(0,1.25fr)_minmax(300px,.75fr)] lg:gap-16 lg:pb-20 lg:pt-28">
         <div className="max-w-3xl">
           <nav aria-label="Breadcrumb" className="mb-9 flex items-center gap-3 font-mono text-[10px] uppercase tracking-[.2em] text-slate-300">
-            <Link to="/" className="transition hover:text-cyan-300">Home</Link><span aria-hidden="true" className="text-white/30">/</span><span className="text-cyan-300">Contact</span>
+            <Link to="/" className="touch-target transition hover:text-cyan-300">Home</Link><span aria-hidden="true" className="text-white/30">/</span><span className="text-cyan-300">Contact</span>
           </nav>
           <p className="eyebrow flex items-center gap-3"><span className="h-px w-9 bg-cyan-300" />Talk to EMS</p>
           <h1 className="type-page-title mt-5 max-w-3xl font-serif">Great engineering starts with <span className="text-cyan-300">a conversation.</span></h1>

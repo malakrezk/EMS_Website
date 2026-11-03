@@ -1,0 +1,73 @@
+/* Footer: one dark field lit faintly from its top edge, with a seam of light where the page ends. */
+
+.site-footer { position: relative; isolation: isolate; background: var(--paint-footer); color: rgba(222, 234, 246, .7); }
+.site-footer::before { position: absolute; inset: 0 0 auto; z-index: -1; height: min(560px, 75%); background: radial-gradient(55% 100% at 50% 0%, rgba(35, 140, 220, .13), transparent 72%); content: ''; pointer-events: none; }
+.site-footer::after { position: absolute; inset: 0 0 auto; height: 1px; background: linear-gradient(90deg, transparent, rgba(56, 189, 248, .42) 50%, transparent); content: ''; pointer-events: none; }
+
+/* Columns: brand, the two link lists, contact. */
+.site-footer-main { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); grid-template-areas: "brand brand" "nav caps" "contact contact"; gap: 2.75rem 1.5rem; padding-block: clamp(3.5rem, 6vw, 5rem) clamp(2.75rem, 5vw, 4rem); }
+.site-footer-brand { grid-area: brand; }
+.site-footer-nav { grid-area: nav; }
+.site-footer-capabilities { grid-area: caps; }
+.site-footer-contact { grid-area: contact; }
+.site-footer-heading { color: #fff; font-size: 12.5px; font-weight: 600; letter-spacing: .16em; line-height: 1.4; text-transform: uppercase; }
+
+.site-footer-logo { display: inline-block; border-radius: 6px; }
+.site-footer-logo img { display: block; width: 12rem; height: auto; }
+.site-footer-brand > p { max-width: 24rem; margin-top: 1.25rem; color: rgba(222, 234, 246, .68); font-size: 15px; line-height: 1.7; }
+.site-footer-site { display: inline-flex; min-height: 40px; align-items: center; gap: .4rem; margin-top: .35rem; color: var(--paint-cyan); font-size: 14px; font-weight: 600; transition: color .25s ease; }
+.site-footer-site svg { width: .95rem; height: .95rem; transition: transform .35s cubic-bezier(.22, 1, .36, 1); }
+.site-footer-site:hover { color: #fff; }
+.site-footer-site:hover svg { transform: translate(2px, -2px); }
+.site-footer-presence-heading { margin-top: 1.75rem; }
+.site-footer-markets { display: flex; flex-wrap: wrap; gap: .5rem; margin-top: .9rem; }
+.site-footer-markets li { padding: .35rem .85rem; border: 1px solid rgba(148, 197, 255, .14); border-radius: 999px; background: rgba(255, 255, 255, .03); color: rgba(222, 234, 246, .85); font-size: 13px; line-height: 1.4; }
+
+/* Link lists: a short cyan line draws in ahead of the hovered or focused link. */
+.site-footer-links { display: grid; gap: .15rem; margin-top: 1.1rem; }
+.site-footer-links a { display: inline-flex; min-width: 44px; min-height: 36px; align-items: center; color: rgba(222, 234, 246, .72); font-size: 15px; transition: color .25s ease; }
+.site-footer-links a::before { width: 0; height: 1.5px; margin-right: 0; background: var(--paint-cyan); content: ''; transition: width .35s cubic-bezier(.22, 1, .36, 1), margin-right .35s cubic-bezier(.22, 1, .36, 1); }
+.site-footer-links a:hover,
+.site-footer-links a:focus-visible { color: #fff; }
+.site-footer-links a:hover::before,
+.site-footer-links a:focus-visible::before,
+.site-footer-links a[aria-current="page"]::before { width: .9rem; margin-right: .55rem; }
+.site-footer-links a[aria-current="page"] { color: var(--paint-cyan); }
+
+/* Contact: each detail with its icon and a small label; phone and email are whole-row links. */
+.site-footer-contact-list { display: grid; gap: 1rem; margin-top: 1.1rem; }
+.site-footer-contact-item { display: grid; grid-template-columns: 2.5rem minmax(0, 1fr); gap: .9rem; align-items: start; border-radius: 12px; }
+.site-footer-contact-icon { display: grid; width: 2.5rem; height: 2.5rem; place-items: center; border-radius: 12px; background: rgba(56, 189, 248, .09); color: var(--paint-cyan); transition: background-color .3s ease, color .3s ease; }
+.site-footer-contact-icon svg { width: 1.1rem; height: 1.1rem; }
+.site-footer-contact-label { display: block; color: rgba(222, 234, 246, .5); font-size: 12px; font-weight: 600; letter-spacing: .06em; line-height: 1.4; text-transform: uppercase; }
+.site-footer-contact-value { display: block; max-width: 22rem; margin-top: .2rem; color: rgba(255, 255, 255, .88); font-size: 15px; line-height: 1.55; transition: color .25s ease; }
+a.site-footer-contact-item:hover .site-footer-contact-icon { background: var(--paint-cyan); color: var(--paint-navy); }
+a.site-footer-contact-item:hover .site-footer-contact-value { color: var(--paint-cyan); }
+
+/* Bottom bar. */
+.site-footer-bar { border-top: 1px solid rgba(255, 255, 255, .07); }
+.site-footer-bar-inner { display: flex; flex-direction: column; align-items: flex-start; gap: .75rem; padding-block: 1.4rem; color: rgba(222, 234, 246, .55); font-size: 13px; line-height: 1.5; }
+.site-footer-top { display: inline-flex; min-height: 40px; align-items: center; gap: .5rem; padding-inline: 1rem; border: 1px solid rgba(255, 255, 255, .14); border-radius: 999px; color: rgba(222, 234, 246, .85); font-size: 13px; font-weight: 600; transition: border-color .3s ease, color .3s ease; }
+.site-footer-top svg { width: .9rem; height: .9rem; transition: transform .35s cubic-bezier(.22, 1, .36, 1); }
+.site-footer-top:hover { border-color: var(--paint-cyan); color: var(--paint-cyan); }
+.site-footer-top:hover svg { transform: translateY(-2px); }
+
+.site-footer :is(a, button):focus-visible { outline: 2px solid var(--paint-cyan); outline-offset: 3px; }
+.site-footer .site-footer-links a:focus-visible { border-radius: 4px; }
+
+@screen sm {
+  .site-footer-bar-inner { flex-direction: row; align-items: center; gap: 1.5rem; }
+  .site-footer-platform { margin-left: auto; }
+}
+@screen md {
+  .site-footer-main { grid-template-areas: "brand contact" "nav caps"; column-gap: 3rem; }
+}
+@screen lg {
+  .site-footer-main { grid-template-columns: minmax(0, 1.4fr) minmax(0, .7fr) minmax(0, .8fr) minmax(0, 1.2fr); grid-template-areas: "brand nav caps contact"; column-gap: clamp(2rem, 4vw, 4rem); }
+  .site-footer-brand { padding-right: clamp(2rem, 4vw, 4rem); border-right: 1px solid rgba(255, 255, 255, .07); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .site-footer svg,
+  .site-footer-links a::before { transition: none !important; }
+  .site-footer :is(.site-footer-site, .site-footer-top):hover svg { transform: none; }
+}

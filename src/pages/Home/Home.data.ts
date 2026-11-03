@@ -1,14 +1,10 @@
 import type { IconType } from 'react-icons'
-import {
-  HiOutlineBuildingOffice2, HiOutlineCheckBadge,
-  HiOutlineGlobeAlt
-} from 'react-icons/hi2'
+import { HiOutlineBuildingOffice2, HiOutlineGlobeAlt, HiOutlineMapPin } from 'react-icons/hi2'
 import { images } from '../../constants/images'
 import { partners } from '../../data/partners'
 import { projects } from '../../data/projects'
-import { getShowcaseService } from '../../data/servicesShowcase'
 import { transitions } from '../../theme/transitions'
-import type { ShowcaseService } from '../../types/content.types'
+import type { ServiceShowcaseItem } from '../../types/content.types'
 
 export const solutionCards = [
   { id: 'building-management', title: 'BMS', label: 'Intelligent buildings', image: 'https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1800&q=88', text: 'Centralized building management for intelligent monitoring, control and energy efficiency.', to: '/services/building-management' },
@@ -24,7 +20,6 @@ export const homeCaseStudyOrder: [string, string, string | undefined, string | u
   ['water-treatment-plant-automation', 'Water Infrastructure', images.investorsWater, images.industryWaterDashboard, 'Smart Water Management', 'Connected monitoring and intelligent control for safer, more efficient water operations.', ['Real-Time Monitoring', 'Predictive Maintenance']],
   ['smart-hospital', 'Hospital', undefined, undefined, 'Integrated Healthcare Infrastructure', 'Connected facility systems provide clear, real-time oversight across healthcare operations.', ['Integrated Building Management', 'Real-Time Monitoring']],
   ['wadi-zaha-project', 'Residential Compounds', images.parkLaneCompounds, images.industryMallsDashboard, 'Connected Residential Infrastructure', 'Integrated MEP and automation systems support connected residential communities.', ['Integrated MEP Systems', 'Smart Residential Automation']],
-  ['zia-building-complex', 'Smart Buildings', images.cn05Buildings, images.industryTowersDashboard, 'Intelligent Building Management', 'Unified smart-building visibility supports coordinated and efficient facility operations.', ['Unified Building Visibility', 'Siemens-Integrated Controls']],
   ['industrial-scada-system', 'Industrial Facilities', images.abdellatefIndustrial, images.industrialAbdellatefPoster, 'Integrated Industrial Automation', 'Integrated PLC and SCADA control supports reliable manufacturing operations.', ['Live Process Visibility', 'Integrated PLC & SCADA']],
 ]
 
@@ -47,60 +42,120 @@ export const homeCaseStudies = homeCaseStudyOrder
 
 export const ease = transitions.reveal
 
-export const aboutMilestones: [string, string, IconType][] = [
-  ['Founded in Egypt', 'Established as a premier MEP contracting company in Egypt.', HiOutlineBuildingOffice2],
-  ['Expanded in Saudi Arabia', 'Expanded operations in Saudi Arabia to serve the wider regional market.', HiOutlineGlobeAlt],
-  ['Expanded in England', 'Expanded operations in England to connect EMS with international markets.', HiOutlineCheckBadge],
+export const homeMobileApplicationService = {
+  title: 'Mobile Applications',
+  subtitle: 'Connected Operations, Wherever You Are',
+  description: 'Custom mobile applications that bring your dashboards, alerts, and operational workflows together in one accessible experience.',
+  image: images.parkLaneMobileApp,
+  videoSrc: images.mobileAppVideo,
+  highlights: ['Mobile Dashboards & Alerts', 'Connected Operational Workflows'],
+  cta: 'Discuss your mobile application',
+  to: '/mobile-app',
+}
+
+export interface AboutMilestone {
+  id: string
+  title: string
+  text: string
+  icon: IconType
+}
+
+// In the order EMS grew; the About timeline draws from one to the next.
+export const aboutMilestones: AboutMilestone[] = [
+  { id: 'egypt', title: 'Founded in Egypt', text: 'Established as a premier MEP contracting company in Egypt.', icon: HiOutlineBuildingOffice2 },
+  { id: 'saudi-arabia', title: 'Expanded in Saudi Arabia', text: 'Expanded operations in Saudi Arabia to serve the wider regional market.', icon: HiOutlineGlobeAlt },
+  { id: 'oman', title: 'Expanded in Oman', text: 'Expanded operations in Oman to support projects across the Sultanate.', icon: HiOutlineMapPin },
 ]
 
-export const homeServiceCards: ShowcaseService[] = [
+/** The services showcase heading, and the services it names, in the order the cards follow. */
+export const homeShowcaseHeading = {
+  title: 'Engineering Solutions',
+  services: ['BMS', 'SCADA', 'IoT', 'AI', 'Digital Twin', 'Robotics', 'Mobile Applications'],
+}
+
+export const homeServiceShowcase: ServiceShowcaseItem[] = [
   {
-    ...getShowcaseService('building-management-systems'),
+    id: 'bms',
     title: 'BMS',
-    image: images.homeServiceBms,
+    label: 'Building Management Systems',
     description: 'Unified building management for HVAC, power, lighting, security and life-safety systems.',
-    features: ['Unified building dashboards', 'HVAC and lighting control', 'Energy and fault reporting'],
+    points: [
+      { title: 'Centralized Building Management', text: 'Integrating building systems into one intelligent monitoring and control platform.' },
+      { title: 'Smart Automation & Energy Efficiency', text: 'Optimizing HVAC, lighting, and power systems for efficient building operations.' },
+      { title: 'Intelligent Building Integration', text: 'Connecting BMS with IoT, AI analytics, and Digital Twin technologies.' },
+    ],
+    to: '/services/building-management',
+    card: images.showcaseBmsCard,
+    cardAlt: 'Smart office building at dusk with connected ventilation, temperature, lighting, energy, security and elevator systems',
+    background: images.showcaseBmsBackground,
+    // The large card shows the live EMS station dashboard.
+    wide: images.solutionsApproachDashboard,
   },
   {
-    ...getShowcaseService('scada'),
+    id: 'scada',
     title: 'SCADA',
-    image: images.serviceScadaControlRoom,
+    label: 'SCADA & Infrastructure Control',
     description: 'Real-time supervisory control, alarms and operational visibility across distributed infrastructure.',
-    features: ['Live process visualization', 'Remote telemetry and alarms', 'Historian and reporting'],
+    to: '/services/scada',
+    card: images.showcaseScadaCard,
+    cardAlt: 'Operators monitoring a water treatment plant from a SCADA control room',
+    background: images.serviceScadaHero,
   },
   {
-    ...getShowcaseService('light-current-systems'),
+    id: 'iot',
     title: 'IoT',
-    image: images.serviceIot,
+    label: 'Internet of Things',
     description: 'Connected sensors and devices that transform facility data into clear, actionable insight.',
-    features: ['Connected sensors and gateways', 'Real-time device monitoring', 'Secure data integration'],
+    to: '/services/iot',
+    card: images.homeServiceIotCard,
+    cardAlt: 'IoT cloud dashboard connecting field devices, sensors and control panels across a facility',
+    background: images.showcaseIotBackground,
+    // The large card shows the EMS live cameras dashboard, prepared at the card's 1.7:1 shape so it fills without cropping.
+    wide: images.iotDashboard,
   },
   {
-    ...getShowcaseService('control-systems'),
+    id: 'ai',
     title: 'AI',
-    image: images.serviceAi,
+    label: 'Artificial Intelligence',
     description: 'AI-powered analytics for smarter decisions, predictive maintenance and efficient operations.',
-    features: ['Predictive maintenance', 'Operational analytics', 'Intelligent recommendations'],
+    to: '/services/artificial-intelligence',
+    card: images.showcaseAiCard,
+    cardAlt: 'AI command center dashboard with live monitoring, event detection, occupancy analytics and predictive maintenance',
+    background: images.showcaseAiBackground,
   },
   {
-    ...getShowcaseService('industrial-automation'),
-    title: 'Robotics',
-    image: images.screenshot20260914221026,
-    description: 'Connected robotic automation engineered to improve precision, throughput and workplace safety.',
-    features: ['Robotic process integration', 'Production automation', 'Performance monitoring'],
-  },
-  {
-    ...getShowcaseService('energy-management'),
     id: 'digital-twin',
     title: 'Digital Twin',
-    image: images.serviceDigitalTwinDashboard,
+    label: '3D Operations',
     description: 'A connected digital representation of physical systems for simulation, monitoring and remote insight.',
-    features: ['Live operational context', 'Remote system understanding', 'Simulation and maintenance support'],
     to: '/digital-twin',
+    card: images.showcaseDigitalTwinCard,
+    cardAlt: '3D digital twin of a sewage lifting station above its live operations dashboard',
+    background: images.solutionsApproachDashboard,
+  },
+  {
+    id: 'robotics',
+    title: 'Robotics',
+    label: 'Robotics & IoT',
+    description: 'Connected robotic automation engineered to improve precision, throughput and workplace safety.',
+    to: '/services/robotics-iot',
+    card: images.homeServiceRoboticsCard,
+    cardAlt: 'AI assistant robot surrounded by robotic automation and monitoring interfaces',
+    background: images.homeServiceRobotics,
+  },
+  {
+    id: 'mobile-applications',
+    title: 'Mobile Applications',
+    description: homeMobileApplicationService.description,
+    to: homeMobileApplicationService.to,
+    ctaLabel: homeMobileApplicationService.cta,
+    card: images.showcaseMobileApplicationsCard,
+    cardAlt: 'EMS mobile application for a connected residential compound shown on a smartphone',
+    background: images.parkLaneMobileApp,
   },
 ]
 
-export const featuredPartners = partners.filter(partner => ['siemens', 'cisco', 'aws', 'oracle'].includes(partner.id))
+export const featuredPartners = partners.filter(partner => ['siemens', 'cisco', 'oracle'].includes(partner.id))
 
 export const industryGroups: { id: string; title: string; image: string; description: string; to: string; video?: string }[] = [
   {

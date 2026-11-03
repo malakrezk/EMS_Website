@@ -16,8 +16,7 @@ export default function HeroSection() {
   const [heroMuted, setHeroMuted] = useState(true)
 
   return (
-    <section id="home-hero" className="relative min-h-[100svh] scroll-mt-20 overflow-hidden">
-      {/* Full-width hero video with smooth left-panel shade */}
+    <section id="home-hero" className="home-hero-bg relative min-h-[100svh] scroll-mt-20 overflow-hidden">
       <div aria-hidden="true" className="absolute inset-0 z-[1] overflow-hidden">
         <video
           ref={heroVideoRef}
@@ -31,9 +30,7 @@ export default function HeroSection() {
         >
           <source src={images.alNamaHero} type="video/mp4" />
         </video>
-        {/* Smooth left-panel shade — wide gradient for cinematic fade */}
         <div className="home-hero-video-shade" />
-        {/* Top fade behind navbar */}
         <div className="absolute inset-0 z-10 bg-[linear-gradient(180deg,var(--paint-hero)_0%,rgba(0,8,22,.7)_5%,rgba(0,8,22,.25)_12%,transparent_20%)]" />
         {/* Bottom vignette */}
         <div className="absolute inset-0 z-10 bg-[linear-gradient(0deg,rgba(1,11,31,.6)_0%,rgba(1,11,31,.2)_8%,transparent_18%)]" />
@@ -61,10 +58,17 @@ export default function HeroSection() {
             <Link to="/projects" className="home-hero-action home-hero-secondary">View Projects</Link>
           </div>
           <div className="home-hero-trust home-hero-support mt-10">
-            <div className="home-hero-trust-item flex w-fit items-center gap-2 text-[11px] font-semibold text-paint-muted sm:text-xs">
+            {/* The logos wrap under the label on narrow phones. Oracle's file is a square with the wordmark across its middle, so it is cropped to the wordmark. */}
+            <div className="home-hero-trust-item flex w-fit flex-wrap items-center gap-x-2 gap-y-3 text-[11px] font-semibold text-paint-muted sm:text-xs">
               <HiOutlineCheckBadge aria-hidden="true" className="h-[17px] w-[17px] shrink-0 text-paint-accent" />
-              <span>Siemens Certified Partner</span>
-              <img src={images.siemens} alt="Siemens" className="ml-1 h-3.5 w-auto object-contain" />
+              <span>Certified Partners</span>
+              <span className="ml-1 flex items-center gap-4">
+                <img src={images.siemens} alt="Siemens" width={724} height={124} className="h-3.5 w-auto object-contain" />
+                <span className="relative block h-3 w-[90px] shrink-0 overflow-hidden">
+                  <img src={images.oracle} alt="Oracle" width={320} height={320} className="absolute left-1/2 top-1/2 w-[100px] max-w-none -translate-x-1/2 -translate-y-1/2" />
+                </span>
+                <img src={images.cisco} alt="Cisco" width={2000} height={1054} className="h-[22px] w-auto object-contain" />
+              </span>
             </div>
           </div>
         </div>

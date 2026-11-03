@@ -29,7 +29,7 @@ export default function CartItems({ items, totalQuantity, clearCart, updateQuant
         <div className="flex flex-wrap items-center gap-3">
           <Link
             to="/store"
-            className="inline-flex items-center gap-1 text-xs font-semibold text-paint-accent transition hover:text-white"
+            className="touch-target inline-flex items-center gap-1 text-xs font-semibold text-paint-accent transition hover:text-white"
           >
             <HiOutlinePlus className="h-3.5 w-3.5" /> Add More Products
           </Link>
@@ -37,7 +37,7 @@ export default function CartItems({ items, totalQuantity, clearCart, updateQuant
           <button
             type="button"
             onClick={clearCart}
-            className="text-xs font-semibold text-slate-400 transition hover:text-red-400"
+            className="touch-target text-xs font-semibold text-slate-400 transition hover:text-red-400"
           >
             Clear All
           </button>

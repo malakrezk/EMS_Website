@@ -1,16 +1,69 @@
-import { HiOutlineEnvelope, HiOutlineMapPin, HiOutlinePhone } from 'react-icons/hi2'
-import { Link } from 'react-router-dom'
+import type { IconType } from 'react-icons'
+import { HiOutlineArrowUp, HiOutlineArrowUpRight, HiOutlineEnvelope, HiOutlineMapPin, HiOutlinePhone } from 'react-icons/hi2'
+import { Link, NavLink } from 'react-router-dom'
 import { navigation as links } from '../../config/navigationConfig'
 import { images } from '../../constants/images'
 import { services } from '../../data/services'
 import { regionalMarkets } from '../../data/zeta'
 import Container from './Container'
+import './Footer.css'
+
+const contactDetails: { label: string; text: string; href?: string; icon: IconType }[] = [
+  { label: 'Address', text: 'Villa 17, Bayram El-Tunsi St., El Nargis 2, Fifth Settlement, New Cairo, Egypt', icon: HiOutlineMapPin },
+  { label: 'Phone', text: '+20 120 254 2095', href: 'tel:+201202542095', icon: HiOutlinePhone },
+  { label: 'Email', text: 'info@ems-me.com', href: 'mailto:info@ems-me.com', icon: HiOutlineEnvelope },
+]
+
+function backToTop() {
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+  window.scrollTo({ top: 0, behavior: reducedMotion ? 'auto' : 'smooth' })
+  // Keyboard users carry on from the start of the page, not from the footer.
+  document.querySelector<HTMLElement>('header a')?.focus({ preventScroll: true })
+}
 
 export default function Footer() {
-  return <footer className="border-t border-white/10 bg-paint-footer text-white/65"><Container className="py-[clamp(3.5rem,7vw,6rem)]"><div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.2fr_.7fr_1fr_1.15fr]">
-    <div><Link to="/" aria-label="EMS home"><img src={images.emsLogo} alt="EMS Engineering Management Systems" width="331" height="101" className="h-auto w-48 object-contain object-left" /></Link><p className="mt-5 max-w-sm text-[13px] leading-6 text-white/45">Connected building and infrastructure operations through BMS, SCADA, IoT, AI, digital twins and robotics.</p><a href="https://www.ems-me.com" className="mt-4 inline-block text-xs text-cyan-300">www.ems-me.com</a></div>
-    <div><h3 className="text-xs font-semibold uppercase tracking-[.2em] text-white">Navigate</h3><ul className="mt-5 space-y-3 text-sm">{links.map(({ to, label }) => <li key={to}><Link to={to} className="transition hover:text-cyan-300">{label}</Link></li>)}</ul></div>
-    <div><h3 className="text-xs font-semibold uppercase tracking-[.2em] text-white">Capabilities</h3><ul className="mt-5 space-y-3 text-sm">{services.map(service => <li key={service.id}><Link to={`/services/${service.id}`} className="transition hover:text-cyan-300">{service.label}</Link></li>)}</ul></div>
-    <div><h3 className="text-xs font-semibold uppercase tracking-[.2em] text-white">Contact</h3><ul className="mt-5 space-y-4 text-[13px] leading-6"><li className="flex gap-3"><HiOutlineMapPin className="mt-1 h-4 w-4 flex-none text-cyan-400" /><span>Villa 17, Bayram El-Tunsi St., El Nargis 2, Fifth Settlement, New Cairo, Egypt</span></li><li className="flex items-center gap-3"><HiOutlinePhone className="h-4 w-4 flex-none text-cyan-400" /><a href="tel:+201202542095">+20 120 254 2095</a></li><li className="flex items-center gap-3"><HiOutlineEnvelope className="h-4 w-4 flex-none text-cyan-400" /><a href="mailto:info@ems-me.com">info@ems-me.com</a></li></ul><p className="mt-6 text-[10px] uppercase tracking-[.18em] text-white/35">{regionalMarkets.join(' · ')}</p></div>
-  </div></Container><div className="border-t border-white/10"><Container className="flex flex-col gap-2 py-6 text-xs text-white/35 sm:flex-row sm:items-center sm:justify-between"><p>© {new Date().getFullYear()} EMS Engineering Management Systems.</p><p>ZETA connected operations platform.</p></Container></div></footer>
+  return <footer className="site-footer">
+    <Container>
+      <div className="site-footer-main">
+        <div className="site-footer-brand">
+          <Link to="/" aria-label="EMS home" className="site-footer-logo"><img src={images.emsLogo} alt="EMS Engineering Management Systems" width="331" height="101" /></Link>
+          <p>Connected building and infrastructure operations through BMS, SCADA, IoT, AI, digital twins and robotics.</p>
+          <a href="https://www.ems-me.com" className="site-footer-site">www.ems-me.com <HiOutlineArrowUpRight aria-hidden="true" /></a>
+          <h3 className="site-footer-heading site-footer-presence-heading">Regional presence</h3>
+          <ul className="site-footer-markets">{regionalMarkets.map(market => <li key={market}>{market}</li>)}</ul>
+        </div>
+
+        <nav className="site-footer-nav" aria-labelledby="site-footer-navigate">
+          <h3 id="site-footer-navigate" className="site-footer-heading">Navigate</h3>
+          <ul className="site-footer-links">{links.map(({ to, label }) => <li key={to}><NavLink to={to} end={to === '/'}>{label}</NavLink></li>)}</ul>
+        </nav>
+
+        <nav className="site-footer-capabilities" aria-labelledby="site-footer-capabilities">
+          <h3 id="site-footer-capabilities" className="site-footer-heading">Capabilities</h3>
+          <ul className="site-footer-links">{services.map(service => <li key={service.id}><NavLink to={`/services/${service.id}`}>{service.label}</NavLink></li>)}</ul>
+        </nav>
+
+        <div className="site-footer-contact">
+          <h3 className="site-footer-heading">Contact</h3>
+          <ul className="site-footer-contact-list">
+            {contactDetails.map(({ label, text, href, icon: Icon }) => {
+              const content = <>
+                <span className="site-footer-contact-icon" aria-hidden="true"><Icon /></span>
+                <span><span className="site-footer-contact-label">{label}</span><span className="site-footer-contact-value">{text}</span></span>
+              </>
+              return <li key={label}>{href ? <a href={href} className="site-footer-contact-item">{content}</a> : <div className="site-footer-contact-item">{content}</div>}</li>
+            })}
+          </ul>
+        </div>
+      </div>
+    </Container>
+
+    <div className="site-footer-bar">
+      <Container className="site-footer-bar-inner">
+        <p>© {new Date().getFullYear()} EMS Engineering Management Systems.</p>
+        <p className="site-footer-platform">ZETA connected operations platform.</p>
+        <button type="button" className="site-footer-top" onClick={backToTop}>Back to top <HiOutlineArrowUp aria-hidden="true" /></button>
+      </Container>
+    </div>
+  </footer>
 }

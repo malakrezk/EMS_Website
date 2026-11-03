@@ -3,7 +3,7 @@ import { industries } from '../src/data/industries'
 import { projects } from '../src/data/projects'
 import { services } from '../src/data/services'
 
-const routes = ['/', '/about', '/services', '/services/scada', '/industries/hospitals', '/solutions', '/case-studies', '/case-studies/data-center-operations', '/partners', '/contact', '/store', '/cart', '/missing-page']
+const routes = ['/', '/about', '/services', '/services/scada', '/industries/hospitals', '/solutions', '/case-studies', '/case-studies/data-center-operations', '/partners', '/mobile-app', '/contact', '/store', '/cart', '/missing-page']
 
 for (const width of [1440, 768, 390]) {
   test(`pages render without runtime errors or horizontal overflow at ${width}px`, async ({ page }) => {
@@ -188,9 +188,6 @@ test('home carousels and video preview work with motion enabled', async ({ page 
   const next = page.getByRole('button', { name: 'Next service', exact: true })
   await next.click()
   await expect(next.locator('..').locator('span').first()).toHaveText('02')
-  await page.locator('[aria-label="Next industry"]').scrollIntoViewIfNeeded()
-  await page.getByRole('button', { name: 'Next industry', exact: true }).click()
-  await expect(page.getByRole('group', { name: 'HOSPITALS, selected', exact: true })).toHaveAttribute('aria-current', 'true')
   await page.locator('[aria-label^="Preview Data Center video"]').scrollIntoViewIfNeeded()
   await page.getByRole('button', { name: /Preview Data Center video/ }).click()
   await expect(page.getByRole('dialog', { name: /Data Center video player/ })).toBeVisible()
@@ -198,15 +195,11 @@ test('home carousels and video preview work with motion enabled', async ({ page 
   await expect(page.getByRole('dialog')).toHaveCount(0)
 })
 
-test('sector switching and project filters remain functional', async ({ page }) => {
+test('sector switching remains functional', async ({ page }) => {
   await page.goto('/solutions')
   await page.locator('.solutions-sector-rail button').nth(1).click()
   await expect(page.locator('.solutions-sector-rail button').nth(1)).toHaveAttribute('aria-pressed', 'true')
   await expect(page.getByRole('link', { name: 'Explore Compounds', exact: true }).first()).toBeVisible()
-  await page.goto('/case-studies')
-  await page.getByRole('button', { name: 'Healthcare', exact: true }).click()
-  await expect(page.getByRole('button', { name: 'Healthcare', exact: true })).toHaveAttribute('aria-pressed', 'true')
-  await expect(page.locator('#project-index article')).toHaveCount(projects.filter(item => item.categories.includes('healthcare')).length)
 })
 
 test('cart quantity changes and removal update shared navigation state', async ({ page }) => {

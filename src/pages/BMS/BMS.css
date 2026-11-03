@@ -1,0 +1,277 @@
+.bms-page {
+  --bms-accent: var(--paint-cyan);
+  --bms-border: rgba(56, 189, 248, .18);
+  background: var(--page-background);
+  color: var(--paint-white-short);
+}
+.bms-page .bms-label { color: var(--bms-accent); font-family: var(--font-mono, monospace); font-size: .65rem; font-weight: 500; line-height: 1.6; letter-spacing: .18em; text-transform: uppercase; }
+.bms-page .bms-heading { margin-top: 1.15rem; font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2rem, 3.4vw, 3.25rem); font-weight: 400; line-height: 1.14; letter-spacing: -.025em; }
+.bms-page .bms-heading span { color: var(--paint-muted); }
+.bms-section { padding-block: clamp(4rem, 7.5vw, 7rem); scroll-margin-top: 6rem; }
+.bms-split { display: grid; align-items: center; gap: 3rem; }
+.bms-prose { margin-top: 1.7rem; display: grid; gap: 1rem; }
+.bms-prose p, .bms-section-intro > p, .bms-intelligence-intro > p:last-child { color: var(--paint-muted); font-size: .95rem; line-height: 1.85; }
+.bms-section-intro { display: flex; flex-direction: column; gap: 1.5rem; margin-bottom: 2.75rem; }
+.bms-section-intro > p { max-width: 27rem; }
+
+/* Hold the building in view while the scroll advances from daylight to night. */
+.bms-hero-sequence { height: calc(var(--bms-hero-height, 100svh) + 100svh); }
+.bms-hero { position: sticky; top: min(0px, calc(100svh - var(--bms-hero-height, 100svh))); min-height: 100svh; isolation: isolate; overflow: hidden; background: var(--paint-navy); }
+.bms-hero-image { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: center; transform-origin: center; will-change: transform, opacity; z-index: -3; }
+.bms-hero-shade { position: absolute; inset: 0; z-index: -2; background: linear-gradient(90deg, rgba(1,11,31,.97) 0%, rgba(1,11,31,.91) 30%, rgba(1,11,31,.52) 58%, rgba(1,11,31,.08) 100%), linear-gradient(0deg, var(--paint-blue-10), transparent 30%); }
+.bms-hero-layout { position: relative; padding-top: 7.5rem; }
+.bms-hero-shade { pointer-events: none; }
+@media (prefers-reduced-motion: reduce) {
+  .bms-hero-sequence { height:auto; }
+  .bms-hero { position:relative;top:0; }
+}
+.bms-breadcrumb { display: flex; align-items: center; flex-wrap: wrap; gap: .7rem; color: var(--paint-muted); font-size: .7rem; }
+.bms-breadcrumb svg { width: .65rem; height: .65rem; opacity: .7; }
+.bms-breadcrumb a { padding-block: .5rem; }
+.bms-breadcrumb a:hover { color: var(--bms-accent); }
+.bms-hero-content { position: relative; z-index: 1; max-width: 43rem; padding-block: 3.5rem; }
+.bms-page .bms-hero h1 { margin-top: clamp(1.75rem, 2.6vw, 2.4rem); max-width: 43rem; font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.85rem, 2.7vw, 2.6rem); line-height: 1.32; letter-spacing: -.015em; font-weight: 500; text-wrap: balance; }
+.bms-hero h1 span { color: var(--bms-accent); }
+.bms-hero-description { margin-top: clamp(2rem, 3vw, 2.75rem); max-width: 32rem; color: rgba(222, 234, 246, .82); font-size: clamp(1rem, .94rem + .3vw, 1.15rem); line-height: 1.75; text-wrap: pretty; }
+.bms-actions { display: flex; flex-wrap: wrap; gap: 1rem; margin-top: clamp(2rem, 3vw, 2.6rem); }
+.bms-page .bms-actions .btn-primary, .bms-page .bms-actions .btn-outline { min-height: 3.2rem; font-size: .75rem; gap: .65rem; }
+.bms-hero-hud { position: relative; width: 100%; max-width: 25rem; margin-bottom: 2rem; border: 1px solid var(--bms-border); background: rgba(6,20,38,.78); border-radius: .75rem; padding: 1.25rem; backdrop-filter: blur(12px); }
+.bms-hud-heading { display: flex; align-items: center; gap: .5rem; color: var(--bms-accent); font: .55rem monospace; letter-spacing: .08em; }
+.bms-hud-heading > span:last-child { margin-left: auto; color: var(--paint-muted); }
+.bms-status-dot { width: .35rem; height: .35rem; border-radius: 50%; background: var(--bms-accent); box-shadow: 0 0 10px var(--bms-accent); animation: bms-pulse 3s ease-in-out infinite; }
+.bms-hud-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem .75rem; margin-block: 1.5rem; }
+.bms-hud-grid > div { display: flex; gap: .6rem; align-items: center; }
+.bms-hud-grid svg { width: 1.3rem; height: 1.3rem; color: var(--bms-accent); }
+.bms-hud-grid span { font-size: .75rem; }
+.bms-hud-grid small { display: block; font-size: .55rem; color: var(--paint-muted); margin-top: .25rem; }
+.bms-hud-footer { border-top: 1px solid var(--bms-border); padding-top: .9rem; color: var(--paint-muted); font-size: .6rem; display: flex; align-items: center; gap: .7rem; }
+.bms-data-line { width: 2.5rem; height: 1px; overflow: hidden; background: rgba(56,189,248,.2); position: relative; }
+.bms-data-line::after { content: ''; position: absolute; inset: 0; background: var(--bms-accent); animation: bms-data 2.5s linear infinite; }
+.bms-hero-bottom { border-top: 1px solid var(--bms-border); display: flex; justify-content: space-between; align-items: center; gap: 1rem; padding-block: 1.4rem; }
+.bms-hero-bottom a { display: inline-flex; align-items: center; gap: .8rem; font-size: .65rem; color: var(--paint-muted); }
+.bms-hero-bottom a svg { color: var(--bms-accent); }
+.bms-hero-bottom > span { display: none; font: .55rem monospace; letter-spacing: .12em; color: var(--paint-muted); }
+.bms-scroll-mark { height: 1.5rem; width: 1px; position: relative; background: var(--bms-border); overflow: hidden; }
+.bms-scroll-mark::after { content: ''; position: absolute; inset: 0; background: var(--bms-accent); animation: bms-data 2s linear infinite; }
+
+/* An actual SVG architecture illustration, with a static reduced-motion state. */
+.bms-overview { background: transparent; }
+/* Overview: lead line, two separate points and the principle, each with room to breathe. */
+.bms-overview-line { display: block; overflow: hidden; padding-bottom: .08em; }
+.bms-overview-line > span { display: block; }
+/* The mask wrappers are spans too; keep the first line white and only the second line muted, as before. */
+.bms-page .bms-heading .bms-overview-line, .bms-page .bms-heading .bms-overview-line > span { color: var(--paint-white-short); }
+.bms-page .bms-heading .bms-overview-line > span > span { color: var(--paint-muted); }
+.bms-overview-lead { max-width: 34rem; margin-top: 2.25rem; color: rgba(235, 243, 252, .9); font-size: clamp(1.05rem, 1rem + .3vw, 1.2rem); line-height: 1.8; }
+.bms-overview-divider { display: block; max-width: 40rem; height: 1px; margin-top: 2.75rem; background: linear-gradient(90deg, var(--bms-accent), var(--bms-border) 35%, transparent); transform-origin: left; }
+.bms-overview-points { display: grid; gap: 2rem; max-width: 40rem; margin-top: 2.25rem; }
+.bms-overview-points li { display: flex; flex-direction: column; gap: 1.1rem; }
+.bms-overview-icon { display: grid; place-items: center; width: 2.75rem; height: 2.75rem; border: 1px solid var(--bms-border); border-radius: .7rem; background: rgba(35, 199, 255, .06); color: var(--bms-accent); }
+.bms-overview-icon svg { width: 1.25rem; height: 1.25rem; stroke-width: 1.4; }
+.bms-overview-points p { color: var(--paint-muted); font-size: .92rem; line-height: 1.85; }
+.bms-overview-points strong { color: var(--paint-white-short); font-weight: 500; }
+/* The artwork has its own dark backdrop; lighten lets the page background show through it while the panel tilts in 3D. */
+.bms-overview-visual { min-width: 0; mix-blend-mode: lighten; }
+.bms-building-card { --tc-rim-color: rgba(35, 199, 255, .16); --tc-rim-light: rgba(127, 220, 255, .22); }
+/* Current pulses travel along the printed connectors; the SVG copies TiltedCard's 6px image bleed so the two stay aligned. */
+.bms-circuit-layer { pointer-events: none; }
+.bms-circuit-layer svg { position: absolute; top: calc(-1 * var(--bleed)); left: calc(-1 * var(--bleed)); width: calc(100% + 2 * var(--bleed)); height: calc(100% + 2 * var(--bleed)); overflow: visible; }
+/* A faint, flickering charge on every printed line, so the circuits read as live between pulses. */
+.bms-live { fill: none; stroke: rgba(127, 220, 255, .5); stroke-width: 2.5; filter: drop-shadow(0 0 4px rgba(35, 199, 255, .8)); animation: bms-live 3.1s ease-in-out infinite; }
+@keyframes bms-live { 0%, 100% { opacity: .35; } 46% { opacity: .9; } 50% { opacity: .5; } 54% { opacity: 1; } }
+.bms-current, .bms-current-glow { fill: none; stroke-linecap: round; stroke-dasharray: 18 100; stroke-dashoffset: 18; animation: bms-current linear infinite; }
+.bms-current { stroke: #effcff; stroke-width: 3.5; }
+.bms-current-glow { stroke: rgba(35, 199, 255, .85); stroke-width: 14; filter: blur(5px); }
+@keyframes bms-current { to { stroke-dashoffset: -100; } }
+.bms-junction { fill: #7fdcff; opacity: .85; }
+.bms-junction-flash { fill: none; stroke: #9be8ff; stroke-width: 2; opacity: 0; animation: bms-junction linear infinite; }
+/* The flash fires as the pulse reaches the end of its line (100 / 118 of the cycle). */
+@keyframes bms-junction { 0%, 82% { opacity: 0; transform: scale(.6); } 85% { opacity: 1; transform: scale(1); } 100% { opacity: 0; transform: scale(3.2); } }
+.bms-spark-layer { pointer-events: none; }
+.bms-spark-layer span { position: absolute; width: 3px; height: 3px; border-radius: 50%; background: #9be8ff; box-shadow: 0 0 8px 2px rgba(35, 199, 255, .55); opacity: 0; animation: bms-spark 5.2s ease-in-out infinite; }
+@keyframes bms-spark { 0% { opacity: 0; transform: translateY(18px) scale(.6); } 25% { opacity: .9; } 70% { opacity: .5; } 100% { opacity: 0; transform: translateY(-46px) scale(1); } }
+@media (prefers-reduced-motion: reduce) {
+  .bms-current, .bms-current-glow, .bms-junction-flash, .bms-spark-layer span { animation: none; display: none; }
+  .bms-live { animation: none; opacity: .6; }
+}
+.bms-building-panel { background: radial-gradient(ellipse at 50% 40%, rgba(56,189,248,.1), transparent 65%), var(--paint-panel); border: 1px solid var(--bms-border); border-radius: 1rem; padding: 1.5rem; min-width: 0; }
+.bms-diagram-topline { display: flex; justify-content: space-between; color: var(--paint-muted); font: .55rem monospace; letter-spacing: .12em; }
+.bms-building-svg { width: 100%; height: auto; color: var(--bms-accent); overflow: visible; }
+.bms-connection-paths { stroke-dasharray: 5 8; animation: bms-flow 20s linear infinite; }
+.bms-building-dot { animation: bms-pulse 3s ease-in-out infinite; }
+.bms-system-legend { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1rem; padding-top: 1.2rem; border-top: 1px solid var(--bms-border); }
+.bms-system-legend span { display: inline-flex; gap: .5rem; align-items: center; color: var(--paint-muted); font-size: .65rem; }
+.bms-system-legend svg { color: var(--bms-accent); }
+
+.bms-expertise { background: rgba(255, 255, 255, .02); border-block: 1px solid var(--bms-border); }
+.bms-service-scope { margin-top: .8rem; color: var(--paint-muted); line-height: 1.8; font-size: .75rem; }
+
+.bms-industries-grid { display: grid; gap: 1.25rem; }
+.bms-industry-card { display: block; position: relative; overflow: hidden; border-radius: .8rem; aspect-ratio: 4 / 3; container-type: inline-size; border: 1px solid var(--bms-border); background: var(--paint-panel); }
+.bms-industry-card > img { width: 100%; height: 100%; object-fit: cover; transition: transform .7s ease; }
+.bms-industry-shade { position: absolute; inset: 0; background: linear-gradient(0deg, rgba(1,11,31,.98), rgba(1,11,31,.1) 85%); transition: opacity .4s ease; opacity: .9; }
+.bms-industry-number { position: absolute; inset: 1.2rem 1.2rem auto; display: flex; align-items: center; gap: .6rem; font: .65rem monospace; color: white; }
+.bms-industry-number svg { width: 1rem; height: 1rem; }
+.bms-industry-copy { position: absolute; inset: auto 1.4rem 1.2rem; transition: transform .3s ease; }
+.bms-industry-copy > p { color: var(--bms-accent); text-transform: uppercase; font-size: .55rem; letter-spacing: .14em; }
+/* Every title stays on one line at one shared size, scaled to the card width so the longest name fits. */
+.bms-industry-copy h3 { font-family: 'Playfair Display', Georgia, serif; font-size: min(1.35rem, calc((100cqi - 2.8rem) * .045)); line-height: 1.3; margin-top: .5rem; overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+.bms-industry-copy > span { display: flex; align-items: center; gap: .5rem; margin-top: .8rem; font-size: .6rem; color: var(--paint-muted); }
+.bms-industry-card:focus-visible { border-color: var(--bms-accent); }
+
+.bms-intelligence { position: relative; background: radial-gradient(ellipse at 50% 35%, rgba(56,189,248,.08), transparent 65%); border-block: 1px solid var(--bms-border); }
+.bms-intelligence-intro { text-align: center; max-width: 50rem; margin-inline: auto; }
+.bms-intelligence-intro > p:last-child { margin-top: 1.5rem; }
+.bms-tech-flow { display: flex; flex-direction: column; margin-top: 3rem; }
+.bms-tech-step { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.bms-tech-step button { position: relative; display: flex; align-items: center; gap: 1rem; width: 100%; min-height: 6rem; padding: 1.5rem; border: 1px solid var(--bms-border); border-radius: .75rem; background: var(--paint-panel); transition: border-color .3s ease, background .3s ease, box-shadow .3s ease; }
+.bms-tech-step button[aria-pressed='true'] { border-color: var(--bms-accent); background: var(--paint-blue-16); box-shadow: 0 0 25px rgba(56,189,248,.08); }
+.bms-tech-step button > svg { width: 1.8rem; height: 1.8rem; color: var(--bms-accent); stroke-width: 1; }
+.bms-tech-step button > span:last-child { font-size: .85rem; }
+.bms-tech-index { font: .55rem monospace; color: var(--paint-muted); margin-left: auto; order: 1; }
+.bms-tech-connector { align-self: center; position: relative; display: flex; justify-content: center; align-items: center; height: 2rem; width: 1px; background: var(--bms-border); }
+.bms-tech-connector svg { transform: rotate(90deg); min-width: .9rem; color: var(--bms-accent); }
+.bms-tech-connector::after { position: absolute; content: ''; width: 3px; height: 6px; border-radius: 50%; background: var(--bms-accent); animation: bms-data 2s linear infinite; }
+.bms-tech-description { display: grid; gap: 1rem; margin-top: 1.75rem; min-height: 12rem; border: 1px solid var(--bms-border); border-left: 2px solid var(--bms-accent); border-radius: .6rem; padding: 1.5rem; background: var(--paint-panel); }
+.bms-tech-description > div { display: flex; align-items: center; gap: .75rem; }
+.bms-tech-description svg { width: 1.4rem; height: 1.4rem; color: var(--bms-accent); }
+.bms-tech-description h3 { font-size: 1.1rem; font-weight: 500; }
+.bms-tech-description p { color: var(--paint-white-short); font-size: .85rem; line-height: 1.8; }
+.bms-tech-description p span { display: block; margin-top: .4rem; font-size: .75rem; color: var(--paint-muted); }
+.bms-tech-context { display: grid; gap: 1rem; margin-top: 1.75rem; }
+.bms-tech-context p { font-size: .75rem; line-height: 1.85; color: var(--paint-muted); }
+.bms-tech-context p:last-child { border-left: 1px solid var(--bms-border); padding-left: 1rem; font-size: .7rem; }
+
+.bms-why-image { position: relative; overflow: hidden; min-height: 25rem; height: 100%; border: 1px solid var(--bms-border); border-radius: 1rem; }
+.bms-why-image > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.bms-why-image > div { position: absolute; inset: 0; background: linear-gradient(0deg, var(--paint-navy), transparent 80%); }
+.bms-why-image > p { position: absolute; bottom: 2rem; left: 2rem; right: 2rem; font-size: .9rem; line-height: 1.8; color: var(--bms-accent); letter-spacing: .04em; }
+.bms-why-image > p span { color: white; }
+.bms-advantages { margin-top: 1.75rem; }
+.bms-advantage { display: flex; gap: 1rem; padding-block: 1.1rem; border-bottom: 1px solid var(--bms-border); }
+.bms-advantage > span { display: grid; place-items: center; flex-shrink: 0; width: 1.8rem; height: 1.8rem; border-radius: 50%; background: rgba(56,189,248,.08); border: 1px solid var(--bms-border); color: var(--bms-accent); }
+.bms-advantage h3 { font-size: .85rem; font-weight: 500; }
+.bms-advantage p { margin-top: .4rem; font-size: .75rem; color: var(--paint-muted); line-height: 1.7; }
+
+.bms-consultation { position: relative; isolation: isolate; overflow: hidden; padding-block: clamp(4.5rem, 8vw, 8rem); border-top: 1px solid var(--bms-border); text-align: center; background: radial-gradient(ellipse at 50% 70%, rgba(56,189,248,.1), transparent 65%); }
+.bms-page .bms-consultation h2 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(2.5rem, 5vw, 4.5rem); line-height: 1.1; letter-spacing: -.03em; margin-block: 1.2rem 1.7rem; }
+.bms-consultation h2 span { color: var(--bms-accent); }
+.bms-consultation p:not(.bms-label) { max-width: 38rem; margin-inline: auto; color: var(--paint-muted); font-size: .875rem; line-height: 1.85; }
+.bms-consultation .btn-primary { margin-top: 2rem; gap: .8rem; }
+.bms-regions { display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: .7rem; color: var(--paint-muted); margin-top: 1.6rem; font-size: .65rem; letter-spacing: .1em; }
+.bms-regions span { color: var(--bms-accent); }
+.bms-cta-wireframe { position: absolute; inset: -50% -30%; z-index: -1; transform: perspective(600px) rotateX(55deg); background-image: linear-gradient(rgba(56,189,248,.06) 1px, transparent 1px), linear-gradient(90deg, rgba(56,189,248,.06) 1px, transparent 1px); background-size: 70px 70px; mask-image: radial-gradient(ellipse, black, transparent 60%); }
+
+@screen md {
+  .bms-split { grid-template-columns: 1fr 1fr; gap: 3rem; }
+  .bms-industries-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .bms-hero-bottom > span { display: block; }
+  .bms-section-intro { flex-direction: row; align-items: flex-end; justify-content: space-between; gap: 3rem; }
+  .bms-section-intro > div { flex: 1.4; }
+  .bms-section-intro > p { flex: 1; font-size: .85rem; }
+  .bms-tech-description { grid-template-columns: 1fr 2.5fr; align-items: center; min-height: 10rem; padding: 2rem; }
+  .bms-tech-context { grid-template-columns: 1.5fr 1fr; gap: 3rem; }
+}
+@screen lg {
+  .bms-hero-content { padding-block: 4rem 5rem; max-width: 58%; }
+  .bms-hero-hud { position: absolute; right: var(--container-gutter); bottom: 8rem; width: 29%; max-width: 22rem; margin: 0; }
+  .bms-industries-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.5rem; }
+  .bms-tech-flow { flex-direction: row; }
+  .bms-tech-step { flex-direction: row; align-items: center; }
+  .bms-tech-step button { flex-direction: column; justify-content: center; min-height: 10rem; gap: 1.3rem; padding: 1.25rem .6rem; }
+  .bms-tech-index { position: absolute; right: .7rem; top: .7rem; }
+  .bms-tech-connector { min-width: 2rem; width: 2rem; height: 1px; }
+  .bms-tech-connector svg { transform: none; }
+  .bms-tech-connector::after { width: 6px; height: 3px; }
+  .bms-split { gap: 5rem; }
+}
+@screen phone-down {
+  .bms-page .bms-hero h1 { font-size: clamp(1.9rem, 8vw, 2.3rem); }
+  .bms-page .bms-actions > a { width: 100%; }
+  .bms-page .bms-consultation .btn-primary { max-width: 100%; font-size: .7rem; }
+  .bms-hero-content { padding-block: 2.5rem; }
+  .bms-hero-shade { background: linear-gradient(90deg, rgba(1,11,31,.95), rgba(1,11,31,.78)), linear-gradient(0deg, var(--paint-blue-10), transparent); }
+  .bms-building-panel { padding: 1rem; }
+  .bms-system-legend { gap: .8rem; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .bms-industry-card:hover > img { transform: scale(1.045); }
+  .bms-industry-card:hover .bms-industry-shade { opacity: 1; }
+  .bms-industry-card:hover .bms-industry-copy { transform: translateY(-4px); }
+  .bms-industry-card:hover { border-color: var(--bms-accent); }
+}
+@keyframes bms-flow { to { stroke-dashoffset: -130; } }
+@keyframes bms-pulse { 50% { opacity: .4; } }
+@keyframes bms-data { from { transform: translate(-100%, -100%); } to { transform: translate(100%, 100%); } }
+@media (prefers-reduced-motion: reduce) {
+  .bms-page *, .bms-page *::before, .bms-page *::after { animation: none !important; transition: none !important; }
+}
+
+/* Our Expertise: an asymmetric set of real EMS screens. Four compositions share one navy surface:
+   feature (image fills the panel), split (image beside the text), stacked (image above) and band (full-width row). */
+.bms-xp-grid { display: grid; gap: 1rem; }
+.bms-xp-cell { display: flex; min-width: 0; }
+.bms-xp-card { position: relative; display: flex; flex: 1; flex-direction: column; min-width: 0; overflow: hidden; border: 1px solid var(--bms-border); border-radius: 14px; background: #061428; transition: border-color .4s ease, background-color .4s ease; }
+.bms-xp-media { position: relative; overflow: hidden; aspect-ratio: 16 / 9; background: #020c1c; }
+.bms-xp-reveal { position: absolute; inset: 0; }
+.bms-xp-media img { width: 100%; height: 100%; object-fit: cover; filter: saturate(.9) brightness(.9); transform: translate3d(calc(var(--mx, 0) * -14px), calc(var(--my, 0) * -10px), 0) scale(calc(var(--base, 1.02) * var(--lift, 1))); transition: transform .9s cubic-bezier(.22, 1, .36, 1), filter .6s ease; }
+.bms-xp-media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(180deg, rgba(4, 14, 30, 0) 45%, rgba(4, 14, 30, .72)); pointer-events: none; }
+.bms-xp-source { position: absolute; left: 1rem; bottom: .85rem; z-index: 1; display: flex; align-items: center; gap: .55rem; padding: .3rem .7rem .3rem .6rem; border-radius: 999px; background: rgba(3, 10, 24, .8); color: rgba(245, 249, 255, .85); font-size: .7rem; letter-spacing: .02em; }
+/* Park Lane is a full dashboard; crop in on the lit streets so the card reads as lighting. */
+.bms-xp-cell.is-lighting .bms-xp-media img { --base: 1.32; }
+.bms-xp-source::before { content: ''; width: 1rem; height: 1px; background: var(--bms-accent); }
+.bms-xp-body { position: relative; z-index: 1; display: flex; flex: 1; flex-direction: column; padding: 1.5rem; }
+.bms-xp-meta { display: flex; align-items: center; justify-content: space-between; }
+.bms-xp-meta svg { width: 1.35rem; height: 1.35rem; color: var(--bms-accent); stroke-width: 1.25; }
+.bms-xp-meta span { color: var(--paint-muted); font: .7rem var(--font-mono, monospace); opacity: .75; }
+.bms-xp-body h3 { margin-top: 1.1rem; font-size: 1.15rem; font-weight: 600; line-height: 1.35; letter-spacing: -.01em; }
+.bms-xp-body > p { max-width: 34rem; margin: .7rem 0 1.5rem; color: var(--paint-muted); font-size: .86rem; line-height: 1.75; }
+.bms-xp-body > button { display: flex; align-items: center; justify-content: space-between; gap: 1rem; width: 100%; min-height: 44px; margin-top: auto; padding-top: .8rem; border-top: 1px solid var(--bms-border); color: var(--bms-accent); font-size: .78rem; font-weight: 500; text-align: left; }
+.bms-xp-body > button svg { width: 1.1rem; height: 1.1rem; transition: transform .35s cubic-bezier(.22, 1, .36, 1); }
+.bms-xp-card.is-expanded, .bms-xp-card:focus-within { border-color: var(--bms-accent); }
+
+.bms-xp-card.is-feature { min-height: 27rem; justify-content: flex-end; }
+.is-feature .bms-xp-media { position: absolute; inset: 0; aspect-ratio: auto; }
+.is-feature .bms-xp-media::after { background: linear-gradient(180deg, rgba(3, 10, 24, .1) 0%, rgba(3, 10, 24, .3) 38%, rgba(3, 10, 24, .95) 80%), linear-gradient(90deg, rgba(3, 10, 24, .5), transparent 65%); }
+.is-feature .bms-xp-source { top: 1.25rem; right: 1.25rem; bottom: auto; left: auto; }
+.is-feature .bms-xp-body { flex: none; padding: clamp(1.5rem, 3vw, 2.25rem); }
+.is-feature .bms-xp-meta { justify-content: flex-start; gap: .9rem; }
+.is-feature .bms-xp-body h3 { max-width: 16ch; font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.75rem, 2.6vw, 2.5rem); font-weight: 500; line-height: 1.12; letter-spacing: -.015em; }
+.is-feature .bms-xp-body > p { color: rgba(222, 234, 246, .84); font-size: .92rem; }
+.is-band .bms-xp-body h3 { font-family: 'Playfair Display', Georgia, serif; font-size: clamp(1.6rem, 2.2vw, 2.1rem); font-weight: 500; line-height: 1.15; }
+
+@screen md {
+  .bms-xp-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; }
+  .bms-xp-cell.is-integration, .bms-xp-cell.is-modernization { grid-column: 1 / -1; }
+  .bms-xp-card.is-band { flex-direction: row; }
+  .is-band .bms-xp-body { flex: 0 0 44%; padding: 2.25rem; }
+  .is-band .bms-xp-media { flex: 1; order: 2; aspect-ratio: auto; min-height: 20rem; }
+  .is-band .bms-xp-media::after { background: linear-gradient(90deg, #061428 0%, rgba(6, 20, 40, .35) 28%, transparent 60%); }
+}
+@screen lg {
+  .bms-xp-grid { grid-template-columns: repeat(12, minmax(0, 1fr)); }
+  .bms-xp-cell.is-integration { grid-column: 1 / 8; grid-row: 1 / 3; }
+  .bms-xp-cell.is-hvac { grid-column: 8 / 13; grid-row: 1; }
+  .bms-xp-cell.is-energy { grid-column: 8 / 13; grid-row: 2; }
+  .bms-xp-cell.is-lighting { grid-column: 1 / 6; grid-row: 3; }
+  .bms-xp-cell.is-siemens { grid-column: 6 / 13; grid-row: 3; }
+  .bms-xp-cell.is-modernization { grid-column: 1 / -1; grid-row: 4; }
+  .bms-xp-card.is-feature { min-height: 31rem; }
+  .bms-xp-card.is-split { flex-direction: row; }
+  .is-split .bms-xp-media { flex: 0 0 40%; order: 2; aspect-ratio: auto; }
+  .is-split .bms-xp-media::after { background: linear-gradient(90deg, #061428 0%, rgba(6, 20, 40, .3) 30%, transparent 70%); }
+  .is-split .bms-xp-source { left: auto; right: 1rem; }
+  .is-band .bms-xp-body { flex-basis: 40%; padding: 2.5rem; }
+  .is-band .bms-xp-media { min-height: 22rem; }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .bms-xp-card:hover { border-color: rgba(35, 199, 255, .45); background-color: #071a33; }
+  .bms-xp-card:hover .bms-xp-media img { --lift: 1.05; filter: saturate(1) brightness(1); }
+  .bms-xp-card:hover .bms-xp-body > button svg { transform: translate(3px, -3px); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bms-xp-media img { transform: none; transition: none; }
+}
+@screen xl {
+  .bms-overview-points { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 2.5rem; }
+}

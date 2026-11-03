@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+:root {
+  --page-background: linear-gradient(160deg, #030816 0%, #071733 34%, #0a2350 62%, #0c2c58 82%, #030816 100%);
+}
+
 
 
 html {
@@ -277,6 +281,20 @@ select:focus-visible {
     background-image: linear-gradient(rgba(35, 199, 255, 0.07) 1px, transparent 1px),
       linear-gradient(90deg, rgba(35, 199, 255, 0.07) 1px, transparent 1px);
     background-size: 44px 44px;
+  }
+
+  /* Gives a small text link or button a hit area of at least 44 × 44px without changing how it looks. */
+  .touch-target {
+    position: relative;
+  }
+  .touch-target::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: max(100%, 44px);
+    height: max(100%, 44px);
+    transform: translate(-50%, -50%);
+    content: '';
   }
 }
 

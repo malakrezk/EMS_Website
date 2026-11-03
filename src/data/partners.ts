@@ -5,6 +5,5 @@ export const partners = [
   { id: 'cisco', name: 'Cisco', logo: images.cisco },
   { id: 'python', name: 'Python', logo: images.python },
   { id: 'visual-studio', name: 'Visual Studio', logo: images.visualStudio },
-  { id: 'aws', name: 'AWS', logo: images.aws },
   { id: 'oracle', name: 'Oracle', logo: images.oracle }
 ]

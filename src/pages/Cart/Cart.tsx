@@ -1,3 +1,4 @@
+import PageBackground from '../../components/common/PageBackground'
 import Container from '../../components/layout/Container'
 import { sendOrder } from '../../services/orderService'
 import type { OrderRequest } from '../../types/store.types'
@@ -81,25 +82,15 @@ export default function Cart() {
 
   // --- ACTIVE CART REQUEST ORDER FLOW ---
   return (
-    <div className="relative min-h-screen overflow-hidden bg-paint-navy pb-28 pt-32 text-white">
-      {/* Subtle grid texture */}
-      <div
-        className="pointer-events-none absolute inset-0 opacity-25"
-        style={{
-          backgroundImage:
-            'linear-gradient(rgba(89,220,255,.04) 1px, transparent 1px), linear-gradient(90deg, rgba(89,220,255,.04) 1px, transparent 1px)',
-          backgroundSize: '64px 64px',
-        }}
-      />
-      <div className="pointer-events-none absolute -left-40 top-32 h-[450px] w-[450px] rounded-full bg-paint-accent/10 blur-[140px]" />
-      <div className="pointer-events-none absolute -right-40 top-72 h-[450px] w-[450px] rounded-full bg-paint-cyan/08 blur-[140px]" />
+    <div className="engineering-page-background relative min-h-screen overflow-hidden pb-28 pt-32 text-white">
+      <PageBackground />
 
       <Container className="relative mx-auto max-w-[1400px]">
         {/* Breadcrumb Navigation */}
         <nav aria-label="Breadcrumb" className="flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.18em] text-slate-400">
-          <Link to="/" className="transition hover:text-white">Home</Link>
+          <Link to="/" className="touch-target transition hover:text-white">Home</Link>
           <HiOutlineChevronRight className="h-3 w-3 text-slate-600" />
-          <Link to="/store" className="transition hover:text-white">Store</Link>
+          <Link to="/store" className="touch-target transition hover:text-white">Store</Link>
           <HiOutlineChevronRight className="h-3 w-3 text-slate-600" />
           <span className="text-paint-accent font-semibold">Request Order</span>
         </nav>

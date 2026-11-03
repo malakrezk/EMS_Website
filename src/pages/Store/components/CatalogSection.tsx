@@ -61,7 +61,7 @@ export default function CatalogSection() {
   }
 
   return (
-    <section id="product-catalog" className="pt-14 sm:pt-20">
+    <section id="product-catalog" className="pt-4 sm:pt-6">
       <div className="border-b border-white/10 pb-6">
         <form
           role="search"

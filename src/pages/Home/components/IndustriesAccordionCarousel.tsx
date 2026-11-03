@@ -38,22 +38,22 @@ export default function IndustriesAccordionCarousel() {
     if (position === 0) {
       return {
         ...shared,
-        left: 'calc(var(--industry-side) + var(--industry-gap))',
-        width: 'calc(100% - var(--industry-side) - var(--industry-side) - var(--industry-gap) - var(--industry-gap))',
+        left: 'calc((100% - var(--industry-main)) / 2)',
+        width: 'var(--industry-main)',
         opacity: 1,
         zIndex: 30,
       }
     }
 
     if (position === -1) {
-      return { ...shared, left: '0px', width: 'var(--industry-side)', opacity: 0.84, zIndex: 20 }
+      return { ...shared, left: 'calc((100% - var(--industry-main)) / 2 - var(--industry-gap) - var(--industry-fill))', width: 'var(--industry-fill)', opacity: 0.84, zIndex: 20 }
     }
 
     if (position === 1) {
       return {
         ...shared,
-        left: 'calc(100% - var(--industry-side))',
-        width: 'var(--industry-side)',
+        left: 'calc((100% + var(--industry-main)) / 2 + var(--industry-gap))',
+        width: 'var(--industry-fill)',
         opacity: 0.84,
         zIndex: 20,
       }
@@ -62,9 +62,9 @@ export default function IndustriesAccordionCarousel() {
     return {
       ...shared,
       left: position < 0
-        ? 'calc(0px - var(--industry-side) - var(--industry-gap))'
+        ? 'calc(0px - var(--industry-fill) - var(--industry-gap))'
         : 'calc(100% + var(--industry-gap))',
-      width: 'var(--industry-side)',
+      width: 'var(--industry-fill)',
       opacity: 0,
       zIndex: 0,
     }
@@ -72,7 +72,7 @@ export default function IndustriesAccordionCarousel() {
 
   return (
     <div
-      className="home-reveal mx-auto mt-5 w-full max-w-[1800px] overflow-x-clip outline-none focus-visible:ring-2 focus-visible:ring-paint-accent"
+      className="home-reveal mx-auto mt-5 w-full max-w-[1800px] outline-none focus-visible:ring-2 focus-visible:ring-paint-accent"
       role="region"
       aria-roledescription="carousel"
       aria-label="Industries EMS serves"
@@ -89,7 +89,7 @@ export default function IndustriesAccordionCarousel() {
       }}
     >
       <motion.div
-        className="relative isolate h-[clamp(340px,37vw,520px)] touch-pan-y overflow-hidden [--industry-gap:10px] [--industry-side:48px] sm:[--industry-gap:18px] sm:[--industry-side:clamp(72px,12vw,105px)] lg:[--industry-gap:20px] lg:[--industry-side:clamp(96px,8vw,120px)]"
+        className="home-industry-stage relative isolate h-[clamp(340px,37vw,520px)] touch-pan-y overflow-hidden [--industry-gap:10px] [--industry-side:48px] sm:[--industry-gap:18px] sm:[--industry-side:clamp(72px,12vw,105px)] lg:[--industry-gap:20px] lg:[--industry-side:clamp(96px,8vw,120px)]"
         drag="x"
         dragConstraints={{ left: 0, right: 0 }}
         dragElastic={0.12}
@@ -179,7 +179,7 @@ export default function IndustriesAccordionCarousel() {
                   <p className="mx-auto mt-4 max-w-[42rem] text-[clamp(13px,1vw,16px)] leading-relaxed text-paint-muted">{card.description}</p>
                   <Link
                     to={card.to}
-                    className="mt-5 inline-flex items-center gap-2 text-xs font-semibold text-white transition hover:gap-3 hover:text-paint-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paint-accent"
+                    className="touch-target mt-5 inline-flex items-center gap-2 text-xs font-semibold text-white transition hover:gap-3 hover:text-paint-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-paint-accent"
                   >
                     Explore <HiOutlineArrowRight aria-hidden="true" />
                   </Link>

@@ -10,6 +10,7 @@ import { ease, solutionCards } from '../Home.data'
 import SectionTitle from '../components/SectionTitle'
 import IndustriesAccordionCarousel from './IndustriesAccordionCarousel'
 
+// Not on the Home page for now: hidden at the client's request and kept unchanged, with its carousel and animation, so it can be put back as it was (see Home.tsx).
 export default function SolutionsSection() {
   return (
     <section id="home-solutions" className="home-major-section relative scroll-mt-20 overflow-hidden bg-[radial-gradient(circle_at_50%_-10%,rgba(35,199,255,.13),transparent_38%),radial-gradient(circle_at_8%_58%,rgba(41,155,240,.12),transparent_32%),radial-gradient(circle_at_92%_72%,rgba(20,88,145,.16),transparent_34%),linear-gradient(145deg,var(--paint-neutral-06)_0%,var(--paint-blue-12)_48%,var(--paint-blue-06)_100%)]">
@@ -18,7 +19,7 @@ export default function SolutionsSection() {
       <div className="pointer-events-none absolute -left-48 top-1/3 h-96 w-96 rounded-full bg-cyan-500/10 blur-[130px]" />
       <div className="pointer-events-none absolute -right-40 bottom-0 h-80 w-80 rounded-full bg-paint-primary/10 blur-[120px]" />
       <Container className="relative">
-        <div className="flex flex-col items-center text-center"><SectionTitle eyebrow="Solutions" title="Where Engineering Meets Intelligence." text="EMS connects control, data and engineering context so teams can see more clearly and operate with confidence." align="center" /><Link to="/solutions" className="home-reveal mt-6 inline-flex w-fit items-center gap-2 text-xs font-semibold text-paint-primary transition hover:gap-3">Explore all solutions <HiOutlineArrowRight /></Link></div>
+        <div className="flex flex-col items-center text-center"><SectionTitle eyebrow="Solutions" title="Where Engineering Meets Intelligence." text="EMS connects control, data and engineering context so teams can see more clearly and operate with confidence." align="center" /><Link to="/solutions" className="home-reveal touch-target mt-6 inline-flex w-fit items-center gap-2 text-xs font-semibold text-paint-primary transition hover:gap-3">Explore all solutions <HiOutlineArrowRight /></Link></div>
         <IndustriesAccordionCarousel />
         <div className="hidden">
           {solutionCards.map((solution, index) => <motion.article key={solution.title} initial={{ opacity: 0, y: 28 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: '-80px' }} transition={{ duration: .75, delay: (index % 3) * .08, ease }} className="home-solution-card group relative isolate min-h-[280px] overflow-hidden rounded-2xl border border-white/10 bg-paint-panel">

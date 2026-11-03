@@ -1,0 +1,62 @@
+.engineering-page-background {
+  position: relative;
+  isolation: isolate;
+  background: var(--page-background);
+}
+
+/* Abstract futuristic background: navy-to-blue gradient, blue top-left arc glow,
+   blue neon streaks, blue haze, blue bokeh, glossy floor. Center stays clear. */
+.projects-bg { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; }
+.projects-bg > span { position: absolute; display: block; }
+
+.projects-bg-glow {
+  top: -20%; left: -16%;
+  width: 64vw; height: 64vw;
+  background: radial-gradient(circle, rgba(56,160,255,.6) 0%, rgba(56,160,255,.24) 34%, transparent 70%);
+  filter: blur(38px);
+  border-radius: 50%;
+}
+
+.projects-bg-haze {
+  inset: 0;
+  background:
+    radial-gradient(ellipse 90% 55% at 50% 40%, rgba(70,150,255,.12), transparent 62%),
+    radial-gradient(ellipse 70% 45% at 20% 70%, rgba(0,170,255,.08), transparent 62%);
+  filter: blur(12px);
+}
+
+.projects-bg-streak {
+  right: -8%;
+  width: 60vw;
+  height: 22vh;
+  border-radius: 999px;
+  filter: blur(26px);
+  transform-origin: right center;
+}
+.streak-a { top: 8%; background: linear-gradient(100deg, transparent, rgba(40,140,255,.7) 45%, rgba(90,200,255,.85) 70%, transparent); transform: rotate(-18deg); }
+.streak-b { top: 30%; background: linear-gradient(105deg, transparent, rgba(30,120,255,.6) 50%, rgba(120,210,255,.7) 78%, transparent); transform: rotate(-26deg); filter: blur(34px); }
+.streak-c { top: 55%; background: linear-gradient(100deg, transparent, rgba(60,160,255,.55) 55%, rgba(140,225,255,.5) 85%, transparent); transform: rotate(-12deg); filter: blur(30px); }
+
+.projects-bg-bokeh { border-radius: 50%; filter: blur(18px); }
+.bokeh-1 { top: 14%; left: 12%; width: 90px; height: 90px; background: rgba(80,190,255,.4); }
+.bokeh-2 { top: 40%; left: 6%; width: 150px; height: 150px; background: rgba(90,150,255,.3); }
+.bokeh-3 { top: 70%; left: 18%; width: 70px; height: 70px; background: rgba(150,220,255,.34); }
+.bokeh-4 { top: 22%; right: 18%; width: 110px; height: 110px; background: rgba(70,170,255,.3); }
+.bokeh-5 { top: 66%; right: 10%; width: 130px; height: 130px; background: rgba(120,200,255,.28); }
+
+.projects-bg-floor {
+  left: 0; right: 0; bottom: 0; height: 24%;
+  background:
+    linear-gradient(180deg, transparent, rgba(70,150,255,.12) 45%, rgba(120,200,255,.16) 80%),
+    linear-gradient(90deg, rgba(0,180,255,.07), rgba(90,180,255,.12), rgba(0,180,255,.07));
+  transform: perspective(600px) rotateX(58deg);
+  transform-origin: bottom;
+  filter: blur(3px);
+  opacity: .85;
+}
+.projects-bg-floor::after {
+  content: ''; position: absolute; inset: 0;
+  background: repeating-linear-gradient(90deg, transparent 0 46px, rgba(120,200,255,.14) 46px 47px);
+  mask-image: linear-gradient(transparent, black 70%);
+}
+

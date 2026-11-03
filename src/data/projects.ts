@@ -12,7 +12,7 @@ export const projectCategories = [
 export const projects: Project[] = [
   {
     id: 'data-center-operations', name: 'Data Center', location: 'Connected Digital Infrastructure', industry: 'Data Centers', categories: ['commercial'], accent: 'cyan',
-    image: 'https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=1800&q=84',
+    image: images.dataCenterShowroom,
     videoSrc: images.dataCenter,
     description: 'Centralized monitoring and intelligent control for resilient, high-availability data-center operations.',
     challenge: 'Critical digital infrastructure requires continuous visibility across power, cooling, security and equipment performance.',
@@ -118,4 +118,7 @@ export const projects: Project[] = [
 ]
 
 export const getProjectById = (id: string | undefined) => projects.find(project => project.id === id)
-export const getRelatedProjects = (project: Project, count = 2) => projects.filter(item => item.id !== project.id).slice(0, count)
+export const getRelatedProjects = (project: Project, count = 2) => projects
+  .filter(item => item.id !== project.id)
+  .sort((first, second) => Number(second.categories.some(category => project.categories.includes(category))) - Number(first.categories.some(category => project.categories.includes(category))))
+  .slice(0, count)

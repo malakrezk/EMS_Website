@@ -10,10 +10,10 @@ export default function ProjectFilters({ categories, active, onChange }: { categ
           onClick={() => onChange(cat.id)}
           aria-pressed={active === cat.id}
           className={cn(
-            'rounded-full border px-4 py-2 text-[11px] font-semibold uppercase tracking-[.1em] transition-all duration-300',
+            'min-h-11 rounded-full border px-4 py-2 text-xs font-semibold transition-colors duration-200',
             active === cat.id
-              ? 'border-paint-primary bg-paint-primary text-paint-navy shadow-[0_0_24px_rgba(41,155,240,.24)]'
-              : 'border-white/10 bg-paint-panel text-slate-400 hover:border-cyan-300/40 hover:text-cyan-200'
+              ? 'border-paint-primary bg-paint-primary text-paint-navy'
+              : 'border-white/10 bg-paint-panel text-slate-300 hover:border-cyan-300/40 hover:text-cyan-200'
           )}
         >
           {cat.label}

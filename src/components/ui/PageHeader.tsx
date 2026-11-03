@@ -14,7 +14,7 @@ export default function PageHeader({ eyebrow, title, description }: { eyebrow: s
   const pointerY = useMotionValue(0)
   const smoothX = useSpring(pointerX, { stiffness: 48, damping: 24, mass: .8 })
   const smoothY = useSpring(pointerY, { stiffness: 48, damping: 24, mass: .8 })
-  const image = headerImages[eyebrow] || headerImages['Case Studies']
+  const image = headerImages[eyebrow] || headerImages['Projects']
 
   const onPointerMove = (event: React.PointerEvent<HTMLElement>) => {
     if (!isAbout || reducedMotion) return

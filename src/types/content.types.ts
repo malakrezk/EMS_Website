@@ -46,6 +46,29 @@ export interface ShowcaseService {
   to?: string
 }
 
+/** One key point of a showcase service: a short title and a line of text. */
+export interface ShowcasePoint { title: string; text: string }
+
+/** One service in the homepage showcase: a 3:4 card image plus a landscape section background. */
+export interface ServiceShowcaseItem {
+  id: string
+  title: string
+  /** Optional full name of the service, shown under its card while in focus, e.g. Building Management Systems. */
+  label?: string
+  description: string
+  /** Optional key points, shown as a numbered list in place of the description. */
+  points?: ShowcasePoint[]
+  to: string
+  ctaLabel?: string
+  card: string
+  cardAlt: string
+  background: string
+  /** Image for the card while it is shown large and wide. Defaults to the background. */
+  wide?: string}
+
+/** Video shown in the homepage large player: any project or service clip. */
+export interface VideoClip { name: string; location: string; videoSrc?: string; poster?: string }
+
 export interface NavigationItem { to: string; label: string }
 
 export interface Industry {

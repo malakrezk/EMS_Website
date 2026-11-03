@@ -1,25 +1,26 @@
+import PageBackground from '../../components/common/PageBackground'
 import { AnimatePresence, motion, useReducedMotion } from 'framer-motion'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/ScrollTrigger'
 import { useEffect, useLayoutEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import {
   HiOutlineXMark
 } from 'react-icons/hi2'
-import type { Project } from '../../types/content.types'
+import type { VideoClip } from '../../types/content.types'
 import './Home.css'
 import { ease } from './Home.data'
 import AboutSection from './components/AboutSection'
 import CaseStudiesSection from './components/CaseStudiesSection'
 import HeroSection from './components/HeroSection'
-import ServiceCarousel from './components/ServiceCarousel'
-import SolutionsSection from './components/SolutionsSection'
+import ServicesShowcase from './components/ServicesShowcase'
 
 gsap.registerPlugin(ScrollTrigger)
 
 export default function Home() {
   const rootRef = useRef<HTMLDivElement>(null)
 
-  const [activeVideo, setActiveVideo] = useState<Project | null>(null)
+  const [activeVideo, setActiveVideo] = useState<VideoClip | null>(null)
 
   const reducedMotion = useReducedMotion()
 
@@ -32,10 +33,13 @@ export default function Home() {
     }
     document.body.style.overflow = 'hidden'
     document.documentElement.style.overflow = 'hidden'
+    // Hides the site navbar so the player has the screen to itself.
+    document.documentElement.classList.add('home-video-open')
     window.addEventListener('keydown', closeOnEscape)
     return () => {
       document.body.style.overflow = previousBodyOverflow
       document.documentElement.style.overflow = previousHtmlOverflow
+      document.documentElement.classList.remove('home-video-open')
       window.removeEventListener('keydown', closeOnEscape)
     }
   }, [activeVideo])
@@ -58,19 +62,22 @@ export default function Home() {
     }
   }, [])
 
-  return <div ref={rootRef} className="home-page-shell overflow-hidden bg-paint-hero text-white">
+  return <div ref={rootRef} className="home-page-shell engineering-page-background overflow-hidden bg-paint-hero text-white">
+    <PageBackground />
 
     <HeroSection />
 
-    <ServiceCarousel />
+    <ServicesShowcase />
 
-    <SolutionsSection />
+    {/* The Solutions section ("Where Engineering Meets Intelligence." and its industries carousel, components/SolutionsSection) is hidden for now at the client's request.
+        It is kept unchanged so it can come back as it was: import it and render <SolutionsSection /> here. */}
 
     <CaseStudiesSection reducedMotion={reducedMotion} setActiveVideo={setActiveVideo} />
 
     <AboutSection />
 
-    <AnimatePresence>
+    {/* Portalled to <body> so it covers the fixed navbar; the page wrapper is its own stacking context. */}
+    {createPortal(<AnimatePresence>
       {activeVideo && (
         <motion.div
           role="dialog"
@@ -81,7 +88,7 @@ export default function Home() {
           exit={{ opacity: 0 }}
           transition={{ duration: .25 }}
           onMouseDown={() => setActiveVideo(null)}
-          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/65 p-3 backdrop-blur-sm sm:p-6"
+          className="fixed inset-0 z-[100] flex items-center justify-center bg-black/80 p-3 backdrop-blur-md sm:p-6"
         >
           <motion.div
             initial={{ opacity: 0, scale: .94, y: 18 }}
@@ -99,6 +106,6 @@ export default function Home() {
           </motion.div>
         </motion.div>
       )}
-    </AnimatePresence>
+    </AnimatePresence>, document.body)}
   </div>
 }

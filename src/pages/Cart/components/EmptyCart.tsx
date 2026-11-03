@@ -1,3 +1,4 @@
+import PageBackground from '../../../components/common/PageBackground'
 import {
   HiOutlineArrowLeft,
   HiOutlineShoppingCart
@@ -6,10 +7,8 @@ import AppButton from '../../../components/common/AppButton'
 import Container from '../../../components/layout/Container'
 export default function EmptyCart() {
   return (
-    <div className="relative min-h-screen overflow-hidden bg-paint-navy pb-24 pt-36 text-white">
-      <div className="pointer-events-none absolute inset-0">
-        <div className="absolute left-1/2 top-20 h-96 w-96 -translate-x-1/2 rounded-full bg-paint-accent/10 blur-[130px]" />
-      </div>
+    <div className="engineering-page-background relative min-h-screen overflow-hidden pb-24 pt-36 text-white">
+      <PageBackground />
 
       <Container className="relative mx-auto max-w-2xl">
         <div className="rounded-3xl border border-white/10 bg-[radial-gradient(ellipse_at_top,rgba(35,199,255,0.06),transparent_60%),linear-gradient(180deg,var(--paint-gradient-04)_0%,var(--paint-gradient-03)_100%)] p-10 sm:p-14 text-center shadow-2xl backdrop-blur-xl">

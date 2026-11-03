@@ -1,4 +1,4 @@
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import { useState } from 'react'
 import { HiOutlineEnvelope, HiOutlineMapPin, HiOutlinePaperAirplane } from 'react-icons/hi2'
 import AppButton from '../../../components/common/AppButton'
@@ -7,6 +7,7 @@ import Container from '../../../components/layout/Container'
 import { offices, services } from '../Contact.data'
 
 export default function ContactSection() {
+  const reducedMotion = useReducedMotion()
   const [form, setForm] = useState({ name: '', email: '', phone: '', service: '', message: '' })
   const [submitted, setSubmitted] = useState(false)
 
@@ -31,7 +32,7 @@ export default function ContactSection() {
 
         <div className="mt-10 grid grid-cols-1 gap-10 lg:grid-cols-12 lg:gap-14">
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={reducedMotion ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
@@ -61,7 +62,7 @@ export default function ContactSection() {
                 <HiOutlineEnvelope className="mt-1 h-5 w-5 flex-shrink-0 text-cyan-400" />
                 <div>
                   <h3 className="text-xs font-semibold uppercase tracking-[.14em] text-white">Email</h3>
-                  <a href="mailto:emscompany2016@gmail.com" className="mt-2 inline-block break-all text-sm text-cyan-300 transition hover:text-white">emscompany2016@gmail.com</a>
+                  <a href="mailto:emscompany2016@gmail.com" className="touch-target mt-2 inline-block break-all text-sm text-cyan-300 transition hover:text-white">emscompany2016@gmail.com</a>
                   <p className="text-sm text-white/60">General inquiries and support</p>
                 </div>
               </div>
@@ -69,7 +70,7 @@ export default function ContactSection() {
           </motion.div>
 
           <motion.div
-            initial={{ opacity: 0, y: 24 }}
+            initial={reducedMotion ? false : { opacity: 0, y: 24 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6, delay: 0.1 }}

@@ -2,8 +2,9 @@
 import fs from 'node:fs/promises'
 
 const phase = process.argv[2] || 'after'
+const baseURL = process.env.CAPTURE_BASE_URL || 'http://127.0.0.1:5173'
 const browser = await chromium.launch({ channel: 'chrome', headless: true })
-const routes = ['/', '/about', '/services', '/services/scada', '/industries/hospitals', '/solutions', '/case-studies', '/case-studies/data-center-operations', '/partners', '/contact', '/store', '/cart', '/missing-page']
+const routes = ['/', '/about', '/services', '/services/scada', '/industries/hospitals', '/solutions', '/projects', '/projects/data-center-operations', '/partners', '/contact', '/store', '/cart', '/missing-page']
 const results = []
 await fs.mkdir(`artifacts/${phase}`, { recursive: true })
 for (const width of [1440, 768, 390]) {
@@ -13,7 +14,7 @@ for (const width of [1440, 768, 390]) {
   page.on('pageerror', error => errors.push(error.message))
   for (const route of routes) {
     errors.length = 0
-    await page.goto(`http://127.0.0.1:5173${route}`, { waitUntil: 'domcontentloaded' })
+    await page.goto(`${baseURL}${route}`, { waitUntil: 'domcontentloaded' })
     await page.locator('h1').first().waitFor({ state: 'attached' })
     await page.evaluate(() => document.fonts.ready)
     await page.waitForTimeout(500)

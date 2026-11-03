@@ -52,6 +52,35 @@ requests now display an error and preserve the cart, rather than claiming succes
 
 ## Project structure
 
+### BMS day-to-night hero
+
+The BMS hero blends the supplied brighter courtyard and starlit courtyard images directly from
+scroll progress using Framer Motion scroll values. Both layers share the same
+zoom and crop, while the copy and shade fade away to reveal the night scene.
+The sticky sequence reverses when scrolling upward and releases into the existing
+page content after the night scene. Reduced-motion mode shows a static daytime
+hero without the extra scroll hold. The navbar is transparent over both moods,
+returns to its normal background below the hero, and keeps an opaque mobile menu.
+The Home page retains its original video hero.
+
+### Projects scroll gallery
+
+The Projects page features the existing Data Center, ZIA Building Complex, and
+Water Treatment Plant Automation records above the complete filterable portfolio.
+At viewport widths of 768px or more and heights of 600px or more, GSAP
+ScrollTrigger pins a perspective-layered image composition and scrubs a reversible
+timeline: incoming photographs rise diagonally from alternating sides as outgoing
+photographs shrink toward the upper edge. The building-photo hero has a slow
+entrance zoom and a pinned parallax exit. A page-scoped Lenis instance smooths
+desktop wheel input, leaving both GSAP timelines at `scrub: true`.
+Previous/Next and arrow keys on the focused gallery change the scroll position,
+so images, captions, counter, and progress share one animation source. Navigation
+stops at the first/last project; All projects skips directly to the portfolio.
+Mobile, short viewports, and reduced-motion preferences use unpinned project
+stories with all descriptions and detail links visible. GSAP contexts and
+intersection observers, scroll listeners, and Lenis are cleaned up when the route
+or media query changes.
+
 ```text
 ems-website/
 |-- public/              Static images, videos, logos, and favicon
@@ -85,7 +114,7 @@ ems-website/
 
 The folder is deployable as its own Vercel project. Set the Vercel root directory to this folder; `vercel.json` builds with `npm run build` and publishes `dist`.
 
-Client-side routes use a fallback rewrite to `index.html`, including `/about`, `/services`, `/solutions`, `/case-studies`, `/partners`, and `/contact`.
+Client-side routes use a fallback rewrite to `index.html`, including `/about`, `/services`, `/solutions`, `/projects`, `/partners`, and `/contact`.
 
 ## External content
 

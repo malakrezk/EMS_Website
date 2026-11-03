@@ -63,7 +63,7 @@ export default function ProductCard({ product, index = 0 }: { product: Product; 
             <button
               type="button"
               onClick={() => setShowQuoteModal(true)}
-              className="text-sm font-bold text-paint-accent transition hover:text-white hover:underline underline-offset-4"
+              className="touch-target text-sm font-bold text-paint-accent transition hover:text-white hover:underline underline-offset-4"
             >
               Request Price
             </button>

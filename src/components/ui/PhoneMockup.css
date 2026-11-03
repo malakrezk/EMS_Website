@@ -1,0 +1,94 @@
+/* Phone frame: a titanium rim lit along two edges, a black bezel and a rounded glass screen.
+   Everything scales with --phone-width; the screen keeps the 390:868 shape of the app recordings. */
+.phone-mockup {
+  --pm-width: var(--phone-width, 300px);
+  --pm-rim: calc(var(--pm-width) * .016);
+  --pm-bezel: calc(var(--pm-width) * .03);
+  --pm-radius: calc(var(--pm-width) * .17);
+  position: relative;
+  width: var(--pm-width);
+  padding: var(--pm-bezel);
+  border: var(--pm-rim) solid transparent;
+  border-radius: var(--pm-radius);
+  background:
+    linear-gradient(#020306, #020306) padding-box,
+    linear-gradient(140deg, #a7b1c4 0%, #3d4555 13%, #171c25 33%, #0b0e14 52%, #2d3441 71%, #97a1b4 90%, #4c5464 100%) border-box;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .05),
+    0 0 0 1px rgba(4, 8, 18, .9),
+    0 70px 90px -50px rgba(0, 3, 14, .95),
+    0 30px 60px -30px rgba(0, 0, 0, .75);
+}
+
+/* Specular highlights along the top-left and bottom-right of the rim. */
+.phone-mockup::before {
+  position: absolute;
+  inset: calc(-1 * var(--pm-rim));
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, .34);
+  border-radius: var(--pm-radius);
+  -webkit-mask-image: linear-gradient(150deg, #000 0%, transparent 28%, transparent 72%, #000 100%);
+  mask-image: linear-gradient(150deg, #000 0%, transparent 28%, transparent 72%, #000 100%);
+  pointer-events: none;
+  content: '';
+}
+
+.phone-mockup-button {
+  position: absolute;
+  width: calc(var(--pm-width) * .011);
+  border-radius: 2px;
+  background: linear-gradient(90deg, #2b313c, #9aa4b6 55%, #3f4654);
+}
+.phone-mockup-button.is-action { left: calc(-1 * var(--pm-rim) - var(--pm-width) * .009); top: 17%; height: 4%; }
+.phone-mockup-button.is-volume-up { left: calc(-1 * var(--pm-rim) - var(--pm-width) * .009); top: 24%; height: 7.5%; }
+.phone-mockup-button.is-volume-down { left: calc(-1 * var(--pm-rim) - var(--pm-width) * .009); top: 33%; height: 7.5%; }
+.phone-mockup-button.is-power { right: calc(-1 * var(--pm-rim) - var(--pm-width) * .009); top: 27%; height: 11%; }
+
+/* With depth, the frame is a 3D body: stacked edge layers and a back plate behind the face.
+   The drop shadow moves to the back plate, so it falls behind the edge instead of over it. */
+.phone-mockup.has-depth {
+  --pm-depth: calc(var(--pm-width) * .085);
+  transform-style: preserve-3d;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .05), 0 0 0 1px rgba(4, 8, 18, .9);
+}
+.phone-mockup.has-depth::after {
+  position: absolute;
+  inset: calc(-1 * var(--pm-rim));
+  border-radius: var(--pm-radius);
+  background: #0b0e14;
+  box-shadow: 0 70px 90px -50px rgba(0, 3, 14, .95), 0 30px 60px -30px rgba(0, 0, 0, .75);
+  transform: translateZ(calc(-1 * var(--pm-depth)));
+  pointer-events: none;
+  content: '';
+}
+.phone-mockup-edge {
+  position: absolute;
+  inset: calc(-1 * var(--pm-rim));
+  border-radius: var(--pm-radius);
+  background:
+    linear-gradient(rgba(220, 230, 245, calc(var(--shine) * .3)), rgba(220, 230, 245, calc(var(--shine) * .3))),
+    linear-gradient(180deg, #8d97ab 0%, #3a414e 7%, #1b2029 30%, #252b36 62%, #3d4452 90%, #828c9f 100%);
+  transform: translateZ(calc(var(--pm-depth) * var(--edge) * -1));
+  pointer-events: none;
+}
+.phone-mockup.has-depth .phone-mockup-button { transform: translateZ(calc(var(--pm-depth) * -.5)); }
+
+.phone-mockup-screen {
+  position: relative;
+  isolation: isolate;
+  aspect-ratio: 390 / 868;
+  overflow: hidden;
+  border-radius: calc(var(--pm-radius) - var(--pm-rim) - var(--pm-bezel));
+  background: #050a1d;
+}
+.phone-mockup-screen > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; user-select: none; }
+
+/* Glass: a soft sheen across the upper left of the screen. */
+.phone-mockup-screen::after {
+  position: absolute;
+  inset: 0;
+  z-index: 5;
+  background: linear-gradient(118deg, rgba(255, 255, 255, .13) 0%, rgba(255, 255, 255, .035) 24%, transparent 40%);
+  pointer-events: none;
+  content: '';
+}

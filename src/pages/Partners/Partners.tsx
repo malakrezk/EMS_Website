@@ -1,12 +1,13 @@
 import Container from '../../components/layout/Container'
 
-import { motion } from 'framer-motion'
+import { motion, useReducedMotion } from 'framer-motion'
 import PageHeader from '../../components/ui/PageHeader'
 import PartnersMarquee from '../../components/ui/Partners'
 import SectionHeading from '../../components/ui/SectionHeading'
 import { partners } from '../../data/partners'
 
 export default function Partners() {
+  const reducedMotion = useReducedMotion()
   return (
     <>
       <PageHeader
@@ -25,13 +26,13 @@ export default function Partners() {
             {partners.map((p, i) => (
               <motion.div
                 key={p.id}
-                initial={{ opacity: 0, y: 16 }}
+                initial={reducedMotion ? false : { opacity: 0, y: 16 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: '-60px' }}
                 transition={{ duration: 0.4, delay: (i % 5) * 0.06 }}
                 className="card-surface card-hover-glow flex h-24 items-center justify-center px-4 text-center"
               >
-                <img src={p.logo} alt={p.name} className="h-8 w-auto" />
+                <img src={p.logo} alt={p.name} className="h-8 w-auto max-w-full object-contain" />
               </motion.div>
             ))}
           </div>

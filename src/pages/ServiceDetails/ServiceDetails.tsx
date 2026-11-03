@@ -1,3 +1,4 @@
+import PageBackground from '../../components/common/PageBackground'
 import ArchitectureSection from './components/ArchitectureSection'
 import CapabilitiesSection from './components/CapabilitiesSection'
 import ContactSection from './components/ContactSection'
@@ -30,7 +31,8 @@ export default function ServiceDetails() {
   const architecture = [service.capabilities[0], 'Controllers & gateways', service.label, 'ZETA platform', 'Operations dashboard']
 
   return (
-    <div className="service-detail-page overflow-hidden bg-paint-navy text-white">
+    <div className="service-detail-page engineering-page-background overflow-hidden text-white">
+      <PageBackground />
       <HeroSection heroRef={heroRef} heroY={heroY} service={service} Icon={Icon} />
 
       <OverviewSection service={service} />

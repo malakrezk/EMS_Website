@@ -1,11 +1,12 @@
 import { motion, useReducedMotion } from 'framer-motion'
+import { useEffect } from 'react'
 import { HiOutlineArrowLeft, HiOutlineArrowRight, HiOutlineCheck, HiOutlineCpuChip } from 'react-icons/hi2'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import AppButton from '../../components/common/AppButton'
 import Container from '../../components/layout/Container'
 import Reveal from '../../components/ui/Reveal'
 import { images } from '../../constants/images'
-import { getProjectById, projects } from '../../data/projects'
+import { getProjectById, getRelatedProjects, projects } from '../../data/projects'
 import { ease } from './ProjectDetails.data'
 import Architecture from './components/Architecture'
 
@@ -13,15 +14,40 @@ export default function ProjectDetails() {
   const { id } = useParams()
   const project = getProjectById(id)
   const reducedMotion = useReducedMotion()
-  if (!project) return <Navigate to="/case-studies" replace />
+  useEffect(() => {
+    if (!project) return
+    const previousTitle = document.title
+    const description = document.querySelector('meta[name="description"]')
+    const previousDescription = description?.getAttribute('content')
+    const canonical = document.createElement('link')
+    canonical.rel = 'canonical'
+    canonical.href = `https://www.ems-me.com/projects/${project.id}`
+    document.head.append(canonical)
+    document.title = `${project.name} | EMS Projects`
+    description?.setAttribute('content', project.description)
+    return () => {
+      document.title = previousTitle
+      if (description && previousDescription !== undefined && previousDescription !== null) description.setAttribute('content', previousDescription)
+      canonical.remove()
+    }
+  }, [project])
+  if (!project) return <Navigate to="/projects" replace />
   const index = projects.findIndex(item => item.id === project.id)
   const next = projects[(index + 1) % projects.length]
+  const related = getRelatedProjects(project)
 
   return <div className="project-detail-page overflow-hidden bg-paint-navy text-white">
-    <section className="relative min-h-[680px] overflow-hidden pt-24 lg:min-h-[82vh]">
-      {project.videoSrc ? <video src={project.videoSrc} poster={project.image} autoPlay muted loop playsInline className="absolute inset-0 h-full w-full object-cover" /> : <img src={project.image} alt={`${project.name} project`} className="absolute inset-0 h-full w-full object-cover" />}
+    <section className="relative min-h-[min(680px,100svh)] overflow-hidden pt-24 lg:min-h-[82vh]">
+      {project.videoSrc ? <video src={project.videoSrc} poster={project.image} autoPlay={!reducedMotion} preload="metadata" muted loop playsInline aria-hidden="true" className="absolute inset-0 h-full w-full object-cover" /> : <img src={project.image} alt={`${project.name} project`} fetchPriority="high" className="absolute inset-0 h-full w-full object-cover" />}
       <div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,11,31,.98)_0%,rgba(1,11,31,.78)_55%,rgba(1,11,31,.24)_100%)]" /><div className="absolute inset-0 bg-gradient-to-t from-paint-navy via-transparent to-paint-navy/50" /><div className="grid-bg absolute inset-0 opacity-15" />
-      <Container className="relative flex min-h-[590px] items-end pb-[clamp(4rem,8vw,7rem)]"><motion.div initial={reducedMotion ? false : { opacity: 0, y: 28 }} animate={reducedMotion ? undefined : { opacity: 1, y: 0 }} transition={{ duration: .85, ease }} className="max-w-4xl"><Link to="/case-studies" className="inline-flex items-center gap-2 text-xs text-slate-300 transition hover:gap-3 hover:text-cyan-200"><HiOutlineArrowLeft /> Case studies</Link><p className="eyebrow mt-8">Project {String(index + 1).padStart(2, '0')} / {project.industry}</p><h1 className="type-page-title mt-5 font-serif tracking-[-.03em]">{project.name}</h1><p className="type-lead mt-6 max-w-2xl text-slate-300">{project.description}</p><div className="mt-7 flex flex-wrap gap-2">{project.services.map(service => <span key={service} className="rounded-full border border-white/15 bg-paint-navy/55 px-3 py-1.5 text-[10px] text-slate-200 backdrop-blur">{service}</span>)}</div></motion.div></Container>
+      <Container className="relative flex min-h-[min(590px,calc(100svh_-_6rem))] items-end pb-[clamp(4rem,8vw,7rem)]"><motion.div initial={reducedMotion ? false : { opacity: 0, y: 28 }} animate={reducedMotion ? undefined : { opacity: 1, y: 0 }} transition={{ duration: .85, ease }} className="max-w-4xl"><Link to="/projects" className="touch-target inline-flex items-center gap-2 text-xs text-slate-300 transition hover:gap-3 hover:text-cyan-200"><HiOutlineArrowLeft /> Projects</Link><p className="eyebrow mt-8 flex">Project {String(index + 1).padStart(2, '0')} / {project.industry}</p><h1 className="type-page-title mt-5 font-serif tracking-[-.03em]">{project.name}</h1><p className="type-lead mt-6 max-w-2xl text-slate-300">{project.description}</p><div className="mt-7 flex flex-wrap gap-2">{project.services.map(service => <span key={service} className="rounded-full border border-white/15 bg-paint-navy/55 px-3 py-1.5 text-[10px] text-slate-200 backdrop-blur">{service}</span>)}</div></motion.div></Container>
+    </section>
+
+    <section aria-labelledby="project-overview-heading" className="section-padding border-b border-white/10 bg-paint-blue-31">
+      <Container className="grid gap-10 lg:grid-cols-[1.2fr_.8fr]">
+        <Reveal><p className="eyebrow">Project overview</p><h2 id="project-overview-heading" className="mt-4 font-serif text-3xl md:text-4xl">{project.name}</h2><p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-200">{project.description}</p><ul className="mt-6 space-y-3">{project.highlights.map(highlight => <li key={highlight} className="flex items-start gap-3 text-sm text-cyan-200"><HiOutlineCheck aria-hidden="true" className="mt-0.5 h-4 w-4 shrink-0" />{highlight}</li>)}</ul></Reveal>
+        <Reveal delay={.08}><dl className="divide-y divide-white/15 border-y border-white/15"><div className="py-5"><dt className="text-xs text-slate-300">Location / operating context</dt><dd className="mt-2 text-sm text-white">{project.location}</dd></div><div className="py-5"><dt className="text-xs text-slate-300">Industry</dt><dd className="mt-2 text-sm text-white">{project.industry}</dd></div><div className="py-5"><dt className="text-xs text-slate-300">EMS scope</dt><dd className="mt-2 text-sm leading-relaxed text-white">{project.services.join(' · ')}</dd></div></dl></Reveal>
+      </Container>
     </section>
 
     <section className="section-padding"><Container className="grid gap-10 lg:grid-cols-[.75fr_1.25fr]"><Reveal distance={28} duration={.7}><p className="eyebrow">01 / The challenge</p><h2 className="type-section-title mt-4 font-serif">The operating context.</h2></Reveal><Reveal distance={28} duration={.7} delay={.08}><p className="type-lead text-slate-300">{project.challenge}</p><div className="mt-8 border-l border-cyan-300/40 pl-5"><p className="type-body text-slate-400">The project required coordinated visibility across its engineering systems, with information structured so operational teams could understand conditions and respond with confidence.</p></div></Reveal></Container></section>
@@ -34,8 +60,22 @@ export default function ProjectDetails() {
 
     <section className="section-padding"><Container className=""><Reveal distance={28} duration={.7} className="max-w-3xl"><p className="eyebrow">05 / Results</p><h2 className="type-section-title mt-4 font-serif">Operational outcomes, made visible.</h2></Reveal><div className="mt-10 grid gap-px overflow-hidden rounded-[1.4rem] border border-white/10 bg-white/10 sm:grid-cols-2 lg:grid-cols-4">{project.results.map((result, i) => <motion.div key={result.label} initial={reducedMotion ? false : { opacity: 0, y: 16 }} whileInView={reducedMotion ? undefined : { opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * .07 }} className="bg-paint-panel p-6 lg:p-8"><p className="font-serif text-[clamp(1.8rem,3vw,3rem)] text-cyan-100">{result.value}</p><p className="mt-3 text-[10px] uppercase tracking-[.16em] text-slate-400">{result.label}</p></motion.div>)}</div></Container></section>
 
-    <section className="section-padding border-y border-white/10 bg-paint-section"><Container className=""><Reveal distance={28} duration={.7}><p className="eyebrow">06 / Project gallery</p><h2 className="type-section-title mt-4 font-serif">Engineering in its operating environment.</h2></Reveal><div className="mt-10 grid auto-rows-[220px] gap-4 sm:grid-cols-2 lg:grid-cols-12 lg:auto-rows-[260px]"><div className="group relative overflow-hidden rounded-[1.2rem] sm:row-span-2 lg:col-span-7"><img src={project.image} alt={`${project.name} overview`} className="h-full w-full object-cover transition duration-1000 group-hover:scale-105" /></div><div className="group relative overflow-hidden rounded-[1.2rem] lg:col-span-5">{project.videoSrc ? <video src={project.videoSrc} poster={project.image} autoPlay muted loop playsInline className="h-full w-full object-cover" /> : <img src={images.heroControlRoom02} alt="EMS control environment" className="h-full w-full object-cover transition duration-1000 group-hover:scale-105" />}</div><div className="group relative overflow-hidden rounded-[1.2rem] lg:col-span-5"><img src={images.heroControlRoom04} alt="Connected operations visualization" className="h-full w-full object-cover transition duration-1000 group-hover:scale-105" /></div></div></Container></section>
+    <section aria-labelledby="project-gallery-heading" className="section-padding border-y border-white/10 bg-paint-section">
+      <Container><Reveal distance={28} duration={.7}><p className="eyebrow">06 / Project gallery</p><h2 id="project-gallery-heading" className="type-section-title mt-4 font-serif">Engineering in its operating environment.</h2></Reveal>
+        <div className="mt-10 grid auto-rows-[220px] gap-7 sm:grid-cols-2 lg:grid-cols-12 lg:auto-rows-[260px]">
+          <div className="group relative overflow-hidden rounded-lg sm:row-span-2 lg:col-span-7"><img src={project.image} alt={`${project.name} overview`} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-105" /></div>
+          <div className="relative overflow-hidden rounded-lg lg:col-span-5">{project.videoSrc ? <video src={project.videoSrc} poster={project.image} controls preload="none" playsInline aria-label={`${project.name} project video`} className="h-full w-full object-contain bg-paint-navy" /> : <img src={images.heroControlRoom02} alt="EMS control environment" loading="lazy" decoding="async" className="h-full w-full object-cover" />}</div>
+          <div className="group relative overflow-hidden rounded-lg lg:col-span-5"><img src={images.heroControlRoom04} alt="Connected operations visualization" loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-105" /></div>
+        </div>
+      </Container>
+    </section>
 
-    <section className="relative min-h-[480px] overflow-hidden"><img src={next.image} alt="" className="absolute inset-0 h-full w-full object-cover opacity-45 transition duration-1000" /><div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,11,31,.98),rgba(1,11,31,.55))]" /><Container className="relative flex min-h-[480px] items-center"><div><p className="eyebrow">Next case study</p><h2 className="type-section-title mt-5 max-w-3xl font-serif">{next.name}</h2><p className="type-body mt-4 max-w-xl text-slate-300">{next.description}</p><AppButton to={`/case-studies/${next.id}`} className="mt-7">Continue exploring <HiOutlineArrowRight /></AppButton></div></Container></section>
+    <section aria-labelledby="related-projects-heading" className="section-padding">
+      <Container><p className="eyebrow">Continue exploring</p><h2 id="related-projects-heading" className="mt-4 font-serif text-3xl md:text-4xl">Related Projects</h2>
+        <div className="mt-8 grid auto-rows-fr gap-7 md:grid-cols-2">{related.map((item, relatedIndex) => <Reveal key={item.id} delay={relatedIndex * .06} className="h-full"><Link to={`/projects/${item.id}`} className="group flex h-full flex-col overflow-hidden rounded-lg border border-white/15 bg-paint-blue-31 shadow-lg transition-colors hover:border-cyan-200 focus-visible:border-cyan-200"><div className="aspect-[16/9] overflow-hidden"><img src={item.image} alt={item.name} loading="lazy" decoding="async" className="h-full w-full object-cover transition-transform duration-500 motion-safe:group-hover:scale-105" /></div><div className="flex flex-1 flex-col p-6"><p className="text-xs text-cyan-200">{item.industry}</p><h3 className="mt-3 font-serif text-2xl">{item.name}</h3><p className="mb-5 mt-3 text-sm leading-relaxed text-slate-300">{item.description}</p><span className="mt-auto inline-flex items-center gap-3 text-sm font-semibold text-cyan-200">View Project <HiOutlineArrowRight aria-hidden="true" className="transition-transform motion-safe:group-hover:translate-x-1" /></span></div></Link></Reveal>)}</div>
+      </Container>
+    </section>
+
+    <section className="relative min-h-[480px] overflow-hidden"><img src={next.image} alt="" loading="lazy" className="absolute inset-0 h-full w-full object-cover opacity-45 transition duration-1000" /><div className="absolute inset-0 bg-[linear-gradient(90deg,rgba(1,11,31,.98),rgba(1,11,31,.55))]" /><Container className="relative flex min-h-[480px] items-center"><div><p className="eyebrow">Next project</p><h2 className="type-section-title mt-5 max-w-3xl font-serif">{next.name}</h2><p className="type-body mt-4 max-w-xl text-slate-300">{next.description}</p><AppButton to={`/projects/${next.id}`} className="mt-7">Continue exploring <HiOutlineArrowRight /></AppButton></div></Container></section>
   </div>
 }
