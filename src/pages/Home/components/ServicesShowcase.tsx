@@ -1,6 +1,6 @@
-import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion, type PanInfo } from 'framer-motion'
-import { Fragment, useCallback, useEffect, useRef, useState, type KeyboardEvent } from 'react'
-import { HiOutlineArrowLeft, HiOutlineArrowRight } from 'react-icons/hi2'
+import { AnimatePresence, animate, motion, useMotionValue, useReducedMotion, type PanInfo, type Variants } from 'framer-motion'
+import { useCallback, useEffect, useRef, useState, type CSSProperties, type KeyboardEvent } from 'react'
+import { HiOutlineArrowRight } from 'react-icons/hi2'
 import { Link } from 'react-router-dom'
 import Container from '../../../components/layout/Container'
 import { breakpoints } from '../../../theme/breakpoints'
@@ -10,6 +10,17 @@ import { ease, homeServiceShowcase as services, homeShowcaseHeading as heading }
 const total = services.length
 const pad = (value: number) => String(value).padStart(2, '0')
 const VISIBLE_AHEAD = 1
+const FADE_DURATION = .7
+// Beside the strip the card is 16:9, the shape of the dashboards shown in it, so they show whole.
+const CARD_RATIO = 16 / 9
+const ctaLabel = (service: ServiceShowcaseItem) => service.ctaLabel ?? 'Explore Service'
+// On a change of service the key points arrive as a wave: each rises into place a beat after the one above it.
+const POINT_STAGGER = .08
+const pointWave: Variants = {
+  enter: { opacity: 0, y: 18 },
+  center: { opacity: 1, y: 0, transition: { duration: .75, ease } },
+  exit: { opacity: 0, transition: { duration: .25 } },
+}
 
 // Distance of a card from the active one, wrapped into [-1, total - 2] so exactly one card sits "behind".
 const offsetFrom = (index: number, active: number) => {
@@ -17,7 +28,7 @@ const offsetFrom = (index: number, active: number) => {
   return offset === total - 1 ? -1 : offset
 }
 
-// Card geometry depends on the track width and, on laptop screens, on the viewport size.
+// Card geometry depends on the track width and the viewport: its width picks the layout, its height caps the card on laptop screens.
 function useTrackSize<T extends HTMLElement>() {
   const ref = useRef<T>(null)
   const [size, setSize] = useState({ width: 0, viewportWidth: 1440, viewportHeight: 900 })
@@ -34,18 +45,24 @@ function useTrackSize<T extends HTMLElement>() {
 }
 
 // A service with key points lists them, numbered and divided, in place of its one-line description.
+// On wide screens the list climbs through a window beside the photo in an endless loop (see Home.css). A second copy, hidden from
+// assistive technology, follows the first, so the loop never shows a gap.
 function ServiceDescription({ service }: { service: ServiceShowcaseItem }) {
-  if (!service.points) return <p>{service.description}</p>
-  return (
-    <ol className="home-showcase-points">
-      {service.points.map((point, index) => (
-        <li key={point.title} className="home-showcase-point">
+  const reducedMotion = useReducedMotion()
+  const wave = reducedMotion ? undefined : pointWave
+  const { points } = service
+  if (!points) return <motion.p variants={wave}>{service.description}</motion.p>
+  const list = (copy: boolean) => (
+    <ol className="home-showcase-points" aria-hidden={copy || undefined}>
+      {points.map((point, index) => (
+        <motion.li key={point.title} className="home-showcase-point" variants={wave}>
           <span aria-hidden="true" className="home-showcase-point-number">{pad(index + 1)}</span>
           <p><strong className="home-showcase-point-title">{point.title}</strong><span className="home-showcase-point-text">{point.text}</span></p>
-        </li>
+        </motion.li>
       ))}
     </ol>
   )
+  return <div className="home-showcase-loop">{list(false)}{list(true)}</div>
 }
 
 export default function ServicesShowcase() {
@@ -79,17 +96,27 @@ export default function ServicesShowcase() {
   // Phone-width tracks get a taller card and a wider strip; the narrowest wide-screen track (553px at 1024px) stays above the cut-off.
   const compact = trackWidth > 0 && trackWidth < 540
   const gap = compact ? 12 : 18
-  const stripWidth = Math.round(compact ? Math.max(trackWidth * .16, 52) : Math.min(Math.max(trackWidth * .08, 56), 110))
-  const wideWidth = Math.max(0, trackWidth - stripWidth - gap)
-  // The card is 1.7 times as wide as it is tall, the ratio its wide images are made at. Beside the service text on the narrowest
-  // wide screens (tracks under 700px, below about 1280px) it grows taller, to 1.2 at 550px, so it stays as tall as the text it lines up with.
-  const wideRatio = viewportWidth >= breakpoints.lg ? Math.min(1.7, Math.max(1.2, 1.2 + (trackWidth - 550) / 300)) : 1.7
-  const cardHeight = Math.round(compact ? wideWidth / 1.2 : Math.min(wideWidth / wideRatio, viewportHeight * .55, 560))
+  // The strip is just wide enough to read as a card, leaving the most room for the card in focus.
+  const stripWidth = Math.round(compact ? Math.max(trackWidth * .16, 52) : Math.min(Math.max(trackWidth * .1, 84), 140))
+  const fullWidth = Math.max(0, trackWidth - stripWidth - gap)
+  // On short screens the card is narrowed rather than cropped to fit the height. On wide screens the whole section fits one laptop
+  // screen: everything besides the card (padding, heading, pills and the gap under them) takes about 264px.
+  const wide = viewportWidth >= breakpoints.lg
+  const heightCap = wide ? Math.max(Math.min(viewportHeight * .62, viewportHeight - 264), 240) : viewportHeight * .55
+  const ratio = compact ? 1.2 : CARD_RATIO
+  const wideWidth = compact ? fullWidth : Math.min(fullWidth, Math.min(heightCap, 560) * ratio)
+  const cardHeight = Math.round(wideWidth / ratio)
   const cardWidth = (offset: number) => offset === 0 ? wideWidth : stripWidth
   const cardX = (offset: number) => offset === -1 ? -(stripWidth + gap) : offset === 0 ? 0 : wideWidth + gap + (offset - 1) * (stripWidth + gap)
 
   const transition = reducedMotion ? { duration: 0 } : { type: 'spring' as const, stiffness: 90, damping: 20, mass: .9 }
-  const fade = (delay = 0) => reducedMotion ? { duration: 0 } : { duration: .7, delay, ease }
+  const fade = (delay = 0) => reducedMotion ? { duration: 0 } : { duration: FADE_DURATION, delay, ease }
+  // The description fades in where it stands while its points rise in one after another; it leaves as one.
+  const descriptionWave: Variants = {
+    enter: { opacity: 0 },
+    center: { opacity: 1, transition: { ...fade(), staggerChildren: reducedMotion ? 0 : POINT_STAGGER, delayChildren: reducedMotion ? 0 : .14 } },
+    exit: { opacity: 0, y: -14, transition: fade() },
+  }
 
   const onPan = (_: PointerEvent, info: PanInfo) => {
     if (Math.abs(info.offset.x) > 6) dragged.current = true
@@ -105,58 +132,80 @@ export default function ServicesShowcase() {
   }
 
   return (
-    <section id="home-services" className="home-showcase" aria-roledescription="carousel" aria-labelledby="home-showcase-title" onKeyDown={onKeyDown}>
-      <div aria-hidden="true" className="home-showcase-backdrop">
-        <AnimatePresence initial={false}>
-          <motion.img
-            key={service.id}
-            src={service.background}
-            alt=""
-            className="home-showcase-backdrop-image"
-            initial={reducedMotion ? { opacity: 0 } : { opacity: 0, scale: 1.07 }}
-            animate={{ opacity: 1, scale: 1 }}
-            exit={{ opacity: 0 }}
-            transition={reducedMotion ? { duration: 0 } : { opacity: { duration: .9, ease }, scale: { duration: 1.6, ease } }}
-          />
-        </AnimatePresence>
-        <span className="home-showcase-shade" />
-      </div>
-
+    <section
+      id="home-services"
+      className="home-showcase"
+      aria-roledescription="carousel"
+      aria-labelledby="home-showcase-title"
+      onKeyDown={onKeyDown}
+      // The shared block and the points' window take their size from the photo card; the block stops at its right edge, short of the strip.
+      style={cardHeight ? { '--showcase-card-height': `${cardHeight}px`, '--showcase-panel-inset': `${Math.max(0, trackWidth - wideWidth)}px` } as CSSProperties : undefined}
+    >
       <div className="home-showcase-rail" aria-hidden="true">
         <span className="home-showcase-rail-track"><motion.span className="home-showcase-rail-fill" style={{ originY: 0 }} animate={{ scaleY: (active + 1) / total }} transition={fade()} /></span>
       </div>
 
       <Container className="home-showcase-inner">
         <div className="home-showcase-intro">
-          <h2 id="home-showcase-title" className="home-showcase-heading">{heading.title}</h2>
-          <p className="home-showcase-services">{heading.services.map((service, index) => <Fragment key={service}>{index > 0 && ' · '}<span>{service}</span></Fragment>)}</p>
-        </div>
-        <div className="home-showcase-copy">
+          {/* The section's own name is for screen readers; on screen the service in focus heads it. */}
+          <h2 id="home-showcase-title" className="sr-only">{heading.title}</h2>
           <div className="home-showcase-text" aria-live="polite">
-            {/* Invisible copies of every service's title share the cell, so it is always as tall as the longest one and the button never shifts. */}
+            {/* Invisible copies of every service's title share the cell, so it is always as tall as the longest one and nothing under it shifts. */}
             {services.map(item => (
-              <p key={item.id} aria-hidden="true" className="home-showcase-title is-sizer">{item.title}</p>
+              <p key={item.id} aria-hidden="true" className="home-showcase-title is-sizer">{item.heading ?? item.title}</p>
             ))}
             <AnimatePresence initial={false} custom={direction}>
-              <motion.h3 key={service.id} className="home-showcase-title" custom={direction} variants={{ enter: { opacity: 0, y: 46 }, center: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -28 } }} initial="enter" animate="center" exit="exit" transition={fade(.05)}>{service.title}</motion.h3>
+              <motion.h3 key={service.id} className="home-showcase-title" custom={direction} variants={{ enter: { opacity: 0, y: 46 }, center: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -28 } }} initial="enter" animate="center" exit="exit" transition={fade(.05)}>{service.heading ?? service.title}</motion.h3>
             </AnimatePresence>
           </div>
+          {/* One pill per service under the heading, in the order of the cards. They rise in one after another as the section comes into view,
+              and a filled thumb glides to the one in focus. */}
+          <motion.div
+            className="home-showcase-pills"
+            role="group"
+            aria-label="Choose a service"
+            initial="hidden"
+            whileInView="shown"
+            viewport={{ once: true }}
+            variants={{ shown: { transition: { staggerChildren: reducedMotion ? 0 : .05 } } }}
+          >
+            {services.map((item, index) => (
+              <motion.button key={item.id} type="button" aria-pressed={index === active} onClick={() => goTo(index)} className="home-showcase-pill" variants={{ hidden: { opacity: 0, y: 10 }, shown: { opacity: 1, y: 0 } }} transition={fade()}>
+                {index === active && <motion.span layoutId="home-showcase-pill-thumb" aria-hidden="true" className="home-showcase-pill-thumb" transition={reducedMotion ? { duration: 0 } : { type: 'spring', stiffness: 380, damping: 32 }} />}
+                <span className="home-showcase-pill-label">{item.title}</span>
+              </motion.button>
+            ))}
+          </motion.div>
+        </div>
+        {/* On wide screens the text and the photo in focus share one card: this panel lies behind both, and the photo fades into it. */}
+        <div aria-hidden="true" className="home-showcase-panel" />
+        <div className="home-showcase-copy">
           <div className="home-showcase-desc-row">
             {services.map(item => (
               <div key={item.id} aria-hidden="true" className="home-showcase-description is-sizer"><ServiceDescription service={item} /></div>
             ))}
             <AnimatePresence initial={false} custom={direction}>
-              <motion.div key={service.id} className="home-showcase-description" custom={direction} variants={{ enter: { opacity: 0, y: 24 }, center: { opacity: 1, y: 0 }, exit: { opacity: 0, y: -14 } }} initial="enter" animate="center" exit="exit" transition={fade(.16)}><ServiceDescription service={service} /></motion.div>
+              <motion.div key={service.id} className="home-showcase-description" custom={direction} variants={descriptionWave} initial="enter" animate="center" exit="exit"><ServiceDescription service={service} /></motion.div>
             </AnimatePresence>
           </div>
-          <Link to={service.to} aria-label={`Explore ${service.title}`} className="btn-primary home-showcase-cta">{service.ctaLabel ?? 'Explore Service'}<HiOutlineArrowRight aria-hidden="true" /></Link>
+          {/* The button names the service in focus: an arrow in a blue disc, which spreads across the whole pill on hover, then the label.
+              Invisible copies of every label share the label's cell, so the button keeps the width of the longest. */}
+          <Link to={service.to} className="home-showcase-cta">
+            <span aria-hidden="true" className="home-showcase-cta-icon"><HiOutlineArrowRight /></span>
+            <span className="home-showcase-cta-label">
+              {services.map(item => (
+                <span key={item.id} aria-hidden="true" className="is-sizer">{ctaLabel(item)}</span>
+              ))}
+              <span>{ctaLabel(service)}</span>
+            </span>
+          </Link>
         </div>
 
         <div className="home-showcase-stage">
           <motion.div
             ref={trackRef}
             className="home-showcase-track"
-            style={{ height: cardHeight + 44 }}
+            style={{ height: cardHeight }}
             onPointerDownCapture={() => { dragged.current = false }}
             onPan={onPan}
             onPanEnd={onPanEnd}
@@ -166,7 +215,12 @@ export default function ServicesShowcase() {
                 const offset = offsetFrom(index, active)
                 const isActive = offset === 0
                 const shown = offset >= 0 && offset <= VISIBLE_AHEAD
-                const wraps = Math.abs(offsetFrom(index, previous) - offset) > total / 2
+                const before = offsetFrom(index, previous)
+                // A card that moves more than one place, on a wrap round the loop or a jump from the pills, does not slide across the others:
+                // one leaving fades out where it was before it moves, and one arriving moves at once and fades in where it lands.
+                const far = Math.abs(before - offset) > 1
+                const leaving = before >= 0 && before <= VISIBLE_AHEAD && !shown
+                const jump = { duration: 0, delay: leaving && !reducedMotion ? FADE_DURATION : 0 }
                 const near = offset >= -1 && offset <= 1
                 // The portrait image fills the narrow strip; the wide one fades in over it while the card is shown large.
                 const image = <>
@@ -176,14 +230,13 @@ export default function ServicesShowcase() {
                 return (
                   <motion.div
                     key={item.id}
-                    className={`home-showcase-card${isActive ? ' is-active' : ''}`}
+                    className={`home-showcase-card${isActive ? ' is-active' : ''}${item.cardFit === 'contain' ? ' is-contained' : ''}`}
                     style={{ zIndex: isActive ? 5 : offset === -1 ? 1 : 4 - offset, pointerEvents: shown ? 'auto' : 'none' }}
                     initial={false}
                     animate={{ x: cardX(offset), width: cardWidth(offset), opacity: shown ? 1 : 0 }}
-                    transition={wraps ? { x: { duration: 0 }, width: { duration: 0 }, opacity: fade() } : transition}
+                    transition={far ? { x: jump, width: jump, opacity: fade() } : transition}
                     aria-hidden={!shown}
                   >
-                    <p className="home-showcase-card-caption"><span>{pad(index + 1)}</span><span className="home-showcase-card-caption-title">{item.title}</span></p>
                     {isActive
                       ? <Link to={item.to} tabIndex={-1} aria-hidden="true" draggable={false} className="home-showcase-card-frame" onClick={event => { if (dragged.current) event.preventDefault() }} style={{ height: cardHeight }}>{image}</Link>
                       : <button type="button" tabIndex={shown ? 0 : -1} aria-label={`Show ${item.title}`} draggable={false} className="home-showcase-card-frame" onClick={() => { if (!dragged.current) goTo(index) }} style={{ height: cardHeight }}>{image}</button>}
@@ -192,20 +245,6 @@ export default function ServicesShowcase() {
               })}
             </motion.div>
           </motion.div>
-
-          <div className="home-showcase-controls">
-            <span className="home-showcase-count">{pad(active + 1)}</span>
-            {/* The full name of the service in focus sits on the progress line. */}
-            <div className="home-showcase-line">
-              <AnimatePresence initial={false}>
-                {service.label && <motion.p key={service.id} className="home-showcase-label" initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={fade()}>{service.label}</motion.p>}
-              </AnimatePresence>
-              <div className="home-showcase-progress" aria-hidden="true"><motion.span style={{ originX: 0 }} animate={{ scaleX: (active + 1) / total }} transition={fade()} /></div>
-            </div>
-            <span className="home-showcase-count is-total">{pad(total)}</span>
-            <button type="button" onClick={() => go(-1)} aria-label="Previous service" className="home-showcase-arrow is-prev"><HiOutlineArrowLeft aria-hidden="true" /></button>
-            <button type="button" onClick={() => go(1)} aria-label="Next service" className="home-showcase-arrow is-next"><HiOutlineArrowRight aria-hidden="true" /></button>
-          </div>
         </div>
       </Container>
     </section>

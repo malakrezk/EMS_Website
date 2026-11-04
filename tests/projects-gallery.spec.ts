@@ -1,16 +1,17 @@
 import { expect, test, type Page } from '@playwright/test'
 import { images } from '../src/constants/images'
 
-// Expected homepage showcase order (the order named under its heading), assets and destinations.
-// `wide` is the image of the large card when it differs from the background.
-const homeServiceShowcase: { title: string; card: string; background: string; to: string; wide?: string }[] = [
-  { title: 'BMS', card: images.showcaseBmsCard, background: images.showcaseBmsBackground, wide: images.solutionsApproachDashboard, to: '/services/building-management' },
-  { title: 'SCADA', card: images.showcaseScadaCard, background: images.serviceScadaHero, to: '/services/scada' },
-  { title: 'IoT', card: images.homeServiceIotCard, background: images.showcaseIotBackground, wide: images.iotDashboard, to: '/services/iot' },
-  { title: 'AI', card: images.showcaseAiCard, background: images.showcaseAiBackground, to: '/services/artificial-intelligence' },
-  { title: 'Digital Twin', card: images.showcaseDigitalTwinCard, background: images.solutionsApproachDashboard, to: '/digital-twin' },
-  { title: 'Robotics', card: images.homeServiceRoboticsCard, background: images.homeServiceRobotics, to: '/services/robotics-iot' },
-  { title: 'Mobile Applications', card: images.showcaseMobileApplicationsCard, background: images.parkLaneMobileApp, to: '/mobile-app' },
+// Expected homepage showcase order (the order named under its heading), assets, button labels and destinations.
+// `heading` is the title over the service text when it differs from the card's short title.
+// `wide` is the image of the large card when it differs from the background; `fit` is 'contain' where that image shows whole, smaller.
+const homeServiceShowcase: { title: string; heading?: string; points?: string[]; card: string; background: string; cta: string; to: string; wide?: string; fit?: 'contain' }[] = [
+  { title: 'BMS', heading: 'Building Management Systems', points: ['Centralized Building Management', 'Smart Automation & Energy Efficiency', 'Intelligent Building Integration', 'BMS Modernization & Digital Transformation'], card: images.showcaseBmsCard, background: images.showcaseBmsDashboard, cta: 'Explore BMS Solutions', to: '/services/building-management' },
+  { title: 'SCADA', points: ['Water & Wastewater Automation', 'Centralized Monitoring & Control', 'PLC & SCADA Integration', 'SCADA Modernization & Digital Operations'], card: images.showcaseScadaCard, background: images.homeServiceDigitalTwin, cta: 'Explore SCADA Solutions', to: '/services/scada' },
+  { title: 'IoT', points: ['Connected Assets & Sensors', 'Remote Asset Monitoring', 'IoT Dashboards & Operational Insights', 'BMS & SCADA Integration'], card: images.homeServiceIotCard, background: images.iotDashboard, cta: 'Explore IoT Solutions', to: '/services/iot' },
+  { title: 'AI', heading: 'Artificial Intelligence', points: ['Predictive Maintenance & Fault Detection', 'Intelligent Energy Management', 'Operational Analytics & Anomaly Detection', 'AI & Digital Twin Integration'], card: images.showcaseAiCard, background: images.homeServiceAi, cta: 'Explore AI Solutions', to: '/services/artificial-intelligence' },
+  { title: 'Digital Twin', points: ['Connected Digital Asset Representation', 'Operational Status & Performance Visualization', 'Maintenance & Energy Analysis', 'BMS, SCADA & AI Integration'], card: images.showcaseDigitalTwinCard, background: images.solutionsApproachDashboard, cta: 'Explore Digital Twin Solutions', to: '/services/digital-twin' },
+  { title: 'Robotics', points: ['Interactive Virtual Assistant', 'Voice & Text Interaction', 'Operational Data Assistance', 'Integrated Platform Support'], card: images.homeServiceRoboticsCard, background: images.homeServiceRobotics, cta: 'Explore Robotics Solutions', to: '/services/robotics-iot', fit: 'contain' },
+  { title: 'Mobile Applications', points: ['Mobile Monitoring & Dashboards', 'Alarms & Event Notifications', 'Maintenance & Work Order Management', 'Connected Multi-Site Operations'], card: images.showcaseMobileApplicationsCard, background: images.parkLaneMobileApp, fit: 'contain', cta: 'Explore Mobile App Solutions', to: '/mobile-app' },
 ]
 
 // Scroll progress that settles on scene k (0-based) of the 6-scene gallery timeline.
@@ -131,12 +132,18 @@ test('home services showcase pairs every service with its portrait card, backgro
   const services = page.locator('#home-services')
   await services.scrollIntoViewIfNeeded()
   await expect(services.getByRole('heading', { level: 2 })).toHaveText('Engineering Solutions')
-  await expect(services.locator('.home-showcase-services')).toHaveText('BMS · SCADA · IoT · AI · Digital Twin · Robotics · Mobile Applications')
-  // BMS lists its three key points in place of its one-line description.
-  await expect(services.locator('.home-showcase-description:not(.is-sizer) .home-showcase-point-title')).toHaveText(['Centralized Building Management', 'Smart Automation & Energy Efficiency', 'Intelligent Building Integration'])
+  // One pill per service, in the order of the cards.
+  const pills = services.getByRole('group', { name: 'Choose a service' }).getByRole('button')
+  await expect(pills).toHaveText(['BMS', 'SCADA', 'IoT', 'AI', 'Digital Twin', 'Robotics', 'Mobile Applications'])
+  // The button names the service in focus but keeps one width throughout.
+  const ctaWidths: number[] = []
   for (const [index, service] of homeServiceShowcase.entries()) {
-    await expect(services.locator('.home-showcase-title').last()).toHaveText(service.title)
-    await expect(services.locator('.home-showcase-count').first()).toHaveText(String(index + 1).padStart(2, '0'))
+    await expect(services.locator('.home-showcase-title').last()).toHaveText(service.heading ?? service.title)
+    // A service with key points lists them in place of its one-line description.
+    if (service.points) await expect(services.locator('.home-showcase-description:not(.is-sizer)').last().locator('.home-showcase-points:not([aria-hidden]) .home-showcase-point-title')).toHaveText(service.points)
+    // Only the pill of the service in focus is pressed.
+    await expect(pills.nth(index)).toHaveAttribute('aria-pressed', 'true')
+    await expect(services.locator('.home-showcase-pill[aria-pressed="true"]')).toHaveCount(1)
     const card = services.locator('.home-showcase-card.is-active img.is-tall')
     await expect(card).toHaveAttribute('src', service.card)
     await expect(card).not.toHaveAttribute('alt', '')
@@ -144,11 +151,13 @@ test('home services showcase pairs every service with its portrait card, backgro
     const wide = services.locator('.home-showcase-card.is-active img.is-wide')
     await expect(wide).toHaveAttribute('src', service.wide ?? service.background)
     await expect.poll(() => wide.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
-    await expect(services.locator('.home-showcase-backdrop-image').last()).toHaveAttribute('src', service.background)
-    await expect(services.getByRole('link', { name: `Explore ${service.title}`, exact: true })).toHaveAttribute('href', service.to)
-    await services.getByRole('button', { name: 'Next service', exact: true }).click()
+    const cta = services.getByRole('link', { name: service.cta, exact: true })
+    await expect(cta).toHaveAttribute('href', service.to)
+    ctaWidths.push(Math.round((await cta.boundingBox())?.width ?? 0))
+    await pills.nth((index + 1) % homeServiceShowcase.length).click()
   }
-  await expect(services.locator('.home-showcase-title').last()).toHaveText(homeServiceShowcase[0].title)
+  expect(new Set(ctaWidths).size).toBe(1)
+  await expect(services.locator('.home-showcase-title').last()).toHaveText(homeServiceShowcase[0].heading ?? homeServiceShowcase[0].title)
 })
 
 for (const width of [1440, 768, 390]) {
@@ -162,7 +171,7 @@ for (const width of [1440, 768, 390]) {
       const frame = services.locator('.home-showcase-card.is-active .home-showcase-card-frame')
       const strip = services.locator('.home-showcase-card:not(.is-active):not([aria-hidden="true"]) .home-showcase-card-frame')
       const image = frame.locator('img.is-wide')
-      await expect(image).toHaveCSS('object-fit', 'cover')
+      await expect(image).toHaveCSS('object-fit', homeServiceShowcase[step].fit ?? 'cover')
       await expect.poll(() => image.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
       await expect(strip).toHaveCount(1)
       const [frameBox, imageBox, stripBox] = await Promise.all([frame.boundingBox(), image.boundingBox(), strip.boundingBox()])
@@ -176,37 +185,84 @@ for (const width of [1440, 768, 390]) {
       expect(stripBox.x + stripBox.width).toBeLessThanOrEqual(width - 12)
       expect(Math.abs(imageBox.width - frameBox.width)).toBeLessThan(3)
       expect(Math.abs(imageBox.height - frameBox.height)).toBeLessThan(3)
-      await services.getByRole('button', { name: 'Next service', exact: true }).click()
+      await services.locator('.home-showcase-pill').nth((step + 1) % homeServiceShowcase.length).click()
     }
-    const next = await services.getByRole('button', { name: 'Next service', exact: true }).boundingBox()
-    expect(next && next.x + next.width).toBeLessThanOrEqual(width)
+    // The pills wrap inside the page rather than running off it.
+    const pills = await services.locator('.home-showcase-pills').boundingBox()
+    expect(pills && pills.x + pills.width).toBeLessThanOrEqual(width)
+    for (const pill of await services.locator('.home-showcase-pill').all()) {
+      const box = await pill.boundingBox()
+      expect(box && box.x + box.width).toBeLessThanOrEqual(width)
+    }
     expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
   })
 }
 
 for (const [width, height] of [[1440, 900], [1280, 800]]) {
-  test(`home services showcase text lines up with the card and controls at ${width}x${height}`, async ({ page }) => {
+  test(`home services showcase text lines up with the heading, pills and card at ${width}x${height}`, async ({ page }) => {
     await page.setViewportSize({ width, height })
     await page.emulateMedia({ reducedMotion: 'reduce' })
     await page.goto('/')
     const services = page.locator('#home-services')
     await services.scrollIntoViewIfNeeded()
     const frame = services.locator('.home-showcase-card.is-active .home-showcase-card-frame')
-    const [frameBox, titleBox, descriptionBox, ctaBox, arrowBox, introBox] = await Promise.all([
+    const image = frame.locator('img.is-wide')
+    await expect.poll(() => image.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
+    const [frameBox, titleBox, panelBox, windowBox, ctaBox, pillsBox, introBox] = await Promise.all([
       frame.boundingBox(),
       services.locator('.home-showcase-text .home-showcase-title:not(.is-sizer)').boundingBox(),
-      services.locator('.home-showcase-desc-row .home-showcase-description:not(.is-sizer)').boundingBox(),
+      services.locator('.home-showcase-panel').boundingBox(),
+      services.locator('.home-showcase-desc-row').boundingBox(),
       services.locator('.home-showcase-cta').boundingBox(),
-      services.getByRole('button', { name: 'Next service', exact: true }).boundingBox(),
+      services.locator('.home-showcase-pills').boundingBox(),
       services.locator('.home-showcase-intro').boundingBox(),
     ])
-    if (!frameBox || !titleBox || !descriptionBox || !ctaBox || !arrowBox || !introBox) throw new Error('Showcase card, text, button, arrow or heading is missing')
-    // The heading sits above the card. The service title's line box starts just above the card's top edge so its capitals sit on it,
-    // and the button is level with the carousel arrows, with clear space between it and the text above.
-    expect(introBox.y + introBox.height).toBeLessThan(frameBox.y)
-    expect(titleBox.y).toBeLessThanOrEqual(frameBox.y)
-    expect(titleBox.y).toBeGreaterThan(frameBox.y - 12)
-    expect(Math.abs(ctaBox.y + ctaBox.height / 2 - (arrowBox.y + arrowBox.height / 2))).toBeLessThan(3)
-    expect(ctaBox.y - (descriptionBox.y + descriptionBox.height)).toBeGreaterThan(24)
+    if (!frameBox || !titleBox || !panelBox || !windowBox || !ctaBox || !pillsBox || !introBox) throw new Error('Showcase card, panel, text, button, pills or heading is missing')
+    // The service's title is centred above the row, with the pills centred under it. The text and the photo share one panel, which has the
+    // photo's top, bottom and right edge, with no caption over either card. Inside it, the key points' window starts 1.75rem under its top,
+    // and the button follows the window and ends 1.75rem above its bottom.
+    await expect(services.locator('.home-showcase-intro')).toHaveCSS('text-align', 'center')
+    expect(titleBox.y + titleBox.height).toBeLessThanOrEqual(pillsBox.y)
+    expect(pillsBox.y + pillsBox.height).toBeLessThanOrEqual(introBox.y + introBox.height)
+    expect(Math.abs(pillsBox.x + pillsBox.width / 2 - (titleBox.x + titleBox.width / 2))).toBeLessThan(2)
+    const pillRow = await services.locator('.home-showcase-pill').evaluateAll(pills => pills.map(pill => pill.getBoundingClientRect().top))
+    expect(new Set(pillRow.map(Math.round)).size).toBe(1)
+    expect(introBox.y + introBox.height).toBeLessThan(panelBox.y)
+    expect(Math.abs(panelBox.y - frameBox.y)).toBeLessThan(2)
+    expect(Math.abs(panelBox.y + panelBox.height - (frameBox.y + frameBox.height))).toBeLessThan(2)
+    expect(Math.abs(panelBox.x + panelBox.width - (frameBox.x + frameBox.width))).toBeLessThan(2)
+    expect(panelBox.x).toBeLessThan(windowBox.x)
+    await expect(services.locator('.home-showcase-card-caption')).toHaveCount(0)
+    expect(Math.abs(windowBox.y - (frameBox.y + 28))).toBeLessThan(2)
+    expect(Math.abs(ctaBox.x - windowBox.x)).toBeLessThan(2)
+    expect(ctaBox.y).toBeGreaterThan(windowBox.y + windowBox.height)
+    expect(Math.abs(ctaBox.y + ctaBox.height - (frameBox.y + frameBox.height - 28))).toBeLessThan(2)
+    // The card has its image's shape, so the dashboard in it shows whole.
+    const ratio = await image.evaluate(node => (node as HTMLImageElement).naturalWidth / (node as HTMLImageElement).naturalHeight)
+    expect(Math.abs(frameBox.width / frameBox.height - ratio)).toBeLessThan(.02)
   })
 }
+
+test('home services showcase loops the key points beside the photo and holds them under the pointer', async ({ page }) => {
+  await page.setViewportSize({ width: 1440, height: 900 })
+  await page.emulateMedia({ reducedMotion: 'no-preference' })
+  await page.goto('/')
+  const services = page.locator('#home-services')
+  await services.scrollIntoViewIfNeeded()
+  const pointsWindow = services.locator('.home-showcase-desc-row')
+  const loop = services.locator('.home-showcase-description:not(.is-sizer) .home-showcase-loop')
+  // The list climbs inside a clipped window, followed by a copy that assistive technology skips.
+  await expect(pointsWindow).toHaveCSS('overflow', 'hidden')
+  await expect(loop).toHaveCSS('animation-name', 'homeShowcaseLoop')
+  await expect(loop.locator('.home-showcase-points')).toHaveCount(2)
+  await expect(loop.locator('.home-showcase-points').nth(1)).toHaveAttribute('aria-hidden', 'true')
+  // It moves on its own and holds still while the pointer is over it.
+  const offset = () => loop.evaluate(node => new DOMMatrix(getComputedStyle(node).transform).m42)
+  const start = await offset()
+  await expect.poll(offset).toBeLessThan(start - 5)
+  await pointsWindow.hover()
+  await expect(loop).toHaveCSS('animation-play-state', 'paused')
+  const held = await offset()
+  await page.waitForTimeout(600)
+  expect(await offset()).toBeCloseTo(held, 0)
+})

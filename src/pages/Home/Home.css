@@ -11,7 +11,7 @@
   .home-page-shell .home-hero-word { display:block;overflow:visible;padding-bottom:.08em;white-space:nowrap; }
   .home-page-shell .home-hero-word + .home-hero-word { margin-top:clamp(10px,1vw,14px); }
   .home-page-shell .home-hero-word > span { display:block; }
-  .home-page-shell .home-hero-title { width:min(540px,52vw);max-width:none;font-family:"Cormorant Garamond",Georgia,serif;font-size:clamp(1.75rem,2.9vw,2.5rem);font-weight:600;line-height:1.05;letter-spacing:-.025em; }
+  .home-page-shell .home-hero-title { width:min(540px,52vw);max-width:none;font-family:"Playfair Display",Georgia,serif;font-size:clamp(1.75rem,2.9vw,2.5rem);font-weight:500;line-height:1.05;letter-spacing:-.02em; }
   .home-page-shell .home-hero-line-primary,
   .home-page-shell .home-hero-digitalization { color:var(--paint-neutral-14); }
   .home-page-shell .home-hero-highlight,
@@ -154,23 +154,16 @@
   @media (prefers-reduced-motion: reduce) { .home-page-shell .home-network-path,.home-page-shell .home-data-particle,.home-page-shell .home-scan,.home-page-shell .home-float,.home-page-shell .home-scroll-line::after,.home-page-shell .home-solutions-progress,.home-page-shell .home-case-orb,.home-page-shell .home-partners-title,.home-page-shell .home-partners-aura,.home-page-shell .home-partner-logo-card::after{animation:none!important}.home-page-shell .home-hero-gallery-slot,.home-page-shell .home-hero-gallery-card,.home-page-shell .home-hero-gallery-media{transition:none!important}.home-page-shell #home-hero .home-hero-trust-item{transition:none!important}.home-page-shell .home-case-card,.home-page-shell .home-case-media,.home-page-shell .home-case-sweep,.home-page-shell .home-case-play,.home-page-shell .home-case-glow,.home-page-shell .home-case-accent,.home-page-shell .home-case-copy{transition:none!important;transform:none!important} }
 
   /* ---------- Services showcase: cinematic split layout with portrait cards ---------- */
-  .home-page-shell .home-showcase { --showcase-navy:var(--paint-blue-10);--showcase-deep:var(--paint-about-deep);--showcase-cyan:var(--paint-about-signal);--showcase-electric:var(--paint-electric);--showcase-paper:var(--paint-about-paper);position:relative;isolation:isolate;display:flex;min-height:clamp(720px,100svh,940px);align-items:center;overflow:hidden;overflow:clip;padding-block:clamp(5rem,8vw,7rem);border-block:1px solid rgba(245,249,255,.06);background:var(--showcase-navy);color:var(--showcase-paper); }
-  .home-page-shell .home-showcase-backdrop { position:absolute;inset:0;z-index:-1;overflow:hidden; }
-  .home-page-shell .home-showcase-backdrop-image { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center; }
-  .home-page-shell .home-showcase-shade { position:absolute;inset:0;background:radial-gradient(ellipse 48% 58% at 76% 56%,rgba(22,139,223,.14),transparent 70%),linear-gradient(90deg,rgba(6,20,38,.97) 0%,rgba(6,20,38,.9) 32%,rgba(6,20,38,.62) 58%,rgba(6,20,38,.42) 100%),linear-gradient(180deg,rgba(6,20,38,.88) 0%,rgba(6,20,38,0) 24%,rgba(6,20,38,0) 70%,rgba(6,20,38,.94) 100%); }
+  .home-page-shell .home-showcase { --showcase-navy:var(--paint-blue-10);--showcase-deep:var(--paint-about-deep);--showcase-cyan:var(--paint-about-signal);--showcase-electric:var(--paint-electric);--showcase-paper:var(--paint-about-paper);position:relative;isolation:isolate;display:flex;min-height:clamp(720px,100svh,940px);align-items:center;overflow:hidden;overflow:clip;padding-block:clamp(5rem,8vw,7rem);border-block:1px solid rgba(245,249,255,.06);color:var(--showcase-paper); }
+  /* The section has no backdrop of its own: like the projects section below it, it sits on the page's shaded background. */
   .home-page-shell .home-showcase-rail { position:absolute;top:50%;left:.5rem;z-index:2;display:none;flex-direction:column;align-items:center;gap:1.1rem;transform:translateY(-50%); }
   .home-page-shell .home-showcase-rail-track { position:relative;width:1px;height:clamp(140px,22vh,210px);overflow:hidden;background:rgba(245,249,255,.16); }
   .home-page-shell .home-showcase-rail-fill { position:absolute;inset:0;background:linear-gradient(180deg,var(--showcase-cyan),var(--showcase-electric)); }
   .home-page-shell .home-showcase-inner { position:relative;z-index:1;display:grid;gap:2.75rem;align-items:center; }
-  /* The section names itself plainly: a large white heading, then the services in the order of the cards.
-     The heading sits --showcase-heading-lift higher and the same space opens under it, so the services line stays put.
+  /* The service in focus heads the section (the section's own name is for screen readers), with the service pills under it.
      Below wide screens the service text follows in the same column; the intro's margin turns the grid's gap into the space above it. */
-  .home-page-shell .home-showcase-intro { --showcase-heading-lift:clamp(1.25rem,2.5vh,2rem);min-width:0;margin-bottom:calc(clamp(1.75rem,calc(4vw - 1rem),2.75rem) - 2.75rem); }
+  .home-page-shell .home-showcase-intro { min-width:0;margin-bottom:calc(clamp(1.75rem,calc(4vw - 1rem),2.75rem) - 2.75rem); }
   .home-page-shell .home-showcase-copy { min-width:0; }
-  .home-page-shell .home-showcase-heading { margin:calc(-1 * var(--showcase-heading-lift)) 0 0;color:#fff;font-family:"Playfair Display",Georgia,serif;font-size:clamp(2rem,2.9vw,2.75rem);font-weight:500;line-height:1.08;letter-spacing:-.02em;text-wrap:balance; }
-  .home-page-shell .home-showcase-services { margin-top:calc(.85rem + var(--showcase-heading-lift));color:rgba(245,249,255,.74);font-size:clamp(.78125rem,.8vw,.84375rem);font-weight:500;letter-spacing:.02em; }
-  /* When the list wraps, it breaks between services, never inside a name such as "Mobile Applications". */
-  .home-page-shell .home-showcase-services > span { white-space:nowrap; }
   .home-page-shell .home-showcase-text { display:grid;align-content:start; }
   .home-page-shell .home-showcase-text > * { grid-area:1 / 1; }
   .home-page-shell .home-showcase-text > .is-sizer { visibility:hidden;pointer-events:none; }
@@ -180,96 +173,136 @@
   .home-page-shell .home-showcase-desc-row .home-showcase-description { margin-top:0; }
   /* Key points: numbered, each a bold title over a line of text, divided by hairlines. */
   .home-page-shell .home-showcase-points { display:grid;gap:1rem; }
+  /* The shared panel and the loop's second copy only appear where the list scrolls beside the photo (wide screens, below). */
+  .home-page-shell .home-showcase-panel,
+  .home-page-shell .home-showcase-loop > [aria-hidden] { display:none; }
   .home-page-shell .home-showcase-point { display:grid;grid-template-columns:1.5rem minmax(0,1fr);gap:.75rem;align-items:baseline; }
   .home-page-shell .home-showcase-point + .home-showcase-point { padding-top:1rem;border-top:1px solid rgba(245,249,255,.1); }
   .home-page-shell .home-showcase-point-number { color:var(--showcase-cyan);font-family:"Space Grotesk",sans-serif;font-size:11px;font-weight:500;letter-spacing:.14em; }
-  .home-page-shell .home-showcase-point-title { display:block;color:var(--showcase-paper);font-size:clamp(1rem,1.1vw,1.0625rem);font-weight:600;line-height:1.4; }
+  .home-page-shell .home-showcase-point-title { display:block;color:var(--showcase-cyan);font-size:clamp(1rem,1.1vw,1.0625rem);font-weight:600;line-height:1.4; }
   .home-page-shell .home-showcase-point-text { display:block;margin-top:.3rem;font-size:clamp(.9375rem,1vw,1rem);line-height:1.6; }
-  .home-page-shell .home-showcase-title { max-width:500px;margin:0;color:var(--showcase-paper);font-family:Inter,sans-serif;font-size:clamp(1.75rem,2.2vw,2rem);font-weight:600;line-height:1.12;letter-spacing:-.025em;text-wrap:balance; }
-  .home-page-shell .home-showcase-description { max-width:500px;margin-top:1.25rem;color:rgba(245,249,255,.76);font-size:clamp(1.0625rem,1.2vw,1.125rem);line-height:1.7; }
-  .home-page-shell .home-showcase-cta { margin-top:2.25rem;min-height:50px;padding-inline:1.5rem;border-radius:.65rem;font-size:14px; }
-  /* Under the card in focus: the service's full name, small and spaced out. */
-  /* The service's full name rests on the progress line, anchored to its bottom so a long name wraps upward. */
-  .home-page-shell .home-showcase-line { position:relative;display:flex;flex:1;min-width:0;align-items:center;align-self:stretch; }
-  .home-page-shell .home-showcase-label { position:absolute;left:0;right:0;bottom:calc(50% + .55rem);color:rgba(245,249,255,.62);font-family:"Space Grotesk",sans-serif;font-size:11px;letter-spacing:.2em;line-height:1.5;text-transform:uppercase;pointer-events:none; }
+  .home-page-shell .home-showcase-title { max-width:500px;margin:0;color:var(--showcase-paper);font-family:Inter,sans-serif;font-size:2.25rem;font-weight:600;line-height:1.12;letter-spacing:-.025em;text-wrap:balance; }
+  .home-page-shell .home-showcase-description { max-width:500px;margin-top:1.25rem;color:var(--showcase-paper);font-size:clamp(1.0625rem,1.2vw,1.125rem);line-height:1.7; }
+  /* An arrow-reveal pill: white, with only the arrow in blue, in a disc at its left. On hover, focus or press the blue spreads across the
+     whole pill (the pill clips it) as the link opens the service's page; the label and the arrow stay navy on the blue to read clearly. */
+  .home-page-shell .home-showcase-cta { position:relative;isolation:isolate;display:inline-flex;align-items:center;gap:.75rem;min-height:44px;margin-top:2.25rem;padding:5px 1.4rem 5px 5px;overflow:hidden;border-radius:999px;background:var(--showcase-paper);color:var(--showcase-navy);font-size:13px;font-weight:600;letter-spacing:.01em;box-shadow:0 8px 22px -10px rgba(0,0,0,.6);transition:box-shadow .3s ease; }
+  .home-page-shell .home-showcase-cta-icon { position:relative;display:grid;flex-shrink:0;place-items:center;width:34px;height:34px;border-radius:999px;color:#fff;transition:color .3s ease; }
+  .home-page-shell .home-showcase-cta-icon::before { position:absolute;inset:0;z-index:-1;border-radius:inherit;background:linear-gradient(90deg,var(--paint-primary),#06b6d4);transition:transform .45s cubic-bezier(.22,1,.36,1);content:''; }
+  .home-page-shell .home-showcase-cta-icon svg { width:16px;height:16px;transition:transform .3s cubic-bezier(.22,1,.36,1); }
+  .home-page-shell .home-showcase-cta:is(:hover,:focus-visible,:active) { box-shadow:0 10px 26px -8px rgba(41,155,240,.65); }
+  .home-page-shell .home-showcase-cta:is(:hover,:focus-visible,:active) .home-showcase-cta-icon { color:var(--showcase-navy); }
+  .home-page-shell .home-showcase-cta:is(:hover,:focus-visible,:active) .home-showcase-cta-icon::before { transform:scale(20); }
+  .home-page-shell .home-showcase-cta:hover .home-showcase-cta-icon svg { transform:translateX(3px); }
+  .home-page-shell .home-showcase-cta:focus-visible { outline:2px solid var(--showcase-cyan);outline-offset:3px; }
+  @media (prefers-reduced-motion: reduce) { .home-page-shell .home-showcase-cta-icon::before { transition:none; } }
+  /* Every service's label shares one cell, so the button keeps the width of the longest. */
+  .home-page-shell .home-showcase-cta-label { display:grid;white-space:nowrap; }
+  .home-page-shell .home-showcase-cta-label > * { grid-area:1 / 1; }
+  .home-page-shell .home-showcase-cta-label > .is-sizer { visibility:hidden; }
   .home-page-shell .home-showcase-stage { position:relative;min-width:0; }
   /* Clipped sideways only: cards leaving to the left or waiting to the right stay out of sight. */
   .home-page-shell .home-showcase-track { position:relative;overflow-x:clip;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:pan-y; }
   .home-page-shell .home-showcase-track:active { cursor:grabbing; }
   .home-page-shell .home-showcase-cards { position:absolute;inset:0; }
   .home-page-shell .home-showcase-card { position:absolute;top:0;left:0;will-change:transform; }
-  .home-page-shell .home-showcase-card-caption { display:flex;height:44px;align-items:flex-end;gap:.6rem;padding-bottom:.8rem;overflow:hidden;color:rgba(245,249,255,.72);font-size:14px;font-weight:600;white-space:nowrap;transition:color .6s ease; }
-  .home-page-shell .home-showcase-card-caption > span:first-child { color:rgba(56,189,248,.75);font-family:"Space Grotesk",sans-serif;font-size:11px;font-weight:500;letter-spacing:.14em; }
-  .home-page-shell .home-showcase-card-caption-title { min-width:0;overflow:hidden;text-overflow:ellipsis; }
-  .home-page-shell .home-showcase-card.is-active .home-showcase-card-caption { color:var(--showcase-paper); }
   .home-page-shell .home-showcase-card-frame { position:relative;display:block;-webkit-user-drag:none;width:100%;padding:0;overflow:hidden;border:1px solid rgba(245,249,255,.09);border-radius:1.1rem;background:var(--showcase-deep);box-shadow:0 30px 60px -22px rgba(0,0,0,.75);cursor:pointer;transition:box-shadow .7s ease,border-color .7s ease; }
   .home-page-shell .home-showcase-card-frame::after { position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,20,38,.32),transparent 38%);pointer-events:none;content:''; }
   .home-page-shell .home-showcase-card-frame img { position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.6) saturate(.85);transition:transform 1.2s cubic-bezier(.22,1,.36,1),filter .7s ease;pointer-events:none; }
   .home-page-shell .home-showcase-card-frame img.is-wide { opacity:0;transition:opacity .7s ease,transform 1.2s cubic-bezier(.22,1,.36,1),filter .7s ease; }
-  .home-page-shell .home-showcase-card.is-active .home-showcase-card-frame img.is-wide { opacity:1; }  .home-page-shell .home-showcase-card:not(.is-active) .home-showcase-card-frame:hover img { filter:brightness(.82) saturate(.95); }
+  /* The photo of the service in focus washes in from the left behind a soft wave, over the picture it replaces. Its mask is a shape with a
+     feathered, wave-shaped right edge, 2.3 times the photo's width, swept across it once; with reduced motion it simply shows. */
+  .home-page-shell .home-showcase-card.is-active .home-showcase-card-frame img.is-wide { --showcase-wave-wash:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 230 100' preserveAspectRatio='none'%3E%3Cfilter id='w' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='3'/%3E%3C/filter%3E%3Cpath d='M-10 -10H115C121 3.3 121 16.7 115 30C109 43.3 109 56.7 115 70C121 83.3 121 96.7 115 110H-10Z' filter='url(%23w)'/%3E%3C/svg%3E");opacity:1;-webkit-mask:var(--showcase-wave-wash) 0 0 / 230% 100% no-repeat;mask:var(--showcase-wave-wash) 0 0 / 230% 100% no-repeat;animation:homeShowcaseWaveWash 1.3s cubic-bezier(.6,.05,.3,1) both; }
+  @keyframes homeShowcaseWaveWash { from { -webkit-mask-position:100% 0;mask-position:100% 0; } }
+  @media (prefers-reduced-motion: reduce) {
+    .home-page-shell .home-showcase-card.is-active .home-showcase-card-frame img.is-wide { animation:none; }
+  }
+  .home-page-shell .home-showcase-card:not(.is-active) .home-showcase-card-frame:hover img { filter:brightness(.82) saturate(.95); }
   .home-page-shell .home-showcase-card.is-active .home-showcase-card-frame { border-color:rgba(56,189,248,.42);box-shadow:0 0 0 1px rgba(56,189,248,.12),0 42px 80px -26px rgba(0,0,0,.85),0 0 46px -14px rgba(22,139,223,.5); }
   .home-page-shell .home-showcase-card.is-active .home-showcase-card-frame img { filter:none; }
+  /* A contained image, a tall phone screen, shows whole and a little smaller, floating on the panel: the frame drops its own fill, and the
+     portrait behind it, which would otherwise show at its sides, fades away while the card is large. */
+  .home-page-shell .home-showcase-card.is-contained.is-active .home-showcase-card-frame { background:transparent; }
+  .home-page-shell .home-showcase-card.is-contained .home-showcase-card-frame img.is-tall { transition:opacity .7s ease,transform 1.2s cubic-bezier(.22,1,.36,1),filter .7s ease; }
+  .home-page-shell .home-showcase-card.is-contained.is-active .home-showcase-card-frame img.is-tall { opacity:0; }
+  .home-page-shell .home-showcase-card.is-contained .home-showcase-card-frame img.is-wide { padding:1rem;object-fit:contain;object-position:center;filter:drop-shadow(0 18px 30px rgba(0,0,0,.55)); }
   .home-page-shell .home-showcase-card.is-active .home-showcase-card-frame:hover img { transform:scale(1.035); }
   .home-page-shell .home-showcase-card-frame:focus-visible { outline:2px solid var(--showcase-cyan);outline-offset:3px; }
-  .home-page-shell .home-showcase-controls { display:flex;max-width:34rem;align-items:center;gap:1rem;margin-top:1.75rem; }
-  .home-page-shell .home-showcase-count { color:var(--showcase-paper);font-family:"Space Grotesk",sans-serif;font-size:12px;letter-spacing:.12em; }
-  .home-page-shell .home-showcase-count.is-total { color:rgba(245,249,255,.5); }
-  .home-page-shell .home-showcase-progress { position:relative;flex:1;height:1px;overflow:hidden;background:rgba(245,249,255,.16); }
-  .home-page-shell .home-showcase-progress > span { position:absolute;inset:0;background:linear-gradient(90deg,var(--showcase-electric),var(--showcase-cyan)); }
-  /* The arrows are lit glass orbs: a highlight on the top left, cyan light from below, a dark rim underneath that gives them thickness, a halo, and a streak of light running round the edge. Hover lifts them and brightens the glow; a press pushes them down onto their rim. */
-  .home-page-shell .home-showcase-arrow { --arrow-rim:#031026;--arrow-shade:inset 0 1px 1px rgba(255,255,255,.55),inset 0 0 12px rgba(56,215,255,.55),inset 0 -8px 14px rgba(2,10,28,.45),0 0 0 1px rgba(125,211,252,.7);position:relative;display:grid;width:48px;height:48px;flex-shrink:0;place-items:center;border-radius:50%;background:radial-gradient(circle at 32% 24%,rgba(255,255,255,.42),rgba(255,255,255,0) 40%),radial-gradient(circle at 50% 112%,rgba(56,215,255,.95),rgba(35,199,255,0) 62%),linear-gradient(165deg,#2272cf 0%,#0e3c80 48%,#07214d 100%);color:#fff;box-shadow:var(--arrow-shade),0 4px 0 var(--arrow-rim),0 10px 22px -6px rgba(0,0,0,.6),0 0 0 4px rgba(35,199,255,.14),0 0 24px 2px rgba(35,199,255,.65),0 0 56px rgba(37,99,235,.5);transition:translate .3s cubic-bezier(.22,1,.36,1),box-shadow .3s ease; }
-  .home-page-shell .home-showcase-arrow::before { content:"";position:absolute;inset:-2px;padding:2px;border-radius:50%;background:conic-gradient(rgba(35,199,255,0) 0deg 150deg,var(--showcase-cyan) 270deg,#fff 315deg,var(--showcase-electric) 340deg,rgba(35,199,255,0) 360deg);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);pointer-events:none;animation:homeArrowOrbit 3.6s linear infinite; }
-  .home-page-shell .home-showcase-arrow.is-next::before { animation-delay:-1.8s; }
-  @keyframes homeArrowOrbit { to { transform:rotate(1turn); } }
-  .home-page-shell .home-showcase-arrow svg { position:relative;width:18px;height:18px;filter:drop-shadow(0 0 4px #9be7ff) drop-shadow(0 0 12px rgba(35,199,255,.75));transition:transform .35s cubic-bezier(.22,1,.36,1); }
+  /* The service pills: small, outlined glass. The one in focus holds a blue thumb, the call-to-action's gradient, that glides from pill to pill.
+     They wrap between services, never inside a name such as "Mobile Applications". */
+  .home-page-shell .home-showcase-pills { display:flex;flex-wrap:wrap;gap:.375rem;margin-top:1rem; }
+  .home-page-shell .home-showcase-pill { position:relative;display:inline-flex;min-height:30px;align-items:center;padding-inline:.85rem;border:1px solid rgba(245,249,255,.2);border-radius:999px;background:rgba(6,20,38,.5);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);color:rgba(245,249,255,.78);font-size:12px;font-weight:500;line-height:1;letter-spacing:.01em;white-space:nowrap;transition:border-color .3s ease,color .3s ease,background-color .3s ease; }
+  .home-page-shell .home-showcase-pill-thumb { position:absolute;inset:-1px;border-radius:inherit;background:linear-gradient(90deg,var(--paint-primary),#06b6d4);box-shadow:0 0 0 1px rgba(125,211,252,.55),0 6px 18px -6px rgba(41,155,240,.8); }
+  .home-page-shell .home-showcase-pill-label { position:relative; }
   @media (hover: hover) {
-    .home-page-shell .home-showcase-arrow:hover { translate:0 -2px;box-shadow:var(--arrow-shade),0 6px 0 var(--arrow-rim),0 14px 26px -6px rgba(0,0,0,.6),0 0 0 5px rgba(35,199,255,.2),0 0 32px 4px rgba(35,199,255,.9),0 0 80px rgba(37,99,235,.65); }
-    .home-page-shell .home-showcase-arrow.is-prev:hover svg { transform:translateX(-3px); }
-    .home-page-shell .home-showcase-arrow.is-next:hover svg { transform:translateX(3px); }
+    .home-page-shell .home-showcase-pill:hover { border-color:rgba(56,189,248,.6);background:rgba(56,189,248,.1);color:var(--showcase-paper); }
   }
-  .home-page-shell .home-showcase-arrow:active { translate:0 3px;box-shadow:var(--arrow-shade),0 1px 0 var(--arrow-rim),0 4px 10px -4px rgba(0,0,0,.6),0 0 14px rgba(35,199,255,.4);transition-duration:.08s; }
-  .home-page-shell .home-showcase-arrow:focus-visible { outline:2px solid var(--showcase-cyan);outline-offset:5px; }
-  @media (prefers-reduced-motion: reduce) {
-    .home-page-shell .home-showcase-arrow::before { animation:none; }
-  }
+  .home-page-shell .home-showcase-pill[aria-pressed="true"] { border-color:transparent;color:var(--showcase-navy); }
+  .home-page-shell .home-showcase-pill:focus-visible { outline:2px solid var(--showcase-cyan);outline-offset:3px; }
   @screen lg {
     .home-page-shell .home-showcase-rail { display:flex; }
-    /* The heading and services line head the left column. Under them the service text and the cards share a row: the cards' 44px captions rise beside the services line,
-       so the service title's capitals start level with the top edge of the card in focus, and the text column stretches down to the carousel controls,
-       which puts the button level with them, well clear of the text above it.
-       The section's padding is trimmed so the taller composition still fits one screen; more stays above, so the heading clears the fixed navbar. */
-    .home-page-shell .home-showcase { padding-block:clamp(5.5rem,12vh,7rem) clamp(2.5rem,5vh,4rem); }
-    .home-page-shell .home-showcase-inner { grid-template-columns:minmax(0,40fr) minmax(0,60fr);grid-template-areas:"intro ." "copy stage";column-gap:clamp(2rem,4vw,4.5rem);row-gap:clamp(2rem,4.5vh,3rem);align-items:start; }
-    /* Text starts just right of the progress rail rather than at the container gutter. */
-    .home-page-shell .home-showcase-intro { grid-area:intro;margin:0 0 0 calc(1.5rem - var(--container-gutter)); }
-    .home-page-shell .home-showcase-copy { grid-area:copy;display:flex;flex-direction:column;align-self:stretch;margin-left:calc(1.5rem - var(--container-gutter)); }
-    /* The line box starts about .2em above the capitals; this lifts the capitals onto the card's top edge. */
-    .home-page-shell .home-showcase-text > .home-showcase-title { margin-top:-.2em; }
-    .home-page-shell .home-showcase-stage { grid-area:stage;margin-top:-44px; }
-    .home-page-shell .home-showcase-desc-row { margin-top:.75rem;margin-bottom:auto; }
+    /* The heading and the service pills are centred over both columns. Under them the service text and the photo in focus sit in one block:
+       a panel runs behind both, from the text's side to the photo's right edge, and the photo fades into it from the middle. The next card
+       waits beyond the block as a narrow strip. The key points climb through a window in the panel's left half with the button under them.
+       The section's padding is trimmed and its floor lowered so the whole composition fits a laptop screen (the card sizes itself to match,
+       see ServicesShowcase); more padding stays above, so the heading clears the fixed navbar. Any spare height goes a quarter above the
+       composition and three quarters below it, so the heading sits near the top and the pills keep a generous gap above the block. */
+    .home-page-shell .home-showcase { flex-direction:column;align-items:stretch;min-height:clamp(36rem,100svh,940px);padding-block:clamp(5rem,11vh,6.5rem) clamp(2.5rem,5vh,4rem); }
+    .home-page-shell .home-showcase::before,
+    .home-page-shell .home-showcase::after { flex:1 1 0;content:''; }
+    .home-page-shell .home-showcase::after { flex-grow:3; }
+    .home-page-shell .home-showcase-inner { grid-template-columns:minmax(0,34fr) minmax(0,66fr);grid-template-areas:"intro intro" "copy stage";column-gap:clamp(1.75rem,3vw,3.5rem);row-gap:calc(clamp(1.75rem,4.5vh,2.5rem) + 1.75rem);align-items:start; }
+    .home-page-shell .home-showcase-intro { position:relative;grid-area:intro;margin:0;text-align:center; }
+    .home-page-shell .home-showcase-pills { justify-content:center; }
+    /* The panel has the photo card's top, bottom, border and glow, and stops at the photo's right edge, short of the next card's strip.
+       It is glass in the brand's blue, which shows along its top edge and on the left, while a deeper shade lies behind the text so the
+       points and the button read clearly. Toward the photo it darkens to the deep navy of the dashboards' own edges, so the two meet without a seam. */
+    .home-page-shell .home-showcase-panel { display:block;grid-row:2;grid-column:1 / -1;align-self:start;height:var(--showcase-card-height,0);margin:0 var(--showcase-panel-inset,0) 0 0;border:1px solid rgba(56,189,248,.42);border-radius:1.1rem;background:radial-gradient(70% 58% at 24% 62%,rgba(3,11,24,.6),transparent 72%),radial-gradient(60% 45% at 18% 0%,rgba(41,155,240,.3),transparent 70%),linear-gradient(90deg,rgba(24,56,98,.74) 0%,rgba(16,42,76,.72) 18%,rgba(8,24,46,.82) 30%,rgba(4,14,30,.9) 38%,rgba(4,14,30,.9) 100%);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 0 0 1px rgba(56,189,248,.12),0 42px 80px -26px rgba(0,0,0,.85),0 0 46px -14px rgba(22,139,223,.5); }
+    /* The text sits inside the panel, clear of its left edge. */
+    .home-page-shell .home-showcase-copy { position:relative;z-index:1;grid-area:copy;display:flex;flex-direction:column;align-self:stretch;margin-left:2rem; }
+    .home-page-shell .home-showcase-text > .home-showcase-title { max-width:none; }
+    .home-page-shell .home-showcase-stage { z-index:1;grid-area:stage; }
+    /* The photo in focus keeps the panel's border on its top, right and bottom and shows essentially whole: it eases in from the panel over
+       its first tenth, along a curve rather than a straight ramp, so no edge shows where the two meet. */
+    .home-page-shell .home-showcase-card.is-active .home-showcase-card-frame { --showcase-photo-fade:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.1) 1.5%,rgba(0,0,0,.32) 3.5%,rgba(0,0,0,.6) 5.5%,rgba(0,0,0,.83) 7.5%,rgba(0,0,0,.96) 9%,#000 10.5%);box-shadow:none;-webkit-mask-image:var(--showcase-photo-fade);mask-image:var(--showcase-photo-fade); }
+    /* The window the key points climb through, from 1.75rem inside the panel's top down to the button. Nothing shows outside it. */
+    .home-page-shell .home-showcase-desc-row { height:calc(var(--showcase-card-height,26rem) - 1.75rem - 1.25rem - 44px - 1.75rem);margin-top:1.75rem;overflow:hidden; }
     .home-page-shell .home-showcase-points { gap:.5rem; }
     .home-page-shell .home-showcase-point + .home-showcase-point { padding-top:.5rem; }
-    .home-page-shell .home-showcase-cta { align-self:flex-start;margin-top:1.5rem; }
+    /* The list climbs about 15px a second, like the pump rows on the station dashboard, and holds still under the pointer. Each copy opens
+       with padding and closes with a divider, so the second picks up exactly where the first began and the loop never jumps. */
+    .home-page-shell .home-showcase-loop { animation:homeShowcaseLoop 26s linear infinite; }
+    .home-page-shell .home-showcase-loop > .home-showcase-points { display:grid;padding-bottom:.5rem;border-bottom:1px solid rgba(245,249,255,.1); }
+    .home-page-shell .home-showcase-loop .home-showcase-point:first-child { padding-top:.5rem; }
+    .home-page-shell .home-showcase-desc-row:hover .home-showcase-loop { animation-play-state:paused; }
+    /* While the list climbs, the window's top and bottom edges fade, so each point slides in and out softly rather than being cut off. */
+    @media (prefers-reduced-motion: no-preference) {
+      .home-page-shell .home-showcase-desc-row:has(> .home-showcase-description:not(.is-sizer) .home-showcase-loop) { -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 1.5rem,#000 calc(100% - 1.5rem),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 1.5rem,#000 calc(100% - 1.5rem),transparent 100%); }
+    }
+    .home-page-shell .home-showcase-desc-row > .is-sizer .home-showcase-loop { animation:none; }
+    /* The button sits inside the panel under the key points, 1.75rem above its bottom. Its text eases down to 11px on narrower screens,
+       so the longest label still fits the text column on one line. */
+    .home-page-shell .home-showcase-cta { align-self:flex-start;margin-top:1.25rem;font-size:clamp(.6875rem,.9vw,.8125rem); }
   }
+  /* With reduced motion the list stays still and is shown once; its window scrolls by hand if the list runs long. */
+  @media (prefers-reduced-motion: reduce) {
+    .home-page-shell .home-showcase-loop { animation:none; }
+    .home-page-shell .home-showcase-loop > [aria-hidden] { display:none; }
+    .home-page-shell .home-showcase-desc-row { overflow-y:auto; }
+  }
+  @keyframes homeShowcaseLoop { to { transform:translateY(-50%); } }
   @screen lg-down {
     .home-page-shell .home-showcase-title { font-size:clamp(1.75rem,3.4vw,2rem); }
     .home-page-shell .home-showcase { min-height:0;padding-block:clamp(4rem,9vw,5.5rem); }
-    .home-page-shell .home-showcase-shade { background:radial-gradient(ellipse 70% 40% at 60% 75%,rgba(22,139,223,.14),transparent 70%),linear-gradient(180deg,rgba(6,20,38,.92) 0%,rgba(6,20,38,.8) 45%,rgba(6,20,38,.9) 100%); }
   }
   @screen sm-down {
-    .home-page-shell .home-showcase-heading { font-size:clamp(1.875rem,8.4vw,2.25rem); }
     .home-page-shell .home-showcase-title { font-size:clamp(1.5rem,6.4vw,1.75rem); }
     .home-page-shell .home-showcase-description { margin-top:1rem;font-size:1rem;line-height:1.7; }
     .home-page-shell .home-showcase-intro { margin-bottom:calc(1.5rem - 2.75rem); }
     .home-page-shell .home-showcase-cta { width:100%; }
-    .home-page-shell .home-showcase-controls { gap:.75rem; }
-    .home-page-shell .home-showcase-arrow { width:44px;height:44px; }
   }
 
   /* About: a centred lead, then EMS's growth as a timeline (Egypt, then Saudi Arabia, then Oman), each card hanging from its marker; then mission and vision on one quiet panel. */
-  /* The section takes the Mobile App hero's colour: the site's deep navy washed in blue, cyan light on the right and a trace of violet on the left. It fades in from the projects above and darkens into the footer. */
-  .home-page-shell #home-about { isolation:isolate; }
-  .home-page-shell #home-about::before { content:"";position:absolute;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(70% 45% at 80% 15%,rgba(35,199,255,.1),transparent 75%),radial-gradient(70% 45% at 12% 10%,rgba(110,84,255,.08),transparent 75%),linear-gradient(180deg,rgba(22,139,223,.14),rgba(22,139,223,.1) 75%,rgba(22,139,223,.03)),#040b1d;-webkit-mask-image:linear-gradient(180deg,transparent,#000 clamp(3rem,5vw,4.5rem));mask-image:linear-gradient(180deg,transparent,#000 clamp(3rem,5vw,4.5rem)); }
+  /* The section has no backdrop of its own: like the case studies above it, it sits on the page background. */
   .home-page-shell .home-about-lead { display:grid;gap:clamp(2.75rem,5.5vw,5rem); }
   .home-page-shell .home-about-copy { max-width:64rem;margin-inline:auto;text-align:center; }
   /* About 20px on desktop and 16px on phones, on a wide measure with balanced lines, set well clear of the label. */
@@ -300,13 +333,11 @@
   .home-page-shell .home-about-card::before { content:"";position:absolute;inset:0;z-index:-1;background:radial-gradient(22rem circle at var(--spot-x,30%) var(--spot-y,0%),rgba(35,199,255,.12),transparent 62%);opacity:0;transition:opacity .4s ease; }
   .home-page-shell .home-about-card h3 { color:var(--paint-cyan);font-size:1.0625rem;font-weight:700;line-height:1.35; }
   .home-page-shell .home-about-card p { max-width:34rem;margin-top:.6rem;color:rgba(203,213,225,.78);font-size:15px;line-height:1.65; }
-  .home-page-shell .home-about-index { position:absolute;right:1.25rem;bottom:-1.1rem;z-index:-1;color:rgba(255,255,255,.035);font-family:"Playfair Display",Georgia,serif;font-size:clamp(5rem,7vw,7rem);line-height:1;transition:color .45s ease,transform .6s cubic-bezier(.22,1,.36,1); }
   @media (hover: hover) {
     .home-page-shell .home-about-step:hover .home-about-marker { border-color:var(--paint-cyan);box-shadow:0 0 0 4px rgba(56,189,248,.12),0 0 32px rgba(35,199,255,.38); }
     .home-page-shell .home-about-step:hover .home-about-marker svg { transform:scale(1.12) rotate(-6deg); }
     .home-page-shell .home-about-step:hover .home-about-card { translate:0 -6px;border-color:rgba(41,155,240,.32);box-shadow:0 22px 48px rgba(0,0,0,.28); }
     .home-page-shell .home-about-step:hover .home-about-card::before { opacity:1; }
-    .home-page-shell .home-about-step:hover .home-about-index { color:rgba(35,199,255,.09);transform:translateY(-.4rem); }
   }
   @screen md {
     /* From tablets up: the markers sit on one line across, a column per market, each card hanging just under its marker. */

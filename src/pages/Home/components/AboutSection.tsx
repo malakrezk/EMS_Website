@@ -61,7 +61,6 @@ export default function AboutSection() {
                 </motion.span>
                 <span className="home-about-signal" aria-hidden="true" />
                 <motion.div className="home-about-card" custom={index} variants={cardMotion} onPointerMove={followPointer}>
-                  <span className="home-about-index" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
                   <h3>{milestone.title}</h3>
                   <p>{milestone.text}</p>
                 </motion.div>

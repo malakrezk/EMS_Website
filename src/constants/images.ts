@@ -121,6 +121,7 @@ export const images = {
   "showcaseDigitalTwinCard": "/services-showcase/digital-twin-card.webp",
   "showcaseMobileApplicationsCard": "/services-showcase/mobile-applications-card.webp",
   "showcaseBmsBackground": "/services-showcase/bms-bg.webp",
+  "showcaseBmsDashboard": "/services-showcase/bms-dashboard.webp",
   "showcaseIotBackground": "/services-showcase/iot-bg.webp",
   "showcaseAiBackground": "/services-showcase/ai-bg.webp",
   "parkLaneMobileApp": "/park-lane-mobile-app.jpg",

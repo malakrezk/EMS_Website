@@ -49,12 +49,12 @@ export interface ShowcaseService {
 /** One key point of a showcase service: a short title and a line of text. */
 export interface ShowcasePoint { title: string; text: string }
 
-/** One service in the homepage showcase: a 3:4 card image plus a landscape section background. */
+/** One service in the homepage showcase: a 3:4 image for its narrow strip plus a landscape `background`, shown on its large card. */
 export interface ServiceShowcaseItem {
   id: string
   title: string
-  /** Optional full name of the service, shown under its card while in focus, e.g. Building Management Systems. */
-  label?: string
+  /** Optional heading over the service text in place of the title, e.g. the full name when the title is an acronym. */
+  heading?: string
   description: string
   /** Optional key points, shown as a numbered list in place of the description. */
   points?: ShowcasePoint[]
@@ -64,7 +64,10 @@ export interface ServiceShowcaseItem {
   cardAlt: string
   background: string
   /** Image for the card while it is shown large and wide. Defaults to the background. */
-  wide?: string}
+  wide?: string
+  /** How that image sits on the large card: 'contain' shows all of it, smaller, e.g. a tall phone screen; by default it fills the card. */
+  cardFit?: 'contain'
+}
 
 /** Video shown in the homepage large player: any project or service clip. */
 export interface VideoClip { name: string; location: string; videoSrc?: string; poster?: string }

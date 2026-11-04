@@ -185,9 +185,11 @@ for (const width of [1920, 768, 390]) {
 test('home carousels and video preview work with motion enabled', async ({ page }) => {
   await page.emulateMedia({ reducedMotion: 'no-preference' })
   await page.goto('/')
-  const next = page.getByRole('button', { name: 'Next service', exact: true })
-  await next.click()
-  await expect(next.locator('..').locator('span').first()).toHaveText('02')
+  const scada = page.getByRole('group', { name: 'Choose a service' }).getByRole('button', { name: 'SCADA', exact: true })
+  await scada.click()
+  await expect(scada).toHaveAttribute('aria-pressed', 'true')
+  // While the titles crossfade the leaving one is still in the page; the arriving one comes last.
+  await expect(page.locator('.home-showcase-text .home-showcase-title:not(.is-sizer)').last()).toHaveText('SCADA')
   await page.locator('[aria-label^="Preview Data Center video"]').scrollIntoViewIfNeeded()
   await page.getByRole('button', { name: /Preview Data Center video/ }).click()
   await expect(page.getByRole('dialog', { name: /Data Center video player/ })).toBeVisible()

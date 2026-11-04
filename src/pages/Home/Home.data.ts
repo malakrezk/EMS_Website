@@ -67,68 +67,94 @@ export const aboutMilestones: AboutMilestone[] = [
   { id: 'oman', title: 'Expanded in Oman', text: 'Expanded operations in Oman to support projects across the Sultanate.', icon: HiOutlineMapPin },
 ]
 
-/** The services showcase heading, and the services it names, in the order the cards follow. */
+/** The services showcase heading. The services it covers are named on the pills under the cards, in the order the cards follow. */
 export const homeShowcaseHeading = {
   title: 'Engineering Solutions',
-  services: ['BMS', 'SCADA', 'IoT', 'AI', 'Digital Twin', 'Robotics', 'Mobile Applications'],
 }
 
 export const homeServiceShowcase: ServiceShowcaseItem[] = [
   {
     id: 'bms',
     title: 'BMS',
-    label: 'Building Management Systems',
+    heading: 'Building Management Systems',
     description: 'Unified building management for HVAC, power, lighting, security and life-safety systems.',
     points: [
       { title: 'Centralized Building Management', text: 'Integrating building systems into one intelligent monitoring and control platform.' },
       { title: 'Smart Automation & Energy Efficiency', text: 'Optimizing HVAC, lighting, and power systems for efficient building operations.' },
       { title: 'Intelligent Building Integration', text: 'Connecting BMS with IoT, AI analytics, and Digital Twin technologies.' },
+      { title: 'BMS Modernization & Digital Transformation', text: 'Modernizing existing BMS through data integration, analytics, and Digital Twin capabilities.' },
     ],
     to: '/services/building-management',
+    ctaLabel: 'Explore BMS Solutions',
     card: images.showcaseBmsCard,
     cardAlt: 'Smart office building at dusk with connected ventilation, temperature, lighting, energy, security and elevator systems',
-    background: images.showcaseBmsBackground,
-    // The large card shows the live EMS station dashboard.
-    wide: images.solutionsApproachDashboard,
+    // The Al-Najd Twin Towers BMS dashboard, shown on the large card.
+    background: images.showcaseBmsDashboard,
   },
   {
     id: 'scada',
     title: 'SCADA',
-    label: 'SCADA & Infrastructure Control',
     description: 'Real-time supervisory control, alarms and operational visibility across distributed infrastructure.',
+    points: [
+      { title: 'Water & Wastewater Automation', text: 'Monitoring and controlling pumping operations, equipment status, alarms, and field instrumentation.' },
+      { title: 'Centralized Monitoring & Control', text: 'Bringing operational data from multiple stations into one coordinated monitoring and control environment.' },
+      { title: 'PLC & SCADA Integration', text: 'Integrating controllers, operator interfaces, communication networks, and supervisory software.' },
+      { title: 'SCADA Modernization & Digital Operations', text: 'Upgrading existing systems and enabling integration with IoT platforms, AI analytics, and Digital Twin applications.' },
+    ],
     to: '/services/scada',
+    ctaLabel: 'Explore SCADA Solutions',
     card: images.showcaseScadaCard,
     cardAlt: 'Operators monitoring a water treatment plant from a SCADA control room',
-    background: images.serviceScadaHero,
+    // The Investors-Ext sewage lifting station dashboard, shown on the large card. It is 16:9, so it shows whole.
+    background: images.homeServiceDigitalTwin,
   },
   {
     id: 'iot',
     title: 'IoT',
-    label: 'Internet of Things',
     description: 'Connected sensors and devices that transform facility data into clear, actionable insight.',
+    points: [
+      { title: 'Connected Assets & Sensors', text: 'Connecting compatible devices, sensors, and equipment to collect and exchange operational data.' },
+      { title: 'Remote Asset Monitoring', text: 'Providing authorized teams with remote access to asset status, measurements, and alerts.' },
+      { title: 'IoT Dashboards & Operational Insights', text: 'Turning connected data into clear dashboards, trends, and reports for informed decision-making.' },
+      { title: 'BMS & SCADA Integration', text: 'Integrating IoT data with compatible building and infrastructure platforms for coordinated operations.' },
+    ],
     to: '/services/iot',
+    ctaLabel: 'Explore IoT Solutions',
     card: images.homeServiceIotCard,
     cardAlt: 'IoT cloud dashboard connecting field devices, sensors and control panels across a facility',
-    background: images.showcaseIotBackground,
-    // The large card shows the EMS live cameras dashboard, prepared at the card's 1.7:1 shape so it fills without cropping.
-    wide: images.iotDashboard,
+    // The EMS live cameras dashboard, shown on the large card. It is 1.7:1, so the 16:9 card trims a sliver from its top and bottom.
+    background: images.iotDashboard,
   },
   {
     id: 'ai',
     title: 'AI',
-    label: 'Artificial Intelligence',
+    heading: 'Artificial Intelligence',
     description: 'AI-powered analytics for smarter decisions, predictive maintenance and efficient operations.',
+    points: [
+      { title: 'Predictive Maintenance & Fault Detection', text: 'Analyzing equipment data to identify potential failure indicators and support maintenance prioritization.' },
+      { title: 'Intelligent Energy Management', text: 'Analyzing consumption patterns and operating schedules to identify potential energy-saving opportunities.' },
+      { title: 'Operational Analytics & Anomaly Detection', text: 'Interpreting BMS and SCADA data to recognize unusual conditions and assess system performance.' },
+      { title: 'AI & Digital Twin Integration', text: 'Combining AI analytics with digital asset environments to support operational analysis and informed decisions.' },
+    ],
     to: '/services/artificial-intelligence',
+    ctaLabel: 'Explore AI Solutions',
     card: images.showcaseAiCard,
     cardAlt: 'AI command center dashboard with live monitoring, event detection, occupancy analytics and predictive maintenance',
-    background: images.showcaseAiBackground,
+    // 16:9, so it shows whole on the large card.
+    background: images.homeServiceAi,
   },
   {
     id: 'digital-twin',
     title: 'Digital Twin',
-    label: '3D Operations',
     description: 'A connected digital representation of physical systems for simulation, monitoring and remote insight.',
-    to: '/digital-twin',
+    points: [
+      { title: 'Connected Digital Asset Representation', text: 'Combining asset information, system relationships, and operational data in one coordinated digital view.' },
+      { title: 'Operational Status & Performance Visualization', text: 'Visualizing equipment conditions, measurements, and historical trends within the context of each asset.' },
+      { title: 'Maintenance & Energy Analysis', text: 'Using equipment records and operational history to support maintenance planning and identify performance improvements.' },
+      { title: 'BMS, SCADA & AI Integration', text: 'Connecting compatible monitoring systems and AI analytics to support anomaly detection and informed operational decisions.' },
+    ],
+    to: '/services/digital-twin',
+    ctaLabel: 'Explore Digital Twin Solutions',
     card: images.showcaseDigitalTwinCard,
     cardAlt: '3D digital twin of a sewage lifting station above its live operations dashboard',
     background: images.solutionsApproachDashboard,
@@ -136,22 +162,38 @@ export const homeServiceShowcase: ServiceShowcaseItem[] = [
   {
     id: 'robotics',
     title: 'Robotics',
-    label: 'Robotics & IoT',
     description: 'Connected robotic automation engineered to improve precision, throughput and workplace safety.',
+    points: [
+      { title: 'Interactive Virtual Assistant', text: 'Helping users navigate dashboards and access relevant facility information through a digital assistant.' },
+      { title: 'Voice & Text Interaction', text: 'Enabling users to ask questions and request operational information through voice or text.' },
+      { title: 'Operational Data Assistance', text: 'Presenting equipment status, alarms, and performance summaries from connected systems.' },
+      { title: 'Integrated Platform Support', text: 'Connecting the assistant with compatible BMS, SCADA, and IoT platforms to support daily operational tasks.' },
+    ],
     to: '/services/robotics-iot',
+    ctaLabel: 'Explore Robotics Solutions',
     card: images.homeServiceRoboticsCard,
     cardAlt: 'AI assistant robot surrounded by robotic automation and monitoring interfaces',
+    // A square image: it shows whole inside the large card rather than cropped to fill it.
     background: images.homeServiceRobotics,
+    cardFit: 'contain',
   },
   {
     id: 'mobile-applications',
     title: 'Mobile Applications',
     description: homeMobileApplicationService.description,
+    points: [
+      { title: 'Mobile Monitoring & Dashboards', text: 'Giving authorized teams mobile access to equipment status, operational data, and facility dashboards.' },
+      { title: 'Alarms & Event Notifications', text: 'Keeping teams informed through configurable notifications for operational events and equipment alerts.' },
+      { title: 'Maintenance & Work Order Management', text: 'Enabling teams to receive tasks, update work status, and document inspections and completed maintenance.' },
+      { title: 'Connected Multi-Site Operations', text: 'Bringing selected BMS, SCADA, and IoT information from multiple facilities into one mobile interface.' },
+    ],
     to: homeMobileApplicationService.to,
-    ctaLabel: homeMobileApplicationService.cta,
+    ctaLabel: 'Explore Mobile App Solutions',
     card: images.showcaseMobileApplicationsCard,
     cardAlt: 'EMS mobile application for a connected residential compound shown on a smartphone',
+    // A tall phone screen: it shows whole inside the large card rather than cropped to fill it.
     background: images.parkLaneMobileApp,
+    cardFit: 'contain',
   },
 ]
 
