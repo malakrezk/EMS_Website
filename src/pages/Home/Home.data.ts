@@ -86,8 +86,7 @@ export const homeServiceShowcase: ServiceShowcaseItem[] = [
     ],
     to: '/services/building-management',
     ctaLabel: 'Explore BMS Solutions',
-    card: images.showcaseBmsCard,
-    cardAlt: 'Smart office building at dusk with connected ventilation, temperature, lighting, energy, security and elevator systems',
+    cardAlt: 'Al-Najd Twin Towers building management dashboard, with HVAC, indoor environment, alarm, electrical, water and energy panels around a 3D model of the towers',
     // The Al-Najd Twin Towers BMS dashboard, shown on the large card.
     background: images.showcaseBmsDashboard,
   },
@@ -103,8 +102,7 @@ export const homeServiceShowcase: ServiceShowcaseItem[] = [
     ],
     to: '/services/scada',
     ctaLabel: 'Explore SCADA Solutions',
-    card: images.showcaseScadaCard,
-    cardAlt: 'Operators monitoring a water treatment plant from a SCADA control room',
+    cardAlt: 'SCADA dashboard of the Investors-Ext sewage lifting station, with energy, electrical, pump and flow panels around a 3D model of the station',
     // The Investors-Ext sewage lifting station dashboard, shown on the large card. It is 16:9, so it shows whole.
     background: images.homeServiceDigitalTwin,
   },
@@ -120,8 +118,7 @@ export const homeServiceShowcase: ServiceShowcaseItem[] = [
     ],
     to: '/services/iot',
     ctaLabel: 'Explore IoT Solutions',
-    card: images.homeServiceIotCard,
-    cardAlt: 'IoT cloud dashboard connecting field devices, sensors and control panels across a facility',
+    cardAlt: 'IoT dashboard of the Investors-Ext station, with live camera feeds, people counts, detection alerts and the EMS assistant',
     // The EMS live cameras dashboard, shown on the large card. It is 1.7:1, so the 16:9 card trims a sliver from its top and bottom.
     background: images.iotDashboard,
   },
@@ -138,8 +135,7 @@ export const homeServiceShowcase: ServiceShowcaseItem[] = [
     ],
     to: '/services/artificial-intelligence',
     ctaLabel: 'Explore AI Solutions',
-    card: images.showcaseAiCard,
-    cardAlt: 'AI command center dashboard with live monitoring, event detection, occupancy analytics and predictive maintenance',
+    cardAlt: 'AI-powered EMS security monitoring dashboard, with office camera feeds, smoke and intrusion alerts, detection trends and an event timeline',
     // 16:9, so it shows whole on the large card.
     background: images.homeServiceAi,
   },
@@ -155,8 +151,7 @@ export const homeServiceShowcase: ServiceShowcaseItem[] = [
     ],
     to: '/services/digital-twin',
     ctaLabel: 'Explore Digital Twin Solutions',
-    card: images.showcaseDigitalTwinCard,
-    cardAlt: '3D digital twin of a sewage lifting station above its live operations dashboard',
+    cardAlt: 'Digital twin of the Investors-Ext sewage lifting station: a 3D model of the station surrounded by its live energy, pump and flow panels',
     background: images.solutionsApproachDashboard,
   },
   {
@@ -171,8 +166,7 @@ export const homeServiceShowcase: ServiceShowcaseItem[] = [
     ],
     to: '/services/robotics-iot',
     ctaLabel: 'Explore Robotics Solutions',
-    card: images.homeServiceRoboticsCard,
-    cardAlt: 'AI assistant robot surrounded by robotic automation and monitoring interfaces',
+    cardAlt: 'EMS AI assistant robot surrounded by holographic panels for live feeds, AI detections, incidents and camera health',
     // A square image: it shows whole inside the large card rather than cropped to fill it.
     background: images.homeServiceRobotics,
     cardFit: 'contain',
@@ -189,7 +183,6 @@ export const homeServiceShowcase: ServiceShowcaseItem[] = [
     ],
     to: homeMobileApplicationService.to,
     ctaLabel: 'Explore Mobile App Solutions',
-    card: images.showcaseMobileApplicationsCard,
     cardAlt: 'EMS mobile application for a connected residential compound shown on a smartphone',
     // A tall phone screen: it shows whole inside the large card rather than cropped to fill it.
     background: images.parkLaneMobileApp,

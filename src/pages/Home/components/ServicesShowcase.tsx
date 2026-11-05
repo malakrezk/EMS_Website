@@ -14,6 +14,8 @@ const FADE_DURATION = .7
 // Beside the strip the card is 16:9, the shape of the dashboards shown in it, so they show whole.
 const CARD_RATIO = 16 / 9
 const ctaLabel = (service: ServiceShowcaseItem) => service.ctaLabel ?? 'Explore Service'
+// A service's photo: its strip shows it cropped to the strip's width, its large card shows it whole.
+const photo = (service: ServiceShowcaseItem) => service.wide ?? service.background
 // On a change of service the key points arrive as a wave: each rises into place a beat after the one above it.
 const POINT_STAGGER = .08
 const pointWave: Variants = {
@@ -83,12 +85,7 @@ export default function ServicesShowcase() {
 
   // Warm the neighbouring images so a change never waits on the network.
   useEffect(() => {
-    for (const step of [1, -1, 2, 3, 4]) new Image().src = services[(active + step + total) % total].card
-    for (const step of [1, -1]) {
-      const item = services[(active + step + total) % total]
-      new Image().src = item.background
-      if (item.wide) new Image().src = item.wide
-    }
+    for (const step of [1, -1, 2, 3, 4]) new Image().src = photo(services[(active + step + total) % total])
   }, [active])
 
   // The shown card is wide; the next waits beside it as a narrow strip of the same height, ending at the content edge.
@@ -138,8 +135,8 @@ export default function ServicesShowcase() {
       aria-roledescription="carousel"
       aria-labelledby="home-showcase-title"
       onKeyDown={onKeyDown}
-      // The shared block and the points' window take their size from the photo card; the block stops at its right edge, short of the strip.
-      style={cardHeight ? { '--showcase-card-height': `${cardHeight}px`, '--showcase-panel-inset': `${Math.max(0, trackWidth - wideWidth)}px` } as CSSProperties : undefined}
+      // The points' window beside the photo card takes its height from the card.
+      style={cardHeight ? { '--showcase-card-height': `${cardHeight}px` } as CSSProperties : undefined}
     >
       <div className="home-showcase-rail" aria-hidden="true">
         <span className="home-showcase-rail-track"><motion.span className="home-showcase-rail-fill" style={{ originY: 0 }} animate={{ scaleY: (active + 1) / total }} transition={fade()} /></span>
@@ -177,8 +174,6 @@ export default function ServicesShowcase() {
             ))}
           </motion.div>
         </div>
-        {/* On wide screens the text and the photo in focus share one card: this panel lies behind both, and the photo fades into it. */}
-        <div aria-hidden="true" className="home-showcase-panel" />
         <div className="home-showcase-copy">
           <div className="home-showcase-desc-row">
             {services.map(item => (
@@ -222,10 +217,10 @@ export default function ServicesShowcase() {
                 const leaving = before >= 0 && before <= VISIBLE_AHEAD && !shown
                 const jump = { duration: 0, delay: leaving && !reducedMotion ? FADE_DURATION : 0 }
                 const near = offset >= -1 && offset <= 1
-                // The portrait image fills the narrow strip; the wide one fades in over it while the card is shown large.
+                // The strip shows the photo cropped to its width, dimmed; while the card is shown large, the photo washes in over it at full light.
                 const image = <>
-                  <img className="is-tall" src={item.card} alt={item.cardAlt} width={768} height={1024} loading={near ? 'eager' : 'lazy'} decoding="async" draggable={false} />
-                  <img className="is-wide" src={item.wide ?? item.background} alt="" aria-hidden="true" loading={near ? 'eager' : 'lazy'} decoding="async" draggable={false} />
+                  <img className="is-strip" src={photo(item)} alt={item.cardAlt} loading={near ? 'eager' : 'lazy'} decoding="async" draggable={false} />
+                  <img className="is-wide" src={photo(item)} alt="" aria-hidden="true" loading={near ? 'eager' : 'lazy'} decoding="async" draggable={false} />
                 </>
                 return (
                   <motion.div

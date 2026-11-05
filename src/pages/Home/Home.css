@@ -173,8 +173,7 @@
   .home-page-shell .home-showcase-desc-row .home-showcase-description { margin-top:0; }
   /* Key points: numbered, each a bold title over a line of text, divided by hairlines. */
   .home-page-shell .home-showcase-points { display:grid;gap:1rem; }
-  /* The shared panel and the loop's second copy only appear where the list scrolls beside the photo (wide screens, below). */
-  .home-page-shell .home-showcase-panel,
+  /* The loop's second copy only appears where the list scrolls beside the photo (wide screens, below). */
   .home-page-shell .home-showcase-loop > [aria-hidden] { display:none; }
   .home-page-shell .home-showcase-point { display:grid;grid-template-columns:1.5rem minmax(0,1fr);gap:.75rem;align-items:baseline; }
   .home-page-shell .home-showcase-point + .home-showcase-point { padding-top:1rem;border-top:1px solid rgba(245,249,255,.1); }
@@ -209,8 +208,9 @@
   .home-page-shell .home-showcase-card-frame::after { position:absolute;inset:0;background:linear-gradient(0deg,rgba(6,20,38,.32),transparent 38%);pointer-events:none;content:''; }
   .home-page-shell .home-showcase-card-frame img { position:absolute;inset:0;display:block;width:100%;height:100%;object-fit:cover;filter:brightness(.6) saturate(.85);transition:transform 1.2s cubic-bezier(.22,1,.36,1),filter .7s ease;pointer-events:none; }
   .home-page-shell .home-showcase-card-frame img.is-wide { opacity:0;transition:opacity .7s ease,transform 1.2s cubic-bezier(.22,1,.36,1),filter .7s ease; }
-  /* The photo of the service in focus washes in from the left behind a soft wave, over the picture it replaces. Its mask is a shape with a
-     feathered, wave-shaped right edge, 2.3 times the photo's width, swept across it once; with reduced motion it simply shows. */
+  /* The photo of the service in focus washes in from the left behind a soft wave, at full light over the dimmed view of it the strip showed.
+     Its mask is a shape with a feathered, wave-shaped right edge, 2.3 times the photo's width, swept across it once; with reduced motion
+     it simply shows. */
   .home-page-shell .home-showcase-card.is-active .home-showcase-card-frame img.is-wide { --showcase-wave-wash:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 230 100' preserveAspectRatio='none'%3E%3Cfilter id='w' x='-20%25' y='-20%25' width='140%25' height='140%25'%3E%3CfeGaussianBlur stdDeviation='3'/%3E%3C/filter%3E%3Cpath d='M-10 -10H115C121 3.3 121 16.7 115 30C109 43.3 109 56.7 115 70C121 83.3 121 96.7 115 110H-10Z' filter='url(%23w)'/%3E%3C/svg%3E");opacity:1;-webkit-mask:var(--showcase-wave-wash) 0 0 / 230% 100% no-repeat;mask:var(--showcase-wave-wash) 0 0 / 230% 100% no-repeat;animation:homeShowcaseWaveWash 1.3s cubic-bezier(.6,.05,.3,1) both; }
   @keyframes homeShowcaseWaveWash { from { -webkit-mask-position:100% 0;mask-position:100% 0; } }
   @media (prefers-reduced-motion: reduce) {
@@ -218,12 +218,11 @@
   }
   .home-page-shell .home-showcase-card:not(.is-active) .home-showcase-card-frame:hover img { filter:brightness(.82) saturate(.95); }
   .home-page-shell .home-showcase-card.is-active .home-showcase-card-frame { border-color:rgba(56,189,248,.42);box-shadow:0 0 0 1px rgba(56,189,248,.12),0 42px 80px -26px rgba(0,0,0,.85),0 0 46px -14px rgba(22,139,223,.5); }
-  .home-page-shell .home-showcase-card.is-active .home-showcase-card-frame img { filter:none; }
-  /* A contained image, a tall phone screen, shows whole and a little smaller, floating on the panel: the frame drops its own fill, and the
-     portrait behind it, which would otherwise show at its sides, fades away while the card is large. */
-  .home-page-shell .home-showcase-card.is-contained.is-active .home-showcase-card-frame { background:transparent; }
-  .home-page-shell .home-showcase-card.is-contained .home-showcase-card-frame img.is-tall { transition:opacity .7s ease,transform 1.2s cubic-bezier(.22,1,.36,1),filter .7s ease; }
-  .home-page-shell .home-showcase-card.is-contained.is-active .home-showcase-card-frame img.is-tall { opacity:0; }
+  .home-page-shell .home-showcase-card.is-active .home-showcase-card-frame img.is-wide { filter:none; }
+  /* A contained image, a square or a tall phone screen, shows whole and a little smaller on the card's own fill; the strip's cropped view of
+     it, which would otherwise show at its sides, fades away while the card is large. */
+  .home-page-shell .home-showcase-card.is-contained .home-showcase-card-frame img.is-strip { transition:opacity .7s ease,transform 1.2s cubic-bezier(.22,1,.36,1),filter .7s ease; }
+  .home-page-shell .home-showcase-card.is-contained.is-active .home-showcase-card-frame img.is-strip { opacity:0; }
   .home-page-shell .home-showcase-card.is-contained .home-showcase-card-frame img.is-wide { padding:1rem;object-fit:contain;object-position:center;filter:drop-shadow(0 18px 30px rgba(0,0,0,.55)); }
   .home-page-shell .home-showcase-card.is-active .home-showcase-card-frame:hover img { transform:scale(1.035); }
   .home-page-shell .home-showcase-card-frame:focus-visible { outline:2px solid var(--showcase-cyan);outline-offset:3px; }
@@ -240,10 +239,9 @@
   .home-page-shell .home-showcase-pill:focus-visible { outline:2px solid var(--showcase-cyan);outline-offset:3px; }
   @screen lg {
     .home-page-shell .home-showcase-rail { display:flex; }
-    /* The heading and the service pills are centred over both columns. Under them the service text and the photo in focus sit in one block:
-       a panel runs behind both, from the text's side to the photo's right edge, and the photo fades into it from the middle. The next card
-       waits beyond the block as a narrow strip. The key points climb through a window in the panel's left half with the button under them.
-       The section's padding is trimmed and its floor lowered so the whole composition fits a laptop screen (the card sizes itself to match,
+    /* The heading and the service pills are centred over both columns. Under them the service text and the photo in focus stand apart, side
+       by side: on the left the key points climb through a window with the button under them, together exactly as tall as the photo, and on
+       the right the photo is a card of its own, with the next card waiting beside it as a narrow strip. The section's padding is trimmed and its floor lowered so the whole composition fits a laptop screen (the card sizes itself to match,
        see ServicesShowcase); more padding stays above, so the heading clears the fixed navbar. Any spare height goes a quarter above the
        composition and three quarters below it, so the heading sits near the top and the pills keep a generous gap above the block. */
     .home-page-shell .home-showcase { flex-direction:column;align-items:stretch;min-height:clamp(36rem,100svh,940px);padding-block:clamp(5rem,11vh,6.5rem) clamp(2.5rem,5vh,4rem); }
@@ -253,19 +251,11 @@
     .home-page-shell .home-showcase-inner { grid-template-columns:minmax(0,34fr) minmax(0,66fr);grid-template-areas:"intro intro" "copy stage";column-gap:clamp(1.75rem,3vw,3.5rem);row-gap:calc(clamp(1.75rem,4.5vh,2.5rem) + 1.75rem);align-items:start; }
     .home-page-shell .home-showcase-intro { position:relative;grid-area:intro;margin:0;text-align:center; }
     .home-page-shell .home-showcase-pills { justify-content:center; }
-    /* The panel has the photo card's top, bottom, border and glow, and stops at the photo's right edge, short of the next card's strip.
-       It is glass in the brand's blue, which shows along its top edge and on the left, while a deeper shade lies behind the text so the
-       points and the button read clearly. Toward the photo it darkens to the deep navy of the dashboards' own edges, so the two meet without a seam. */
-    .home-page-shell .home-showcase-panel { display:block;grid-row:2;grid-column:1 / -1;align-self:start;height:var(--showcase-card-height,0);margin:0 var(--showcase-panel-inset,0) 0 0;border:1px solid rgba(56,189,248,.42);border-radius:1.1rem;background:radial-gradient(70% 58% at 24% 62%,rgba(3,11,24,.6),transparent 72%),radial-gradient(60% 45% at 18% 0%,rgba(41,155,240,.3),transparent 70%),linear-gradient(90deg,rgba(24,56,98,.74) 0%,rgba(16,42,76,.72) 18%,rgba(8,24,46,.82) 30%,rgba(4,14,30,.9) 38%,rgba(4,14,30,.9) 100%);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);box-shadow:0 0 0 1px rgba(56,189,248,.12),0 42px 80px -26px rgba(0,0,0,.85),0 0 46px -14px rgba(22,139,223,.5); }
-    /* The text sits inside the panel, clear of its left edge. */
-    .home-page-shell .home-showcase-copy { position:relative;z-index:1;grid-area:copy;display:flex;flex-direction:column;align-self:stretch;margin-left:2rem; }
+    .home-page-shell .home-showcase-copy { grid-area:copy;display:flex;flex-direction:column;align-self:stretch; }
     .home-page-shell .home-showcase-text > .home-showcase-title { max-width:none; }
-    .home-page-shell .home-showcase-stage { z-index:1;grid-area:stage; }
-    /* The photo in focus keeps the panel's border on its top, right and bottom and shows essentially whole: it eases in from the panel over
-       its first tenth, along a curve rather than a straight ramp, so no edge shows where the two meet. */
-    .home-page-shell .home-showcase-card.is-active .home-showcase-card-frame { --showcase-photo-fade:linear-gradient(90deg,transparent 0%,rgba(0,0,0,.1) 1.5%,rgba(0,0,0,.32) 3.5%,rgba(0,0,0,.6) 5.5%,rgba(0,0,0,.83) 7.5%,rgba(0,0,0,.96) 9%,#000 10.5%);box-shadow:none;-webkit-mask-image:var(--showcase-photo-fade);mask-image:var(--showcase-photo-fade); }
-    /* The window the key points climb through, from 1.75rem inside the panel's top down to the button. Nothing shows outside it. */
-    .home-page-shell .home-showcase-desc-row { height:calc(var(--showcase-card-height,26rem) - 1.75rem - 1.25rem - 44px - 1.75rem);margin-top:1.75rem;overflow:hidden; }
+    .home-page-shell .home-showcase-stage { grid-area:stage; }
+    /* The window the key points climb through, from level with the photo's top down to the button. Nothing shows outside it. */
+    .home-page-shell .home-showcase-desc-row { height:calc(var(--showcase-card-height,26rem) - 1.25rem - 44px);margin-top:0;overflow:hidden; }
     .home-page-shell .home-showcase-points { gap:.5rem; }
     .home-page-shell .home-showcase-point + .home-showcase-point { padding-top:.5rem; }
     /* The list climbs about 15px a second, like the pump rows on the station dashboard, and holds still under the pointer. Each copy opens
@@ -279,7 +269,7 @@
       .home-page-shell .home-showcase-desc-row:has(> .home-showcase-description:not(.is-sizer) .home-showcase-loop) { -webkit-mask-image:linear-gradient(180deg,transparent 0,#000 1.5rem,#000 calc(100% - 1.5rem),transparent 100%);mask-image:linear-gradient(180deg,transparent 0,#000 1.5rem,#000 calc(100% - 1.5rem),transparent 100%); }
     }
     .home-page-shell .home-showcase-desc-row > .is-sizer .home-showcase-loop { animation:none; }
-    /* The button sits inside the panel under the key points, 1.75rem above its bottom. Its text eases down to 11px on narrower screens,
+    /* The button sits under the key points, its bottom level with the photo's. Its text eases down to 11px on narrower screens,
        so the longest label still fits the text column on one line. */
     .home-page-shell .home-showcase-cta { align-self:flex-start;margin-top:1.25rem;font-size:clamp(.6875rem,.9vw,.8125rem); }
   }

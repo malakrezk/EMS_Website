@@ -4,14 +4,14 @@ import { images } from '../src/constants/images'
 // Expected homepage showcase order (the order named under its heading), assets, button labels and destinations.
 // `heading` is the title over the service text when it differs from the card's short title.
 // `wide` is the image of the large card when it differs from the background; `fit` is 'contain' where that image shows whole, smaller.
-const homeServiceShowcase: { title: string; heading?: string; points?: string[]; card: string; background: string; cta: string; to: string; wide?: string; fit?: 'contain' }[] = [
-  { title: 'BMS', heading: 'Building Management Systems', points: ['Centralized Building Management', 'Smart Automation & Energy Efficiency', 'Intelligent Building Integration', 'BMS Modernization & Digital Transformation'], card: images.showcaseBmsCard, background: images.showcaseBmsDashboard, cta: 'Explore BMS Solutions', to: '/services/building-management' },
-  { title: 'SCADA', points: ['Water & Wastewater Automation', 'Centralized Monitoring & Control', 'PLC & SCADA Integration', 'SCADA Modernization & Digital Operations'], card: images.showcaseScadaCard, background: images.homeServiceDigitalTwin, cta: 'Explore SCADA Solutions', to: '/services/scada' },
-  { title: 'IoT', points: ['Connected Assets & Sensors', 'Remote Asset Monitoring', 'IoT Dashboards & Operational Insights', 'BMS & SCADA Integration'], card: images.homeServiceIotCard, background: images.iotDashboard, cta: 'Explore IoT Solutions', to: '/services/iot' },
-  { title: 'AI', heading: 'Artificial Intelligence', points: ['Predictive Maintenance & Fault Detection', 'Intelligent Energy Management', 'Operational Analytics & Anomaly Detection', 'AI & Digital Twin Integration'], card: images.showcaseAiCard, background: images.homeServiceAi, cta: 'Explore AI Solutions', to: '/services/artificial-intelligence' },
-  { title: 'Digital Twin', points: ['Connected Digital Asset Representation', 'Operational Status & Performance Visualization', 'Maintenance & Energy Analysis', 'BMS, SCADA & AI Integration'], card: images.showcaseDigitalTwinCard, background: images.solutionsApproachDashboard, cta: 'Explore Digital Twin Solutions', to: '/services/digital-twin' },
-  { title: 'Robotics', points: ['Interactive Virtual Assistant', 'Voice & Text Interaction', 'Operational Data Assistance', 'Integrated Platform Support'], card: images.homeServiceRoboticsCard, background: images.homeServiceRobotics, cta: 'Explore Robotics Solutions', to: '/services/robotics-iot', fit: 'contain' },
-  { title: 'Mobile Applications', points: ['Mobile Monitoring & Dashboards', 'Alarms & Event Notifications', 'Maintenance & Work Order Management', 'Connected Multi-Site Operations'], card: images.showcaseMobileApplicationsCard, background: images.parkLaneMobileApp, fit: 'contain', cta: 'Explore Mobile App Solutions', to: '/mobile-app' },
+const homeServiceShowcase: { title: string; heading?: string; points?: string[]; background: string; cta: string; to: string; wide?: string; fit?: 'contain' }[] = [
+  { title: 'BMS', heading: 'Building Management Systems', points: ['Centralized Building Management', 'Smart Automation & Energy Efficiency', 'Intelligent Building Integration', 'BMS Modernization & Digital Transformation'], background: images.showcaseBmsDashboard, cta: 'Explore BMS Solutions', to: '/services/building-management' },
+  { title: 'SCADA', points: ['Water & Wastewater Automation', 'Centralized Monitoring & Control', 'PLC & SCADA Integration', 'SCADA Modernization & Digital Operations'], background: images.homeServiceDigitalTwin, cta: 'Explore SCADA Solutions', to: '/services/scada' },
+  { title: 'IoT', points: ['Connected Assets & Sensors', 'Remote Asset Monitoring', 'IoT Dashboards & Operational Insights', 'BMS & SCADA Integration'], background: images.iotDashboard, cta: 'Explore IoT Solutions', to: '/services/iot' },
+  { title: 'AI', heading: 'Artificial Intelligence', points: ['Predictive Maintenance & Fault Detection', 'Intelligent Energy Management', 'Operational Analytics & Anomaly Detection', 'AI & Digital Twin Integration'], background: images.homeServiceAi, cta: 'Explore AI Solutions', to: '/services/artificial-intelligence' },
+  { title: 'Digital Twin', points: ['Connected Digital Asset Representation', 'Operational Status & Performance Visualization', 'Maintenance & Energy Analysis', 'BMS, SCADA & AI Integration'], background: images.solutionsApproachDashboard, cta: 'Explore Digital Twin Solutions', to: '/services/digital-twin' },
+  { title: 'Robotics', points: ['Interactive Virtual Assistant', 'Voice & Text Interaction', 'Operational Data Assistance', 'Integrated Platform Support'], background: images.homeServiceRobotics, cta: 'Explore Robotics Solutions', to: '/services/robotics-iot', fit: 'contain' },
+  { title: 'Mobile Applications', points: ['Mobile Monitoring & Dashboards', 'Alarms & Event Notifications', 'Maintenance & Work Order Management', 'Connected Multi-Site Operations'], background: images.parkLaneMobileApp, fit: 'contain', cta: 'Explore Mobile App Solutions', to: '/mobile-app' },
 ]
 
 // Scroll progress that settles on scene k (0-based) of the 6-scene gallery timeline.
@@ -126,7 +126,7 @@ test('media changes remove pinning and preserve readable project content', async
   expect(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth)).toBe(true)
 })
 
-test('home services showcase pairs every service with its portrait card, background and route', async ({ page }) => {
+test('home services showcase pairs every service with its photo and route', async ({ page }) => {
   await page.setViewportSize({ width: 1440, height: 900 })
   await page.goto('/')
   const services = page.locator('#home-services')
@@ -144,13 +144,16 @@ test('home services showcase pairs every service with its portrait card, backgro
     // Only the pill of the service in focus is pressed.
     await expect(pills.nth(index)).toHaveAttribute('aria-pressed', 'true')
     await expect(services.locator('.home-showcase-pill[aria-pressed="true"]')).toHaveCount(1)
-    const card = services.locator('.home-showcase-card.is-active img.is-tall')
-    await expect(card).toHaveAttribute('src', service.card)
+    // The large card shows the service's photo, the wide image or else the background, over the strip's view of the same photo.
+    const card = services.locator('.home-showcase-card.is-active img.is-strip')
+    await expect(card).toHaveAttribute('src', service.wide ?? service.background)
     await expect(card).not.toHaveAttribute('alt', '')
-    // The large card shows the wide image, which falls back to the background.
     const wide = services.locator('.home-showcase-card.is-active img.is-wide')
     await expect(wide).toHaveAttribute('src', service.wide ?? service.background)
     await expect.poll(() => wide.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
+    // The next service waits in the strip beside it, showing the photo its large card will show.
+    const next = homeServiceShowcase[(index + 1) % homeServiceShowcase.length]
+    await expect(services.locator('.home-showcase-card:not(.is-active):not([aria-hidden="true"]) img.is-strip')).toHaveAttribute('src', next.wide ?? next.background)
     const cta = services.getByRole('link', { name: service.cta, exact: true })
     await expect(cta).toHaveAttribute('href', service.to)
     ctaWidths.push(Math.round((await cta.boundingBox())?.width ?? 0))
@@ -208,35 +211,34 @@ for (const [width, height] of [[1440, 900], [1280, 800]]) {
     const frame = services.locator('.home-showcase-card.is-active .home-showcase-card-frame')
     const image = frame.locator('img.is-wide')
     await expect.poll(() => image.evaluate(node => (node as HTMLImageElement).naturalWidth)).toBeGreaterThan(0)
-    const [frameBox, titleBox, panelBox, windowBox, ctaBox, pillsBox, introBox] = await Promise.all([
+    const [frameBox, titleBox, windowBox, ctaBox, pillsBox, introBox] = await Promise.all([
       frame.boundingBox(),
       services.locator('.home-showcase-text .home-showcase-title:not(.is-sizer)').boundingBox(),
-      services.locator('.home-showcase-panel').boundingBox(),
       services.locator('.home-showcase-desc-row').boundingBox(),
       services.locator('.home-showcase-cta').boundingBox(),
       services.locator('.home-showcase-pills').boundingBox(),
       services.locator('.home-showcase-intro').boundingBox(),
     ])
-    if (!frameBox || !titleBox || !panelBox || !windowBox || !ctaBox || !pillsBox || !introBox) throw new Error('Showcase card, panel, text, button, pills or heading is missing')
-    // The service's title is centred above the row, with the pills centred under it. The text and the photo share one panel, which has the
-    // photo's top, bottom and right edge, with no caption over either card. Inside it, the key points' window starts 1.75rem under its top,
-    // and the button follows the window and ends 1.75rem above its bottom.
+    if (!frameBox || !titleBox || !windowBox || !ctaBox || !pillsBox || !introBox) throw new Error('Showcase card, text, button, pills or heading is missing')
+    // The service's title is centred above the row, with the pills centred under it. Under them the text and the photo stand apart, with no
+    // panel shared between them and no caption over either card: the key points' window starts level with the photo's top, and the button
+    // follows the window and ends level with its bottom.
     await expect(services.locator('.home-showcase-intro')).toHaveCSS('text-align', 'center')
     expect(titleBox.y + titleBox.height).toBeLessThanOrEqual(pillsBox.y)
     expect(pillsBox.y + pillsBox.height).toBeLessThanOrEqual(introBox.y + introBox.height)
     expect(Math.abs(pillsBox.x + pillsBox.width / 2 - (titleBox.x + titleBox.width / 2))).toBeLessThan(2)
     const pillRow = await services.locator('.home-showcase-pill').evaluateAll(pills => pills.map(pill => pill.getBoundingClientRect().top))
     expect(new Set(pillRow.map(Math.round)).size).toBe(1)
-    expect(introBox.y + introBox.height).toBeLessThan(panelBox.y)
-    expect(Math.abs(panelBox.y - frameBox.y)).toBeLessThan(2)
-    expect(Math.abs(panelBox.y + panelBox.height - (frameBox.y + frameBox.height))).toBeLessThan(2)
-    expect(Math.abs(panelBox.x + panelBox.width - (frameBox.x + frameBox.width))).toBeLessThan(2)
-    expect(panelBox.x).toBeLessThan(windowBox.x)
+    expect(introBox.y + introBox.height).toBeLessThan(frameBox.y)
+    await expect(services.locator('.home-showcase-panel')).toHaveCount(0)
+    expect(windowBox.x + windowBox.width).toBeLessThan(frameBox.x)
     await expect(services.locator('.home-showcase-card-caption')).toHaveCount(0)
-    expect(Math.abs(windowBox.y - (frameBox.y + 28))).toBeLessThan(2)
+    expect(Math.abs(windowBox.y - frameBox.y)).toBeLessThan(2)
     expect(Math.abs(ctaBox.x - windowBox.x)).toBeLessThan(2)
     expect(ctaBox.y).toBeGreaterThan(windowBox.y + windowBox.height)
-    expect(Math.abs(ctaBox.y + ctaBox.height - (frameBox.y + frameBox.height - 28))).toBeLessThan(2)
+    expect(Math.abs(ctaBox.y + ctaBox.height - (frameBox.y + frameBox.height))).toBeLessThan(2)
+    // The photo stands whole on its own card, with no fade into the text beside it.
+    await expect(frame).toHaveCSS('mask-image', 'none')
     // The card has its image's shape, so the dashboard in it shows whole.
     const ratio = await image.evaluate(node => (node as HTMLImageElement).naturalWidth / (node as HTMLImageElement).naturalHeight)
     expect(Math.abs(frameBox.width / frameBox.height - ratio)).toBeLessThan(.02)

@@ -49,7 +49,7 @@ export interface ShowcaseService {
 /** One key point of a showcase service: a short title and a line of text. */
 export interface ShowcasePoint { title: string; text: string }
 
-/** One service in the homepage showcase: a 3:4 image for its narrow strip plus a landscape `background`, shown on its large card. */
+/** One service in the homepage showcase. Its photo, a landscape `background`, shows whole on its large card and cropped on the narrow strip it waits in. */
 export interface ServiceShowcaseItem {
   id: string
   title: string
@@ -60,7 +60,7 @@ export interface ServiceShowcaseItem {
   points?: ShowcasePoint[]
   to: string
   ctaLabel?: string
-  card: string
+  /** Text alternative for the photo. */
   cardAlt: string
   background: string
   /** Image for the card while it is shown large and wide. Defaults to the background. */
